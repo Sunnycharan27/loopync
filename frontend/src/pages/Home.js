@@ -196,10 +196,27 @@ const Home = () => {
         </div>
       </div>
 
-      <CreateFAB onClick={() => setShowComposer(true)} />
+      {/* Create FAB - Only for authenticated users */}
+      {currentUser && <CreateFAB onClick={() => setShowComposer(true)} />}
+      
+      {/* Login prompt for unauthenticated users */}
+      {!currentUser && (
+        <div className="fixed bottom-20 left-0 right-0 mx-4 mb-4">
+          <div className="glass-card p-4 text-center border border-cyan-400/20">
+            <p className="text-white mb-2">Want to post, like, or comment?</p>
+            <button 
+              onClick={() => window.location.href = '/auth'}
+              className="px-6 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-xl hover:shadow-lg hover:shadow-cyan-400/50 transition-all"
+            >
+              Login or Sign Up
+            </button>
+          </div>
+        </div>
+      )}
+      
       <BottomNav active="home" />
 
-      {showComposer && (
+      {currentUser && showComposer && (
         <ComposerModal
           currentUser={currentUser}
           onClose={() => setShowComposer(false)}
