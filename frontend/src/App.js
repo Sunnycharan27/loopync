@@ -126,7 +126,7 @@ function App() {
                 ) : isAuthenticated ? (
                   needsOnboarding ? <Navigate to="/onboarding" /> : <Home />
                 ) : (
-                  <Navigate to="/auth" />
+                  <Home />
                 )
               }
             />
@@ -138,7 +138,7 @@ function App() {
                 ) : isAuthenticated ? (
                   <VibeZone />
                 ) : (
-                  <Navigate to="/auth" />
+                  <VibeZone />
                 )
               }
             />
