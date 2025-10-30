@@ -195,6 +195,10 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
                 data-testid="reel-like-btn"
                 onClick={(e) => {
                   e.stopPropagation();
+                  if (!currentUser) {
+                    window.location.href = '/auth';
+                    return;
+                  }
                   onLike(reel.id);
                 }}
                 className="flex flex-col items-center gap-1"
