@@ -16,7 +16,8 @@ const VibeCapsules = ({ currentUser }) => {
   const fetchCapsules = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API}/capsules?userId=${currentUser.id}`);
+      // Fetch public capsules (no userId needed for public feed)
+      const response = await axios.get(`${API}/capsules`);
       setStories(response.data.stories || []);
     } catch (error) {
       console.error("Failed to fetch capsules:", error);
