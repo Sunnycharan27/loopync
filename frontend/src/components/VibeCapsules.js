@@ -54,13 +54,15 @@ const VibeCapsules = ({ currentUser }) => {
     <>
       <div className="px-4 py-3 border-b border-gray-800">
         <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-          {/* Add Your Story */}
-          <VibeCapsuleUpload 
-            currentUser={currentUser} 
-            onUploadComplete={fetchCapsules}
-          />
+          {/* Add Your Story - Only show if authenticated */}
+          {currentUser && (
+            <VibeCapsuleUpload 
+              currentUser={currentUser} 
+              onUploadComplete={fetchCapsules}
+            />
+          )}
 
-          {/* Friends' Stories */}
+          {/* Stories from all users */}
           {stories.map((story, index) => (
             <button
               key={story.author.id}
