@@ -38,8 +38,13 @@ const AgoraCallModal = ({
     try {
       setCallState('connecting');
       
-      // Create Agora client
-      const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+      // Create Agora client with optimized settings for cross-platform
+      const client = AgoraRTC.createClient({ 
+        mode: 'rtc', 
+        codec: 'vp8',
+        // Enable better mobile compatibility
+        clientRole: 'host'
+      });
       clientRef.current = client;
 
       // Set up event listeners
