@@ -147,13 +147,13 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
       <div className="relative w-full max-w-lg h-full flex items-center justify-center" style={{ zIndex: 10000 }}>
         {currentCapsule.mediaType === "image" ? (
           <img
-            src={currentCapsule.mediaUrl}
+            src={currentCapsule.mediaUrl?.startsWith('/uploads') ? `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}${currentCapsule.mediaUrl}` : currentCapsule.mediaUrl}
             alt="Story"
             className="w-full h-full object-contain"
           />
         ) : (
           <video
-            src={currentCapsule.mediaUrl}
+            src={currentCapsule.mediaUrl?.startsWith('/uploads') ? `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}${currentCapsule.mediaUrl}` : currentCapsule.mediaUrl}
             autoPlay
             muted
             className="w-full h-full object-contain"
