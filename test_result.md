@@ -7466,11 +7466,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Standalone Events Page"
-    - "Standalone Venues Page"
+    - "Agora Video/Audio Calling System"
   stuck_tasks:
-    - "Standalone Events Page"
-    - "Standalone Venues Page"
+    - "Call History Endpoint Bug"
   test_all: false
   test_priority: "high_first"
 
