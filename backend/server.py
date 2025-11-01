@@ -6428,8 +6428,9 @@ async def initiate_call(callerId: str, recipientId: str, callType: str = "video"
         await db.notifications.insert_one(notification)
         
         # Emit WebSocket event to recipient for real-time call notification
+        logger.info(f"🔔 Attempting to send incoming_call notification to recipientId: {recipientId}")
         try:
-            await emit_to_user(recipientId, 'incoming_call', {
+            emit_success = await emit_to_user(recipientId, 'incoming_call', {
                 "callId": call["id"],
                 "callerId": callerId,
                 "callType": callType,
@@ -6440,8 +6441,12 @@ async def initiate_call(callerId: str, recipientId: str, callType: str = "video"
                 "callerName": caller_info.get("name", "Unknown") if caller_info else "Unknown",
                 "callerAvatar": caller_info.get("avatar", "") if caller_info else ""
             })
+            if emit_success:
+                logger.info(f"✅ Successfully sent incoming_call notification to {recipientId}")
+            else:
+                logger.warning(f"⚠️ Recipient {recipientId} not connected to WebSocket")
         except Exception as ws_error:
-            logger.warning(f"Failed to send WebSocket notification: {str(ws_error)}")
+            logger.warning(f"❌ Failed to send WebSocket notification: {str(ws_error)}")
         
         return {
             "callId": call["id"],
