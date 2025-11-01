@@ -615,6 +615,53 @@ frontend:
           
           Authentication system is fully functional and secure.
 
+  - task: "AI Voice Bot Frontend UI (Speech Recognition + TTS)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/VoiceBotModal.js, /app/frontend/src/hooks/useSpeechRecognition.js, /app/frontend/src/hooks/useTextToSpeech.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: |
+          NEWLY IMPLEMENTED: Complete AI Voice Bot Frontend with Speech-to-Text and Text-to-Speech
+          
+          NEW COMPONENTS CREATED:
+          ✅ VoiceBotModal.js - Main voice bot modal interface with chat UI
+          ✅ useSpeechRecognition.js - Custom React hook for Web Speech API integration
+          ✅ useTextToSpeech.js - Custom React hook for Speech Synthesis API
+          
+          FEATURES IMPLEMENTED:
+          - Microphone permission handling with user-friendly error messages
+          - Real-time speech-to-text transcription (Web Speech API)
+          - Text-to-speech AI responses (Speech Synthesis API)
+          - Session-based conversation tracking
+          - Chat history display with user/AI messages
+          - Visual indicators for listening, processing, and speaking states
+          - Welcome message that speaks automatically on modal open
+          - Error handling for microphone access denied, no speech detected, etc.
+          - Browser compatibility checks
+          - Beautiful gradient UI with cyan/blue theme
+          
+          FIXES APPLIED:
+          - Fixed microphone permission request using navigator.mediaDevices.getUserMedia
+          - Fixed React hooks dependency order to prevent initialization errors
+          - Added comprehensive error messages for all speech recognition errors
+          - Added console logging for debugging
+          - Improved text-to-speech with better voice selection and error handling
+          
+          NEEDS COMPREHENSIVE TESTING:
+          - Test microphone permission flow in browser
+          - Test speech recognition accuracy
+          - Test AI response generation via backend API
+          - Test text-to-speech audio output
+          - Test complete conversation flow: speak → transcribe → AI response → speak back
+          - Test error handling for denied permissions
+          - Test session persistence across multiple queries
+          - Test on different browsers (Chrome, Safari, Edge)
+
   - task: "Starbucks-style Wallet Page"
     implemented: true
     working: true
