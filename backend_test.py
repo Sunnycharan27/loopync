@@ -375,14 +375,15 @@ class CallTester:
         call_data = response.json()
         call_id = call_data.get('callId')
         
-        # Test answering the call
-        self.log(f"   Testing answer call (ID: {call_id})")
-        response = self.session.post(f"{BASE_URL}/calls/{call_id}/answer")
+        # Test answering the call (using recipient's perspective)
+        recipient_id = friend.get('id')
+        self.log(f"   Testing answer call (ID: {call_id}) as recipient ({recipient_id})")
+        response = self.session.post(f"{BASE_URL}/calls/{call_id}/answer", params={"userId": recipient_id})
         
         if response.status_code == 200:
             data = response.json()
-            if data.get('status') == 'active':
-                self.log("   ✅ Call answered successfully, status changed to 'active'")
+            if data.get('status') == 'ongoing':
+                self.log("   ✅ Call answered successfully, status changed to 'ongoing'")
             else:
                 self.log(f"   ❌ Call status not updated correctly: {data.get('status')}", "ERROR")
                 return False
@@ -390,14 +391,14 @@ class CallTester:
             self.log(f"   ❌ Failed to answer call: {response.text}", "ERROR")
             return False
         
-        # Test ending the call
-        self.log(f"   Testing end call (ID: {call_id})")
-        response = self.session.post(f"{BASE_URL}/calls/{call_id}/end")
+        # Test ending the call (caller can end it)
+        self.log(f"   Testing end call (ID: {call_id}) as caller ({self.user_id})")
+        response = self.session.post(f"{BASE_URL}/calls/{call_id}/end", params={"userId": self.user_id})
         
         if response.status_code == 200:
             data = response.json()
-            if data.get('success'):
-                self.log("   ✅ Call ended successfully")
+            if data.get('message') == 'Call ended':
+                self.log(f"   ✅ Call ended successfully, duration: {data.get('duration')} seconds")
             else:
                 self.log(f"   ❌ Call end response invalid: {data}", "ERROR")
                 return False
