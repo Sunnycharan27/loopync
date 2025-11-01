@@ -28,652 +28,471 @@ TEST_PASSWORD = "password123"
 
 class CallTester:
     def __init__(self):
-        self.base_url = BASE_URL
         self.session = requests.Session()
-        self.auth_token = None
-        self.demo_user_id = None
-        self.friend_user_id = None
-        self.test_call_id = None
-        self.results = {
-            "total_tests": 7,
-            "passed": 0,
-            "failed": 0,
-            "test_details": []
-        }
+        self.token = None
+        self.user_id = None
+        self.friends = []
         
-    def log_test_result(self, test_name, passed, details, error=None):
-        """Log test result"""
-        status = "✅ PASSED" if passed else "❌ FAILED"
-        self.results["test_details"].append({
-            "test": test_name,
-            "status": status,
-            "details": details,
-            "error": error
+    def log(self, message, level="INFO"):
+        """Log messages with timestamp"""
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        print(f"[{timestamp}] {level}: {message}")
+        
+    def login(self):
+        """Login and get JWT token"""
+        self.log("🔐 Logging in with demo credentials...")
+        
+        response = self.session.post(f"{BASE_URL}/auth/login", json={
+            "email": TEST_EMAIL,
+            "password": TEST_PASSWORD
         })
         
-        if passed:
-            self.results["passed"] += 1
+        if response.status_code == 200:
+            data = response.json()
+            self.token = data.get("token")
+            self.user_id = data.get("user", {}).get("id")
+            self.log(f"✅ Login successful! User ID: {self.user_id}")
+            
+            # Set authorization header for future requests
+            self.session.headers.update({
+                "Authorization": f"Bearer {self.token}",
+                "Content-Type": "application/json"
+            })
+            return True
         else:
-            self.results["failed"] += 1
-            
-        print(f"{status}: {test_name}")
-        if details:
-            print(f"   Details: {details}")
-        if error:
-            print(f"   Error: {error}")
-        print()
-
-    def authenticate(self):
-        """Authenticate with demo credentials"""
-        print("🔐 AUTHENTICATING WITH DEMO CREDENTIALS...")
-        
-        try:
-            response = self.session.post(f"{self.base_url}/auth/login", json={
-                "email": TEST_EMAIL,
-                "password": TEST_PASSWORD
-            })
-            
-            if response.status_code == 200:
-                data = response.json()
-                self.auth_token = data.get("token")
-                self.demo_user_id = data.get("user", {}).get("id")
-                
-                # Set authorization header for future requests
-                self.session.headers.update({
-                    "Authorization": f"Bearer {self.auth_token}"
-                })
-                
-                print(f"✅ Authentication successful")
-                print(f"   User ID: {self.demo_user_id}")
-                print(f"   Token: {self.auth_token[:20]}...")
-                return True
-            else:
-                print(f"❌ Authentication failed: {response.status_code} - {response.text}")
-                return False
-                
-        except Exception as e:
-            print(f"❌ Authentication error: {str(e)}")
+            self.log(f"❌ Login failed: {response.status_code} - {response.text}", "ERROR")
             return False
-
-    def test_1_verify_agora_configuration(self):
-        """Test 1: Verify Agora Configuration"""
-        print("🧪 TEST 1: VERIFY AGORA CONFIGURATION")
+    
+    def get_friends(self):
+        """Get user's friends list"""
+        self.log("👥 Getting friends list...")
         
-        try:
-            # Check if AGORA_APP_ID and AGORA_APP_CERTIFICATE are configured
-            # We'll test this by trying to generate a token via the agora endpoint
-            response = self.session.post(f"{self.base_url}/agora/token", params={
-                "channelName": "test-channel",
-                "uid": 12345,
-                "role": "publisher"
-            })
+        response = self.session.get(f"{BASE_URL}/users/{self.user_id}/friends")
+        
+        if response.status_code == 200:
+            self.friends = response.json()
+            self.log(f"✅ Found {len(self.friends)} friends")
+            for friend in self.friends:
+                self.log(f"   - {friend.get('name')} (ID: {friend.get('id')})")
+            return True
+        else:
+            self.log(f"❌ Failed to get friends: {response.status_code} - {response.text}", "ERROR")
+            return False
+    
+    def test_audio_call_initiation(self):
+        """Test Priority 1: Audio Call Initiation"""
+        self.log("\n📞 TEST 1: Audio Call Initiation")
+        
+        if not self.friends:
+            self.log("❌ No friends available for testing", "ERROR")
+            return False
             
-            if response.status_code == 200:
-                data = response.json()
-                if "token" in data and "appId" in data:
-                    self.log_test_result(
-                        "Agora Configuration Check",
-                        True,
-                        f"Agora credentials configured. App ID: {data.get('appId')}, Token generated successfully"
-                    )
-                    return True
+        friend = self.friends[0]  # Use first friend
+        friend_id = friend.get('id')
+        friend_name = friend.get('name')
+        
+        self.log(f"   Initiating audio call to {friend_name} (ID: {friend_id})")
+        
+        request_body = {
+            "callerId": self.user_id,
+            "recipientId": friend_id,
+            "callType": "audio"
+        }
+        
+        self.log(f"   Request body: {json.dumps(request_body, indent=2)}")
+        
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json=request_body)
+        
+        self.log(f"   Response status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            self.log("✅ Audio call initiation successful!")
+            
+            # Verify response structure
+            required_fields = ["callId", "channelName", "appId", "callerToken", "callerUid", "recipientToken", "recipientUid", "expiresIn"]
+            missing_fields = []
+            
+            for field in required_fields:
+                if field not in data:
+                    missing_fields.append(field)
                 else:
-                    self.log_test_result(
-                        "Agora Configuration Check", 
-                        False,
-                        "Agora token endpoint returned incomplete data",
-                        f"Response: {data}"
-                    )
-                    return False
-            else:
-                self.log_test_result(
-                    "Agora Configuration Check",
-                    False, 
-                    "Agora token generation failed",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
+                    self.log(f"   ✅ {field}: {str(data[field])[:50]}{'...' if len(str(data[field])) > 50 else ''}")
+            
+            if missing_fields:
+                self.log(f"❌ Missing required fields: {missing_fields}", "ERROR")
+                return False
+            
+            # Verify no Pydantic errors
+            if isinstance(data.get('detail'), dict):
+                self.log("❌ Response contains object in detail field (Pydantic error)", "ERROR")
                 return False
                 
-        except Exception as e:
-            self.log_test_result(
-                "Agora Configuration Check",
-                False,
-                "Exception during Agora configuration test",
-                str(e)
-            )
+            self.log("✅ All required fields present and properly formatted")
+            return True
+        else:
+            self.log(f"❌ Audio call initiation failed: {response.text}", "ERROR")
             return False
-
-    def test_2_friend_relationship_check(self):
-        """Test 2: Friend Relationship Check"""
-        print("🧪 TEST 2: FRIEND RELATIONSHIP CHECK")
+    
+    def test_video_call_initiation(self):
+        """Test Priority 1: Video Call Initiation"""
+        self.log("\n📹 TEST 2: Video Call Initiation")
         
-        try:
-            # Get demo user's friends list
-            response = self.session.get(f"{self.base_url}/friends/{self.demo_user_id}")
+        if not self.friends:
+            self.log("❌ No friends available for testing", "ERROR")
+            return False
             
-            if response.status_code == 200:
-                friends = response.json()
-                
-                if isinstance(friends, list) and len(friends) > 0:
-                    # Use the first friend for testing
-                    self.friend_user_id = friends[0].get("id")
-                    friend_name = friends[0].get("name", "Unknown")
-                    
-                    self.log_test_result(
-                        "Friend Relationship Check",
-                        True,
-                        f"Demo user has {len(friends)} friends. Using friend: {friend_name} (ID: {self.friend_user_id})"
-                    )
-                    return True
+        friend = self.friends[0]  # Use first friend
+        friend_id = friend.get('id')
+        friend_name = friend.get('name')
+        
+        self.log(f"   Initiating video call to {friend_name} (ID: {friend_id})")
+        
+        request_body = {
+            "callerId": self.user_id,
+            "recipientId": friend_id,
+            "callType": "video"
+        }
+        
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json=request_body)
+        
+        self.log(f"   Response status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            self.log("✅ Video call initiation successful!")
+            
+            # Verify response structure
+            required_fields = ["callId", "channelName", "appId", "callerToken", "callerUid", "recipientToken", "recipientUid", "expiresIn"]
+            missing_fields = []
+            
+            for field in required_fields:
+                if field not in data:
+                    missing_fields.append(field)
                 else:
-                    # No friends found - try to find other users and create a test scenario
-                    print("   No friends found, checking for other users to create test scenario...")
-                    
-                    # Get list of all users
-                    users_response = self.session.get(f"{self.base_url}/users", params={"limit": 10})
-                    
-                    if users_response.status_code == 200:
-                        users = users_response.json()
-                        
-                        # Find a user that's not the demo user
-                        test_friend = None
-                        for user in users:
-                            if user.get("id") != self.demo_user_id:
-                                test_friend = user
-                                break
-                        
-                        if test_friend:
-                            self.friend_user_id = test_friend.get("id")
-                            self.log_test_result(
-                                "Friend Relationship Check",
-                                True,
-                                f"Found test user for calling: {test_friend.get('name', 'Unknown')} (ID: {self.friend_user_id}). Note: Not actual friends, but will test call initiation"
-                            )
-                            return True
-                        else:
-                            self.log_test_result(
-                                "Friend Relationship Check",
-                                False,
-                                "No other users found for testing",
-                                "Cannot test calling functionality without other users"
-                            )
-                            return False
-                    else:
-                        self.log_test_result(
-                            "Friend Relationship Check",
-                            False,
-                            "Demo user has no friends and cannot retrieve user list",
-                            "Cannot test calling functionality without friend relationships or other users"
-                        )
-                        return False
-            else:
-                self.log_test_result(
-                    "Friend Relationship Check",
-                    False,
-                    "Failed to retrieve friends list",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
+                    self.log(f"   ✅ {field}: {str(data[field])[:50]}{'...' if len(str(data[field])) > 50 else ''}")
+            
+            if missing_fields:
+                self.log(f"❌ Missing required fields: {missing_fields}", "ERROR")
+                return False
+            
+            # Verify no Pydantic errors
+            if isinstance(data.get('detail'), dict):
+                self.log("❌ Response contains object in detail field (Pydantic error)", "ERROR")
                 return False
                 
-        except Exception as e:
-            self.log_test_result(
-                "Friend Relationship Check",
-                False,
-                "Exception during friend relationship check",
-                str(e)
-            )
+            self.log("✅ All required fields present and properly formatted")
+            return True
+        else:
+            self.log(f"❌ Video call initiation failed: {response.text}", "ERROR")
             return False
-
-    def test_3_call_initiation(self):
-        """Test 3: Call Initiation"""
-        print("🧪 TEST 3: CALL INITIATION")
+    
+    def test_error_scenarios(self):
+        """Test Priority 1: Error Scenarios"""
+        self.log("\n🚨 TEST 3: Error Scenarios")
         
-        if not self.friend_user_id:
-            self.log_test_result(
-                "Call Initiation",
-                False,
-                "Cannot test call initiation without friend relationship",
-                "Skipping due to no available friends"
-            )
+        # Test 3a: Non-existent caller
+        self.log("   3a: Testing non-existent caller")
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
+            "callerId": "non_existent_user",
+            "recipientId": self.friends[0].get('id') if self.friends else "test_user_1",
+            "callType": "audio"
+        })
+        
+        if response.status_code == 404:
+            data = response.json()
+            if data.get('detail') == "Caller not found":
+                self.log("   ✅ Non-existent caller properly rejected with 404")
+            else:
+                self.log(f"   ❌ Wrong error message: {data.get('detail')}", "ERROR")
+                return False
+        else:
+            self.log(f"   ❌ Expected 404, got {response.status_code}", "ERROR")
             return False
         
-        try:
-            # Initiate a video call
-            response = self.session.post(f"{self.base_url}/calls/initiate", params={
-                "callerId": self.demo_user_id,
-                "recipientId": self.friend_user_id,
-                "callType": "video"
-            })
+        # Test 3b: Non-friend recipient (if we have friends, test with a non-friend)
+        self.log("   3b: Testing non-friend recipient")
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
+            "callerId": self.user_id,
+            "recipientId": "non_friend_user",
+            "callType": "audio"
+        })
+        
+        if response.status_code == 403:
+            data = response.json()
+            if data.get('detail') == "You can only call friends":
+                self.log("   ✅ Non-friend recipient properly rejected with 403")
+            else:
+                self.log(f"   ❌ Wrong error message: {data.get('detail')}", "ERROR")
+                return False
+        else:
+            self.log(f"   ❌ Expected 403, got {response.status_code}", "ERROR")
+            return False
+        
+        # Test 3c: Invalid request format (missing fields)
+        self.log("   3c: Testing invalid request format")
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
+            "callerId": self.user_id
+            # Missing recipientId and callType
+        })
+        
+        if response.status_code == 422:
+            data = response.json()
+            if isinstance(data.get('detail'), list):
+                self.log("   ✅ Invalid request format properly rejected with 422 validation error")
+            else:
+                self.log(f"   ❌ Expected validation error list, got: {data.get('detail')}", "ERROR")
+                return False
+        else:
+            self.log(f"   ❌ Expected 422, got {response.status_code}", "ERROR")
+            return False
+        
+        # Test 3d: Empty request body
+        self.log("   3d: Testing empty request body")
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json={})
+        
+        if response.status_code == 422:
+            self.log("   ✅ Empty request body properly rejected with 422")
+        else:
+            self.log(f"   ❌ Expected 422, got {response.status_code}", "ERROR")
+            return False
+        
+        self.log("✅ All error scenarios working correctly")
+        return True
+    
+    def test_agora_token_generation(self):
+        """Test Priority 1: Agora Token Generation"""
+        self.log("\n🎮 TEST 4: Agora Token Generation Verification")
+        
+        if not self.friends:
+            self.log("❌ No friends available for testing", "ERROR")
+            return False
+        
+        # Initiate a call to get tokens
+        friend = self.friends[0]
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
+            "callerId": self.user_id,
+            "recipientId": friend.get('id'),
+            "callType": "audio"
+        })
+        
+        if response.status_code != 200:
+            self.log(f"❌ Failed to initiate call for token testing: {response.text}", "ERROR")
+            return False
+        
+        data = response.json()
+        
+        # Verify Agora token structure
+        self.log("   Verifying Agora token generation...")
+        
+        # Check callId (UUID format)
+        call_id = data.get('callId')
+        if call_id and len(call_id) == 36 and call_id.count('-') == 4:
+            self.log(f"   ✅ callId: Valid UUID format ({call_id})")
+        else:
+            self.log(f"   ❌ callId: Invalid format ({call_id})", "ERROR")
+            return False
+        
+        # Check channelName
+        channel_name = data.get('channelName')
+        if channel_name and channel_name.startswith('call-'):
+            self.log(f"   ✅ channelName: Valid format ({channel_name})")
+        else:
+            self.log(f"   ❌ channelName: Invalid format ({channel_name})", "ERROR")
+            return False
+        
+        # Check appId (Agora app ID)
+        app_id = data.get('appId')
+        if app_id and len(app_id) == 32:  # Agora app IDs are typically 32 characters
+            self.log(f"   ✅ appId: Valid format ({app_id})")
+        else:
+            self.log(f"   ❌ appId: Invalid format ({app_id})", "ERROR")
+            return False
+        
+        # Check tokens (JWT-like strings)
+        caller_token = data.get('callerToken')
+        recipient_token = data.get('recipientToken')
+        
+        if caller_token and len(caller_token) > 100:  # Agora tokens are long
+            self.log(f"   ✅ callerToken: Valid JWT-like string ({len(caller_token)} chars)")
+        else:
+            self.log(f"   ❌ callerToken: Invalid format", "ERROR")
+            return False
+        
+        if recipient_token and len(recipient_token) > 100:
+            self.log(f"   ✅ recipientToken: Valid JWT-like string ({len(recipient_token)} chars)")
+        else:
+            self.log(f"   ❌ recipientToken: Invalid format", "ERROR")
+            return False
+        
+        # Check UIDs (integers)
+        caller_uid = data.get('callerUid')
+        recipient_uid = data.get('recipientUid')
+        
+        if isinstance(caller_uid, int) and caller_uid > 0:
+            self.log(f"   ✅ callerUid: Valid integer ({caller_uid})")
+        else:
+            self.log(f"   ❌ callerUid: Invalid format ({caller_uid})", "ERROR")
+            return False
+        
+        if isinstance(recipient_uid, int) and recipient_uid > 0:
+            self.log(f"   ✅ recipientUid: Valid integer ({recipient_uid})")
+        else:
+            self.log(f"   ❌ recipientUid: Invalid format ({recipient_uid})", "ERROR")
+            return False
+        
+        # Check expiration
+        expires_in = data.get('expiresIn')
+        if expires_in == 3600:
+            self.log(f"   ✅ expiresIn: Correct value (3600 seconds)")
+        else:
+            self.log(f"   ❌ expiresIn: Wrong value ({expires_in})", "ERROR")
+            return False
+        
+        self.log("✅ Agora token generation working correctly")
+        return True
+    
+    def test_call_management(self):
+        """Test Priority 2: Call Management"""
+        self.log("\n📱 TEST 5: Call Management (Answer/End)")
+        
+        if not self.friends:
+            self.log("❌ No friends available for testing", "ERROR")
+            return False
+        
+        # First, initiate a call
+        friend = self.friends[0]
+        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
+            "callerId": self.user_id,
+            "recipientId": friend.get('id'),
+            "callType": "audio"
+        })
+        
+        if response.status_code != 200:
+            self.log(f"❌ Failed to initiate call: {response.text}", "ERROR")
+            return False
+        
+        call_data = response.json()
+        call_id = call_data.get('callId')
+        
+        # Test answering the call
+        self.log(f"   Testing answer call (ID: {call_id})")
+        response = self.session.post(f"{BASE_URL}/calls/{call_id}/answer")
+        
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('status') == 'active':
+                self.log("   ✅ Call answered successfully, status changed to 'active'")
+            else:
+                self.log(f"   ❌ Call status not updated correctly: {data.get('status')}", "ERROR")
+                return False
+        else:
+            self.log(f"   ❌ Failed to answer call: {response.text}", "ERROR")
+            return False
+        
+        # Test ending the call
+        self.log(f"   Testing end call (ID: {call_id})")
+        response = self.session.post(f"{BASE_URL}/calls/{call_id}/end")
+        
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('success'):
+                self.log("   ✅ Call ended successfully")
+            else:
+                self.log(f"   ❌ Call end response invalid: {data}", "ERROR")
+                return False
+        else:
+            self.log(f"   ❌ Failed to end call: {response.text}", "ERROR")
+            return False
+        
+        self.log("✅ Call management working correctly")
+        return True
+    
+    def test_call_history(self):
+        """Test Priority 3: Call History"""
+        self.log("\n📋 TEST 6: Call History")
+        
+        response = self.session.get(f"{BASE_URL}/calls/{self.user_id}/history")
+        
+        if response.status_code == 200:
+            calls = response.json()
+            self.log(f"   ✅ Retrieved {len(calls)} calls from history")
             
-            if response.status_code == 200:
-                data = response.json()
+            if calls:
+                # Verify call structure
+                call = calls[0]
+                required_fields = ["id", "callerId", "recipientId", "callType", "status", "startedAt"]
                 
-                # Verify response contains required fields
-                required_fields = [
-                    "callId", "channelName", "appId", 
-                    "callerToken", "callerUid", 
-                    "recipientToken", "recipientUid"
-                ]
-                
-                missing_fields = []
                 for field in required_fields:
-                    if field not in data:
-                        missing_fields.append(field)
-                
-                if not missing_fields:
-                    self.test_call_id = data.get("callId")
-                    
-                    # Verify tokens are valid strings (not empty)
-                    caller_token = data.get("callerToken", "")
-                    recipient_token = data.get("recipientToken", "")
-                    caller_uid = data.get("callerUid")
-                    recipient_uid = data.get("recipientUid")
-                    
-                    token_valid = len(caller_token) > 0 and len(recipient_token) > 0
-                    uid_valid = isinstance(caller_uid, int) and isinstance(recipient_uid, int) and caller_uid > 0 and recipient_uid > 0
-                    
-                    if token_valid and uid_valid:
-                        self.log_test_result(
-                            "Call Initiation",
-                            True,
-                            f"Call initiated successfully. Call ID: {self.test_call_id}, Channel: {data.get('channelName')}, App ID: {data.get('appId')}, Caller UID: {caller_uid}, Recipient UID: {recipient_uid}"
-                        )
-                        return True
+                    if field in call:
+                        self.log(f"   ✅ {field}: {call[field]}")
                     else:
-                        self.log_test_result(
-                            "Call Initiation",
-                            False,
-                            "Call initiated but tokens/UIDs are invalid",
-                            f"Token valid: {token_valid}, UID valid: {uid_valid}"
-                        )
+                        self.log(f"   ❌ Missing field: {field}", "ERROR")
                         return False
-                else:
-                    self.log_test_result(
-                        "Call Initiation",
-                        False,
-                        "Call initiation response missing required fields",
-                        f"Missing fields: {missing_fields}"
-                    )
-                    return False
-            else:
-                self.log_test_result(
-                    "Call Initiation",
-                    False,
-                    "Call initiation failed",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
-                return False
                 
-        except Exception as e:
-            self.log_test_result(
-                "Call Initiation",
-                False,
-                "Exception during call initiation",
-                str(e)
-            )
-            return False
-
-    def test_4_call_record_creation(self):
-        """Test 4: Call Record Creation"""
-        print("🧪 TEST 4: CALL RECORD CREATION")
-        
-        if not self.test_call_id:
-            self.log_test_result(
-                "Call Record Creation",
-                False,
-                "Cannot test call record without successful call initiation",
-                "Skipping due to failed call initiation"
-            )
-            return False
-        
-        try:
-            # Check if call was stored in database by trying to answer it
-            # (This will also verify the call exists and has correct status)
-            response = self.session.post(f"{self.base_url}/calls/{self.test_call_id}/answer", params={
-                "userId": self.friend_user_id  # Use recipient ID for answering
-            })
+                # Check if caller and recipient data is enriched
+                if 'caller' in call and 'recipient' in call:
+                    self.log("   ✅ Call history includes enriched user data")
+                else:
+                    self.log("   ❌ Call history missing user data enrichment", "ERROR")
+                    return False
             
-            if response.status_code == 200:
-                answer_response = response.json()
-                
-                # The answer endpoint returns a simple response, not the full call record
-                # Let's verify the call was created by checking if the answer was successful
-                if answer_response and "status" in answer_response:
-                    # Try to verify call exists by attempting to end it (which should work if call exists)
-                    end_test_response = self.session.post(f"{self.base_url}/calls/{self.test_call_id}/end", params={
-                        "userId": self.demo_user_id
-                    })
-                    
-                    if end_test_response.status_code == 200:
-                        self.log_test_result(
-                            "Call Record Creation",
-                            True,
-                            f"Call record created and stored successfully. Answer response: {answer_response}, End test successful"
-                        )
-                        return True
-                    else:
-                        self.log_test_result(
-                            "Call Record Creation",
-                            True,  # Still pass since answer worked
-                            f"Call record exists (answer successful) but end test failed. Answer response: {answer_response}"
-                        )
-                        return True
-                else:
-                    self.log_test_result(
-                        "Call Record Creation",
-                        False,
-                        "Call answer response invalid",
-                        f"Response: {answer_response}"
-                    )
-                    return False
-            else:
-                self.log_test_result(
-                    "Call Record Creation",
-                    False,
-                    "Failed to answer call (call may not exist)",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
-                return False
-                
-        except Exception as e:
-            self.log_test_result(
-                "Call Record Creation",
-                False,
-                "Exception during call record verification",
-                str(e)
-            )
+            self.log("✅ Call history working correctly")
+            return True
+        else:
+            self.log(f"❌ Failed to get call history: {response.text}", "ERROR")
             return False
-
-    def test_5_answer_call_endpoint(self):
-        """Test 5: Answer Call Endpoint"""
-        print("🧪 TEST 5: ANSWER CALL ENDPOINT")
-        
-        if not self.test_call_id:
-            self.log_test_result(
-                "Answer Call Endpoint",
-                False,
-                "Cannot test answer call without valid call ID",
-                "Skipping due to failed call initiation"
-            )
-            return False
-        
-        try:
-            # Answer the call
-            response = self.session.post(f"{self.base_url}/calls/{self.test_call_id}/answer", params={
-                "userId": self.friend_user_id  # Use recipient ID for answering
-            })
-            
-            if response.status_code == 200:
-                call_data = response.json()
-                
-                # Verify call status changed to "ongoing" (the actual implementation uses "ongoing")
-                if call_data and call_data.get("status") in ["active", "ongoing"]:
-                    self.log_test_result(
-                        "Answer Call Endpoint",
-                        True,
-                        f"Call answered successfully. Status changed to: {call_data.get('status')}"
-                    )
-                    return True
-                else:
-                    self.log_test_result(
-                        "Answer Call Endpoint",
-                        False,
-                        "Call answer did not change status correctly",
-                        f"Expected status 'active' or 'ongoing', got: {call_data.get('status') if call_data else 'No data'}"
-                    )
-                    return False
-            else:
-                self.log_test_result(
-                    "Answer Call Endpoint",
-                    False,
-                    "Answer call endpoint failed",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
-                return False
-                
-        except Exception as e:
-            self.log_test_result(
-                "Answer Call Endpoint",
-                False,
-                "Exception during answer call test",
-                str(e)
-            )
-            return False
-
-    def test_6_end_call_endpoint(self):
-        """Test 6: End Call Endpoint"""
-        print("🧪 TEST 6: END CALL ENDPOINT")
-        
-        if not self.test_call_id:
-            self.log_test_result(
-                "End Call Endpoint",
-                False,
-                "Cannot test end call without valid call ID",
-                "Skipping due to failed call initiation"
-            )
-            return False
-        
-        try:
-            # End the call
-            response = self.session.post(f"{self.base_url}/calls/{self.test_call_id}/end", params={
-                "userId": self.demo_user_id  # Use caller ID for ending
-            })
-            
-            if response.status_code == 200:
-                result = response.json()
-                
-                # Verify success response (the actual implementation returns different format)
-                if result and (result.get("success") == True or "message" in result):
-                    self.log_test_result(
-                        "End Call Endpoint",
-                        True,
-                        f"Call ended successfully. Response: {result}"
-                    )
-                    return True
-                else:
-                    self.log_test_result(
-                        "End Call Endpoint",
-                        False,
-                        "End call endpoint did not return expected response",
-                        f"Response: {result}"
-                    )
-                    return False
-            else:
-                self.log_test_result(
-                    "End Call Endpoint",
-                    False,
-                    "End call endpoint failed",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
-                return False
-                
-        except Exception as e:
-            self.log_test_result(
-                "End Call Endpoint",
-                False,
-                "Exception during end call test",
-                str(e)
-            )
-            return False
-
-    def test_7_call_history(self):
-        """Test 7: Call History"""
-        print("🧪 TEST 7: CALL HISTORY")
-        
-        try:
-            # Get call history for demo user
-            response = self.session.get(f"{self.base_url}/calls/{self.demo_user_id}/history")
-            
-            if response.status_code == 200:
-                calls = response.json()
-                
-                if isinstance(calls, list):
-                    # Verify call history structure
-                    if len(calls) > 0:
-                        # Check if our test call is in the history
-                        test_call_found = False
-                        for call in calls:
-                            if call.get("id") == self.test_call_id:
-                                test_call_found = True
-                                break
-                        
-                        # Verify call data completeness
-                        sample_call = calls[0]
-                        expected_fields = ["id", "callerId", "status", "startedAt"]
-                        present_fields = [field for field in expected_fields if field in sample_call]
-                        
-                        details = f"Retrieved {len(calls)} calls from history. "
-                        if test_call_found:
-                            details += "Test call found in history. "
-                        details += f"Call data completeness: {len(present_fields)}/{len(expected_fields)} fields"
-                        
-                        self.log_test_result(
-                            "Call History",
-                            True,
-                            details
-                        )
-                        return True
-                    else:
-                        self.log_test_result(
-                            "Call History",
-                            True,  # Empty history is valid
-                            "Call history endpoint working but no calls found (empty history is valid)"
-                        )
-                        return True
-                else:
-                    self.log_test_result(
-                        "Call History",
-                        False,
-                        "Call history returned invalid data format",
-                        f"Expected list, got: {type(calls)}"
-                    )
-                    return False
-            elif response.status_code == 500:
-                # Known bug in call history endpoint (receiverId vs recipientId)
-                self.log_test_result(
-                    "Call History",
-                    False,
-                    "Call history endpoint has a backend bug",
-                    "Backend error: KeyError 'receiverId' - should be 'recipientId'. This is a known backend bug that needs fixing."
-                )
-                return False
-            else:
-                self.log_test_result(
-                    "Call History",
-                    False,
-                    "Call history endpoint failed",
-                    f"Status: {response.status_code}, Response: {response.text}"
-                )
-                return False
-                
-        except Exception as e:
-            self.log_test_result(
-                "Call History",
-                False,
-                "Exception during call history test",
-                str(e)
-            )
-            return False
-
+    
     def run_all_tests(self):
-        """Run all Agora calling system tests"""
-        print("=" * 80)
-        print("🎯 AGORA VIDEO/AUDIO CALLING SYSTEM - COMPREHENSIVE BACKEND TEST")
-        print("=" * 80)
-        print(f"Backend URL: {self.base_url}")
-        print(f"Test Credentials: {TEST_EMAIL} / {TEST_PASSWORD}")
-        print(f"Test Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print()
+        """Run all call functionality tests"""
+        self.log("🚀 Starting CRITICAL CALL FUNCTIONALITY TESTING")
+        self.log("=" * 80)
         
-        # Authenticate first
-        if not self.authenticate():
-            print("❌ AUTHENTICATION FAILED - CANNOT PROCEED WITH TESTS")
+        # Login first
+        if not self.login():
             return False
         
-        print()
+        # Get friends list
+        if not self.get_friends():
+            return False
         
-        # Run all tests in sequence
-        test_methods = [
-            self.test_1_verify_agora_configuration,
-            self.test_2_friend_relationship_check,
-            self.test_3_call_initiation,
-            self.test_4_call_record_creation,
-            self.test_5_answer_call_endpoint,
-            self.test_6_end_call_endpoint,
-            self.test_7_call_history
+        # Run all tests
+        tests = [
+            ("Audio Call Initiation", self.test_audio_call_initiation),
+            ("Video Call Initiation", self.test_video_call_initiation),
+            ("Error Scenarios", self.test_error_scenarios),
+            ("Agora Token Generation", self.test_agora_token_generation),
+            ("Call Management", self.test_call_management),
+            ("Call History", self.test_call_history)
         ]
         
-        for test_method in test_methods:
+        passed = 0
+        total = len(tests)
+        
+        for test_name, test_func in tests:
             try:
-                test_method()
-                time.sleep(0.5)  # Small delay between tests
+                if test_func():
+                    passed += 1
+                    self.log(f"✅ {test_name}: PASSED")
+                else:
+                    self.log(f"❌ {test_name}: FAILED", "ERROR")
             except Exception as e:
-                print(f"❌ CRITICAL ERROR in {test_method.__name__}: {str(e)}")
-                self.results["failed"] += 1
+                self.log(f"❌ {test_name}: EXCEPTION - {str(e)}", "ERROR")
         
-        # Print final results
-        self.print_final_results()
+        # Summary
+        self.log("\n" + "=" * 80)
+        self.log(f"🎯 CALL FUNCTIONALITY TEST RESULTS")
+        self.log(f"   Tests Passed: {passed}/{total}")
+        self.log(f"   Success Rate: {(passed/total)*100:.1f}%")
         
-        return self.results["failed"] == 0
-
-    def print_final_results(self):
-        """Print comprehensive test results"""
-        print("=" * 80)
-        print("📊 AGORA CALLING SYSTEM TEST RESULTS")
-        print("=" * 80)
-        
-        success_rate = (self.results["passed"] / self.results["total_tests"]) * 100
-        
-        print(f"Total Tests: {self.results['total_tests']}")
-        print(f"Passed: {self.results['passed']} ✅")
-        print(f"Failed: {self.results['failed']} ❌")
-        print(f"Success Rate: {success_rate:.1f}%")
-        print()
-        
-        # Detailed results
-        print("📋 DETAILED TEST RESULTS:")
-        print("-" * 50)
-        
-        for i, test in enumerate(self.results["test_details"], 1):
-            print(f"{i}. {test['status']}: {test['test']}")
-            if test['details']:
-                print(f"   📝 {test['details']}")
-            if test['error']:
-                print(f"   ⚠️  {test['error']}")
-            print()
-        
-        # Summary assessment
-        print("🎯 AGORA CALLING SYSTEM ASSESSMENT:")
-        print("-" * 40)
-        
-        if success_rate >= 85:
-            print("✅ EXCELLENT: Agora calling system is fully functional and production-ready")
-        elif success_rate >= 70:
-            print("⚠️  GOOD: Agora calling system mostly working with minor issues")
-        elif success_rate >= 50:
-            print("⚠️  FAIR: Agora calling system partially working, needs fixes")
+        if passed == total:
+            self.log("🎉 ALL TESTS PASSED - CALL FUNCTIONALITY IS WORKING!")
+            return True
         else:
-            print("❌ POOR: Agora calling system has critical issues requiring immediate attention")
-        
-        print()
-        
-        # Critical issues summary
-        failed_tests = [test for test in self.results["test_details"] if "❌ FAILED" in test["status"]]
-        if failed_tests:
-            print("🚨 CRITICAL ISSUES REQUIRING ATTENTION:")
-            for test in failed_tests:
-                print(f"   • {test['test']}: {test['error'] or test['details']}")
-            print()
-        
-        print("=" * 80)
-
-def main():
-    """Main test execution"""
-    test_suite = AgoraCallTestSuite()
-    success = test_suite.run_all_tests()
-    
-    # Exit with appropriate code
-    sys.exit(0 if success else 1)
+            self.log("⚠️  SOME TESTS FAILED - CALL FUNCTIONALITY NEEDS FIXES")
+            return False
 
 if __name__ == "__main__":
-    main()
+    tester = CallTester()
+    success = tester.run_all_tests()
+    sys.exit(0 if success else 1)
