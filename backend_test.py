@@ -49,61 +49,42 @@ class VoiceBotTester:
             print(f"   Response: {json.dumps(response_data, indent=2)}")
         print()
         
-    def test_1_login_demo_user(self):
-        """TEST 1: Login Demo User & Verify Wallet"""
+    def authenticate(self):
+        """Authenticate with demo credentials"""
+        print("🔐 Authenticating with demo credentials...")
+        
         try:
-            login_data = {
-                "email": TEST_EMAIL,
-                "password": TEST_PASSWORD
-            }
-            
-            response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data)
+            response = self.session.post(
+                f"{BACKEND_URL}/auth/login",
+                json={
+                    "email": TEST_EMAIL,
+                    "password": TEST_PASSWORD
+                },
+                headers={"Content-Type": "application/json"}
+            )
             
             if response.status_code == 200:
                 data = response.json()
-                self.jwt_token = data.get("token")
+                self.auth_token = data.get("token")
                 user_data = data.get("user", {})
-                self.user_id = user_data.get("id")
-                self.initial_balance = user_data.get("walletBalance", 0.0)
-                
-                # Set authorization header for future requests
-                self.session.headers.update({"Authorization": f"Bearer {self.jwt_token}"})
                 
                 self.log_test(
-                    "Login Demo User & Verify Wallet",
-                    True,
-                    f"User ID: {self.user_id}, Wallet Balance: ₹{self.initial_balance:,.2f}"
+                    "Authentication", 
+                    True, 
+                    f"Successfully authenticated as {user_data.get('name', 'Unknown')} ({user_data.get('email', 'Unknown')})",
+                    {"user_id": user_data.get('id'), "email": user_data.get('email')}
                 )
-                
-                # Verify sufficient funds (should be ₹10,000 for demo user)
-                if self.initial_balance >= 5000:
-                    self.log_test(
-                        "Verify Sufficient Funds for Testing",
-                        True,
-                        f"Demo user has ₹{self.initial_balance:,.2f} - sufficient for ticket booking"
-                    )
-                else:
-                    self.log_test(
-                        "Verify Sufficient Funds for Testing",
-                        False,
-                        f"Demo user has only ₹{self.initial_balance:,.2f} - may not be sufficient for all tests"
-                    )
-                
                 return True
             else:
                 self.log_test(
-                    "Login Demo User & Verify Wallet",
-                    False,
-                    error=f"Login failed with status {response.status_code}: {response.text}"
+                    "Authentication", 
+                    False, 
+                    f"Login failed with status {response.status_code}: {response.text}"
                 )
                 return False
                 
         except Exception as e:
-            self.log_test(
-                "Login Demo User & Verify Wallet",
-                False,
-                error=f"Exception during login: {str(e)}"
-            )
+            self.log_test("Authentication", False, f"Authentication error: {str(e)}")
             return False
     
     def test_2_get_available_events(self):
