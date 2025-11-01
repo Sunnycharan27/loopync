@@ -115,14 +115,25 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated }) => {
     formData.append("file", selectedFile);
 
     try {
+      console.log('Uploading file to:', `${API}/upload`);
       const res = await axios.post(`${API}/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { "Content-Type": "multipart/form-data" },
+        timeout: 60000 // 60 second timeout for large files
       });
-      // Return the full URL with backend URL + /api prefix
-      return `${API}${res.data.url}`;
+      
+      console.log('Upload response:', res.data);
+      
+      // The backend returns { url: "/uploads/filename.jpg" }
+      // We need to return just the path, not the full URL
+      const uploadedPath = res.data.url;
+      console.log('Uploaded path:', uploadedPath);
+      
+      toast.success("Media uploaded successfully!");
+      return uploadedPath; // Return just the path like "/uploads/filename.jpg"
     } catch (error) {
       console.error("Upload error:", error);
-      toast.error("Failed to upload file");
+      const errorMsg = error.response?.data?.detail || error.message || "Failed to upload file";
+      toast.error(`Upload failed: ${errorMsg}`);
       return null;
     } finally {
       setUploading(false);
