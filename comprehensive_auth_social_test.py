@@ -370,6 +370,7 @@ class ComprehensiveAuthSocialTester:
                     "text": f"Test post created at {datetime.now().isoformat()}",
                     "audience": "public"
                 },
+                params={"authorId": self.demo_user_data.get("id")},
                 headers={
                     "Authorization": f"Bearer {self.demo_auth_token}",
                     "Content-Type": "application/json"
