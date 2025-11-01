@@ -224,9 +224,12 @@ const VoiceBotModal = ({ isOpen, onClose }) => {
         {/* Transcript Display */}
         {transcript && (
           <div className="px-4 pb-2">
-            <div className="bg-cyan-400/10 border border-cyan-400/30 rounded-xl p-3">
-              <p className="text-cyan-400 text-sm">
-                🎙️ {transcript}
+            <div className="bg-purple-400/10 border border-purple-400/30 rounded-xl p-3">
+              <p className="text-purple-400 text-xs font-semibold mb-1">
+                🎙️ You said:
+              </p>
+              <p className="text-white text-sm">
+                {transcript}
               </p>
             </div>
           </div>
