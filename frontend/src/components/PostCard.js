@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import UniversalShareModal from "./UniversalShareModal";
 import CommentsSection from "./CommentsSection";
+import { getMediaUrl, isVideoUrl } from "../utils/mediaUtils";
 
 const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
   const navigate = useNavigate();
