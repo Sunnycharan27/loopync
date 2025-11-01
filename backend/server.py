@@ -628,7 +628,10 @@ async def emit_to_user(user_id: str, event: str, data: dict):
     if user_id in connected_clients:
         sid = connected_clients[user_id]
         await sio.emit(event, data, room=sid)
-        logging.info(f"Emitted {event} to user {user_id}")
+        logging.info(f"✅ Emitted '{event}' to user {user_id} (sid: {sid})")
+    else:
+        logging.warning(f"⚠️ User {user_id} not found in connected_clients. Cannot emit '{event}'. Connected users: {list(connected_clients.keys())}")
+    return user_id in connected_clients
 
 async def emit_to_thread(thread_id: str, event: str, data: dict, exclude_user: str = None):
     """Emit event to all users in a thread"""
