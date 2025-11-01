@@ -241,12 +241,25 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated }) => {
           {/* Preview */}
           {previewUrl && (
             <div className="mb-4 relative">
-              <img src={previewUrl} alt="Preview" className="rounded-2xl w-full max-h-64 object-cover" />
+              {selectedFile?.type.startsWith('video/') ? (
+                <video 
+                  src={previewUrl} 
+                  controls 
+                  className="rounded-2xl w-full max-h-64 object-cover"
+                />
+              ) : (
+                <img 
+                  src={previewUrl} 
+                  alt="Preview" 
+                  className="rounded-2xl w-full max-h-64 object-cover" 
+                />
+              )}
               <button
                 type="button"
                 onClick={() => {
                   setSelectedFile(null);
                   setPreviewUrl("");
+                  setMedia("");
                 }}
                 className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70"
               >
