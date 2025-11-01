@@ -102,12 +102,28 @@ const AgoraCallModal = ({
       await client.join(appId, channelName, token, uid);
       console.log('Successfully joined Agora channel:', channelName);
       
-      // Create and publish local tracks
-      const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      // Create and publish local tracks with mobile-friendly settings
+      const audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+        encoderConfig: 'music_standard', // Better audio quality
+        AEC: true, // Echo cancellation
+        ANS: true, // Noise suppression
+        AGC: true  // Auto gain control
+      });
       localTracksRef.current.audio = audioTrack;
       
       if (callData.callType === 'video') {
-        const videoTrack = await AgoraRTC.createCameraVideoTrack();
+        // Mobile-optimized video settings
+        const videoTrack = await AgoraRTC.createCameraVideoTrack({
+          optimizationMode: 'detail', // Better for mobile
+          encoderConfig: {
+            width: { min: 320, ideal: 640, max: 1280 },
+            height: { min: 240, ideal: 480, max: 720 },
+            frameRate: { min: 15, ideal: 20, max: 30 },
+            bitrateMin: 400,
+            bitrateMax: 1000
+          },
+          facingMode: 'user' // Front camera by default
+        });
         localTracksRef.current.video = videoTrack;
         
         // Play local video
