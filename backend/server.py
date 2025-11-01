@@ -637,6 +637,9 @@ async def emit_to_user(user_id: str, event: str, data: dict):
 # Initialize Messenger Service
 messenger_service = MessengerService(db, emit_to_user)
 
+# Initialize Auth Service
+auth_service = AuthService(db)
+
 async def emit_to_thread(thread_id: str, event: str, data: dict, exclude_user: str = None):
     """Emit event to all users in a thread"""
     # Get thread participants
