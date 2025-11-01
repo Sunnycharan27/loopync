@@ -584,9 +584,13 @@ const MessengerNew = () => {
                   <div
                     className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
                       isOwn
-                        ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black'
-                        : 'bg-gray-800 text-white'
+                        ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-lg shadow-cyan-400/30'
+                        : 'text-white'
                     }`}
+                    style={!isOwn ? { 
+                      background: 'rgba(18, 20, 39, 0.9)', 
+                      border: '1px solid rgba(0, 224, 255, 0.2)'
+                    } : {}}
                   >
                     {message.text && <p className="text-sm">{message.text}</p>}
                     {message.mediaUrl && (
