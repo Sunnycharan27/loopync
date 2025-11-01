@@ -6338,18 +6338,18 @@ async def initiate_call(req: CallInitiateRequest):
         call.pop("_id", None)
         
         # Get caller info for notification
-        caller_info = await db.users.find_one({"id": callerId}, {"_id": 0, "name": 1, "avatar": 1})
+        caller_info = await db.users.find_one({"id": req.callerId}, {"_id": 0, "name": 1, "avatar": 1})
         
         # Send notification to recipient
         notification = {
             "id": str(uuid.uuid4()),
-            "userId": recipientId,
+            "userId": req.recipientId,
             "type": "call",
-            "title": f"Incoming {callType} call",
+            "title": f"Incoming {req.callType} call",
             "message": f"Call from user",
             "data": {
                 "callId": call["id"],
-                "callerId": callerId,
+                "callerId": req.callerId,
                 "channelName": channel_name,
                 "token": recipient_token,
                 "uid": recipient_uid,
@@ -6361,12 +6361,12 @@ async def initiate_call(req: CallInitiateRequest):
         await db.notifications.insert_one(notification)
         
         # Emit WebSocket event to recipient for real-time call notification
-        logger.info(f"🔔 Attempting to send incoming_call notification to recipientId: {recipientId}")
+        logger.info(f"🔔 Attempting to send incoming_call notification to recipientId: {req.recipientId}")
         try:
-            emit_success = await emit_to_user(recipientId, 'incoming_call', {
+            emit_success = await emit_to_user(req.recipientId, 'incoming_call', {
                 "callId": call["id"],
-                "callerId": callerId,
-                "callType": callType,
+                "callerId": req.callerId,
+                "callType": req.callType,
                 "channelName": channel_name,
                 "token": recipient_token,
                 "uid": recipient_uid,
@@ -6375,9 +6375,9 @@ async def initiate_call(req: CallInitiateRequest):
                 "callerAvatar": caller_info.get("avatar", "") if caller_info else ""
             })
             if emit_success:
-                logger.info(f"✅ Successfully sent incoming_call notification to {recipientId}")
+                logger.info(f"✅ Successfully sent incoming_call notification to {req.recipientId}")
             else:
-                logger.warning(f"⚠️ Recipient {recipientId} not connected to WebSocket")
+                logger.warning(f"⚠️ Recipient {req.recipientId} not connected to WebSocket")
         except Exception as ws_error:
             logger.warning(f"❌ Failed to send WebSocket notification: {str(ws_error)}")
         
