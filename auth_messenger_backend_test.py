@@ -599,14 +599,16 @@ class AuthMessengerTestSuite:
             # Set authorization header
             headers = {"Authorization": f"Bearer {self.demo_token}"}
             
-            # Send a test message
+            # Send a test message (using messenger/send endpoint)
             test_message = f"Test message from authentication fix verification - {datetime.now().strftime('%H:%M:%S')}"
             message_data = {
-                "text": test_message
+                "threadId": self.test_thread_id,
+                "text": test_message,
+                "senderId": self.demo_user_id
             }
             
             response = self.session.post(
-                f"{self.base_url}/messenger/threads/{self.test_thread_id}/messages",
+                f"{self.base_url}/messenger/send",
                 json=message_data,
                 headers=headers
             )
