@@ -19,17 +19,22 @@ const AgoraCallModal = ({
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [remoteUserJoined, setRemoteUserJoined] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(false);
   
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const clientRef = useRef(null);
   const localTracksRef = useRef({ audio: null, video: null });
   const timerRef = useRef(null);
+  const isCleaningUpRef = useRef(false);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
+    isMountedRef.current = true;
     initializeCall();
     
     return () => {
+      isMountedRef.current = false;
       cleanupCall();
     };
   }, []);
