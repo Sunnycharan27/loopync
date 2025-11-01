@@ -151,7 +151,7 @@ class MessengerService:
         """Get all message threads for a user"""
         threads = await self.db.threads.find({
             "participants": user_id
-        }).sort("lastMessageAt", -1).to_list(100)
+        }, {"_id": 0}).sort("lastMessageAt", -1).to_list(100)
         
         # Enrich with participant info
         for thread in threads:
