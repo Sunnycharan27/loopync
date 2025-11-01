@@ -1295,21 +1295,6 @@ async def login(req: LoginRequest):
         
         # Refresh mongo_user data after updates
         mongo_user = await db.users.find_one({"id": user['user_id']}, {"_id": 0})
-                    if user['user_id'] not in seeded_friends:
-                        seeded_friends.append(user['user_id'])
-                        await db.users.update_one(
-                            {"id": seeded_id},
-                            {"$set": {"friends": seeded_friends}}
-                        )
-            
-            # Update demo user's friends list
-            if updated_friends:
-                await db.users.update_one(
-                    {"id": user['user_id']},
-                    {"$set": {"friends": updated_friends}}
-                )
-                mongo_user['friends'] = updated_friends
-                logger.info(f"Demo user auto-friended with {len(updated_friends)} seeded users")
     
     # Generate JWT token
     token = create_access_token(user['user_id'])
