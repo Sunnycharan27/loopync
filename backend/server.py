@@ -2034,6 +2034,67 @@ async def create_post_comment_alias(postId: str, comment: CommentCreate, authorI
     return await create_post_comment(postId, comment, authorId)
 
 
+# ===== AI VOICE BOT ENDPOINTS (OpenAI via Emergent LLM Key) =====
+
+from openai import AsyncOpenAI
+
+# Initialize OpenAI client with Emergent LLM Key
+EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+openai_client = AsyncOpenAI(
+    api_key=EMERGENT_LLM_KEY,
+    base_url="https://api.emergent.com/v1"
+) if EMERGENT_LLM_KEY else None
+
+class VoiceQueryRequest(BaseModel):
+    query: str
+    session_id: Optional[str] = None
+    temperature: float = 0.7
+    max_tokens: int = 512
+
+@api_router.post("/voice/chat")
+async def voice_chat(request: VoiceQueryRequest):
+    """Handle voice bot queries using OpenAI via Emergent LLM Key"""
+    if not openai_client:
+        raise HTTPException(status_code=500, detail="Voice bot not configured")
+    
+    try:
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a helpful voice assistant for Loopync social media app. Provide concise, natural responses suitable for speech. Keep responses under 100 words."
+            },
+            {
+                "role": "user",
+                "content": request.query
+            }
+        ]
+        
+        completion = await openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            temperature=request.temperature,
+            max_tokens=request.max_tokens
+        )
+        
+        response_text = completion.choices[0].message.content
+        
+        return {
+            "success": True,
+            "data": {
+                "response": response_text,
+                "session_id": request.session_id,
+                "model": "gpt-4o"
+            }
+        }
+    
+    except Exception as e:
+        logger.error(f"Voice bot error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ===== END AI VOICE BOT ENDPOINTS =====
+
+
 # ===== INSTAGRAM-STYLE FEATURES =====
 
 @api_router.post("/posts/{postId}/save")
