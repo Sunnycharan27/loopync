@@ -447,9 +447,27 @@ const MessengerNew = () => {
               <div
                 key={thread.id}
                 onClick={() => selectThread(thread)}
-                className={`flex items-center gap-3 p-4 cursor-pointer hover:bg-gray-900 transition ${
-                  selectedThread?.id === thread.id ? 'bg-gray-900' : ''
+                className={`flex items-center gap-3 p-4 cursor-pointer transition ${
+                  selectedThread?.id === thread.id ? 'shadow-lg' : ''
                 }`}
+                style={{ 
+                  background: selectedThread?.id === thread.id 
+                    ? 'rgba(0, 224, 255, 0.1)' 
+                    : 'rgba(18, 20, 39, 0.3)',
+                  border: selectedThread?.id === thread.id 
+                    ? '1px solid rgba(0, 224, 255, 0.3)' 
+                    : '1px solid transparent'
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedThread?.id !== thread.id) {
+                    e.currentTarget.style.background = 'rgba(0, 224, 255, 0.05)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedThread?.id !== thread.id) {
+                    e.currentTarget.style.background = 'rgba(18, 20, 39, 0.3)';
+                  }
+                }}
               >
                 <div className="relative">
                   <img
