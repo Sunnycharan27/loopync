@@ -424,6 +424,9 @@ class AuthMessengerTestSuite:
                                 participant_ids = [p.get("id") if isinstance(p, dict) else p for p in participants]
                                 
                                 if self.demo_user_id in participant_ids and friend_user_id in participant_ids:
+                                    # Store participants for later use
+                                    self.test_thread_participants = participants
+                                    
                                     self.log_test_result(
                                         "Start Conversation",
                                         True,
