@@ -2036,8 +2036,6 @@ async def create_post_comment_alias(postId: str, comment: CommentCreate, authorI
 
 # ===== AI VOICE BOT ENDPOINTS (OpenAI via Emergent LLM Key) =====
 
-from emergentintegrations.llm.openai import LlmChat, UserMessage
-
 # Initialize OpenAI client with Emergent LLM Key
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 llm_chat = LlmChat(api_key=EMERGENT_LLM_KEY) if EMERGENT_LLM_KEY else None
