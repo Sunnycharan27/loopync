@@ -346,35 +346,36 @@ const MessengerNew = () => {
   );
 
   return (
-    <div className="flex h-screen bg-black">
+    <div className="flex h-screen" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       {/* Call Manager */}
       <CallManager currentUser={currentUser} />
 
       {/* Threads List */}
       <div className={`${
         selectedThread ? 'hidden md:flex' : 'flex'
-      } w-full md:w-96 flex-col border-r border-gray-800`}>
+      } w-full md:w-96 flex-col border-r border-cyan-500/10`} style={{ background: 'rgba(18, 20, 39, 0.5)' }}>
         {/* Header */}
-        <div className="p-4 border-b border-gray-800">
+        <div className="p-4 border-b border-cyan-500/10">
           <div className="flex items-center justify-between mb-4">
-            <button onClick={() => navigate('/')} className="text-white">
+            <button onClick={() => navigate('/')} className="text-white hover:text-cyan-400 transition-colors">
               <ArrowLeft size={24} />
             </button>
             <h1 className="text-xl font-bold text-white">Messages</h1>
-            <button className="text-white">
+            <button className="text-white hover:text-cyan-400 transition-colors">
               <MoreVertical size={24} />
             </button>
           </div>
 
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-3 text-gray-500" size={20} />
+            <Search className="absolute left-3 top-3 text-gray-400" size={20} />
             <input
               type="text"
               placeholder="Search friends or conversations"
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full pl-10 pr-4 py-2 bg-gray-900 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full pl-10 pr-4 py-2 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+              style={{ background: 'rgba(18, 20, 39, 0.8)', border: '1px solid rgba(0, 224, 255, 0.15)' }}
             />
             {searchQuery && (
               <button
@@ -383,7 +384,7 @@ const MessengerNew = () => {
                   setSearchResults([]);
                   setIsSearching(false);
                 }}
-                className="absolute right-3 top-3 text-gray-500 hover:text-white"
+                className="absolute right-3 top-3 text-gray-400 hover:text-cyan-400 transition-colors"
               >
                 <X size={20} />
               </button>
@@ -393,7 +394,7 @@ const MessengerNew = () => {
 
         {/* Search Results (Friends) */}
         {isSearching && searchQuery && (
-          <div className="border-b border-gray-800 bg-gray-900">
+          <div className="border-b border-cyan-500/10" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
             <div className="p-2">
               <p className="text-xs text-gray-500 px-2 mb-2">
                 {searchResults.length > 0 ? 'Friends' : 'No friends found'}
