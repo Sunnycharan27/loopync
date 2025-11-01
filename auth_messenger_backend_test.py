@@ -601,17 +601,48 @@ class AuthMessengerTestSuite:
             
             # Send a test message (using messenger/send endpoint)
             test_message = f"Test message from authentication fix verification - {datetime.now().strftime('%H:%M:%S')}"
-            message_data = {
-                "threadId": self.test_thread_id,
-                "text": test_message,
-                "senderId": self.demo_user_id
-            }
             
-            response = self.session.post(
-                f"{self.base_url}/messenger/send",
-                json=message_data,
-                headers=headers
-            )
+            # Get the friend ID from the thread participants
+            thread_participants = self.test_thread_participants if hasattr(self, 'test_thread_participants') else []
+            recipient_id = None
+            for participant in thread_participants:
+                if isinstance(participant, dict):
+                    participant_id = participant.get("id")
+                else:
+                    participant_id = participant
+                
+                if participant_id != self.demo_user_id:
+                    recipient_id = participant_id
+                    break
+            
+            if not recipient_id:
+                # Fallback: use first friend
+                friends_response = self.session.get(f"{self.base_url}/users/{self.demo_user_id}/friends", headers=headers)
+                if friends_response.status_code == 200:
+                    friends = friends_response.json()
+                    if friends and len(friends) > 0:
+                        recipient_id = friends[0].get("id")
+            
+            if recipient_id:
+                message_data = {
+                    "senderId": self.demo_user_id,
+                    "recipientId": recipient_id,
+                    "text": test_message
+                }
+                
+                response = self.session.post(
+                    f"{self.base_url}/messenger/send",
+                    json=message_data,
+                    headers=headers
+                )
+            else:
+                self.log_test_result(
+                    "Send Message",
+                    False,
+                    "Cannot determine recipient ID for message",
+                    "No valid recipient found in thread participants or friends list"
+                )
+                return False
             
             if response.status_code == 200:
                 message_response = response.json()
