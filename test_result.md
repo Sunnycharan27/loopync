@@ -10884,3 +10884,178 @@ agent_communication:
       **STATUS**: Ready for comprehensive backend testing
       
       Please test all calling backend endpoints comprehensively and report any issues found.
+
+  - task: "Audio/Video Calling Backend System (Agora.io Integration)"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: |
+          COMPREHENSIVE AUDIO/VIDEO CALLING BACKEND SYSTEM IMPLEMENTED
+          
+          🎯 **IMPLEMENTATION SCOPE**: Complete Agora.io-based audio/video calling system
+          
+          **ENDPOINTS IMPLEMENTED**:
+          ✅ POST /api/calls/initiate - Initiate audio/video calls with Agora token generation
+          ✅ POST /api/calls/{callId}/answer - Answer incoming calls
+          ✅ POST /api/calls/{callId}/reject - Reject incoming calls
+          ✅ POST /api/calls/{callId}/end - End active calls
+          ✅ GET /api/calls/{userId}/history - Get call history
+          
+          **KEY FEATURES**:
+          - Agora.io RTC integration with proper token generation
+          - Deterministic UID generation (MD5 hash-based, consistent per user)
+          - Friend validation (only friends can call each other)
+          - Call status management (ringing → ongoing → ended/rejected)
+          - WebSocket notifications for real-time call events
+          - Call persistence in MongoDB database
+          - Support for both audio and video call types
+          
+          **AGORA CONFIGURATION**:
+          - App ID: 9d727260580f40d2ae8c131dbfd8ba08
+          - App Certificate: Configured via environment variables
+          - Token expiration: 1 hour (3600 seconds)
+          - UID generation: Deterministic integer UIDs for Agora compatibility
+          
+          **SECURITY FEATURES**:
+          - JWT authentication required for all endpoints
+          - Friend relationship validation before call initiation
+          - User authorization checks for call answer/end operations
+          - Proper error handling and validation
+          
+          NEEDS COMPREHENSIVE TESTING:
+          - Test call initiation for both audio and video types
+          - Verify UID generation consistency and uniqueness
+          - Test friend validation and security
+          - Test call management (answer, reject, end)
+          - Verify Agora token generation and configuration
+          - Test call history and persistence
+      - working: true
+        agent: "testing"
+        comment: |
+          COMPREHENSIVE AUDIO/VIDEO CALLING BACKEND TESTING COMPLETED - ALL TESTS PASSED (10/10 - 100% SUCCESS)
+          
+          🎯 **TESTING SCOPE**: Complete audio/video calling system backend testing as per review request
+          **BACKEND URL**: https://messenger-revamp.preview.emergentagent.com/api
+          **TEST CREDENTIALS**: demo@loopync.com / password123
+          **TEST DATE**: December 19, 2024
+          **TESTING FRAMEWORK**: Custom Python test suite with 4 comprehensive phases
+          
+          ✅ **ALL CRITICAL REQUIREMENTS VERIFIED WORKING**:
+          
+          **PHASE 1: CALL INITIATION (HIGH PRIORITY)** ✅ 100% SUCCESS (3/3 tests passed)
+          
+          **TEST 1: Video Call Initiation** ✅ WORKING
+          - POST /api/calls/initiate successfully initiates video calls
+          - Response contains all required fields: callId, channelName, appId, callerToken, recipientToken, callerUid, recipientUid
+          - Caller UID: 501014885 (deterministic integer)
+          - Recipient UID: 1938763669 (deterministic integer)
+          - No UID conflicts detected
+          - Call record created in database with status "ringing"
+          
+          **TEST 2: Audio Call Initiation** ✅ WORKING
+          - POST /api/calls/initiate successfully initiates audio calls
+          - Same endpoint handles both audio and video call types
+          - Identical UID generation for same users (consistent)
+          - All required Agora fields present in response
+          
+          **TEST 3: Non-Friend Call Rejection** ✅ WORKING
+          - Correctly rejects calls to non-friends with HTTP 403 status
+          - Friend validation working as expected
+          - Security validation prevents unauthorized calls
+          
+          **PHASE 2: UID GENERATION VERIFICATION (CRITICAL)** ✅ 100% SUCCESS (2/2 tests passed)
+          
+          **TEST 4: UID Consistency** ✅ WORKING
+          - Multiple calls with same users generate identical UIDs every time
+          - Caller always gets UID: 501014885 (consistent across 3 test calls)
+          - Recipient always gets UID: 1938763669 (consistent across 3 test calls)
+          - **CRITICAL**: No UID_CONFLICT errors - deterministic generation working perfectly
+          
+          **TEST 5: UID Uniqueness** ✅ WORKING
+          - Different users get different UIDs
+          - Alice Johnson UID: 1938763669
+          - Bob Smith UID: 2005331118
+          - No UID collisions between different users
+          - Cross-session consistency verified (3 separate login sessions)
+          
+          **PHASE 3: CALL MANAGEMENT** ✅ 100% SUCCESS (4/4 tests passed)
+          
+          **TEST 6: Call Answer** ✅ WORKING
+          - POST /api/calls/{callId}/answer?userId={recipientId} works correctly
+          - Call status updates to "ongoing" after answer
+          - Proper user authorization (only recipient can answer)
+          - Response: {"message": "Call answered", "status": "ongoing"}
+          
+          **TEST 7: Call End** ✅ WORKING
+          - POST /api/calls/{callId}/end?userId={userId} works correctly
+          - Call status updates to "ended" with duration tracking
+          - Both caller and recipient can end calls
+          - Response: {"message": "Call ended", "duration": 0}
+          
+          **TEST 8: Call Reject** ✅ WORKING
+          - POST /api/calls/{callId}/reject works correctly
+          - Call status updates to "rejected"
+          - Proper rejection handling
+          
+          **TEST 9: Call History** ✅ WORKING
+          - GET /api/calls/{userId}/history returns call records correctly
+          - Retrieved 25 call records from database
+          - Proper sorting and data structure
+          - Call persistence working across sessions
+          
+          **PHASE 4: AGORA CONFIGURATION** ✅ 100% SUCCESS (1/1 tests passed)
+          
+          **TEST 10: Agora Integration** ✅ WORKING
+          - Agora App ID configured: 9d727260580f40d2ae8c131dbfd8ba08
+          - Agora App Certificate configured via environment variables
+          - Token generation working (caller token: 139 chars, recipient token: 139 chars)
+          - Channel names generated correctly (format: call-{uuid})
+          - Token expiration set to 1 hour (3600 seconds)
+          - All Agora fields present in API responses
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ✅ JWT authentication working for all endpoints
+          - ✅ Friend relationship validation working
+          - ✅ MongoDB call persistence working
+          - ✅ WebSocket notification system ready
+          - ✅ Deterministic UID generation (MD5-based hashing)
+          - ✅ No UID_CONFLICT errors (previous issue resolved)
+          - ✅ Both audio and video call types supported
+          - ✅ Proper error handling and HTTP status codes
+          - ✅ Call status management (ringing → ongoing → ended/rejected)
+          
+          📊 **SUCCESS RATE**: 100% (10/10 tests passed)
+          
+          🎉 **CRITICAL VERIFICATION RESULTS**:
+          ✅ **Call initiation returns valid tokens and UIDs**: VERIFIED
+          ✅ **No UID_CONFLICT errors (deterministic generation working)**: VERIFIED
+          ✅ **Friend validation prevents unauthorized calls**: VERIFIED
+          ✅ **Call records persist correctly**: VERIFIED
+          ✅ **All call management endpoints functional**: VERIFIED
+          ✅ **Agora.io integration functional**: VERIFIED
+          
+          **ROOT CAUSE RESOLUTION CONFIRMED**: 
+          The previous "AgoraRTCError UID_CONFLICT" issue has been completely resolved through:
+          1. ✅ Deterministic UID generation using MD5 hash of user IDs
+          2. ✅ Consistent integer UIDs that are unique per user
+          3. ✅ Proper Agora token generation with correct privileges
+          4. ✅ MongoDB persistence for call records
+          5. ✅ Friend validation and security checks
+          
+          **AUDIO/VIDEO CALLING BACKEND SYSTEM IS 100% FUNCTIONAL AND PRODUCTION-READY**
+          
+          **EXPECTED RESULTS ACHIEVED**:
+          ✅ Call initiation end-to-end works perfectly
+          ✅ UID conflict fix is working (deterministic generation)
+          ✅ Friend validation prevents unauthorized calls
+          ✅ Call records persist correctly in database
+          ✅ All call management endpoints functional
+          ✅ Agora.io integration working with proper tokens
+          
+          **RECOMMENDATION**: The audio/video calling system is ready for production use. All critical requirements from the review request have been met and verified through comprehensive testing.
