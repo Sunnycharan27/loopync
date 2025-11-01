@@ -3401,9 +3401,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "MongoDB User Authentication - Duplicate Endpoint Fix"
-    - "Messenger Conversation Initiation"
-    - "Friend-Based Messaging Functionality"
+    - "Audio/Video Calling Backend System (Agora.io Integration)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
