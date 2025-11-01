@@ -413,7 +413,7 @@ class CallTester:
         """Test Priority 3: Call History"""
         self.log("\n📋 TEST 6: Call History")
         
-        response = self.session.get(f"{BASE_URL}/calls/{self.user_id}/history")
+        response = self.session.get(f"{BASE_URL}/calls/history/{self.user_id}")
         
         if response.status_code == 200:
             calls = response.json()
