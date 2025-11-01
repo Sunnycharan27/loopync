@@ -7955,9 +7955,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Agora Video/Audio Calling System"
-  stuck_tasks:
-    - "Call History Endpoint Bug"
+    - "Call functionality testing completed successfully"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
