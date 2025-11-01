@@ -457,7 +457,9 @@ class AgoraCallTestSuite:
         
         try:
             # End the call
-            response = self.session.post(f"{self.base_url}/calls/{self.test_call_id}/end")
+            response = self.session.post(f"{self.base_url}/calls/{self.test_call_id}/end", params={
+                "userId": self.demo_user_id  # Use caller ID for ending
+            })
             
             if response.status_code == 200:
                 result = response.json()
