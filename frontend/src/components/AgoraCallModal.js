@@ -79,11 +79,23 @@ const AgoraCallModal = ({
         handleEndCall();
       });
 
-      // Join the channel with token from backend
-      const { channelName, appId, callerToken, callerUid } = callData;
+      // Join the channel with correct token based on call direction
+      const { channelName, appId, callerToken, callerUid, recipientToken, recipientUid } = callData;
       
-      await client.join(appId, channelName, callerToken, callerUid);
-      console.log('Joined Agora channel:', channelName);
+      // Use appropriate token and UID based on whether this is incoming or outgoing call
+      const token = isIncoming ? (callData.token || recipientToken) : callerToken;
+      const uid = isIncoming ? (callData.uid || recipientUid) : callerUid;
+      
+      console.log('Joining Agora channel:', {
+        channelName,
+        appId,
+        uid,
+        isIncoming,
+        hasToken: !!token
+      });
+      
+      await client.join(appId, channelName, token, uid);
+      console.log('Successfully joined Agora channel:', channelName);
       
       // Create and publish local tracks
       const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
