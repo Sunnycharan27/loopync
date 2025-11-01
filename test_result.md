@@ -710,6 +710,53 @@ backend:
           
           Protected route security is properly implemented and functional.
 
+  - task: "MongoDB User Authentication - Duplicate Endpoint Fix"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: |
+          USER ISSUE REPORTED:
+          - "Internal server error" showing on signup page
+          - "Failed to start conversation" error in messenger
+          - Users unable to create accounts or send messages
+          
+          ROOT CAUSE IDENTIFIED:
+          - Duplicate signup endpoints at lines 1067 and 1155 in server.py
+          - First endpoint (line 1067) was using old sheets_db (in-memory storage)
+          - Second endpoint (line 1155) was using new auth_service (MongoDB)
+          - FastAPI was routing to the first endpoint, causing users to be created in-memory
+          - When server restarted, in-memory users were lost, causing authentication failures
+      - working: "NA"
+        agent: "main"
+        comment: |
+          CRITICAL FIX APPLIED: Removed Duplicate Signup Endpoint
+          
+          ✅ CHANGES MADE:
+          1. Removed OLD signup endpoint (lines 1067-1138) that used sheets_db
+          2. Kept NEW signup endpoint (lines 1082-1112) that uses auth_service with MongoDB
+          3. Users will now be properly saved to MongoDB instead of in-memory storage
+          4. Backend restarted to apply changes
+          
+          📊 EXPECTED BEHAVIOR NOW:
+          - ✅ Signup endpoint now uses MongoDB via auth_service
+          - ✅ User data will persist across server restarts
+          - ✅ "Internal server error" should be resolved
+          - ✅ "Failed to start conversation" should be fixed
+          - ✅ Authentication state will be maintained properly
+          
+          NEEDS COMPREHENSIVE TESTING:
+          - Test signup with new user (should create account in MongoDB)
+          - Test login with newly created user
+          - Test messenger conversation creation
+          - Test friend-based messaging functionality
+          - Verify user persistence after server restart
+
 frontend:
   - task: "Email-based Authentication UI"
     implemented: true
