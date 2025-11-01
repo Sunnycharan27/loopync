@@ -3283,12 +3283,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Instagram-Style Features (Save Posts, Follow/Unfollow)"
-    - "Twitter-Style Features (Quotes, Replies, Hashtags, Trending)"
-  stuck_tasks:
-    - "BookMyShow-style Ticket Booking Flow"
-    - "Standalone Venues Page"
-    - "Standalone Events Page"
+    - "MongoDB User Authentication - Duplicate Endpoint Fix"
+    - "Messenger Conversation Initiation"
+    - "Friend-Based Messaging Functionality"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
