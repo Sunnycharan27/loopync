@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MessageCircle, Bell, Mic } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import VoiceBotModal from "./VoiceBotModal";
@@ -6,6 +6,17 @@ import VoiceBotModal from "./VoiceBotModal";
 const TopHeader = ({ title, subtitle, showIcons = true }) => {
   const navigate = useNavigate();
   const [showVoiceBot, setShowVoiceBot] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const mobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+      setIsMobile(mobile);
+    };
+    checkMobile();
+  }, []);
 
   return (
     <>
