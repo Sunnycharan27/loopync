@@ -614,7 +614,7 @@ const MessengerNew = () => {
           </div>
 
           {/* Input */}
-          <form onSubmit={sendMessage} className="p-4 border-t border-gray-800">
+          <form onSubmit={sendMessage} className="p-4 border-t border-cyan-500/10" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
             <div className="flex items-center gap-2">
               <button
                 type="button"
