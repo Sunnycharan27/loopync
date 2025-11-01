@@ -18,7 +18,7 @@ from datetime import datetime
 import time
 
 # Configuration
-BACKEND_URL = "https://socialverse-62.preview.emergentagent.com/api"
+BACKEND_URL = "https://loopync-social-1.preview.emergentagent.com/api"
 
 class AuthRegistrationTester:
     def __init__(self):

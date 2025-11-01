@@ -3,7 +3,7 @@
 Comprehensive Agora Video/Audio Calling System Backend Test
 Test Agora Video/Audio Calling System - Complete Call Flow
 
-Backend URL: https://socialverse-62.preview.emergentagent.com/api
+Backend URL: https://loopync-social-1.preview.emergentagent.com/api
 Test Credentials: 
 - User 1 (Caller): demo@loopync.com / password123
 - User 2 (Recipient): Need to check if demo user has friends or create test scenario
@@ -26,7 +26,7 @@ from datetime import datetime
 import time
 
 # Configuration
-BASE_URL = "https://socialverse-62.preview.emergentagent.com/api"
+BASE_URL = "https://loopync-social-1.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 

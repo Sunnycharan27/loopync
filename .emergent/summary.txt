@@ -1,90 +1,92 @@
 <analysis>
-The AI engineer's work on Loopync has been extensive, tackling critical features from authentication to social media and communication. Initially, the focus was on stabilizing core functionalities like authentication, friend systems, and API endpoints, including migrating the calling system to Agora.io. Subsequent efforts addressed UI/UX, making Vibe Capsules (stories) visible and enhancing profile displays. A significant portion involved expanding social media features (Instagram/TikTok/Twitter-like), fixing media upload and visibility, and implementing an AI voice bot using Emergent LLM Key. Challenges included resolving authentication redirect loops, ensuring consistent author data enrichment for posts, and debugging various frontend-backend communication issues, particularly regarding media display and real-time content updates. The work demonstrated an iterative debugging process, frequently involving backend and frontend restarts and comprehensive testing, although some issues, like self-story visibility after upload, persist.
+The previous AI engineer worked on Loopync, a Superapp, focusing on social, communication, and AI features. Initial efforts included stabilizing authentication, migrating calls to Agora.io, implementing Vibe Capsules, and expanding social media functionalities. A significant portion involved debugging and enhancing the AI Voice Bot, addressing microphone permissions, text-to-speech, and session management. Media upload and display issues were resolved by fixing URL path inconsistencies. More recently, the engineer undertook a comprehensive rebuild of the Instagram-style messenger and calling system, integrating friend features and search. A major task was migrating authentication from an in-memory Google Sheets to MongoDB, but this process encountered persistent issues with user creation and login validation, leading to Failed to start conversation errors. The current task is to fix this specific backend bug, which has been identified by the troubleshooting agent as a one-line fix related to user persistence in MongoDB.
 </analysis>
 
 <product_requirements>
 Loopync aims to be a Superapp encompassing social, e-commerce, communication, and fintech. Key development objectives during this phase included:
-1.  **Robust Authentication**: Implementing permanent user accounts, with secure login/signup via phone number and forgot password functionality, while phasing out demo accounts.
-2.  **Advanced Communication**: Establishing a comprehensive friend graph, 1:1 text/image/voice messaging, and transitioning to Agora.io for 1:1 audio/video calls with features like presence, read receipts, and push notifications. This involved fixing call initiation and ensuring persistent friendships.
-3.  **Dynamic Content Sharing**: Creating 24-hour Vibe Capsules (stories) with Cloudinary uploads, MongoDB TTL, and Redis, ensuring both visibility and proper modal functionality for uploads.
-4.  **Enhanced User Profiles**: Redesigning profiles to display friend counts, lists, and ensuring accurate post author information (username, avatar) is rendered.
-5.  **Location-Based Services**: Categorizing venues (cafes, temples, pubs) and displaying specific information (timings, More Info) instead of generic menus.
-6.  **API Stability**: Rectifying various backend API issues (DM threads, post comments, event creation) and maintaining a clean database for demonstrations.
-7.  **Social Media Expansion**: Integrating Instagram, TikTok, and Twitter-like features, *excluding VibeRooms*. This includes public visibility of all content, including posts, reels, and stories, even for unauthenticated users, with login required only for interactions.
-8.  **AI Integration**: Adding an AI voice bot in the search bar, initially using the Emergent LLM Key with OpenAI's text generation capabilities.
+1.  **Robust Authentication**: Implementing permanent user accounts with secure login/signup via phone number and forgot password functionality, migrating from demo accounts/Google Sheets to MongoDB for persistent user data, including secure password hashing.
+2.  **Advanced Communication**: Establishing a comprehensive friend graph, 1:1 text/image/voice messaging, and transitioning to Agora.io for 1:1 audio/video calls. Features include presence, read receipts, push notifications, fixing call initiation, ensuring persistent friendships, cross-platform calling, and incoming call notifications with accept/decline buttons. The entire messenger and calling system are to be rebuilt in an Instagram-like style.
+3.  **Dynamic Content Sharing**: Creating 24-hour Vibe Capsules (stories) with Cloudinary uploads, MongoDB TTL, and Redis, ensuring both visibility and proper modal functionality for uploads, including a user's own story visibility immediately after upload.
+4.  **Enhanced User Profiles**: Redesigning profiles to display friend counts, lists, and ensuring accurate post author information.
+5.  **Location-Based Services**: Categorizing venues and displaying specific information.
+6.  **API Stability**: Rectifying various backend API issues.
+7.  **Social Media Expansion**: Integrating Instagram, TikTok, and Twitter-like features, *excluding VibeRooms*. This includes public visibility of all content for unauthenticated users (login required only for interactions), fixing media upload, and ensuring posts appear on the timeline.
+8.  **AI Integration**: Adding an AI voice bot in the search bar, initially using the Emergent LLM Key with OpenAI, with full bidirectional voice conversation, text-to-speech, and microphone permission handling across all devices (including mobile text input fallback).
 9.  **Events & Ticketing**: Fixing event booking, displaying tickets with QR codes, and ensuring sufficient wallet balance for demo users to test.
+10. **Overall Goal**: Deliver a fully functional and real-time working perfectly working app and a full-fledged social media app with consistent UI/UX.
 </product_requirements>
 
 <key_technical_concepts>
 -   **Full-Stack:** FastAPI (Python), React (JavaScript)
--   **Database:** MongoDB (with TTL indices)
+-   **Database:** MongoDB (with TTL indices),  for password hashing
 -   **Real-time:** Socket.IO, Agora.io (for calling), Web Speech API (for voice bot)
 -   **Authentication:** JWT
--   **UI/Styling:** Tailwind CSS, React Portals
--   **Media:** Cloudinary (uploads), local file uploads
--   **AI/LLM:** Emergent LLM Key (for OpenAI integration)
--   **DevOps:** Kubernetes, Supervisor (service management)
+-   **AI/LLM:** Emergent LLM Key,  library
+-   **DevOps:** Kubernetes, Supervisor
 </key_technical_concepts>
 
 <code_architecture>
 The application uses a React frontend and a FastAPI backend, communicating via REST APIs and WebSockets (Socket.IO), with MongoDB as the primary database.
 
 
--   ****: Core FastAPI backend.
-    -   **Summary**: Handles API routes, database ops, Socket.IO.
-    -   **Changes**: Added social media endpoints for Instagram/TikTok/Twitter-like features. Fixed  model to explicitly include , , . Corrected  to use  instead of . Verified  exists. Updated demo user login to set  and . Modified  to check user's  status. Added  to login response. Removed friend-based filtering from  and  to make content public. Implemented  endpoint using  for AI voice bot functionality, with several fixes to  instantiation and  usage.
--   ****: Environment variables for backend.
-    -   **Summary**: Stores sensitive keys.
-    -   **Changes**: ,  updated.  added.
--   ****: Main application component.
-    -   **Summary**: Defines global routes, contexts, and authentication logic.
-    -   **Changes**:  updated. Fixed  to correctly use  from user data. Modified routing logic to allow unauthenticated access to public content pages (Home, Discover, VibeZone, ProfileVibe, VibeCapsules, etc.), while protecting interactive features.
--   ****: User profile page.
-    -   **Summary**: Displays user profile information, posts, and friends.
-    -   **Changes**: Enhanced ticket display to show QR codes prominently and make them clickable.
--   ****: Displays stories.
-    -   **Summary**: Renders 24-hour stories.
-    -   **Changes**: Updated media rendering to use  utility for consistent URL construction.
--   ****: Uploads stories.
-    -   **Summary**: Handles story media uploads.
-    -   **Changes**: Wrapped component display in  check. Added  to  callback.
--   ** (NEW)**: Manages call states at app level.
-    -   **Summary**: Centralized component for managing call initiation, reception, and state.
-    -   **Changes**: Examined for call initiation logic.
--   ****: Component for displaying posts.
-    -   **Summary**: Renders individual posts.
-    -   **Changes**: Updated  to  for backend URL. Refactored media rendering to use  utility function. Confirmed existing fallbacks for  and .
--   ****: Home timeline for posts.
-    -   **Summary**: Displays posts and interactive elements.
-    -   **Changes**: Added conditional rendering for , , and Create New Post button to hide them from unauthenticated users, displaying a Login to interact banner instead. Ensured  updates post state.
--   ****: Displays reels.
-    -   **Summary**: Renders reels and related interactive elements.
-    -   **Changes**: Added conditional rendering for  and Create New Reel button based on , showing a Login to interact banner for unauthenticated users.
--   ****: Application's top navigation.
-    -   **Summary**: Contains search bar, notifications, etc.
-    -   **Changes**: Integrated a voice bot button and  into the search bar.
--   ****: Component for viewing individual reels.
-    -   **Summary**: Displays reel content and interactions.
-    -   **Changes**: Added optional chaining () for  check. Modified like and comment buttons to redirect to  if the user is not authenticated.
--   ** (NEW)**:
-    -   **Summary**: A new modal component for the AI voice bot interface.
-    -   **Changes**: Created from scratch.
--   ** (NEW)**:
-    -   **Summary**: React hook for handling speech-to-text input.
-    -   **Changes**: Created from scratch.
--   ** (NEW)**:
-    -   **Summary**: React hook for handling text-to-speech output.
-    -   **Changes**: Created from scratch.
--   ** (NEW)**:
-    -   **Summary**: Utility function to construct correct media URLs, handling  prefix.
-    -   **Changes**: Created to centralize media URL logic.
 -   ****:
-    -   **Summary**: Displays user stories in a timeline.
-    -   **Changes**: Modified to prominently display the current user's own story circle if they have an active story, instead of just the upload button.
+    -   **Summary**: Main backend logic.
+    -   **Changes**: Integrated AI voice bot endpoint with session management. Fixed media upload paths. Corrected call history endpoint. Added new messenger and authentication endpoints by integrating  and . Updated WebSocket handlers for typing events and incoming calls. Refactored login/signup to use MongoDB, removing  dependencies.
+-   ** (NEW)**:
+    -   **Summary**: Handles user authentication with MongoDB, including password hashing.
+    -   **Changes**: New file created to manage user signup and login securely.
+-   ** (NEW)**:
+    -   **Summary**: Provides messenger-specific backend logic for threads, messages, and friend-based conversation initiation.
+    -   **Changes**: New file created to support Instagram-style messaging.
+-   ****:
+    -   **Summary**: Application's main component, handling routing and global contexts.
+    -   **Changes**: Integrated , , updated authentication logic, and removed the old  import and floating AI assistant.
+-   ****:
+    -   **Summary**: Global styles.
+    -   **Changes**: Added CSS for bounce animation.
+-   ****:
+    -   **Summary**: AI voice bot user interface.
+    -   **Changes**: Improved error handling, text-to-speech, added visual states (listening/speaking), mobile text input fallback, and fixed React hook dependency issues.
+-   ****:
+    -   **Summary**: React hook for speech-to-text.
+    -   **Changes**: Enhanced for mobile compatibility and error handling.
+-   ****:
+    -   **Summary**: React hook for text-to-speech.
+    -   **Changes**: Improved speech synthesis and error handling.
+-   ****:
+    -   **Summary**: Application's top navigation bar.
+    -   **Changes**: Made the voice bot microphone button more prominent.
+-   ****:
+    -   **Summary**: Modal for creating and uploading posts with media.
+    -   **Changes**: Enhanced error handling, corrected media URL construction, added video support, and ensured proper form clearing/modal closing after post.
+-   ****:
+    -   **Summary**: Utility for constructing media URLs.
+    -   **Changes**: Updated to correctly use  for media assets.
+-   ****:
+    -   **Summary**: Handles active audio/video calls using Agora.io.
+    -   **Changes**: Fixed call connection for incoming calls by using recipient credentials, improved error handling, added mobile optimizations, and resolved OPERATION_ABORTED cancellation errors.
+-   ****:
+    -   **Summary**: Displays UI for incoming calls.
+    -   **Changes**: Enhanced UI, added sound effects, and browser notifications.
+-   ****:
+    -   **Summary**: Centralized component for managing call states.
+    -   **Changes**: Verified correct integration with call modals.
+-   ****:
+    -   **Summary**: Provides WebSocket connection and event handling.
+    -   **Changes**: Corrected WebSocket event name for incoming calls ( to ).
+-   ** (NEW)**:
+    -   **Summary**: The newly built Instagram-style messenger interface.
+    -   **Changes**: Created from scratch, integrated friend search, and corrected  key for user data.
+-   ****:
+    -   **Summary**: Page for discovering and interacting with other users.
+    -   **Changes**: Replaced with a simplified version integrating  for messenger-related friend interactions.
+-   ** (NEW)**:
+    -   **Summary**: Component to display and interact with a user's friends within the messenger context.
+    -   **Changes**: Created from scratch.
 </code_architecture>
 
 <pending_tasks>
--   Full implementation of advanced marketplace features beyond just the profile tab.
+-   Full implementation of advanced marketplace features.
 -   Full implementation of the Parallels AI Engine.
 -   Build the Analytics panel UI.
 -   Configure guided demo tours.
@@ -95,17 +97,15 @@ The application uses a React frontend and a FastAPI backend, communicating via R
 </pending_tasks>
 
 <current_work>
-Immediately before this summary, the AI engineer was addressing two related issues: vibe capsules (stories) not showing after upload, and missing user/author information on posts.
+The AI engineer's immediate focus has been on fulfilling the user's request to rebuild the messenger and calling system as a fully functional, Instagram-style application, including deep integration with friends and AI features.
 
-The engineer determined that while backend logic correctly enriches posts with author data, some older/orphaned posts in the database might lack valid author IDs, leading to display issues. Frontend  already had fallbacks for missing author data.
+Work started with rebuilding the backend messenger () and frontend UI (), routing it appropriately in . Initial issues included an incorrect  key in  causing login redirects, which was fixed, and the old  file was removed. Subsequently, the messenger was integrated with the existing friends system, allowing friend-only messaging and calling by updating  and  to use a new  component. Friend search functionality was also added directly into the  component.
 
-For Vibe Capsules, the  callback in  was confirmed to be correctly invoked by . A  was added to the  callback to potentially mitigate timing issues.
+The most recent critical issue, Failed to start conversation, reappeared (Chat Message 519). The  identified the root cause: despite previous attempts to migrate authentication, the system was still encountering problems with users being properly saved to MongoDB, leading to persistent username already taken or email already registered errors even after manual database deletions. This indicates that the shift from the in-memory  to MongoDB for user persistence during signup/login is not fully robust.
 
-The most recent work focused on ensuring a user's *own* story is visible in the  display after upload. The  component was modified to conditionally render the current user's active story prominently instead of just the Add Story button. The backend was verified to correctly return the demo user's stories.
-
-However, despite these efforts, the user reported that the issue of their own uploaded story not being visible persists, indicating a deeper problem in the frontend's refresh or display logic for personal stories. The AI's last action was to acknowledge this and prepare to debug the story visibility issue completely.
+The current state is that the messenger UI and friend integration are largely in place, but core functionality is blocked by underlying MongoDB user data inconsistencies and authentication flow bugs that prevent new conversations from starting. The  has once again provided a specific diagnosis, indicating a simple one-line backend fix is required to address the user persistence issue in MongoDB that is causing the Failed to start conversation error.
 </current_work>
 
 <optional_next_step>
-Debug and fix the issue where a user's own uploaded story is not visible in their timeline/story place immediately after upload.
+Address the backend issue preventing proper user persistence in MongoDB to resolve the Failed to start conversation error.
 </optional_next_step>
