@@ -649,10 +649,11 @@ class ComprehensiveAuthSocialTester:
             return False
         
         try:
-            # Get active stories
+            # Get active stories (vibe capsules)
             print("   Getting active stories...")
             stories_response = self.session.get(
-                f"{BACKEND_URL}/vibe-capsules",
+                f"{BACKEND_URL}/capsules",
+                params={"userId": self.demo_user_data.get("id")},
                 headers={
                     "Authorization": f"Bearer {self.demo_auth_token}",
                     "Content-Type": "application/json"
