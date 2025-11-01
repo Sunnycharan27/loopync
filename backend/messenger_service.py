@@ -47,6 +47,11 @@ class MessengerService:
         
     async def get_or_create_thread(self, user1_id: str, user2_id: str) -> dict:
         """Get existing thread or create new one between two users"""
+        # Check if users are friends
+        are_friends = await self.check_friendship(user1_id, user2_id)
+        if not are_friends:
+            raise HTTPException(status_code=403, detail="You can only message friends. Send a friend request first!")
+        
         # Sort user IDs to ensure consistent thread lookup
         participants = sorted([user1_id, user2_id])
         
@@ -74,6 +79,15 @@ class MessengerService:
         logger.info(f"Created new thread {thread['id']} between {user1_id} and {user2_id}")
         
         return thread
+    
+    async def check_friendship(self, user1_id: str, user2_id: str) -> bool:
+        """Check if two users are friends"""
+        user1 = await self.db.users.find_one({"id": user1_id})
+        if not user1:
+            return False
+        
+        friends = user1.get("friends", [])
+        return user2_id in friends
     
     async def send_message(self, request: SendMessageRequest) -> dict:
         """Send a message in a thread"""
