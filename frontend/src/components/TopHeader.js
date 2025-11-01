@@ -1,33 +1,45 @@
-import React from "react";
-import { MessageCircle, Bell } from "lucide-react";
+import React, { useState } from "react";
+import { MessageCircle, Bell, Mic } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import VoiceBotModal from "./VoiceBotModal";
 
 const TopHeader = ({ title, subtitle, showIcons = true }) => {
   const navigate = useNavigate();
+  const [showVoiceBot, setShowVoiceBot] = useState(false);
 
   return (
-    <div className="sticky top-0 z-10 bg-gray-800 border-b border-gray-700 p-4 mb-0 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <img 
-          src="/loopync-logo.jpg" 
-          alt="Loopync" 
-          className="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform"
-          onClick={() => navigate('/')}
-        />
-        <div>
-          <h1 className="text-xl font-bold text-white">{title}</h1>
-          {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
+    <>
+      <div className="sticky top-0 z-10 bg-gray-800 border-b border-gray-700 p-4 mb-0 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img 
+            src="/loopync-logo.jpg" 
+            alt="Loopync" 
+            className="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform"
+            onClick={() => navigate('/')}
+          />
+          <div>
+            <h1 className="text-xl font-bold text-white">{title}</h1>
+            {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
+          </div>
         </div>
-      </div>
-      
-      {showIcons && (
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => navigate('/notifications')}
-            className="relative w-10 h-10 rounded-full flex items-center justify-center bg-gray-700 text-white hover:bg-gray-600 transition-colors"
-            data-testid="header-notifications-btn"
-          >
-            <Bell size={20} />
+        
+        {showIcons && (
+          <div className="flex items-center gap-2">
+            {/* AI Voice Bot Button */}
+            <button
+              onClick={() => setShowVoiceBot(true)}
+              className="relative w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-400 to-blue-500 text-black hover:from-cyan-500 hover:to-blue-600 transition-all shadow-lg shadow-cyan-400/30 animate-pulse-slow"
+              title="AI Voice Assistant"
+            >
+              <Mic size={20} />
+            </button>
+
+            <button
+              onClick={() => navigate('/notifications')}
+              className="relative w-10 h-10 rounded-full flex items-center justify-center bg-gray-700 text-white hover:bg-gray-600 transition-colors"
+              data-testid="header-notifications-btn"
+            >
+              <Bell size={20} />
             <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-cyan-400"></div>
           </button>
           <button
