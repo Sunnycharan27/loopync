@@ -515,7 +515,7 @@ const MessengerNew = () => {
       {selectedThread ? (
         <div className="flex-1 flex flex-col">
           {/* Chat Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-800">
+          <div className="flex items-center justify-between p-4 border-b border-cyan-500/10" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setSelectedThread(null)} 
