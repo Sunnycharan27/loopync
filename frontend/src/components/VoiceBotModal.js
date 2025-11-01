@@ -285,50 +285,86 @@ const VoiceBotModal = ({ isOpen, onClose }) => {
 
         {/* Controls */}
         <div className="p-4 border-t border-gray-700">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleVoiceInput}
-              disabled={isLoading}
-              className={`flex-1 py-3 px-6 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
-                isListening
-                  ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
-                  : 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-black'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
-            >
-              {isListening ? (
-                <>
-                  <MicOff size={20} />
-                  Listening...
-                </>
-              ) : (
-                <>
-                  <Mic size={20} />
-                  Start Speaking
-                </>
-              )}
-            </button>
+          {/* Show text input on mobile or when speech not supported */}
+          {(isMobile || !browserSupportsSpeech || speechError) && (
+            <form onSubmit={handleTextSubmit} className="mb-3">
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={textInput}
+                  onChange={(e) => setTextInput(e.target.value)}
+                  placeholder="Type your message here..."
+                  className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-xl border border-gray-600 focus:border-cyan-400 focus:outline-none"
+                  disabled={isLoading}
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading || !textInput.trim()}
+                  className="px-4 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-black rounded-xl font-semibold transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Send size={20} />
+                </button>
+              </div>
+            </form>
+          )}
 
-            {isSpeaking && (
+          {/* Voice controls - hide on mobile if speech not supported */}
+          {(!isMobile || browserSupportsSpeech) && !speechError && (
+            <div className="flex items-center gap-3">
               <button
-                onClick={stopSpeaking}
-                className="px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-all flex items-center gap-2"
+                onClick={handleVoiceInput}
+                disabled={isLoading}
+                className={`flex-1 py-3 px-6 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
+                  isListening
+                    ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
+                    : 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-black'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
-                <VolumeX size={20} />
-                Stop
+                {isListening ? (
+                  <>
+                    <MicOff size={20} />
+                    Listening...
+                  </>
+                ) : (
+                  <>
+                    <Mic size={20} />
+                    Start Speaking
+                  </>
+                )}
               </button>
-            )}
 
-            <button
-              onClick={clearChat}
-              className="px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-semibold transition-all"
-            >
-              Clear
-            </button>
-          </div>
+              {isSpeaking && (
+                <button
+                  onClick={stopSpeaking}
+                  className="px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-all flex items-center gap-2"
+                >
+                  <VolumeX size={20} />
+                  Stop
+                </button>
+              )}
 
-          <p className="text-xs text-gray-500 text-center mt-3">
-            💡 Tip: Click microphone, speak your question, and get instant AI responses
-          </p>
+              <button
+                onClick={clearChat}
+                className="px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-semibold transition-all"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+
+          {/* Mobile-specific message */}
+          {isMobile && (
+            <p className="text-xs text-gray-500 text-center mt-3">
+              📱 Mobile mode: Type your questions or try voice input above
+            </p>
+          )}
+
+          {/* Desktop tip */}
+          {!isMobile && browserSupportsSpeech && !speechError && (
+            <p className="text-xs text-gray-500 text-center mt-3">
+              💡 Tip: Click microphone, speak your question, and get instant AI responses
+            </p>
+          )}
         </div>
       </div>
     </div>
