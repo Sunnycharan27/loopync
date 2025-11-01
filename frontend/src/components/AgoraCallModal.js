@@ -123,7 +123,18 @@ const AgoraCallModal = ({
       
     } catch (error) {
       console.error('Failed to initialize call:', error);
-      toast.error('Failed to connect call');
+      
+      // Provide specific error messages
+      let errorMessage = 'Failed to connect call';
+      if (error.code === 'PERMISSION_DENIED') {
+        errorMessage = 'Camera/microphone permission denied. Please allow access and try again.';
+      } else if (error.code === 'INVALID_OPERATION') {
+        errorMessage = 'Invalid call operation. Please try again.';
+      } else if (error.message) {
+        errorMessage = `Call error: ${error.message}`;
+      }
+      
+      toast.error(errorMessage);
       onClose();
     }
   };
