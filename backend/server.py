@@ -612,8 +612,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
     
-    # Get user from Google Sheets
-    user = sheets_db.find_user_by_id(user_id)
+    # Get user from MongoDB via auth_service
+    user = await auth_service.get_user_by_id(user_id)
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
     
