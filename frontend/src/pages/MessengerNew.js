@@ -13,6 +13,7 @@ const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 const MessengerNew = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { socket } = useWebSocket();
   
   const [currentUser, setCurrentUser] = useState(null);
@@ -39,7 +40,13 @@ const MessengerNew = () => {
     }
     setCurrentUser(user);
     loadThreads(user.id);
-  }, [navigate]);
+    
+    // Check if thread was passed from navigation
+    if (location.state?.selectedThread) {
+      setSelectedThread(location.state.selectedThread);
+      loadMessages(location.state.selectedThread.id);
+    }
+  }, [navigate, location]);
 
   // WebSocket listeners
   useEffect(() => {
