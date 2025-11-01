@@ -403,7 +403,10 @@ const MessengerNew = () => {
                 <div
                   key={friend.id}
                   onClick={() => startChatWithFriend(friend)}
-                  className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-800 rounded-lg transition"
+                  className="flex items-center gap-3 p-3 cursor-pointer rounded-lg transition hover:shadow-lg"
+                  style={{ background: 'rgba(0, 224, 255, 0.05)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0, 224, 255, 0.1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0, 224, 255, 0.05)'}
                 >
                   <img
                     src={friend.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.id}`}
