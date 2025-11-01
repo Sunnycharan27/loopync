@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Search, Send, Phone, Video, Image, Smile, MoreVertical,
@@ -6,14 +6,14 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { WebSocketContext } from '../context/WebSocketContext';
+import { useWebSocket } from '../context/WebSocketContext';
 import CallManager from '../components/CallManager';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 const MessengerNew = () => {
   const navigate = useNavigate();
-  const { socket } = useContext(WebSocketContext);
+  const { socket } = useWebSocket();
   
   const [currentUser, setCurrentUser] = useState(null);
   const [threads, setThreads] = useState([]);
