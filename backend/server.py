@@ -2062,7 +2062,7 @@ async def voice_chat(request: VoiceQueryRequest):
             system_message=system_message
         )
         
-        user_message = UserMessage(content=request.query)
+        user_message = UserMessage(text=request.query)
         
         # Use LlmChat from emergentintegrations
         response = await llm_chat.achat(
