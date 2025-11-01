@@ -505,8 +505,12 @@ class AuthMessengerTestSuite:
             # Set authorization header
             headers = {"Authorization": f"Bearer {self.demo_token}"}
             
-            # Get messenger threads
-            response = self.session.get(f"{self.base_url}/messenger/threads", headers=headers)
+            # Get messenger threads (using query parameters)
+            response = self.session.get(
+                f"{self.base_url}/messenger/threads", 
+                params={"userId": self.demo_user_id},
+                headers=headers
+            )
             
             if response.status_code == 200:
                 threads = response.json()
