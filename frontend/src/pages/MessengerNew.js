@@ -322,11 +322,28 @@ const MessengerNew = () => {
       });
       
       // Call initiated successfully
-      console.log('Call initiated:', response.data);
+      console.log('✅ Call initiated successfully:', response.data);
+      
+      // Trigger outgoing call modal by dispatching custom event
+      const callData = {
+        callId: response.data.callId,
+        channelName: response.data.channelName,
+        appId: response.data.appId,
+        callerToken: response.data.callerToken,
+        callerUid: response.data.callerUid,
+        callType: callType,
+        peerName: selectedThread.otherUser.name,
+        peerAvatar: selectedThread.otherUser.avatar,
+        isInitiator: true
+      };
+      
+      // Dispatch custom event that CallManager will listen to
+      window.dispatchEvent(new CustomEvent('outgoing_call', { detail: callData }));
+      
       toast.success(`${callType === 'video' ? 'Video' : 'Audio'} call initiated`);
       
     } catch (error) {
-      console.error('Error initiating call:', error);
+      console.error('❌ Error initiating call:', error);
       
       // Extract error message safely
       let errorMsg = 'Failed to initiate call';
