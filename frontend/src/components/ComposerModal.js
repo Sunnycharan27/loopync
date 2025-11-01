@@ -162,18 +162,40 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated }) => {
         const uploadedUrl = await handleUpload();
         if (uploadedUrl) {
           mediaUrl = uploadedUrl;
+          console.log('Media URL to be sent with post:', mediaUrl);
+        } else {
+          toast.error("Failed to upload media");
+          setLoading(false);
+          return;
         }
       }
+
+      console.log('Creating post with data:', { text, media: mediaUrl, authorId: currentUser.id });
 
       const res = await axios.post(`${API}/posts?authorId=${currentUser.id}`, {
         text,
         media: mediaUrl || null,
         audience: "public"
       });
+      
+      console.log('Post created successfully:', res.data);
+      
       toast.success("Posted!");
+      
+      // Clear the form
+      setText("");
+      setMedia("");
+      setSelectedFile(null);
+      setPreviewUrl("");
+      
+      // Call the callback with the new post
       onPostCreated(res.data);
+      
+      // Close the modal
+      onClose();
     } catch (error) {
-      toast.error("Failed to create post");
+      console.error("Failed to create post:", error);
+      toast.error(error.response?.data?.detail || "Failed to create post");
     } finally {
       setLoading(false);
     }
