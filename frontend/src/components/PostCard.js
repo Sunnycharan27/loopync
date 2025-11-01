@@ -185,16 +185,16 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
           <p className="text-gray-200 mb-3">{post.text}</p>
 
           {post.media && (
-            /\.(mp4|webm|mov)$/i.test(post.media) ? (
+            isVideoUrl(post.media) ? (
               <video
-                src={post.media.startsWith('/uploads') ? `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}${post.media}` : post.media}
+                src={getMediaUrl(post.media)}
                 controls
                 className="rounded-2xl w-full mb-3"
                 onClick={() => setShowReactions(true)}
               />
             ) : (
               <img
-                src={post.media.startsWith('/uploads') ? `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}${post.media}` : post.media}
+                src={getMediaUrl(post.media)}
                 alt="Post media"
                 className="rounded-2xl w-full mb-3 hover:scale-[1.01] transition-transform cursor-pointer"
                 onClick={() => setShowReactions(true)}
