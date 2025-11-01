@@ -2065,11 +2065,9 @@ async def voice_chat(request: VoiceQueryRequest):
         user_message = UserMessage(text=request.query)
         
         # Use LlmChat from emergentintegrations
-        response = await llm_chat.achat(
-            messages=[user_message],
-            model="gpt-4o",
-            temperature=request.temperature,
-            max_tokens=request.max_tokens
+        response = await llm_chat.send_message(
+            message=user_message,
+            model="gpt-4o"
         )
         
         return {
