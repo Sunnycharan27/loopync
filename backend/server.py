@@ -679,7 +679,8 @@ async def connect(sid, environ, auth):
         
         # Store connection
         connected_clients[user_id] = sid
-        logging.info(f"User {user_id} connected with sid {sid}")
+        logging.info(f"✅ User {user_id} connected with sid {sid}. Total connected: {len(connected_clients)}")
+        logging.info(f"📊 Connected users: {list(connected_clients.keys())}")
         
         # Join personal room
         await sio.enter_room(sid, f"user:{user_id}")
