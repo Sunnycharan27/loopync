@@ -234,7 +234,7 @@ class MessengerService:
     
     async def add_reaction(self, message_id: str, user_id: str, reaction: str) -> dict:
         """Add reaction to a message"""
-        message = await self.db.messages.find_one({"id": message_id})
+        message = await self.db.messages.find_one({"id": message_id}, {"_id": 0})
         if not message:
             raise HTTPException(status_code=404, detail="Message not found")
         
@@ -264,7 +264,7 @@ class MessengerService:
     
     async def delete_message(self, message_id: str, user_id: str):
         """Delete a message (soft delete)"""
-        message = await self.db.messages.find_one({"id": message_id})
+        message = await self.db.messages.find_one({"id": message_id}, {"_id": 0})
         if not message:
             raise HTTPException(status_code=404, detail="Message not found")
         
