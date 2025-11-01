@@ -462,7 +462,7 @@ const MessengerNew = () => {
                 </div>
               </div>
             ))
-          )}
+          ) : null}
         </div>
       </div>
 
