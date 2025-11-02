@@ -3870,8 +3870,11 @@ async def upload_file(file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    # Return URL path - use /api/uploads for ingress compatibility
-    file_url = f"/api/uploads/{unique_filename}"
+    # Get base URL from environment or use default
+    base_url = os.environ.get('FRONTEND_URL', 'https://messenger-revamp.preview.emergentagent.com')
+    
+    # Return FULL absolute URL for immediate use
+    file_url = f"{base_url}/api/uploads/{unique_filename}"
     
     return {
         "url": file_url,
