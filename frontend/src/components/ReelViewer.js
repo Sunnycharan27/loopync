@@ -12,11 +12,15 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
   const [showShare, setShowShare] = useState(false);
   const [bookmarked, setBookmarked] = useState({});
   const [videoErrors, setVideoErrors] = useState({});
+  const [videoRetries, setVideoRetries] = useState({});
   const videoRefs = useRef([]);
   const containerRef = useRef(null);
 
-  // Filter out reels with broken videos
-  const validReels = reels.filter(reel => !videoErrors[reel.id]);
+  // Filter out reels with broken videos (after multiple retries)
+  const validReels = reels.filter(reel => {
+    const errorCount = videoErrors[reel.id] || 0;
+    return errorCount < 3; // Allow up to 3 errors before filtering out
+  });
 
   useEffect(() => {
     // Track view
