@@ -10,6 +10,7 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
   const [currentCapsuleIndex, setCurrentCapsuleIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [mediaError, setMediaError] = useState(false);
 
   const currentStory = stories[currentStoryIndex];
   const currentCapsule = currentStory?.capsules[currentCapsuleIndex];
