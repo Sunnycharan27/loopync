@@ -48,7 +48,9 @@ const VibeCapsuleUpload = ({ currentUser, onUploadComplete }) => {
         }
       });
 
-      const uploadedUrl = `${API}${uploadRes.data.url}`;
+      // Backend returns /api/uploads/filename, just use it directly without prepending API
+      // since API already includes the base URL with /api
+      const uploadedUrl = uploadRes.data.url;
       setMediaUrl(uploadedUrl);
       
       toast.success("Media uploaded successfully!");
