@@ -157,8 +157,7 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
               muted={muted}
               playsInline
               poster={reel.thumb}
-              onError={() => handleVideoError(reel.id)}
-              crossOrigin="anonymous"
+              onError={(e) => handleVideoError(reel.id, e)}
             />
 
             {/* Top Bar */}
