@@ -176,6 +176,7 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
             {/* Video */}
             <video
               ref={el => videoRefs.current[idx] = el}
+              data-reel-id={reel.id}
               src={getVideoSource(reel)}
               className="w-full h-full object-cover"
               loop
@@ -184,6 +185,8 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
               playsInline
               poster={reel.thumb}
               onError={(e) => handleVideoError(reel.id, e)}
+              onCanPlay={() => handleVideoCanPlay(reel.id)}
+              preload="auto"
             />
 
             {/* Top Bar */}
