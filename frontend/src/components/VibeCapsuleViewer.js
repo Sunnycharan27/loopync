@@ -163,23 +163,39 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
 
       {/* Content */}
       <div className="relative w-full max-w-lg h-full flex items-center justify-center" style={{ zIndex: 10000 }}>
-        {currentCapsule.mediaType === "image" ? (
+        {mediaError ? (
+          <div className="flex flex-col items-center justify-center gap-4 text-white">
+            <div className="w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center">
+              <svg className="w-12 h-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-semibold mb-1">Unable to load media</p>
+              <p className="text-sm text-gray-400">This story content is unavailable</p>
+            </div>
+          </div>
+        ) : currentCapsule.mediaType === "image" ? (
           <img
-            src={currentCapsule.mediaUrl?.startsWith('/uploads') ? `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}${currentCapsule.mediaUrl}` : currentCapsule.mediaUrl}
+            src={getMediaUrl(currentCapsule.mediaUrl)}
             alt="Story"
             className="w-full h-full object-contain"
+            onError={handleMediaError}
+            crossOrigin="anonymous"
           />
         ) : (
           <video
-            src={currentCapsule.mediaUrl?.startsWith('/uploads') ? `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}${currentCapsule.mediaUrl}` : currentCapsule.mediaUrl}
+            src={getMediaUrl(currentCapsule.mediaUrl)}
             autoPlay
             muted
             className="w-full h-full object-contain"
+            onError={handleMediaError}
+            crossOrigin="anonymous"
           />
         )}
 
         {/* Caption */}
-        {currentCapsule.caption && (
+        {currentCapsule.caption && !mediaError && (
           <div className="absolute bottom-24 left-4 right-4">
             <p className="text-white text-lg font-medium bg-black/50 backdrop-blur-sm rounded-xl p-4">
               {currentCapsule.caption}
