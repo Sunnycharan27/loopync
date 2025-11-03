@@ -3904,6 +3904,34 @@ async def upload_file(file: UploadFile = File(...)):
         "size": len(file_content)
     }
 
+
+@api_router.get("/media/{file_id}")
+async def serve_media_file(file_id: str):
+    """Serve media file from MongoDB storage"""
+    from fastapi.responses import Response
+    
+    # Retrieve file from MongoDB
+    media_doc = await db.media_files.find_one({"id": file_id}, {"_id": 0})
+    
+    if not media_doc:
+        raise HTTPException(status_code=404, detail="Media file not found")
+    
+    # Decode base64 file data
+    try:
+        file_data = base64.b64decode(media_doc["file_data"])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error decoding file: {str(e)}")
+    
+    # Return file with proper content type
+    return Response(
+        content=file_data,
+        media_type=media_doc["content_type"],
+        headers={
+            "Content-Disposition": f'inline; filename="{media_doc["filename"]}"',
+            "Cache-Control": "public, max-age=31536000",  # Cache for 1 year
+        }
+    )
+
 # ===== USER PROFILE UPDATE ROUTES =====
 
 class UserProfileUpdate(BaseModel):
