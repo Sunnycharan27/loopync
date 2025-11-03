@@ -184,27 +184,42 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
 
           <p className="text-gray-200 mb-3">{post.text}</p>
 
-          {post.media && (
-            isVideoUrl(post.media) ? (
+          {/* Media Rendering - Simplified and Debugged */}
+          {post.media && post.media.trim() !== '' && (() => {
+            const mediaUrl = getMediaUrl(post.media);
+            console.log('PostCard - Rendering media:', {
+              postId: post.id?.substring(0, 8),
+              originalUrl: post.media,
+              processedUrl: mediaUrl,
+              isVideo: isVideoUrl(post.media)
+            });
+            
+            return isVideoUrl(post.media) ? (
               <video
-                src={getMediaUrl(post.media)}
+                src={mediaUrl}
                 controls
                 className="rounded-2xl w-full mb-3"
                 onClick={() => setShowReactions(true)}
+                onError={(e) => {
+                  console.error('Video load error:', mediaUrl, e);
+                  e.target.style.display = 'none';
+                }}
+                onLoadedData={() => console.log('Video loaded:', mediaUrl)}
               />
             ) : (
               <img
-                src={getMediaUrl(post.media)}
+                src={mediaUrl}
                 alt="Post media"
                 className="rounded-2xl w-full mb-3 hover:scale-[1.01] transition-transform cursor-pointer"
                 onClick={() => setShowReactions(true)}
                 onError={(e) => {
-                  console.error('Image load error:', e.target.src);
+                  console.error('Image load error:', mediaUrl, e);
                   e.target.style.display = 'none';
                 }}
+                onLoad={() => console.log('Image loaded successfully:', mediaUrl)}
               />
-            )
-          )}
+            );
+          })()}
 
           {/* Selected Reaction Display */}
           {selectedReaction && (
