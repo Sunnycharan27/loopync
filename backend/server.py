@@ -3892,11 +3892,8 @@ async def upload_file(file: UploadFile = File(...)):
     
     await db.media_files.insert_one(media_doc)
     
-    # Get base URL from environment
-    base_url = os.environ.get('FRONTEND_URL')
-    
-    # Return URL pointing to our serve endpoint
-    file_url = f"{base_url}/api/media/{file_id}"
+    # Return RELATIVE URL so it works on any deployment domain
+    file_url = f"/api/media/{file_id}"
     
     return {
         "url": file_url,
