@@ -1,0 +1,452 @@
+[
+  {
+    "id": "a7d55cba-0770-4586-85cd-50d53881400d",
+    "fromUserId": "e4030a7c-8aa2-4e3f-ba36-50362c94266d",
+    "toUserId": "0240bcd5-fa31-49e8-9d1b-ac77746ff723",
+    "status": "pending",
+    "createdAt": "2025-10-20T18:13:45.518216+00:00"
+  },
+  {
+    "id": "55dc419e-4cd4-4ac3-8ca8-3585d7967f87",
+    "fromUserId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "toUserId": "db0910c4-e099-41c4-b802-d335f5b7aa95",
+    "status": "pending",
+    "createdAt": "2025-10-21T04:34:33.175350+00:00"
+  },
+  {
+    "id": "c8a616e7-d6a9-4bc5-b9e4-3cbcf0bdc6d6",
+    "fromUserId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "toUserId": "0240bcd5-fa31-49e8-9d1b-ac77746ff723",
+    "status": "pending",
+    "createdAt": "2025-10-21T04:35:12.279588+00:00"
+  },
+  {
+    "id": "f98b60cf-39c4-488e-bb0c-0803453a520f",
+    "fromUserId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "toUserId": "14e0e43c-41c6-407a-b920-0e9ff3d92752",
+    "status": "pending",
+    "createdAt": "2025-10-21T04:35:12.998471+00:00"
+  },
+  {
+    "id": "d3037769-9c21-4342-a7af-d1215ef6b26e",
+    "fromUserId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "toUserId": "633f2cbf-567f-4fe0-8246-94a071115042",
+    "status": "accepted",
+    "createdAt": "2025-10-21T04:36:09.576967+00:00",
+    "decidedAt": "2025-10-21T04:36:17.675894+00:00"
+  },
+  {
+    "id": "f1a18b2e-12ed-409d-9c26-31e8fd35edc6",
+    "fromUserId": "u2",
+    "toUserId": "u1",
+    "status": "accepted",
+    "createdAt": "2025-10-21T05:02:09.549694+00:00",
+    "decidedAt": "2025-10-21T05:04:17.594885+00:00"
+  },
+  {
+    "id": "3a495b2b-d140-4052-a9a4-131687d7796d",
+    "fromUserId": "767fcac4-6d1a-4e58-b3fe-b2c2f92b8bbe",
+    "toUserId": "demo_user",
+    "status": "pending",
+    "createdAt": "2025-10-21T06:32:58.866601+00:00"
+  },
+  {
+    "id": "8a2cd7c4-26da-48e1-a9f4-9e5fc300a01b",
+    "fromUserId": "3e2e4476-7218-4230-8fc1-1b200ecf3579",
+    "toUserId": "7bfc2e44-15a5-4998-99fc-14880580f83c",
+    "status": "accepted",
+    "createdAt": "2025-10-21T09:49:45.731833+00:00",
+    "decidedAt": "2025-10-21T09:49:54.410067+00:00"
+  },
+  {
+    "id": "fbd3f82b-dcaa-4c46-8369-fc66f81fcebe",
+    "fromUserId": "42f98a5b-dec6-45dc-8cee-4344850cf36a",
+    "toUserId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "status": "accepted",
+    "createdAt": "2025-10-21T10:31:02.623109+00:00",
+    "decidedAt": "2025-10-21T10:31:12.686212+00:00"
+  },
+  {
+    "id": "951ba72b-028d-4170-a7d8-2aa031584e30",
+    "fromUserId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "toUserId": "dfb29e40-7c43-4102-ba4f-ae00dd2aba1f",
+    "status": "accepted",
+    "createdAt": "2025-10-21T10:34:45.048238+00:00",
+    "decidedAt": "2025-10-21T10:34:49.159943+00:00"
+  },
+  {
+    "id": "2171efd0-6c1b-4176-81ba-011cf69e9584",
+    "fromUserId": "6ff68536-a8cb-4171-ab75-3925f1408f2d",
+    "toUserId": "demo_user",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:31:49.417411+00:00"
+  },
+  {
+    "id": "3497ef72-7ed9-4246-a5a3-f2bdeae09c41",
+    "fromUserId": "f614196e-0310-4e2e-8523-d5096e3ff3aa",
+    "toUserId": "u2",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:34:27.750909+00:00"
+  },
+  {
+    "id": "d8066dbc-06d9-49b9-81ea-0b1728bd3d38",
+    "fromUserId": "f614196e-0310-4e2e-8523-d5096e3ff3aa",
+    "toUserId": "u3",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:34:34.453405+00:00"
+  },
+  {
+    "id": "ff1e34bc-1954-40e4-a3f3-d24992e88084",
+    "fromUserId": "5854d09f-57d3-42cb-b4fb-b5753116e309",
+    "toUserId": "u2",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:36:17.646872+00:00"
+  },
+  {
+    "id": "3f89fdc7-3544-442f-a240-5cfd93843c50",
+    "fromUserId": "5854d09f-57d3-42cb-b4fb-b5753116e309",
+    "toUserId": "u3",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:36:26.398484+00:00"
+  },
+  {
+    "id": "c1aab4fe-d6d3-45bd-bb20-10f8e72914cf",
+    "fromUserId": "5854d09f-57d3-42cb-b4fb-b5753116e309",
+    "toUserId": "u4",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:37:46.926922+00:00"
+  },
+  {
+    "id": "67d0c671-15fa-46ee-ba5f-d597043e8002",
+    "fromUserId": "6ff68536-a8cb-4171-ab75-3925f1408f2d",
+    "toUserId": "u5",
+    "status": "pending",
+    "createdAt": "2025-10-23T09:41:23.885319+00:00"
+  },
+  {
+    "id": "cfea1a72-a787-412e-a7a8-0347685be354",
+    "fromUserId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "toUserId": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "status": "accepted",
+    "createdAt": "2025-10-24T10:17:37.539837+00:00",
+    "decidedAt": "2025-10-24T10:17:43.072545+00:00"
+  },
+  {
+    "id": "f931e36e-a4f2-4c34-a155-257929a5abdb",
+    "fromUserId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "toUserId": "ca55a75f-abeb-43ab-88ec-5e5137af1c33",
+    "status": "accepted",
+    "createdAt": "2025-10-24T10:17:38.586599+00:00",
+    "decidedAt": "2025-10-25T05:41:51.440404+00:00"
+  },
+  {
+    "id": "8e519f8c-7277-4b3b-aa2e-b953234c1cdb",
+    "fromUserId": "85338454-6550-43ee-827d-5e5718db4928",
+    "toUserId": "39a8b505-f627-4d53-b2dc-d72dcf4b8490",
+    "status": "accepted",
+    "createdAt": "2025-10-24T11:26:32.443411+00:00",
+    "decidedAt": "2025-10-24T11:27:02.667568+00:00"
+  },
+  {
+    "id": "c9f472e5-4d2e-47f8-bae9-1340d9e83d6c",
+    "fromUserId": "85338454-6550-43ee-827d-5e5718db4928",
+    "toUserId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "status": "pending",
+    "createdAt": "2025-10-24T11:37:25.226201+00:00"
+  },
+  {
+    "id": "88fe3f79-48e4-450b-96d7-3ae489a9a59e",
+    "fromUserId": "5c0166b2-0fc0-401b-92c4-2cc23f4f267c",
+    "toUserId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "status": "pending",
+    "createdAt": "2025-10-25T13:33:54.006781+00:00"
+  },
+  {
+    "id": "b8119965-7cf1-4594-b829-deafc448bac3",
+    "fromUserId": "u2",
+    "toUserId": "u1",
+    "status": "pending",
+    "createdAt": "2025-10-26T04:15:22.160438+00:00"
+  },
+  {
+    "id": "d32fc44e-d2aa-4559-942c-c9f66f0c321a",
+    "fromUserId": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "toUserId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "status": "accepted",
+    "createdAt": "2025-10-26T04:42:16.837454+00:00",
+    "decidedAt": "2025-10-26T04:42:24.247754+00:00"
+  },
+  {
+    "id": "457654de-8b90-4d6e-9e3e-ba236398fe30",
+    "fromUserId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "toUserId": "9ccde212-b2a6-4bb0-879f-442608a6fb00",
+    "status": "accepted",
+    "createdAt": "2025-10-26T04:57:33.407016+00:00",
+    "decidedAt": "2025-10-26T04:57:41.388272+00:00"
+  },
+  {
+    "id": "776e6ab1-d276-4a69-9183-5c92b8376af1",
+    "fromUserId": "08d72d6d-275e-43ea-934a-17da0bfacfbc",
+    "toUserId": "u1",
+    "status": "pending",
+    "createdAt": "2025-10-26T06:08:55.381754+00:00"
+  },
+  {
+    "id": "4d36a376-dd93-4014-8323-cd39c918cfdd",
+    "fromUserId": "08d72d6d-275e-43ea-934a-17da0bfacfbc",
+    "toUserId": "u2",
+    "status": "pending",
+    "createdAt": "2025-10-26T06:09:50.063958+00:00"
+  },
+  {
+    "id": "3278cf50-b4dd-40d1-ab18-ef7765b29b07",
+    "fromUserId": "08d72d6d-275e-43ea-934a-17da0bfacfbc",
+    "toUserId": "u3",
+    "status": "pending",
+    "createdAt": "2025-10-26T06:09:54.829131+00:00"
+  },
+  {
+    "id": "17ee9690-166d-450b-b051-280fbcde9147",
+    "fromUserId": "08d72d6d-275e-43ea-934a-17da0bfacfbc",
+    "toUserId": "u4",
+    "status": "pending",
+    "createdAt": "2025-10-26T06:09:59.577974+00:00"
+  },
+  {
+    "id": "ce346c77-cb32-4737-9751-9066edb0cf0d",
+    "fromUserId": "08d72d6d-275e-43ea-934a-17da0bfacfbc",
+    "toUserId": "u5",
+    "status": "pending",
+    "createdAt": "2025-10-26T06:10:04.259704+00:00"
+  },
+  {
+    "id": "52c08640-4177-4a85-a771-58835ce4d3e6",
+    "fromUserId": "f9e27bed-8a52-4856-a463-4c7b94d79787",
+    "toUserId": "u1",
+    "status": "pending",
+    "createdAt": "2025-10-26T06:53:56.839231+00:00"
+  },
+  {
+    "id": "e06f9975-adf7-4062-8029-026c20e099db",
+    "fromUserId": "cbb95c12-02d3-4796-b567-8dac18a6f3ba",
+    "toUserId": "demo_user",
+    "status": "pending",
+    "createdAt": "2025-10-26T08:00:20.882051+00:00"
+  },
+  {
+    "id": "72b5b531-9a1c-41ed-a1b6-5d01fe303337",
+    "fromUserId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "toUserId": "c618316e-75c6-464f-aa41-0465537384de",
+    "status": "pending",
+    "createdAt": "2025-10-27T04:44:21.912814+00:00"
+  },
+  {
+    "id": "29a804c4-6039-4a2a-95f3-118e8119c105",
+    "fromUserId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "toUserId": "3b96941a-498a-466b-9954-d585891b8182",
+    "status": "pending",
+    "createdAt": "2025-10-27T04:45:45.392611+00:00"
+  },
+  {
+    "id": "ed1ff984-9c01-4fc2-9583-b8608dbe1e9c",
+    "fromUserId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "toUserId": "9e705370-6dd6-4255-9696-7582bd6a9214",
+    "status": "pending",
+    "createdAt": "2025-10-27T04:45:46.157788+00:00"
+  },
+  {
+    "id": "be3fab17-ef03-465c-8ab7-0e59302310a4",
+    "fromUserId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "toUserId": "7b25cdb2-93b4-4201-847d-18f581ef59c4",
+    "status": "pending",
+    "createdAt": "2025-10-27T04:45:47.349556+00:00"
+  },
+  {
+    "id": "741fbac0-2838-4322-8a28-c02e6fb4ec38",
+    "fromUserId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "toUserId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "status": "accepted",
+    "createdAt": "2025-10-27T04:50:13.346474+00:00",
+    "decidedAt": "2025-10-27T04:50:17.909832+00:00"
+  },
+  {
+    "id": "02af74d1-c95d-4496-a532-82960ab43405",
+    "fromUserId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "toUserId": "62db2d81-2946-4e47-bd1e-46fc4ef6a04c",
+    "status": "accepted",
+    "createdAt": "2025-10-27T05:02:59.118588+00:00",
+    "decidedAt": "2025-10-27T05:03:05.261263+00:00"
+  },
+  {
+    "id": "ec9ce987-1c1b-4ec8-9ffe-af0d2d402b54",
+    "fromUserId": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "toUserId": "c777588a-e6b1-4dab-a32a-3be629dc59b5",
+    "status": "accepted",
+    "createdAt": "2025-10-27T07:45:21.633924+00:00",
+    "decidedAt": "2025-10-27T07:45:33.418256+00:00"
+  },
+  {
+    "id": "3a6c09fc-f43b-40bb-97b8-131ddc22df1b",
+    "fromUserId": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "toUserId": "e476bc6d-b9ca-4fa2-8308-05ff78d478b9",
+    "status": "accepted",
+    "createdAt": "2025-10-27T08:12:31.152461+00:00",
+    "decidedAt": "2025-10-27T08:12:39.254559+00:00"
+  },
+  {
+    "id": "59479e52-85fc-4ecf-9b13-843060839283",
+    "fromUserId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "toUserId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "status": "accepted",
+    "createdAt": "2025-10-27T08:23:32.392925+00:00",
+    "decidedAt": "2025-10-27T08:24:22.473513+00:00"
+  },
+  {
+    "id": "b628b44c-2ead-4497-96fa-0f19c7c12bba",
+    "fromUserId": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "toUserId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "status": "accepted",
+    "createdAt": "2025-10-27T08:57:27.297046+00:00",
+    "decidedAt": "2025-10-27T09:21:25.526297+00:00"
+  },
+  {
+    "id": "69832c94-3263-430a-a7ae-1146702b5d0d",
+    "fromUserId": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "toUserId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "status": "accepted",
+    "createdAt": "2025-10-27T08:58:23.795378+00:00",
+    "decidedAt": "2025-10-27T08:58:30.560796+00:00"
+  },
+  {
+    "id": "3a288f4e-e596-45ef-b201-83b1862ed80c",
+    "fromUserId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "toUserId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "status": "accepted",
+    "createdAt": "2025-10-27T09:18:16.981677+00:00",
+    "decidedAt": "2025-10-27T09:22:08.007657+00:00"
+  },
+  {
+    "id": "1b9db320-52f1-4470-9d1d-a98d2c72e41a",
+    "fromUserId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "toUserId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "status": "accepted",
+    "createdAt": "2025-10-27T09:19:46.797641+00:00",
+    "decidedAt": "2025-10-27T09:19:52.019321+00:00"
+  },
+  {
+    "id": "aaea7391-b093-4984-9737-31554814ec65",
+    "fromUserId": "555a1f46-b829-4ad4-92ae-1b9bcdb3c4c6",
+    "toUserId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "status": "accepted",
+    "createdAt": "2025-10-27T09:37:59.166678+00:00",
+    "decidedAt": "2025-10-27T09:38:03.794686+00:00"
+  },
+  {
+    "id": "333f4cd9-687b-4939-b73c-44731675cfc4",
+    "fromUserId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "toUserId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "status": "accepted",
+    "createdAt": "2025-10-28T05:33:06.731341+00:00",
+    "decidedAt": "2025-10-28T05:33:13.025510+00:00"
+  },
+  {
+    "id": "f53860bd-722b-420a-9934-0dab4371dfc8",
+    "fromUserId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "toUserId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "status": "accepted",
+    "createdAt": "2025-10-28T05:36:00.179576+00:00",
+    "decidedAt": "2025-10-28T05:36:15.155414+00:00"
+  },
+  {
+    "id": "0f7695b7-c3e8-450e-a2e7-e56a841ba85a",
+    "fromUserId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "toUserId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "status": "pending",
+    "createdAt": "2025-10-28T05:36:24.572293+00:00"
+  },
+  {
+    "id": "2ed697b1-0012-4a40-a38d-cf1a7d1bc81c",
+    "fromUserId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "toUserId": "u4",
+    "status": "pending",
+    "createdAt": "2025-10-28T06:54:04.921220+00:00"
+  },
+  {
+    "id": "d366a140-0611-4901-9bb0-80bbfc8434b4",
+    "fromUserId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "toUserId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "status": "accepted",
+    "createdAt": "2025-10-28T07:14:05.905459+00:00",
+    "decidedAt": "2025-10-28T07:14:11.916152+00:00"
+  },
+  {
+    "id": "c18bc24a-10a9-429e-93a1-d854efefc442",
+    "fromUserId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "toUserId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "status": "accepted",
+    "createdAt": "2025-10-28T07:14:06.866033+00:00",
+    "decidedAt": "2025-11-01T04:38:54.755749+00:00"
+  },
+  {
+    "id": "efdf64b8-cf0c-44c0-a40e-3a0d0d3045b1",
+    "fromUserId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "toUserId": "970f56ee-f7f5-46ee-9a7f-6a3550ab23a0",
+    "status": "pending",
+    "createdAt": "2025-11-01T07:47:18.796089+00:00"
+  },
+  {
+    "id": "16bd69df-3759-463f-8cd9-8ebbdf90d844",
+    "fromUserId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "toUserId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "status": "accepted",
+    "createdAt": "2025-11-01T07:47:20.550687+00:00",
+    "decidedAt": "2025-11-01T07:47:24.926253+00:00"
+  },
+  {
+    "id": "04889cd5-cd31-4020-b6dd-ea86fe89fa14",
+    "fromUserId": "3d660770-65e5-4374-950b-315900fb5892",
+    "toUserId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "status": "accepted",
+    "createdAt": "2025-11-01T08:12:52.885325+00:00",
+    "decidedAt": "2025-11-01T08:12:59.978837+00:00"
+  },
+  {
+    "id": "0e2dfaea-4026-4d95-8c92-56a16582376d",
+    "fromUserId": "3d660770-65e5-4374-950b-315900fb5892",
+    "toUserId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "status": "accepted",
+    "createdAt": "2025-11-01T08:26:54.915310+00:00",
+    "decidedAt": "2025-11-01T08:27:01.313582+00:00"
+  },
+  {
+    "id": "9d58ccf1-9d82-4973-8ca7-2e26591c5907",
+    "fromUserId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "toUserId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "status": "accepted",
+    "createdAt": "2025-11-01T08:57:45.503053+00:00",
+    "decidedAt": "2025-11-01T08:57:59.643758+00:00"
+  },
+  {
+    "id": "f59a90ce-8673-42b2-a3e2-af2872ea4dab",
+    "fromUserId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "toUserId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "status": "pending",
+    "createdAt": "2025-11-01T09:30:35.336443+00:00"
+  },
+  {
+    "id": "0998040e-3084-40b1-8599-2d0096add063",
+    "fromUserId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "toUserId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "status": "accepted",
+    "createdAt": "2025-11-01T09:33:00.547872+00:00",
+    "decidedAt": "2025-11-01T09:33:06.424816+00:00"
+  },
+  {
+    "id": "317f2c1c-b345-401f-bd76-da965b5e0c9c",
+    "fromUserId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "toUserId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "status": "accepted",
+    "createdAt": "2025-11-03T05:38:17.314486+00:00",
+    "decidedAt": "2025-11-03T05:56:32.077661+00:00"
+  }
+]

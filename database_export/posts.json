@@ -1,0 +1,552 @@
+[
+  {
+    "id": "p1",
+    "authorId": "u1",
+    "text": "Free speech doesn't mean freedom from consequences, but it does mean freedom to speak. Let's normalize respectful disagreement! \ud83d\udde3\ufe0f",
+    "media": null,
+    "audience": "public",
+    "stats": {
+      "likes": 42,
+      "quotes": 5,
+      "reposts": 12,
+      "replies": 8
+    },
+    "likedBy": [
+      "u2",
+      "u3"
+    ],
+    "repostedBy": [
+      "u4"
+    ],
+    "createdAt": "2025-10-30T05:37:10.405565+00:00"
+  },
+  {
+    "id": "p2",
+    "authorId": "u2",
+    "text": "Just launched my new side project! Built with React + FastAPI. Ship fast, iterate faster \ud83d\ude80",
+    "media": "",
+    "audience": "public",
+    "stats": {
+      "likes": 89,
+      "quotes": 3,
+      "reposts": 22,
+      "replies": 15
+    },
+    "likedBy": [
+      "u1",
+      "u3",
+      "u5"
+    ],
+    "repostedBy": [],
+    "createdAt": "2025-10-30T05:37:10.405573+00:00"
+  },
+  {
+    "id": "p3",
+    "authorId": "u3",
+    "text": "New artwork drop! Exploring neon aesthetics and cyber themes. What do you think? \ud83d\udcab",
+    "media": "",
+    "audience": "public",
+    "stats": {
+      "likes": 156,
+      "quotes": 8,
+      "reposts": 34,
+      "replies": 22
+    },
+    "likedBy": [
+      "u1",
+      "u2",
+      "u4",
+      "u5"
+    ],
+    "repostedBy": [
+      "u1"
+    ],
+    "createdAt": "2025-10-30T05:37:10.405576+00:00"
+  },
+  {
+    "id": "p4",
+    "authorId": "u4",
+    "text": "The future is decentralized. India needs more Web3 builders. Who's with me? \ud83c\udf10",
+    "media": null,
+    "audience": "public",
+    "stats": {
+      "likes": 67,
+      "quotes": 12,
+      "reposts": 18,
+      "replies": 25
+    },
+    "likedBy": [
+      "u2"
+    ],
+    "repostedBy": [
+      "u2"
+    ],
+    "createdAt": "2025-10-30T05:37:10.405578+00:00"
+  },
+  {
+    "id": "p5",
+    "authorId": "u5",
+    "text": "Found the BEST vada pav in Mumbai! \ud83c\udf2e Location in thread \ud83d\udc47",
+    "media": "",
+    "audience": "public",
+    "stats": {
+      "likes": 234,
+      "quotes": 4,
+      "reposts": 45,
+      "replies": 38
+    },
+    "likedBy": [
+      "u1",
+      "u3",
+      "u4"
+    ],
+    "repostedBy": [
+      "u3"
+    ],
+    "createdAt": "2025-10-30T05:37:10.405581+00:00"
+  },
+  {
+    "id": "16322cf3-2bda-44f8-9fbd-b2e4876d264b",
+    "authorId": "f13afe45-b92f-4bcc-8650-18d75fe9450f",
+    "text": "Test post created at 1761802668 - This should be visible to everyone! #test #visibility",
+    "media": null,
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-10-30T05:37:48.375846+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "c375e27c-ddec-4885-86d1-0442ca83b217",
+    "authorId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "text": "t",
+    "media": "",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-10-30T05:40:40.596343+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "ccdbbcb7-c396-4c29-81aa-736ca124abe1",
+    "authorId": "u1",
+    "text": "Public post from User 1! Everyone can see this! #public #loopync",
+    "media": null,
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-10-30T05:45:25.402839+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "9820e808-2b9b-436d-816a-a04857a81246",
+    "authorId": "u2",
+    "text": "User 2 posting publicly! This is visible to ALL users! #socialfeed",
+    "media": null,
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-10-30T05:45:25.413889+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "e01050c6-2af4-42fb-bfc1-bbddc5c85cc3",
+    "authorId": "u3",
+    "text": "User 3 here! No friends needed to see this post! #discovery",
+    "media": null,
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-10-30T05:45:25.424396+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "05c4f10b-2147-4ddd-bbed-836718c36395",
+    "authorId": "66bc9655-e48d-4b25-9ceb-c57af6805ccb",
+    "text": "Test post with media! This should display an image.",
+    "media": "/api/media/797b405c-f716-423f-bea0-679d6337acef",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T04:28:24.792962+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "bdb661c3-9734-4a5c-b5a6-7b40743c6791",
+    "authorId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "text": "time",
+    "media": "",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T04:34:43.585508+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "8dae9064-475b-4a71-ab3d-31082612358d",
+    "authorId": "66bc9655-e48d-4b25-9ceb-c57af6805ccb",
+    "text": "\u2705 Test post created at 04:40:53 - Should be visible!",
+    "media": "",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T04:40:53.605334+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "3a0fb01c-3bcd-4372-b0e9-eb7084c44115",
+    "authorId": "5243177a-1f16-4bc3-93d1-ea8be8d44915",
+    "text": "Test post created at 2025-11-01T05:21:11.890261",
+    "media": null,
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T05:21:11.899817+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "e12fd0c2-a5ef-4e83-a7b5-61ef17e71b48",
+    "authorId": "5243177a-1f16-4bc3-93d1-ea8be8d44915",
+    "text": "Test post created at 2025-11-01T05:21:38.673370",
+    "media": null,
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 1,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 1
+    },
+    "likedBy": [
+      "5243177a-1f16-4bc3-93d1-ea8be8d44915"
+    ],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T05:21:38.679925+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "c474ee61-1f6a-4a3e-948e-dc3da45c6bfa",
+    "authorId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "text": "Jai",
+    "media": "/api/media/f8531501-7f0d-470b-8c32-a685b07c2a15",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T07:30:17.045641+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "40a2c8e8-37ff-4e67-a746-fd61dad4b5cd",
+    "authorId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "text": "Jai",
+    "media": "/api/media/43d3f087-256d-43f1-bb9e-542208691201",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T07:33:42.178205+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "5c1baa2d-1464-4b84-895f-c1cd6d44147b",
+    "authorId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "text": ".",
+    "media": "/api/media/e1eaa9c7-433b-42f7-abec-4eaff777b8b3",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 1,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [
+      "443c5878-c846-48b5-a4c6-a8683e3f3702"
+    ],
+    "repostedBy": [],
+    "createdAt": "2025-11-01T07:38:14.336668+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "119c3e52-4c53-4b26-9da4-fcc020da712c",
+    "authorId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "text": "Tine",
+    "media": "/api/media/e26e1c86-0458-401e-bc7a-4ca11dc277f1",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-02T05:47:01.511523+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "d3ca55af-bdeb-4b41-bbcf-bae8e46e25de",
+    "authorId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "text": ".",
+    "media": "/api/media/275cf582-424c-46a0-8384-60c0312434e8",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-02T12:00:26.063806+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "2ec04e70-e2d2-43b0-8762-bd7aa2d9a438",
+    "authorId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "text": ".",
+    "media": "/api/media/e63abf41-c9e3-42e9-8b84-7eafa6fdf566",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-02T12:15:41.153103+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "b02a2692-8e64-4a48-8da1-d8ac4ac610ee",
+    "authorId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "text": "check",
+    "media": "/api/media/50cfa4ca-ec1d-4326-a4cb-08a2a175929f",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-03T04:00:39.668067+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "c0a02f87-c9f3-49f3-8fe5-17d49aaa3904",
+    "authorId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "text": "cc",
+    "media": "/api/media/92894af6-cc76-465a-b6ff-d55342e41b24",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-03T04:36:23.391501+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "21734a14-aa31-42e7-bfd4-bedf009546fb",
+    "authorId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "text": "bb",
+    "media": "/api/media/9962e672-51d4-4ce0-8b44-ec0069939e10",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-03T05:37:48.838368+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "967110ec-aa23-493b-b9f7-1a1677ca5776",
+    "authorId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "text": "loop",
+    "media": "/api/media/66bd477e-a966-4fa1-886d-4e12e8383c2e",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-03T05:43:48.942553+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "01e8c725-fc3f-4b1d-a013-1b6a2a6f2fcb",
+    "authorId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "text": "mm",
+    "media": "/api/media/ba113ef0-e028-4e34-bbff-07318556d950",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-03T05:52:10.994610+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  },
+  {
+    "id": "85370e39-6ed5-418b-b18c-cc58dc9f90c9",
+    "authorId": "u1",
+    "text": "Test post with media from API",
+    "media": "/api/media/50228391-9997-4c3d-8df8-92da0ea01df9",
+    "audience": "public",
+    "hashtags": [],
+    "stats": {
+      "likes": 0,
+      "quotes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    "likedBy": [],
+    "repostedBy": [],
+    "createdAt": "2025-11-03T06:15:29.504087+00:00",
+    "quotedPostId": null,
+    "quotedPost": null,
+    "replyToPostId": null
+  }
+]

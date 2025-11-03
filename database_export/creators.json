@@ -1,0 +1,36 @@
+[
+  {
+    "id": "c1",
+    "userId": "u3",
+    "displayName": "Ananya Reddy",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ananya",
+    "bio": "Digital art courses & NFT masterclasses",
+    "items": [
+      {
+        "id": "i1",
+        "name": "Digital Art Basics",
+        "type": "course",
+        "price": 2999
+      }
+    ],
+    "followers": 12400,
+    "createdAt": "2025-10-30T05:37:10.409273+00:00"
+  },
+  {
+    "id": "c2",
+    "userId": "u2",
+    "displayName": "Raj Malhotra",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=raj",
+    "bio": "Full-stack development bootcamp",
+    "items": [
+      {
+        "id": "i2",
+        "name": "React Masterclass",
+        "type": "course",
+        "price": 3999
+      }
+    ],
+    "followers": 8900,
+    "createdAt": "2025-10-30T05:37:10.409280+00:00"
+  }
+]

@@ -1,0 +1,556 @@
+[
+  {
+    "userId": "eba3c086-d5db-441e-b0da-3600f8a9894e",
+    "lastUpdated": "2025-10-20T15:59:02.375576+00:00",
+    "totalCredits": 120,
+    "tier": "Bronze"
+  },
+  {
+    "userId": "3c593f13-cac0-4872-b23f-44fb7a2b5728",
+    "lastUpdated": "2025-10-20T15:55:43.287182+00:00",
+    "totalCredits": 120,
+    "tier": "Bronze"
+  },
+  {
+    "userId": "db0910c4-e099-41c4-b802-d335f5b7aa95",
+    "lastUpdated": "2025-10-20T16:03:31.399855+00:00",
+    "totalCredits": 120,
+    "tier": "Bronze"
+  },
+  {
+    "userId": "b41a6060-2db7-4d23-a037-1ac73c657ef3",
+    "lastUpdated": "2025-10-20T16:24:45.801232+00:00",
+    "totalCredits": 100,
+    "tier": "Bronze"
+  },
+  {
+    "userId": "8a2b8d44-4881-4d32-8ca5-95fbafc68de4",
+    "lastUpdated": "2025-10-20T16:35:53.417170+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "4f775eb7-7fbf-4fa9-ac55-f31654542379",
+    "lastUpdated": "2025-10-20T16:35:26.567057+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "3379e5cf-3dc7-4226-bd5c-2351d9563eb0",
+    "lastUpdated": "2025-10-20T16:59:20.591733+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "fb31c5f4-9327-4e16-8f8d-f2a2457ac36c",
+    "lastUpdated": "2025-10-20T17:08:10.809544+00:00",
+    "totalCredits": 170
+  },
+  {
+    "userId": "c61c3e89-05f2-4e8f-8a75-1ade669af438",
+    "lastUpdated": "2025-10-20T17:26:03.117947+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "c23320fc-32cb-424d-9848-e21962c327ff",
+    "lastUpdated": "2025-10-20T17:40:59.973374+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "edfbab9c-db72-499e-9989-c6c062316e7a",
+    "lastUpdated": "2025-10-20T17:55:37.853795+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "48c7d431-60a4-40ac-80e7-adf2a4615ade",
+    "lastUpdated": "2025-10-20T18:10:56.751571+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "e4030a7c-8aa2-4e3f-ba36-50362c94266d",
+    "lastUpdated": "2025-10-20T18:13:28.577101+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "lastUpdated": "2025-10-21T04:36:17.740172+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "633f2cbf-567f-4fe0-8246-94a071115042",
+    "lastUpdated": "2025-10-21T04:36:17.741587+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "0df92a9d-cd9d-4804-9335-41efac6914c4",
+    "lastUpdated": "2025-10-21T04:42:17.602193+00:00",
+    "totalCredits": 170
+  },
+  {
+    "userId": "u2",
+    "lastUpdated": "2025-10-21T05:04:17.621348+00:00",
+    "totalCredits": 10
+  },
+  {
+    "userId": "u1",
+    "lastUpdated": "2025-10-21T05:04:17.635608+00:00",
+    "totalCredits": 10
+  },
+  {
+    "userId": "17c4462d-982c-45d1-accb-2d5afb4a383c",
+    "lastUpdated": "2025-10-21T05:35:10.816565+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "767fcac4-6d1a-4e58-b3fe-b2c2f92b8bbe",
+    "lastUpdated": "2025-10-21T06:34:32.474552+00:00",
+    "totalCredits": 170
+  },
+  {
+    "userId": "fb4b8ded-2488-4302-b36f-13dbc225990e",
+    "lastUpdated": "2025-10-21T06:50:58.573835+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "09a63735-67fd-4e07-9df3-37554b67b2ff",
+    "lastUpdated": "2025-10-21T07:12:45.216554+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "128a39e2-096e-4c72-b65a-c85d8fe186d3",
+    "lastUpdated": "2025-10-21T08:39:13.074410+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "3e2e4476-7218-4230-8fc1-1b200ecf3579",
+    "lastUpdated": "2025-10-21T09:49:54.426627+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "7bfc2e44-15a5-4998-99fc-14880580f83c",
+    "lastUpdated": "2025-10-21T09:49:54.428015+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "lastUpdated": "2025-10-21T10:34:49.164196+00:00",
+    "totalCredits": 170
+  },
+  {
+    "userId": "42f98a5b-dec6-45dc-8cee-4344850cf36a",
+    "lastUpdated": "2025-10-21T10:31:12.699926+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "dfb29e40-7c43-4102-ba4f-ae00dd2aba1f",
+    "lastUpdated": "2025-10-21T10:34:49.165684+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "a856c3e9-8bbf-4750-b9fe-d454989928d8",
+    "lastUpdated": "2025-10-21T13:18:32.281837+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "e88e1e36-9dab-430e-b2fa-44b2ef139358",
+    "lastUpdated": "2025-10-21T13:54:34.932868+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "32ffec00-1364-4763-ab00-8910d7ff8e00",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-21T14:06:07.711978+00:00"
+  },
+  {
+    "userId": "f9e8d283-dd55-4d7a-bb3e-b408d80b1c0d",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-23T08:16:57.521918+00:00"
+  },
+  {
+    "userId": "5f1a22ac-951b-449e-bb78-918179e103db",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-23T08:25:16.970823+00:00"
+  },
+  {
+    "userId": "63428660-5e56-416e-822b-6b975ed87462",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-23T09:13:14.149271+00:00"
+  },
+  {
+    "userId": "6ff68536-a8cb-4171-ab75-3925f1408f2d",
+    "lastUpdated": "2025-10-23T09:18:05.198168+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "ca55a75f-abeb-43ab-88ec-5e5137af1c33",
+    "lastUpdated": "2025-10-25T05:41:51.451111+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "lastUpdated": "2025-10-25T05:41:51.450193+00:00",
+    "totalCredits": 170
+  },
+  {
+    "userId": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "lastUpdated": "2025-10-24T10:17:43.084317+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "b859ada0-d714-4084-9bad-c0a62961e119",
+    "lastUpdated": "2025-10-24T10:29:36.956223+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "85338454-6550-43ee-827d-5e5718db4928",
+    "lastUpdated": "2025-10-24T11:27:02.685106+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "39a8b505-f627-4d53-b2dc-d72dcf4b8490",
+    "lastUpdated": "2025-10-24T11:27:02.686190+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "1b0783b9-a6bb-4d18-9a07-921f2aef0b9a",
+    "lastUpdated": "2025-10-25T09:05:12.594530+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+    "lastUpdated": "2025-10-25T09:50:22.026866+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "5c0166b2-0fc0-401b-92c4-2cc23f4f267c",
+    "lastUpdated": "2025-10-25T13:31:06.003546+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "5e0b4cc2-1429-49ab-a395-fd0c23942d24",
+    "lastUpdated": "2025-10-26T00:25:17.958803+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "a8c1aed0-c9d6-40c7-ba7c-9896d0e5a846",
+    "lastUpdated": "2025-10-26T02:38:48.531573+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "58f7200f-5c50-44d2-b034-43156c464c58",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-26T03:22:33.914778+00:00"
+  },
+  {
+    "userId": "9c2ef4f8-eaf0-4a6d-bed9-032a92677ec9",
+    "lastUpdated": "2025-10-26T03:29:27.461504+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "066c1ab4-404c-4a09-b3ab-99414084eec6",
+    "lastUpdated": "2025-10-26T03:52:25.501142+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "lastUpdated": "2025-10-26T04:42:24.259930+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "lastUpdated": "2025-10-26T04:57:41.394503+00:00",
+    "totalCredits": 170
+  },
+  {
+    "userId": "9ccde212-b2a6-4bb0-879f-442608a6fb00",
+    "lastUpdated": "2025-10-26T04:57:41.395734+00:00",
+    "totalCredits": 160
+  },
+  {
+    "userId": "c56f7f7f-81da-4dae-975e-a9296fcaa173",
+    "lastUpdated": "2025-10-26T05:07:28.913233+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "70ddfbb5-5289-40bb-8936-69fe90823d08",
+    "lastUpdated": "2025-10-26T07:38:07.382795+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "4f4bf663-b0ee-4e4f-8799-3cb3b94c9bc8",
+    "lastUpdated": "2025-10-26T08:10:48.737663+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "cbb95c12-02d3-4796-b567-8dac18a6f3ba",
+    "lastUpdated": "2025-10-26T08:17:17.521844+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "7b25cdb2-93b4-4201-847d-18f581ef59c4",
+    "lastUpdated": "2025-10-26T08:41:10.548949+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "a06830f9-841e-4fcc-9fa9-650762e2ac32",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-26T08:54:25.290673+00:00"
+  },
+  {
+    "userId": "c618316e-75c6-464f-aa41-0465537384de",
+    "lastUpdated": "2025-10-26T10:00:48.727473+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "e8447b54-52e3-411a-a9e7-2db2b73e3449",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-26T10:03:00.936160+00:00"
+  },
+  {
+    "userId": "82c81b71-8550-4d80-b3d7-01781d1dfd92",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-26T10:13:44.244238+00:00"
+  },
+  {
+    "userId": "c5ca4676-90da-4f29-ad88-7eb08c68f9d5",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-26T10:22:28.631161+00:00"
+  },
+  {
+    "userId": "9e705370-6dd6-4255-9696-7582bd6a9214",
+    "lastUpdated": "2025-10-26T11:00:19.177149+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "3b96941a-498a-466b-9954-d585891b8182",
+    "lastUpdated": "2025-10-26T11:01:11.647024+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "lastUpdated": "2025-10-27T04:50:17.924493+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "lastUpdated": "2025-10-27T05:03:05.265401+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "62db2d81-2946-4e47-bd1e-46fc4ef6a04c",
+    "lastUpdated": "2025-10-27T05:03:05.266766+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "lastUpdated": "2025-10-28T05:36:15.160414+00:00",
+    "totalCredits": 130
+  },
+  {
+    "userId": "c777588a-e6b1-4dab-a32a-3be629dc59b5",
+    "totalCredits": 110,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-27T07:45:33.425834+00:00"
+  },
+  {
+    "userId": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "lastUpdated": "2025-10-27T08:12:39.261384+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "e476bc6d-b9ca-4fa2-8308-05ff78d478b9",
+    "lastUpdated": "2025-10-27T08:12:39.262374+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "lastUpdated": "2025-10-27T09:22:08.013829+00:00",
+    "totalCredits": 130
+  },
+  {
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "lastUpdated": "2025-10-28T05:33:13.037746+00:00",
+    "totalCredits": 150
+  },
+  {
+    "userId": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "lastUpdated": "2025-10-27T09:21:25.530266+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "555a1f46-b829-4ad4-92ae-1b9bcdb3c4c6",
+    "lastUpdated": "2025-10-27T09:38:03.798618+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "d328cfd2-5824-4519-831a-bc4cca6bb9a2",
+    "lastUpdated": "2025-10-28T04:26:23.326950+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "lastUpdated": "2025-10-28T05:36:15.161745+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "lastUpdated": "2025-10-28T06:53:10.335832+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "lastUpdated": "2025-10-28T07:14:11.938268+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "lastUpdated": "2025-10-28T07:14:11.936749+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "0224f586-604a-4ed6-8ad7-6be2a8da8e5a",
+    "totalCredits": 40,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-10-28T10:28:36.005194+00:00"
+  },
+  {
+    "userId": "970f56ee-f7f5-46ee-9a7f-6a3550ab23a0",
+    "lastUpdated": "2025-10-30T05:41:43.585908+00:00",
+    "totalCredits": 100
+  },
+  {
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "lastUpdated": "2025-11-01T08:12:59.985046+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "5243177a-1f16-4bc3-93d1-ea8be8d44915",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-11-01T05:26:38.191863+00:00"
+  },
+  {
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "lastUpdated": "2025-11-01T08:27:01.317200+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "lastUpdated": "2025-11-01T07:47:24.942343+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "lastUpdated": "2025-11-01T08:57:59.655418+00:00",
+    "totalCredits": 120
+  },
+  {
+    "userId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "lastUpdated": "2025-11-01T08:57:59.653904+00:00",
+    "totalCredits": 110
+  },
+  {
+    "userId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "totalCredits": 10,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-11-01T09:33:06.443916+00:00"
+  },
+  {
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "totalCredits": 10,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-11-01T09:33:06.445340+00:00"
+  },
+  {
+    "userId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "totalCredits": 10,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-11-03T05:56:32.103647+00:00"
+  },
+  {
+    "userId": "29a8c586-568e-442a-b05f-9fbbbab38c3f",
+    "totalCredits": 0,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-11-02T12:17:06.842875+00:00"
+  },
+  {
+    "userId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "totalCredits": 10,
+    "totalPosts": 0,
+    "totalCheckins": 0,
+    "totalChallengesCompleted": 0,
+    "vibeRank": 0,
+    "tier": "Bronze",
+    "lastUpdated": "2025-11-03T05:56:32.102265+00:00"
+  }
+]

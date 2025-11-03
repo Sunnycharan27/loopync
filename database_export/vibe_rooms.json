@@ -1,0 +1,2133 @@
+[
+  {
+    "id": "7304e66c-95fd-47e1-9cdd-7af123b54334",
+    "name": "Late Night Music Vibes",
+    "description": "",
+    "category": "general",
+    "hostId": "f9e8d283-dd55-4d7a-bb3e-b408d80b1c0d",
+    "hostName": "Demo User",
+    "moderators": [
+      "f9e8d283-dd55-4d7a-bb3e-b408d80b1c0d"
+    ],
+    "participants": [
+      {
+        "userId": "f9e8d283-dd55-4d7a-bb3e-b408d80b1c0d",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-23T08:13:21.122119+00:00",
+        "isMuted": false,
+        "isHost": true
+      }
+    ],
+    "maxParticipants": 50,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-23T08:13:21.122174+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1
+  },
+  {
+    "id": "f2dd8bd6-49bd-4cc0-977b-e36b514c13a4",
+    "name": "Live Chat Test Room",
+    "description": "",
+    "category": "general",
+    "hostId": "623acd6c-00cb-4811-aa5e-cf2e4a2a814e",
+    "hostName": "Demo User",
+    "moderators": [
+      "623acd6c-00cb-4811-aa5e-cf2e4a2a814e"
+    ],
+    "participants": [
+      {
+        "userId": "623acd6c-00cb-4811-aa5e-cf2e4a2a814e",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-23T08:34:41.222138+00:00",
+        "isMuted": false,
+        "isHost": true
+      }
+    ],
+    "maxParticipants": 50,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-23T08:34:41.222202+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1
+  },
+  {
+    "id": "cfcfaf48-311d-4b26-8a4b-14738ad9c156",
+    "name": "Test Audio Vibe Room",
+    "description": "Testing audio integration",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-24T00:10:11.920668+00:00",
+        "isMuted": false,
+        "isHost": true
+      }
+    ],
+    "maxParticipants": 50,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio"
+    ],
+    "startedAt": "2025-10-24T00:10:11.922246+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/C6CDWRR5NpzsMckremRp",
+    "dailyRoomName": "C6CDWRR5NpzsMckremRp"
+  },
+  {
+    "id": "6013126c-465c-4ad2-a11a-b2e4d0e78f2a",
+    "name": "Test Audio Vibe Room",
+    "description": "Testing audio integration",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-24T00:11:03.668766+00:00",
+        "isMuted": false,
+        "isHost": true
+      }
+    ],
+    "maxParticipants": 50,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio"
+    ],
+    "startedAt": "2025-10-24T00:11:03.668831+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/L1dyvfYppUkbQ1x10AXD",
+    "dailyRoomName": "L1dyvfYppUkbQ1x10AXD"
+  },
+  {
+    "id": "e412d95e-5675-4319-b72b-15ff491a4017",
+    "name": "Test Audio Vibe Room",
+    "description": "Testing audio integration",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-24T00:11:36.249855+00:00",
+        "isMuted": false,
+        "isHost": true
+      }
+    ],
+    "maxParticipants": 50,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio"
+    ],
+    "startedAt": "2025-10-24T00:11:36.249912+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/kNToESMU0ZXChyIa4434",
+    "dailyRoomName": "kNToESMU0ZXChyIa4434"
+  },
+  {
+    "id": "ab8a3c74-386f-44d8-a9af-04791cc95061",
+    "name": "Test Audio Vibe Room",
+    "description": "Testing audio",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-24T00:12:24.304483+00:00",
+        "isMuted": false,
+        "isHost": true
+      }
+    ],
+    "maxParticipants": 50,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-24T00:12:24.304541+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/T46en4PvdIkODDDDR8jM",
+    "dailyRoomName": "T46en4PvdIkODDDDR8jM"
+  },
+  {
+    "id": "6285b45c-c314-4494-b1c8-5fecb9125d38",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-24T00:27:24.709634+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      },
+      {
+        "userId": "u1",
+        "userName": "Priya Sharma",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=priya",
+        "joinedAt": "2025-10-25T09:12:53.750730+00:00",
+        "isMuted": true,
+        "isHost": false,
+        "role": "audience",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-24T00:27:24.709688+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/JwxtE3VOUR8EqAC0G3wf",
+    "dailyRoomName": "JwxtE3VOUR8EqAC0G3wf"
+  },
+  {
+    "id": "5debe8d2-7449-4360-ac22-4376bada09f3",
+    "name": "Test Audio Room",
+    "description": "Testing room creation with Daily.co",
+    "category": "music",
+    "hostId": "366747db-1f27-4484-ab1e-91e62b8c83b0",
+    "hostName": "Demo User Updated",
+    "moderators": [
+      "366747db-1f27-4484-ab1e-91e62b8c83b0"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio"
+    ],
+    "startedAt": "2025-10-24T02:56:03.931142+00:00",
+    "endedAt": "2025-10-24T02:56:03.955453+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/sT3abEQUdDhcBAohAjU6",
+    "dailyRoomName": "sT3abEQUdDhcBAohAjU6"
+  },
+  {
+    "id": "23046474-3c9e-44b7-b27f-d0ce92150264",
+    "name": "sunny",
+    "description": "real people",
+    "category": "general",
+    "hostId": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "hostName": "sunny",
+    "moderators": [
+      "cf8d30ab-f563-448e-9d05-465a90035ace"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": true,
+    "tags": [],
+    "startedAt": "2025-10-24T10:19:06.890064+00:00",
+    "endedAt": "2025-10-24T10:19:29.675396+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/V3qcyFIFbAmpxWrMuDVp",
+    "dailyRoomName": "V3qcyFIFbAmpxWrMuDVp"
+  },
+  {
+    "id": "d43cbc6d-e6ab-4c5a-94b2-5d63d0f5962f",
+    "name": "devlopers",
+    "description": "a",
+    "category": "tech",
+    "hostId": "b859ada0-d714-4084-9bad-c0a62961e119",
+    "hostName": "shiva",
+    "moderators": [
+      "b859ada0-d714-4084-9bad-c0a62961e119"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-24T10:36:12.572063+00:00",
+    "endedAt": "2025-10-24T10:37:06.183744+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/Kfl9m77ww9yStVDGcP1G",
+    "dailyRoomName": "Kfl9m77ww9yStVDGcP1G"
+  },
+  {
+    "id": "1e49cc87-bcfa-415b-9da0-b000a29609e3",
+    "name": "Test Clubhouse Room",
+    "description": "Testing audio integration with Daily.co",
+    "category": "music",
+    "hostId": "36025bb2-1ad9-4ffd-8a9f-54373abaf764",
+    "hostName": "Demo User",
+    "moderators": [
+      "36025bb2-1ad9-4ffd-8a9f-54373abaf764",
+      "testUser123"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio",
+      "clubhouse"
+    ],
+    "startedAt": "2025-10-25T09:12:36.034366+00:00",
+    "endedAt": "2025-10-25T09:12:36.395206+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/cekraniIsAFXLMTq6wSy",
+    "dailyRoomName": "cekraniIsAFXLMTq6wSy"
+  },
+  {
+    "id": "1f89acf6-d875-48c3-9659-dc911e618537",
+    "name": "Test Clubhouse Room",
+    "description": "Testing audio",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user",
+      "u1"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-25T09:14:19.852198+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      },
+      {
+        "userId": "u1",
+        "userName": "Priya Sharma",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=priya",
+        "joinedAt": "2025-10-25T09:14:20.125144+00:00",
+        "isMuted": true,
+        "isHost": false,
+        "role": "audience",
+        "raisedHand": false
+      },
+      {
+        "userId": "u3",
+        "userName": "Ananya Reddy",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ananya",
+        "joinedAt": "2025-10-25T09:14:20.379554+00:00",
+        "isMuted": true,
+        "isHost": false,
+        "role": "audience",
+        "raisedHand": false
+      },
+      {
+        "userId": "u4",
+        "userName": "Maya Patel",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=maya",
+        "joinedAt": "2025-10-25T09:14:20.489379+00:00",
+        "isMuted": true,
+        "isHost": false,
+        "role": "audience",
+        "raisedHand": false
+      },
+      {
+        "userId": "u5",
+        "userName": "Sahil Khan",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=sahil",
+        "joinedAt": "2025-10-25T09:14:20.600486+00:00",
+        "isMuted": true,
+        "isHost": false,
+        "role": "audience",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-25T09:14:19.852247+00:00",
+    "endedAt": null,
+    "totalJoins": 7,
+    "peakParticipants": 6,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/BdKzFisRZc2Iw1KQ9jUj",
+    "dailyRoomName": "BdKzFisRZc2Iw1KQ9jUj"
+  },
+  {
+    "id": "ea5cc80e-a68b-4eac-a7d2-ad74af2dabc3",
+    "name": "ewwe",
+    "description": "ese",
+    "category": "music",
+    "hostId": "1b0783b9-a6bb-4d18-9a07-921f2aef0b9a",
+    "hostName": "Ram Charan",
+    "moderators": [
+      "1b0783b9-a6bb-4d18-9a07-921f2aef0b9a"
+    ],
+    "participants": [
+      {
+        "userId": "1b0783b9-a6bb-4d18-9a07-921f2aef0b9a",
+        "userName": "Ram Charan",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ramcharan",
+        "joinedAt": "2025-10-25T09:19:06.872043+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-25T09:19:06.872094+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/x8KsnhyWUzRNvCiXgnqP",
+    "dailyRoomName": "x8KsnhyWUzRNvCiXgnqP"
+  },
+  {
+    "id": "c45e580d-6d8e-490e-b702-d9ee0c70b170",
+    "name": "jhcxvbn",
+    "description": "lkjhgfdvbnm",
+    "category": "general",
+    "hostId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+    "hostName": "sunny",
+    "moderators": [
+      "68aa1fd8-f3e6-45c8-8dde-107a7762b04a"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-25T09:50:34.190361+00:00",
+    "endedAt": "2025-10-25T09:50:59.601078+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/GcRH3Ycm8E314SfSubmU",
+    "dailyRoomName": "GcRH3Ycm8E314SfSubmU"
+  },
+  {
+    "id": "9ec7ccac-dd59-41db-adc2-c9fb896dea10",
+    "name": ";lkjhgfdxc",
+    "description": "kjhgf",
+    "category": "music",
+    "hostId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+    "hostName": "sunny",
+    "moderators": [
+      "68aa1fd8-f3e6-45c8-8dde-107a7762b04a"
+    ],
+    "participants": [
+      {
+        "userId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+        "userName": "sunny",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ram",
+        "joinedAt": "2025-10-25T09:51:42.536737+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-25T09:51:42.536813+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/qfATl0qQOgjNrlKcbmtx",
+    "dailyRoomName": "qfATl0qQOgjNrlKcbmtx"
+  },
+  {
+    "id": "339ca4a0-5840-433c-b5ec-fcdf3a219a46",
+    "name": "Test Audio VibeRoom",
+    "description": "Testing Daily.co audio integration",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-25T09:57:06.813437+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio",
+      "daily"
+    ],
+    "startedAt": "2025-10-25T09:57:06.813499+00:00",
+    "endedAt": null,
+    "totalJoins": 3,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/gMOqRmWIUAtlr0252fzC",
+    "dailyRoomName": "gMOqRmWIUAtlr0252fzC"
+  },
+  {
+    "id": "e776e8c6-d8b3-426a-b336-b6b4083170ce",
+    "name": "Sunny",
+    "description": "Sujjy",
+    "category": "music",
+    "hostId": "5c0166b2-0fc0-401b-92c4-2cc23f4f267c",
+    "hostName": "Ramcharan",
+    "moderators": [
+      "5c0166b2-0fc0-401b-92c4-2cc23f4f267c"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-25T13:31:31.660549+00:00",
+    "endedAt": "2025-10-25T13:31:51.721327+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "dailyRoomUrl": "https://sunnycharan.daily.co/TParTPgjos2fCaKvHJGK",
+    "dailyRoomName": "TParTPgjos2fCaKvHJGK"
+  },
+  {
+    "id": "e59eacdc-a25f-47fc-ba2b-8ea3d8f91f23",
+    "name": "Test Agora VibeRoom",
+    "description": "Testing Agora.io audio integration",
+    "category": "music",
+    "hostId": "45fdffc2-ab4e-43b4-957b-25cf086d2d23",
+    "hostName": "Demo User",
+    "moderators": [
+      "45fdffc2-ab4e-43b4-957b-25cf086d2d23"
+    ],
+    "participants": [
+      {
+        "userId": "45fdffc2-ab4e-43b4-957b-25cf086d2d23",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T00:17:00.354252+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "agora",
+      "audio"
+    ],
+    "startedAt": "2025-10-26T00:17:00.354307+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "e59eacdc-a25f-47fc-ba2b-8ea3d8f91f23"
+  },
+  {
+    "id": "d617f812-2a04-46b8-b0cb-6ad135006eb6",
+    "name": "Status Test Room",
+    "description": "",
+    "category": "test",
+    "hostId": "45fdffc2-ab4e-43b4-957b-25cf086d2d23",
+    "hostName": "Demo User",
+    "moderators": [
+      "45fdffc2-ab4e-43b4-957b-25cf086d2d23"
+    ],
+    "participants": [
+      {
+        "userId": "45fdffc2-ab4e-43b4-957b-25cf086d2d23",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T00:17:00.446199+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T00:17:00.446261+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "d617f812-2a04-46b8-b0cb-6ad135006eb6"
+  },
+  {
+    "id": "4ae8fa07-a6f4-4dc0-bd29-b1c71af2dd8b",
+    "name": "Test Agora VibeRoom",
+    "description": "Testing Agora.io audio integration",
+    "category": "music",
+    "hostId": "9738f91e-c8d0-45a6-850a-2696bcf5a249",
+    "hostName": "Demo User",
+    "moderators": [
+      "9738f91e-c8d0-45a6-850a-2696bcf5a249"
+    ],
+    "participants": [
+      {
+        "userId": "9738f91e-c8d0-45a6-850a-2696bcf5a249",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T00:17:45.230790+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "agora",
+      "audio"
+    ],
+    "startedAt": "2025-10-26T00:17:45.230823+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "4ae8fa07-a6f4-4dc0-bd29-b1c71af2dd8b"
+  },
+  {
+    "id": "c4bbe897-857a-4f2f-bcec-e5e8dc923f57",
+    "name": "Status Test Room",
+    "description": "",
+    "category": "test",
+    "hostId": "9738f91e-c8d0-45a6-850a-2696bcf5a249",
+    "hostName": "Demo User",
+    "moderators": [
+      "9738f91e-c8d0-45a6-850a-2696bcf5a249"
+    ],
+    "participants": [
+      {
+        "userId": "9738f91e-c8d0-45a6-850a-2696bcf5a249",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T00:17:45.442112+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T00:17:45.442163+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "c4bbe897-857a-4f2f-bcec-e5e8dc923f57"
+  },
+  {
+    "id": "2d93b9d3-c909-40c6-8d06-d8ede6c0db14",
+    "name": "Test Agora Room",
+    "description": "Testing Agora integration",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T00:18:27.770234+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T00:18:27.770280+00:00",
+    "endedAt": null,
+    "totalJoins": 3,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "2d93b9d3-c909-40c6-8d06-d8ede6c0db14"
+  },
+  {
+    "id": "f5752834-c065-47fc-af90-4e6633bbc530",
+    "name": "qwer",
+    "description": "sdf",
+    "category": "general",
+    "hostId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+    "hostName": "sunny",
+    "moderators": [
+      "68aa1fd8-f3e6-45c8-8dde-107a7762b04a"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T00:20:15.247816+00:00",
+    "endedAt": "2025-10-26T02:45:01.373552+00:00",
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "f5752834-c065-47fc-af90-4e6633bbc530"
+  },
+  {
+    "id": "fff1cfbc-fff1-4f62-945d-ea9ff9cb59ef",
+    "name": "dd",
+    "description": "dd",
+    "category": "general",
+    "hostId": "5e0b4cc2-1429-49ab-a395-fd0c23942d24",
+    "hostName": "sunny",
+    "moderators": [
+      "5e0b4cc2-1429-49ab-a395-fd0c23942d24"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T00:25:56.389767+00:00",
+    "endedAt": "2025-10-26T00:26:25.631508+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "fff1cfbc-fff1-4f62-945d-ea9ff9cb59ef"
+  },
+  {
+    "id": "321d9728-fffd-40d5-906a-70c4eb6eec02",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T04:15:23.816102+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T04:15:23.816158+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "321d9728-fffd-40d5-906a-70c4eb6eec02"
+  },
+  {
+    "id": "d23e3d95-7f0a-471e-9ca6-c1292c0d7ab2",
+    "name": "Sting energy",
+    "description": "Vibe",
+    "category": "general",
+    "hostId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "hostName": "Ponnamkarthik ",
+    "moderators": [
+      "03142cfd-e017-4e66-8323-a4b3e7114332"
+    ],
+    "participants": [
+      {
+        "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+        "userName": "Ponnamkarthik ",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthii",
+        "joinedAt": "2025-10-26T04:43:05.027966+00:00",
+        "isMuted": false,
+        "isHost": false,
+        "role": "speaker",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T04:42:42.678243+00:00",
+    "endedAt": null,
+    "totalJoins": 3,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "d23e3d95-7f0a-471e-9ca6-c1292c0d7ab2"
+  },
+  {
+    "id": "2660410f-0ccc-4aab-8a7b-f235643021ee",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T04:47:04.601083+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T04:47:04.601127+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "2660410f-0ccc-4aab-8a7b-f235643021ee"
+  },
+  {
+    "id": "11dbdab8-5749-4499-8753-8307a42d655f",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T04:59:18.659935+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T04:59:18.660000+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "11dbdab8-5749-4499-8753-8307a42d655f"
+  },
+  {
+    "id": "706bb2c4-3360-4467-8996-836e536e88a8",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T05:00:31.890910+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T05:00:31.890971+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "706bb2c4-3360-4467-8996-836e536e88a8"
+  },
+  {
+    "id": "bb164702-33da-4fd0-8db0-7fb584d718fe",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T05:02:33.052365+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T05:02:33.052418+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "bb164702-33da-4fd0-8db0-7fb584d718fe"
+  },
+  {
+    "id": "78296989-6d1a-4049-9063-ff5b5f00258f",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T05:02:48.423607+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T05:02:48.423651+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "78296989-6d1a-4049-9063-ff5b5f00258f"
+  },
+  {
+    "id": "30a71077-1b69-482e-a1cc-3b2c6e6d61df",
+    "name": "Audio Test Room",
+    "description": "Testing audio/microphone functionality",
+    "category": "tech",
+    "hostId": "u1",
+    "hostName": "Priya Sharma",
+    "moderators": [
+      "u1"
+    ],
+    "participants": [
+      {
+        "userId": "u1",
+        "userName": "Priya Sharma",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=priya",
+        "joinedAt": "2025-10-26T07:08:44.009596+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      },
+      {
+        "userId": "u2",
+        "userName": "Raj Malhotra",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=raj",
+        "joinedAt": "2025-10-26T07:08:44.026761+00:00",
+        "isMuted": false,
+        "isHost": false,
+        "role": "speaker",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio"
+    ],
+    "startedAt": "2025-10-26T07:08:44.009640+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "30a71077-1b69-482e-a1cc-3b2c6e6d61df"
+  },
+  {
+    "id": "83946c59-d330-452b-a34d-8d8dc795f1e7",
+    "name": "sting",
+    "description": "energy",
+    "category": "General",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:13:58.411436+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:13:58.411475+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "83946c59-d330-452b-a34d-8d8dc795f1e7"
+  },
+  {
+    "id": "0c3c8046-b441-44d6-8e25-1159ed7ac0b8",
+    "name": "sting",
+    "description": "energy",
+    "category": "General",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:13:58.459170+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:13:58.459203+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "0c3c8046-b441-44d6-8e25-1159ed7ac0b8"
+  },
+  {
+    "id": "a3dbaf2d-56d5-4846-b807-54edab514574",
+    "name": "sting",
+    "description": "energy",
+    "category": "General",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:13:58.465886+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:13:58.465920+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "a3dbaf2d-56d5-4846-b807-54edab514574"
+  },
+  {
+    "id": "0702377f-19cf-4afa-a78c-6f61298a59be",
+    "name": "Test Room",
+    "description": "Test",
+    "category": "General",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:13:58.471251+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:13:58.471280+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "0702377f-19cf-4afa-a78c-6f61298a59be"
+  },
+  {
+    "id": "73ef477b-c4f6-412c-96ad-6d8c8fb0dc62",
+    "name": "sting",
+    "description": "energy",
+    "category": "General",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:16.888131+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      },
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:16.924629+00:00",
+        "isMuted": true,
+        "isHost": false,
+        "role": "audience",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:16.888178+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "73ef477b-c4f6-412c-96ad-6d8c8fb0dc62"
+  },
+  {
+    "id": "3c0a3362-738a-48a9-9581-a987f8cbab51",
+    "name": "Test Music Room",
+    "description": "Testing music category",
+    "category": "music",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:16.989672+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:16.989720+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "3c0a3362-738a-48a9-9581-a987f8cbab51"
+  },
+  {
+    "id": "1c67f110-9f03-4c51-b01b-2a54cb731da3",
+    "name": "Test Tech Room",
+    "description": "Testing tech category",
+    "category": "tech",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:16.998974+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:16.999010+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "1c67f110-9f03-4c51-b01b-2a54cb731da3"
+  },
+  {
+    "id": "ceb6ba5b-1cf3-4d4b-a2fd-12d6beb62f54",
+    "name": "Test Gaming Room",
+    "description": "Testing gaming category",
+    "category": "gaming",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:17.011030+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:17.011096+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "ceb6ba5b-1cf3-4d4b-a2fd-12d6beb62f54"
+  },
+  {
+    "id": "6691c0b4-6f3f-46bd-8b0d-60c2c7dea77f",
+    "name": "Test Lifestyle Room",
+    "description": "Testing lifestyle category",
+    "category": "lifestyle",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:17.062061+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:17.062108+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "6691c0b4-6f3f-46bd-8b0d-60c2c7dea77f"
+  },
+  {
+    "id": "d759ac2f-cf65-4f90-bbd2-eed08334aea7",
+    "name": "Test Business Room",
+    "description": "Testing business category",
+    "category": "business",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:17.071019+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:17.071064+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "d759ac2f-cf65-4f90-bbd2-eed08334aea7"
+  },
+  {
+    "id": "3afe8245-2146-4c2d-9fb5-2c24b26f724b",
+    "name": "Private Test Room",
+    "description": "Testing private room functionality",
+    "category": "General",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:17.079653+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": true,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:17.079686+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "3afe8245-2146-4c2d-9fb5-2c24b26f724b"
+  },
+  {
+    "id": "5b9dcbef-3fcc-4ac2-8a42-a6ac46f1b601",
+    "name": "",
+    "description": "",
+    "category": "general",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:17.144647+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:17.144694+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "5b9dcbef-3fcc-4ac2-8a42-a6ac46f1b601"
+  },
+  {
+    "id": "85edaa4a-9ec1-4cb8-bad0-5a5470796e45",
+    "name": "Test",
+    "description": "",
+    "category": "InvalidCategory",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:15:17.154127+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:15:17.154167+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "85edaa4a-9ec1-4cb8-bad0-5a5470796e45"
+  },
+  {
+    "id": "662f55ba-18d3-4f53-9153-681c5b1ae877",
+    "name": "Test Room",
+    "description": "Testing",
+    "category": "general",
+    "hostId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+    "hostName": "Demo User",
+    "moderators": [
+      "6fa08f84-67de-469e-9812-e6e35aa34892"
+    ],
+    "participants": [
+      {
+        "userId": "6fa08f84-67de-469e-9812-e6e35aa34892",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:21:26.315225+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:21:26.315274+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "662f55ba-18d3-4f53-9153-681c5b1ae877"
+  },
+  {
+    "id": "1757f339-bbd4-437a-b8cc-4c906b4b41e3",
+    "name": "Test VibeRoom",
+    "description": "Testing",
+    "category": "general",
+    "hostId": "2a5d2ed9-2b0e-41fb-ba2e-717ba166884d",
+    "hostName": "Demo User",
+    "moderators": [
+      "2a5d2ed9-2b0e-41fb-ba2e-717ba166884d"
+    ],
+    "participants": [
+      {
+        "userId": "2a5d2ed9-2b0e-41fb-ba2e-717ba166884d",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:25:12.523609+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:25:12.523658+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "1757f339-bbd4-437a-b8cc-4c906b4b41e3"
+  },
+  {
+    "id": "3b5fea31-e308-469a-81ad-2f99526f4377",
+    "name": "sting",
+    "description": "enery",
+    "category": "general",
+    "hostId": "066c1ab4-404c-4a09-b3ab-99414084eec6",
+    "hostName": "User",
+    "moderators": [
+      "066c1ab4-404c-4a09-b3ab-99414084eec6"
+    ],
+    "participants": [
+      {
+        "userId": "066c1ab4-404c-4a09-b3ab-99414084eec6",
+        "userName": "User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=066c1ab4-404c-4a09-b3ab-99414084eec6",
+        "joinedAt": "2025-10-26T07:31:39.536069+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:31:39.536106+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "3b5fea31-e308-469a-81ad-2f99526f4377"
+  },
+  {
+    "id": "a312be6c-7406-4c29-b37f-c550d5276c11",
+    "name": "Demo Room Test",
+    "description": "Testing room creation with demo user",
+    "category": "general",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:40:26.159433+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      },
+      {
+        "userId": "u2",
+        "userName": "Raj Malhotra",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=raj",
+        "joinedAt": "2025-10-26T07:40:26.253625+00:00",
+        "isMuted": false,
+        "isHost": false,
+        "role": "speaker",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "demo"
+    ],
+    "startedAt": "2025-10-26T07:40:26.159481+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "a312be6c-7406-4c29-b37f-c550d5276c11"
+  },
+  {
+    "id": "76b1761a-53da-48f4-b3c1-2dab64f5e887",
+    "name": "Existing User Room",
+    "description": "Testing room creation with existing user u1",
+    "category": "music",
+    "hostId": "u1",
+    "hostName": "Priya Sharma",
+    "moderators": [
+      "u1"
+    ],
+    "participants": [
+      {
+        "userId": "u1",
+        "userName": "Priya Sharma",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=priya",
+        "joinedAt": "2025-10-26T07:40:26.172440+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "music",
+      "test"
+    ],
+    "startedAt": "2025-10-26T07:40:26.172482+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "76b1761a-53da-48f4-b3c1-2dab64f5e887"
+  },
+  {
+    "id": "3b173b5d-8f3a-4af5-830e-f912307e9c2d",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-26T07:40:28.864184+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-26T07:40:28.864247+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "3b173b5d-8f3a-4af5-830e-f912307e9c2d"
+  },
+  {
+    "id": "11ccb284-925d-4506-9460-b487cdd4a439",
+    "name": "ert",
+    "description": "eeeeeeer",
+    "category": "general",
+    "hostId": "70ddfbb5-5289-40bb-8936-69fe90823d08",
+    "hostName": "User",
+    "moderators": [
+      "70ddfbb5-5289-40bb-8936-69fe90823d08"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T07:43:08.340323+00:00",
+    "endedAt": "2025-10-26T07:43:59.115130+00:00",
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "11ccb284-925d-4506-9460-b487cdd4a439"
+  },
+  {
+    "id": "178008d3-0833-4aea-a809-4528c19a61de",
+    "name": "sting",
+    "description": "enery",
+    "category": "general",
+    "hostId": "cbb95c12-02d3-4796-b567-8dac18a6f3ba",
+    "hostName": "Demo User",
+    "moderators": [
+      "70ddfbb5-5289-40bb-8936-69fe90823d08"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-26T08:08:28.415235+00:00",
+    "endedAt": "2025-10-26T08:19:30.456325+00:00",
+    "totalJoins": 4,
+    "peakParticipants": 3,
+    "scheduledFor": null,
+    "agoraChannel": "178008d3-0833-4aea-a809-4528c19a61de"
+  },
+  {
+    "id": "091fa868-ba3e-41b5-b5d9-5ae1b62b31b7",
+    "name": "late night",
+    "description": "party",
+    "category": "general",
+    "hostId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "hostName": "BITLA RAMCHARAN",
+    "moderators": [
+      "aa743481-0663-407e-9c10-24cccd5cf494"
+    ],
+    "participants": [
+      {
+        "userId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+        "userName": "BITLA RAMCHARAN",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sunnyram",
+        "joinedAt": "2025-10-27T04:52:57.906006+00:00",
+        "isMuted": false,
+        "isHost": false,
+        "role": "speaker",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-27T04:52:46.655519+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "091fa868-ba3e-41b5-b5d9-5ae1b62b31b7"
+  },
+  {
+    "id": "5e9bdd10-fb87-4c9a-9899-ee48b368befc",
+    "name": "Bike riders",
+    "description": "Riders club",
+    "category": "general",
+    "hostId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "hostName": "BITLA RAMCHARAN",
+    "moderators": [
+      "ba7138c2-f798-4160-9dd3-5165492f7fef"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-27T04:53:56.244359+00:00",
+    "endedAt": "2025-10-27T04:57:55.772121+00:00",
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "5e9bdd10-fb87-4c9a-9899-ee48b368befc"
+  },
+  {
+    "id": "7214f65e-ac84-4a8d-ab50-438b137afc7c",
+    "name": "Demo Room Test",
+    "description": "Testing room creation with demo user",
+    "category": "general",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-27T08:04:46.798866+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      },
+      {
+        "userId": "u2",
+        "userName": "Raj Malhotra",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=raj",
+        "joinedAt": "2025-10-27T08:04:46.930666+00:00",
+        "isMuted": false,
+        "isHost": false,
+        "role": "speaker",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "demo"
+    ],
+    "startedAt": "2025-10-27T08:04:46.798918+00:00",
+    "endedAt": null,
+    "totalJoins": 2,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "7214f65e-ac84-4a8d-ab50-438b137afc7c"
+  },
+  {
+    "id": "b05c4d9d-264b-4997-8954-0c6244e48710",
+    "name": "Existing User Room",
+    "description": "Testing room creation with existing user u1",
+    "category": "music",
+    "hostId": "u1",
+    "hostName": "Priya Sharma",
+    "moderators": [
+      "u1"
+    ],
+    "participants": [
+      {
+        "userId": "u1",
+        "userName": "Priya Sharma",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=priya",
+        "joinedAt": "2025-10-27T08:04:46.814291+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "music",
+      "test"
+    ],
+    "startedAt": "2025-10-27T08:04:46.814324+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "b05c4d9d-264b-4997-8954-0c6244e48710"
+  },
+  {
+    "id": "56510e1e-9757-4f88-8dff-22a6252ff5fa",
+    "name": "New User Room",
+    "description": "Testing room creation with non-existent user",
+    "category": "tech",
+    "hostId": "newuser_20251027_080446",
+    "hostName": "User",
+    "moderators": [
+      "newuser_20251027_080446"
+    ],
+    "participants": [
+      {
+        "userId": "newuser_20251027_080446",
+        "userName": "User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=newuser_20251027_080446",
+        "joinedAt": "2025-10-27T08:04:46.847285+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "tech",
+      "new"
+    ],
+    "startedAt": "2025-10-27T08:04:46.847311+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "56510e1e-9757-4f88-8dff-22a6252ff5fa"
+  },
+  {
+    "id": "09c73cc3-b267-4e99-9a6b-36cd3c696502",
+    "name": "Test Clubhouse Room",
+    "description": "Testing room creation",
+    "category": "music",
+    "hostId": "demo_user",
+    "hostName": "Demo User",
+    "moderators": [
+      "demo_user"
+    ],
+    "participants": [
+      {
+        "userId": "demo_user",
+        "userName": "Demo User",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+        "joinedAt": "2025-10-27T08:04:49.591760+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test"
+    ],
+    "startedAt": "2025-10-27T08:04:49.591799+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "09c73cc3-b267-4e99-9a6b-36cd3c696502"
+  },
+  {
+    "id": "9a145cca-907a-49d6-9ea6-a6e1044285bb",
+    "name": "Test Audio Room",
+    "description": "Testing room creation with Daily.co",
+    "category": "music",
+    "hostId": "6c64de25-d398-48a6-a148-2bde43df045d",
+    "hostName": "Demo User Updated",
+    "moderators": [
+      "6c64de25-d398-48a6-a148-2bde43df045d"
+    ],
+    "participants": [
+      {
+        "userId": "6c64de25-d398-48a6-a148-2bde43df045d",
+        "userName": "Demo User Updated",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo1",
+        "joinedAt": "2025-10-28T04:34:50.151810+00:00",
+        "isMuted": false,
+        "isHost": true,
+        "role": "host",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [
+      "test",
+      "audio"
+    ],
+    "startedAt": "2025-10-28T04:34:50.151851+00:00",
+    "endedAt": null,
+    "totalJoins": 1,
+    "peakParticipants": 1,
+    "scheduledFor": null,
+    "agoraChannel": "9a145cca-907a-49d6-9ea6-a6e1044285bb"
+  },
+  {
+    "id": "99dd547d-07f5-4195-91fb-f79d9e715eb6",
+    "name": "Late night club",
+    "description": "B",
+    "category": "general",
+    "hostId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "hostName": "Ding dong ",
+    "moderators": [
+      "b1a68570-99a3-49fa-8309-347cbe3499df",
+      "1962c398-33f3-43de-9bca-e3b2224039f7"
+    ],
+    "participants": [],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "ended",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-28T05:34:01.487273+00:00",
+    "endedAt": "2025-10-28T05:36:02.831700+00:00",
+    "totalJoins": 3,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "99dd547d-07f5-4195-91fb-f79d9e715eb6"
+  },
+  {
+    "id": "e9846a7c-2c14-4dfb-b7dc-28e06e7c33b8",
+    "name": "Chit chat",
+    "description": "Sh",
+    "category": "general",
+    "hostId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "hostName": "Karthik ",
+    "moderators": [
+      "22214d62-396a-4d37-8bdc-de8adb9048d5"
+    ],
+    "participants": [
+      {
+        "userId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+        "userName": "Karthik ",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bittu",
+        "joinedAt": "2025-10-28T07:14:28.889372+00:00",
+        "isMuted": false,
+        "isHost": false,
+        "role": "speaker",
+        "raisedHand": false
+      }
+    ],
+    "maxParticipants": 50,
+    "maxSpeakers": 20,
+    "status": "active",
+    "isPrivate": false,
+    "tags": [],
+    "startedAt": "2025-10-28T07:14:25.365653+00:00",
+    "endedAt": null,
+    "totalJoins": 4,
+    "peakParticipants": 2,
+    "scheduledFor": null,
+    "agoraChannel": "e9846a7c-2c14-4dfb-b7dc-28e06e7c33b8"
+  }
+]

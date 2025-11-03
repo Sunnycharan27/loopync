@@ -1,0 +1,1773 @@
+[
+  {
+    "id": "n1",
+    "userId": "demo_user",
+    "type": "post_like",
+    "payload": {
+      "fromName": "Priya Sharma",
+      "postId": "p1"
+    },
+    "read": false,
+    "createdAt": "2025-10-30T05:37:10.410317+00:00"
+  },
+  {
+    "id": "n2",
+    "userId": "demo_user",
+    "type": "tribe_join",
+    "payload": {
+      "fromName": "Raj Malhotra",
+      "tribeId": "t1"
+    },
+    "read": false,
+    "createdAt": "2025-10-30T05:37:10.410323+00:00"
+  },
+  {
+    "id": "9180b506-de69-4d2f-a028-1942928dff3d",
+    "userId": "u1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "01606ce9-b1d0-4a63-85c5-cd1163cc63e2",
+      "callerId": "ae2d94af-25e2-44a9-af04-d18957c1519b",
+      "channelName": "call-b6e58159-835",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACWk/Fq/lYvDBPFTIKmvqeg2iI1rDqP1XrUpk5Ltz+DYNfJlAbyNsRkIgC4P70E3QsHaQQAAQBtyAVpAgBtyAVpAwBtyAVpBABtyAVp",
+      "uid": 385976100,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:44:29.825634+00:00"
+  },
+  {
+    "id": "6896c9b4-dbf3-4b69-8507-09feb68d1b6c",
+    "userId": "u1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "3449d7bf-86c2-4bde-a9c6-02c1ab8980c9",
+      "callerId": "ae2d94af-25e2-44a9-af04-d18957c1519b",
+      "channelName": "call-0948c020-d64",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADreFCPmnh5FsU9HBL8rd4l5EPkBXUXnsvxevm+rcX67ElWTTPyNsRkIgApFTwACQwHaQQAAQCZyAVpAgCZyAVpAwCZyAVpBACZyAVp",
+      "uid": 385976100,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:45:13.999144+00:00"
+  },
+  {
+    "id": "ade5e262-9a85-485d-a6f0-eb63e7c50a80",
+    "userId": "u1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "f6cd7307-12cc-4dd2-a9bb-0c14f36307a4",
+      "callerId": "ae2d94af-25e2-44a9-af04-d18957c1519b",
+      "channelName": "call-c731ba5c-057",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAD33OTi/VCFy4yTJxs951ODjQEDCg3zfV3mHqoqZCeNCrq7jpbyNsRkIgCwGvgAOQwHaQQAAQDJyAVpAgDJyAVpAwDJyAVpBADJyAVp",
+      "uid": 385976100,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:46:01.236805+00:00"
+  },
+  {
+    "id": "ed368fd6-589e-4417-8112-2adb50752966",
+    "userId": "u1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "547b1b81-1c5e-455e-b55c-a040055173e0",
+      "callerId": "ae2d94af-25e2-44a9-af04-d18957c1519b",
+      "channelName": "call-5905798b-273",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAZJS3GQN+oQvUt4erliyJVPOz65MO594+ETgf9PZp53raXuBvyNsRkIgB2y2AAUwwHaQQAAQDjyAVpAgDjyAVpAwDjyAVpBADjyAVp",
+      "uid": 385976100,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:46:27.870818+00:00"
+  },
+  {
+    "id": "b1bf075b-bc0d-4266-9f37-50bf8a950d84",
+    "userId": "970f56ee-f7f5-46ee-9a7f-6a3550ab23a0",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+        "handle": "Vibro",
+        "name": "BITLA RAMCHARAN",
+        "email": "vibrovolt1@gmail.com",
+        "phone": "7458888888",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Vibro",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T07:29:47.382795+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T07:47:18.799355+00:00"
+  },
+  {
+    "id": "d8e7b97f-a0ad-452f-aa66-65395c04ce86",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+        "handle": "Vibro",
+        "name": "BITLA RAMCHARAN",
+        "email": "vibrovolt1@gmail.com",
+        "phone": "7458888888",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Vibro",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T07:29:47.382795+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T07:47:20.551717+00:00"
+  },
+  {
+    "id": "ed952343-581b-43df-b4f8-89812bc42460",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "friend_accepted",
+    "payload": {
+      "toUser": {
+        "id": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+        "handle": "ssunnycharan",
+        "name": "BITLA RAMCHARAN",
+        "email": "vibrovolt@gmail.com",
+        "phone": "4567897654",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ssunnycharan",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T04:50:24.860412+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T07:47:24.941567+00:00"
+  },
+  {
+    "id": "9a1f1c47-aebf-460f-a413-1f478bbca441",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "00920291-a39a-4c05-85f3-2b240a542cd6",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-eb302cb1-cf6",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACSxzRchIxCzF3kzl5QcoiuEAHM9ZQJ9DT1MPZorbKHp5yTq35J2y2aIgCeBSkClQwHaQQAAQAlyQVpAgAlyQVpAwAlyQVpBAAlyQVp",
+      "uid": 744776411,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:47:33.551701+00:00"
+  },
+  {
+    "id": "be21294b-a7d0-459d-a757-1f28ba7c40c4",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "8fe4f6a9-177b-4050-a82e-f2b67cda5259",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-46a0fb3d-d68",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACWqIl0aPjnQ3/0VBZQgo0nDG3qdTfv+BpBrdyOkDV2OJt2hbRJ2y2aIgBEuvAEmwwHaQQAAQAryQVpAgAryQVpAwAryQVpBAAryQVp",
+      "uid": 744776411,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:47:39.947050+00:00"
+  },
+  {
+    "id": "b3723db5-8673-47cc-86a4-b5899eade863",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "1d4bacd1-b7d4-4e79-af0b-136208329404",
+      "callerId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+      "channelName": "call-4391ba0d-6bd",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADly3kBuu2vfmHk+Un9dVTsj//KZjT/3RgZx0d2R7Mf4r4RbpiAjyoDIgAyIGQBqwwHaQQAAQA7yQVpAgA7yQVpAwA7yQVpBAA7yQVp",
+      "uid": 661719969,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:47:55.335585+00:00"
+  },
+  {
+    "id": "f60db7da-27ca-47bb-8384-db70109f3318",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "4157ee89-3480-4575-a5a7-9e6a4101282c",
+      "callerId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+      "channelName": "call-39cac913-7ae",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAVlccrezJ8VeGAS7yyVRy5TdVGYgE+3C/i2YKPmCKkXRCZKhI8qbLGIgAl/0AEsAwHaQQAAQBAyQVpAgBAyQVpAwBAyQVpBABAyQVp",
+      "uid": 460306,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T07:48:00.844849+00:00"
+  },
+  {
+    "id": "59caad22-49d5-47bf-b037-09d310b1e296",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "dm",
+    "payload": {
+      "sender": {
+        "id": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+        "handle": "ssunnycharan",
+        "name": "BITLA RAMCHARAN",
+        "email": "vibrovolt@gmail.com",
+        "phone": "4567897654",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ssunnycharan",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T04:50:24.860412+00:00"
+      },
+      "threadId": "2b12aab8-8ff6-432e-bbcb-8af372de8230"
+    },
+    "message": "",
+    "link": "/messenger/2b12aab8-8ff6-432e-bbcb-8af372de8230",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:12:24.605412+00:00"
+  },
+  {
+    "id": "d363be44-8baf-492e-abae-4cc6d492fe53",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "3d660770-65e5-4374-950b-315900fb5892",
+        "handle": "Sunnyram",
+        "name": "Ram Charan",
+        "email": "sunnycharan1818@gmail.com",
+        "phone": "4568588888",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sunnyram",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T06:04:43.974758+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/3d660770-65e5-4374-950b-315900fb5892",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:12:52.886263+00:00"
+  },
+  {
+    "id": "a2499ac0-72fb-4eb8-8afd-e853033e60c8",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "friend_accepted",
+    "payload": {
+      "toUser": {
+        "id": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+        "handle": "ssunnycharan",
+        "name": "BITLA RAMCHARAN",
+        "email": "vibrovolt@gmail.com",
+        "phone": "4567897654",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ssunnycharan",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+          "3d660770-65e5-4374-950b-315900fb5892"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T04:50:24.860412+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:12:59.982919+00:00"
+  },
+  {
+    "id": "3cca3f2a-87eb-4fbd-a21f-2be61b74cda9",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "11b172f4-aade-405f-ac90-f5b04911e116",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-aaee790d-f9d",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADT62R2G1/GklKypUi+JajW/dFLnTIiTqlF4G5u6eo2cKbe/agLHdjuIgDUwbEAkxIHaQQAAQAjzwVpAgAjzwVpAwAjzwVpBAAjzwVp",
+      "uid": 51502792,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:13:07.895386+00:00"
+  },
+  {
+    "id": "3b750314-d25b-4f38-9859-838a7b993e33",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "a018fd29-1248-476e-be86-01df53c9b0ee",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-4afe4f85-fea",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAACYyO5AUv+iuEOen9csAmKasgUKq0zUSqSBw1VSrG7rcVURDPneI3CIgAm1jgDnBIHaQQAAQAszwVpAgAszwVpAwAszwVpBAAszwVp",
+      "uid": 606100854,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:13:16.519946+00:00"
+  },
+  {
+    "id": "506b7783-f1fc-4b19-ae81-aa40dc0a1ea4",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "15491ddf-fcbc-47d6-b44c-7289dc2900bd",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-a5b5b98c-fde",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACMd/hM4cgeOpq9Or3TmYd+bsBOJtVDahnLE8jM7S4OJl+as8vneI3CIgC9v0wEphIHaQQAAQA2zwVpAgA2zwVpAwA2zwVpBAA2zwVp",
+      "uid": 606100854,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:13:26.920231+00:00"
+  },
+  {
+    "id": "6636e897-b634-4268-8fa8-80aa12c5c4a7",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "b32fc965-acd4-4921-84d5-b5d474a72a96",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-f0bbe554-d10",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAC2AoMlFB4bIKBxP4mGoxQUegaGbcWOCD06FgJrVuWfMUFIzvwLHdjuIgCAVGUEqRIHaQQAAQA5zwVpAgA5zwVpAwA5zwVpBAA5zwVp",
+      "uid": 51502792,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:13:29.163065+00:00"
+  },
+  {
+    "id": "b403d5fa-1c6d-4fa9-b7b0-2c2872cc4910",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "9d3943d2-77fc-428e-957f-7868a9afc10f",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-73f7db7f-453",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADpcKDptC0VJWPlil3MDpyIRIw2eGPdXPjvN2xiMW5/t2nMxkcLHdjuIgCVlW4CsBIHaQQAAQBAzwVpAgBAzwVpAwBAzwVpBABAzwVp",
+      "uid": 51502792,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:13:36.686051+00:00"
+  },
+  {
+    "id": "65f41310-cb24-410f-91cb-a1ae09e76f04",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "363e33fd-6904-489b-9458-fec0e1864aa0",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-1812b03a-3fc",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAD1Ti+mx1xTtzMU2nUo8jX9mAIOawUw0580JR+9zjt5GUoQoz4LHdjuIgBI/BgDuBIHaQQAAQBIzwVpAgBIzwVpAwBIzwVpBABIzwVp",
+      "uid": 51502792,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:13:44.211846+00:00"
+  },
+  {
+    "id": "2fddb449-d133-470f-87de-e1e008603e42",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "b992c8aa-154b-449b-8693-b50a98be40ac",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-d8902011-eb3",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAA0qP74cU0k12fa11kX3vFXGIOd8yfqKu3KeH8qqKp/xdAOkeAj4cebIgCfWwcEJBQHaQQAAQC00AVpAgC00AVpAwC00AVpBAC00AVp",
+      "uid": 37802087,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:19:48.144204+00:00"
+  },
+  {
+    "id": "31ad8e11-e707-4d1b-b1b4-f68d45763a96",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "94517abc-e102-4563-bff6-822d7cdff2bb",
+      "callerId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+      "channelName": "call-4d2263a4-c5b",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADJyssg07YiSQSs+DC57amUTw7p14OsCkvNTttvKGEt7O2Nj+TneI3CIgCJP/cDkBUHaQQAAQAg0gVpAgAg0gVpAwAg0gVpBAAg0gVp",
+      "uid": 606100854,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:25:52.729783+00:00"
+  },
+  {
+    "id": "2b72d7a0-84b0-48e7-b509-3d01ee9516c8",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "3d660770-65e5-4374-950b-315900fb5892",
+        "handle": "Sunnyram",
+        "name": "Ram Charan",
+        "email": "sunnycharan1818@gmail.com",
+        "phone": "4568588888",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sunnyram",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T06:04:43.974758+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/3d660770-65e5-4374-950b-315900fb5892",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:26:54.916015+00:00"
+  },
+  {
+    "id": "ea762151-3484-4942-b04c-46fbd7671e44",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "friend_accepted",
+    "payload": {
+      "toUser": {
+        "id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+        "handle": "Karthii",
+        "name": "Ponnamkarthik ",
+        "email": "ponnamkartheek6969@gmail.com",
+        "phone": "9392734165",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthii",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "3d660770-65e5-4374-950b-315900fb5892"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T08:26:33.779480+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:27:01.316669+00:00"
+  },
+  {
+    "id": "89dfe219-74a0-4aa0-9e2c-66a220fcd5f1",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "dm",
+    "payload": {
+      "sender": {
+        "id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+        "handle": "Karthii",
+        "name": "Ponnamkarthik ",
+        "email": "ponnamkartheek6969@gmail.com",
+        "phone": "9392734165",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthii",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "3d660770-65e5-4374-950b-315900fb5892"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T08:26:33.779480+00:00"
+      },
+      "threadId": "514a249f-2613-4cec-8362-c8e0f3ea5754"
+    },
+    "message": "",
+    "link": "/messenger/514a249f-2613-4cec-8362-c8e0f3ea5754",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:27:10.427806+00:00"
+  },
+  {
+    "id": "0c60e525-6f37-44a2-a0c8-bf2c519f6be8",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "1c49dd6b-6b5d-4e78-b491-f475f6c3acf2",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-8adcd632-00c",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACSydxk1ueqNSP51ef5P0EO4ydKn8kSSRU/Vj4/+iKsR24cRq7c9HO+IgD+i4YA3xUHaQQAAQBv0gVpAgBv0gVpAwBv0gVpBABv0gVp",
+      "uid": 155324523,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:27:11.292887+00:00"
+  },
+  {
+    "id": "5eabc29a-e67e-4bc5-a04e-1a4f388257f2",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "200d3de5-bf4a-4af2-a337-3470912d3f4b",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-bb54654e-168",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADDPSXqzA6NW6hILRBwFTB0Q8IkSE+HXbZWz/3mFy5SDkOB8bvc9HO+IgB1bpwC5hUHaQQAAQB20gVpAgB20gVpAwB20gVpBAB20gVp",
+      "uid": 155324523,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:27:18.702687+00:00"
+  },
+  {
+    "id": "9c9aab48-5613-4922-80fc-00133c1066ba",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "26e79a6e-669c-40bb-82bb-f56714b13554",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-aaa5f4b0-194",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADQiegjxPLmAWozYvugtvst4yQ8caxzhAKMXLBS/VaZ2AQEUqXc9HO+IgAm+D8B/xYHaQQAAQCP0wVpAgCP0wVpAwCP0wVpBACP0wVp",
+      "uid": 155324523,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:31:59.983889+00:00"
+  },
+  {
+    "id": "a0011d07-a2f9-498e-948b-78580afbc07c",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "40f86b6b-b112-459f-be0c-e23f501af221",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-5a01a2e6-9a5",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB9e2+WZOyyOOdFpq4FVIu+fQIQmpMHVQMAn42aF70pIUSWM2Hc9HO+IgBi71ACBxcHaQQAAQCX0wVpAgCX0wVpAwCX0wVpBACX0wVp",
+      "uid": 155324523,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:32:07.671944+00:00"
+  },
+  {
+    "id": "49a3680a-fb62-4868-89c8-ef37fb6e3add",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "5c6bbd63-7f02-4a4a-aac5-32111298e62f",
+      "callerId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+      "channelName": "call-736f16f4-5ea",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACabwfNWliTXolTcCVFrtAsA32zT9EaAI/wyp2sa0nLVVBvuuqDSFfhIgCA20UEMRgHaQQAAQDB1AVpAgDB1AVpAwDB1AVpBADB1AVp",
+      "uid": 732420814,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:37:05.008264+00:00"
+  },
+  {
+    "id": "2b79c8b5-1ce8-482d-9d84-3daeb5871118",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "dm",
+    "payload": {
+      "sender": {
+        "id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+        "handle": "Karthii",
+        "name": "Ponnamkarthik ",
+        "email": "ponnamkartheek6969@gmail.com",
+        "phone": "9392734165",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthii",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "3d660770-65e5-4374-950b-315900fb5892"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T08:26:33.779480+00:00"
+      },
+      "threadId": "514a249f-2613-4cec-8362-c8e0f3ea5754"
+    },
+    "message": "",
+    "link": "/messenger/514a249f-2613-4cec-8362-c8e0f3ea5754",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:37:30.961520+00:00"
+  },
+  {
+    "id": "0e32b94f-4b76-452f-84f0-7137dbbcf339",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "796fdce9-4e1b-411d-bce7-a3e848fa1542",
+      "callerId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+      "channelName": "call-c0f85c3b-69e",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAC8doQHp6vpipCSNkMnT7sl8ZjH/8SiaasK2ogO85o9FVN3M0LTA+CIIgAmmt4DTRgHaQQAAQDd1AVpAgDd1AVpAwDd1AVpBADd1AVp",
+      "uid": 11709421,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:37:33.453843+00:00"
+  },
+  {
+    "id": "3fa7e1ce-e218-41b4-b453-4e310c6d3d5a",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "4dfc5b7e-4cf1-4524-833d-e1f336808329",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-adb35012-a7a",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAqZ/RIXqLHycx2IXajXq+ihlcKQK9i2kAqdxZeKaJnN4U1Knoy8FYaIgDwmlAAVhgHaQQAAQDm1AVpAgDm1AVpAwDm1AVpBADm1AVp",
+      "uid": 919364851,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:37:42.171408+00:00"
+  },
+  {
+    "id": "61f7847c-24f6-4134-84dd-2e0e7182f955",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "e78f648a-84ea-4036-9c03-27580a509208",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-74d1f14d-c09",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAtEi5lNPYioqsnFECbuX24+QTynHi/mSdJKmVMF8CSraqAD0Ey8FYaIgBUcPIBYBgHaQQAAQDw1AVpAgDw1AVpAwDw1AVpBADw1AVp",
+      "uid": 919364851,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:37:52.192766+00:00"
+  },
+  {
+    "id": "99d20582-52aa-41bf-852b-38f011c0441e",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "259d7f0f-b8ec-46fd-bba3-b1db7fcbffff",
+      "callerId": "3d660770-65e5-4374-950b-315900fb5892",
+      "channelName": "call-b271d624-0eb",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACjxmPI6iV4dMCb4aEhj9WMlYUZMdWf6PIbhlW75ZsNZx/+BmMy8FYaIgBYAiICaRgHaQQAAQD51AVpAgD51AVpAwD51AVpBAD51AVp",
+      "uid": 919364851,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T08:38:01.356010+00:00"
+  },
+  {
+    "id": "6ffc10e3-8530-40c0-bee3-e90779eba43a",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+        "handle": "sunnyram",
+        "name": "vibro",
+        "email": "vibrovolt12@gmail.com",
+        "phone": "3456754567",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=sunnyram",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T08:49:26.364053+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T08:57:45.503853+00:00"
+  },
+  {
+    "id": "f243fbc3-d6a8-4cad-a934-0716ccdcf11b",
+    "userId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "type": "friend_accepted",
+    "payload": {
+      "toUser": {
+        "id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+        "handle": "Karthii",
+        "name": "Ponnamkarthik ",
+        "email": "ponnamkartheek6969@gmail.com",
+        "phone": "9392734165",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthii",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "3d660770-65e5-4374-950b-315900fb5892",
+          "443c5878-c846-48b5-a4c6-a8683e3f3702"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T08:26:33.779480+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": true,
+    "createdAt": "2025-11-01T08:57:59.652910+00:00"
+  },
+  {
+    "id": "bc46db2f-41e1-4d7e-a48d-cdb3067ee980",
+    "userId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "type": "dm",
+    "payload": {
+      "sender": {
+        "id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+        "handle": "Karthii",
+        "name": "Ponnamkarthik ",
+        "email": "ponnamkartheek6969@gmail.com",
+        "phone": "9392734165",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthii",
+        "coverPhoto": "",
+        "bio": "",
+        "kycTier": 1,
+        "walletBalance": 0.0,
+        "isVerified": true,
+        "verificationCode": null,
+        "resetPasswordToken": null,
+        "resetPasswordExpires": null,
+        "friends": [
+          "3d660770-65e5-4374-950b-315900fb5892",
+          "443c5878-c846-48b5-a4c6-a8683e3f3702"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "createdAt": "2025-11-01T08:26:33.779480+00:00"
+      },
+      "threadId": "3e7643a5-9c15-4baa-926f-f1f773d648a7"
+    },
+    "message": "",
+    "link": "/messenger/3e7643a5-9c15-4baa-926f-f1f773d648a7",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": true,
+    "createdAt": "2025-11-01T08:58:07.332160+00:00"
+  },
+  {
+    "id": "8fe0da13-89bd-4439-90a5-ba5826e1bcfa",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "type": "like",
+    "payload": {},
+    "message": "",
+    "link": "/posts/5c1baa2d-1464-4b84-895f-c1cd6d44147b",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T09:19:18.007578+00:00"
+  },
+  {
+    "id": "09c5b6ec-e8f2-4584-a3e6-07d1bb7b8cbd",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+        "email": "vibrovolt123@gmail.com",
+        "password": "$2b$12$PSbpJFdQ.vN469nQWTWwJ.wXfdiDYO4d7zgb0pnBuIaKvctNDi.Re",
+        "name": "wertyuiop",
+        "handle": "ertyuikol",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ertyuikol",
+        "bio": "",
+        "isVerified": false,
+        "online": false,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "followers": [],
+        "following": [],
+        "walletBalance": 1000,
+        "onboardingComplete": true,
+        "createdAt": "2025-11-01T09:30:06.117219+00:00",
+        "updatedAt": "2025-11-01T09:30:06.117229+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T09:30:35.339890+00:00"
+  },
+  {
+    "id": "f7f4e3f5-20ce-4c0c-9450-fede73f035de",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+        "email": "vibrovolt123@gmail.com",
+        "password": "$2b$12$PSbpJFdQ.vN469nQWTWwJ.wXfdiDYO4d7zgb0pnBuIaKvctNDi.Re",
+        "name": "wertyuiop",
+        "handle": "ertyuikol",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ertyuikol",
+        "bio": "",
+        "isVerified": false,
+        "online": true,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "followers": [],
+        "following": [],
+        "walletBalance": 1000,
+        "onboardingComplete": true,
+        "createdAt": "2025-11-01T09:30:06.117219+00:00",
+        "updatedAt": "2025-11-01T09:32:42.758790+00:00",
+        "lastLogin": "2025-11-01T09:32:42.758781+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": true,
+    "createdAt": "2025-11-01T09:33:00.550600+00:00"
+  },
+  {
+    "id": "a2c5ae0f-b212-4785-8fbe-fb06427aeb74",
+    "userId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "type": "friend_accepted",
+    "payload": {
+      "toUser": {
+        "id": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+        "email": "ponnamkartheek@gmail.com",
+        "password": "$2b$12$uZJV4O83H6U.H/nVK/PzQuo9nkER5Auh7UgyvKy6TU9tlNJHRHltu",
+        "name": "Ponnamkarthik",
+        "handle": "karthikbittu",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthikbittu",
+        "bio": "",
+        "isVerified": false,
+        "online": false,
+        "friends": [
+          "b090f607-c5e2-4468-9ef7-c531ca1b8fac"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "followers": [],
+        "following": [],
+        "walletBalance": 1000,
+        "onboardingComplete": true,
+        "createdAt": "2025-11-01T09:32:28.999159+00:00",
+        "updatedAt": "2025-11-01T09:32:28.999170+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-01T09:33:06.441456+00:00"
+  },
+  {
+    "id": "03bbc5b6-da78-4300-b118-1151535ae98c",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "ae977457-401e-4814-a1d2-384ae30640fa",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-30e2d3e5-301",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABhi3f5+UEpORvAKk2LVQaFGht/vHc0e2UXNCMF90Tyv1MS41EdqWExIgA2f8YCoCsHaQQAAQAw6AVpAgAw6AVpAwAw6AVpBAAw6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:00.042991+00:00"
+  },
+  {
+    "id": "ae457fd3-f8d7-40f7-b927-0c7147bf0699",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "60a751cb-fd30-42e4-a295-ecb60ae9809b",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-8eabc13c-46a",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACv38H78D4xp+/IR+CVrYg2shtbMASDgfBQB0jqrJ3JenEPgZodqWExIgBYIHEAoCsHaQQAAQAw6AVpAgAw6AVpAwAw6AVpBAAw6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:00.093810+00:00"
+  },
+  {
+    "id": "44ee92d0-f127-47b6-a74d-e2b320fd049c",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "ab330846-73f3-4659-9cab-2b31afd13073",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-ba2961c2-61c",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABhVyr0yJCV93vc+240nkf0w8gZQx8/Gql/X5m8dfIS8dUcwOgdqWExIgCT9iMAoCsHaQQAAQAw6AVpAgAw6AVpAwAw6AVpBAAw6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:00.270007+00:00"
+  },
+  {
+    "id": "2e2c2a9b-f1f2-4d27-8cff-d8ddb628b35f",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "000d4ef5-cc74-4321-aac5-6e1a72befc5b",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-fbcf3dbe-9e3",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAjW76EYsGHs+bEjOyMBgP6kBfsRpVuJYS+22Gyu2C3COmkm08dqWExIgARtqwBoCsHaQQAAQAw6AVpAgAw6AVpAwAw6AVpBAAw6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:00.325569+00:00"
+  },
+  {
+    "id": "da6568ff-a9bf-44cf-98ca-1b711f9da10c",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "885c6e0e-df84-4de2-b7e3-ad6899250762",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-8c68566b-2ab",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAGR9QrmTre1qKsMmIS7BtYtx17+M3OqBOEjGaEUvSMKrwJvZ0dqWExIgBDJf4CxSsHaQQAAQBV6AVpAgBV6AVpAwBV6AVpBABV6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:37.691317+00:00"
+  },
+  {
+    "id": "9b7ad7aa-24a5-475e-ab60-fc69dbb7ec40",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "991447bc-1352-418a-9f62-c08f785f9825",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-d0e5feb2-825",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB1jzaeWmpXjd4EsHtMyvw3il1D6PGTljRaE1Pmonvi2DuyaukdqWExIgClbsgDxSsHaQQAAQBV6AVpAgBV6AVpAwBV6AVpBABV6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:37.702368+00:00"
+  },
+  {
+    "id": "4856b8cd-b737-413b-8f64-02ba81f16eff",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "dcbb2aca-7c69-40fa-a38f-b735d203ebab",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-d26290ac-7cb",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAD2xbwOsQahJPMCLp2ftY6NYyzW9g9X81x9OYAurcvV1agHu6QdqWExIgBTfRkBxSsHaQQAAQBV6AVpAgBV6AVpAwBV6AVpBABV6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:37.787481+00:00"
+  },
+  {
+    "id": "84e4556f-1a82-4a21-b8a1-f08bbba94dcf",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "526a8a39-bfea-443e-a358-9e3bc8a56b9e",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-4b9229ae-d66",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABjD4qICcpdKwYbuyJVps3x28Uo0RSygTUzJ78FZ62VoT3b95MdqWExIgBFCAQCxSsHaQQAAQBV6AVpAgBV6AVpAwBV6AVpBABV6AVp",
+      "uid": 616295012,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:00:37.797283+00:00"
+  },
+  {
+    "id": "3843b001-76cf-414c-846f-7e8606e10437",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "2b8ee900-fb0a-4a75-8ef0-09585fa103fb",
+      "callerId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "channelName": "call-b9207985-20a",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAOmvt0CJc/RjRF+ythHhcaMATtpleZHvxYcmdt5bXlN4MELl29m+fJIgCjO1IAWywHaQQAAQDr6AVpAgDr6AVpAwDr6AVpBADr6AVp",
+      "uid": 680735015,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:03:07.852892+00:00"
+  },
+  {
+    "id": "755a02a6-2566-453d-9794-487a5233a475",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "6c65e984-f186-4b26-ac1c-c2c397fc03fd",
+      "callerId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "channelName": "call-008d6911-265",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAC32WA0DGSo5ujboiO9mWlaJDic75aFCYZqjyMVLckAftu7xuq9m+fJIgCdrroCYywHaQQAAQDz6AVpAgDz6AVpAwDz6AVpBADz6AVp",
+      "uid": 680735015,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:03:15.640795+00:00"
+  },
+  {
+    "id": "d709ee6e-35a5-4dc6-aef9-becfb50b3db2",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "7431fe7a-5b75-49f6-be22-a519b927db3c",
+      "callerId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "channelName": "call-cbe92fb3-83b",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADCbeAORyOoZ6lIoltwwZJoWGDxmCPLpwoDM/hnSWrOFkL35Gq9m+fJIgD7bwUDgC0HaQQAAQAQ6gVpAgAQ6gVpAwAQ6gVpBAAQ6gVp",
+      "uid": 680735015,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:08:00.021465+00:00"
+  },
+  {
+    "id": "eef55aac-d0ed-448f-91d8-c34b33c5e27b",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "5ad9156d-8120-45d4-922f-e7e13bfa6630",
+      "callerId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "channelName": "call-f86a9e5e-b4e",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAA0K6IRzijWCW4TDLdNTLG64gdIyPj3DgqXr0pObl/s6Tp3q4m9m+fJIgDNqiUEji0HaQQAAQAe6gVpAgAe6gVpAwAe6gVpBAAe6gVp",
+      "uid": 680735015,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": true,
+    "createdAt": "2025-11-01T10:08:14.686451+00:00"
+  },
+  {
+    "id": "ffa46221-6686-46f0-9afb-090bc1b8882b",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "4e389ee2-efaf-4751-b1bf-0cd9850980b3",
+      "callerId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "channelName": "call-b8ab8cb9-311",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADIETJKyTvD8WhD58KjoWoUvYQBBUOpC/hQmCCv1i3TLr/n9deBschWIgAS4xQCpzIHaQQAAQA37wVpAgA37wVpAwA37wVpBAA37wVp",
+      "uid": 1665488320,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:29:59.200845+00:00"
+  },
+  {
+    "id": "555a84be-438c-49bd-afb8-5d1817bdc842",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "b21c2d4e-32d1-46fa-a086-bd286f36d886",
+      "callerId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "channelName": "call-d1238203-796",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACdaf+24L/8ja6zBxzSUrcNxSyA8QfW/xHVgDvzP2ze443wb6uBschWIgDGueAA9jIHaQQAAQCG7wVpAgCG7wVpAwCG7wVpBACG7wVp",
+      "uid": 1665488320,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:31:18.644818+00:00"
+  },
+  {
+    "id": "41de949f-6fc7-4be4-8c78-6006b426de70",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "f3585bb5-145f-49d8-9bf5-3a7a884ed5fe",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-4c6a02f2-89a",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB5AzetolJUOvkpHMtJiqtxUhZVgP6xBhPI7fgKws7T4mtdiChx5ZhVIgDCkDsAhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.517125+00:00"
+  },
+  {
+    "id": "864b6edb-c096-4c66-896f-5df5151c4ff0",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "89273d5c-99ca-4408-8f55-a2fa89c41a97",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-c3e0110a-c17",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADDRCKZOeVBL8mCYKS3JZ6EQS+KSA9ikbBE88QrnXCMNdigwV1x5ZhVIgALcycFhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.541429+00:00"
+  },
+  {
+    "id": "6dc3e31b-a817-4dcb-adef-b21c97e1c260",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "bb6d3f60-4062-49fa-aab0-19311164a52f",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-6d62a56f-668",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAdrY1S80i5+SQSTnLqD11pmVKJaHyZUcm1optBXWuTfXvf0KRx5ZhVIgDCeN8EhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.560799+00:00"
+  },
+  {
+    "id": "5db90feb-1888-4eca-aa2f-b9db5c84ae93",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "2f862fd0-0081-470e-b0f3-c1dd1df9a57b",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-fa034dae-10b",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAD/cqCkBO+eZuWxRaaVQORjslFEij4B7vBtY52y+C9l6+YZfeVx5ZhVIgAVUoIAhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.620541+00:00"
+  },
+  {
+    "id": "c800c245-f5c2-4d4d-8587-994478239058",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "ae7fa9fa-ab2c-4cc0-ac17-5202d0d7fac7",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-a3a3c4ea-4ec",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAArGa5d+8zcb870iYFo36BOX/98NTTEu5Vp3SlS+R5RpyjVxkNx5ZhVIgAD+dEFhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.630335+00:00"
+  },
+  {
+    "id": "cf8365bf-e0c3-423a-9a79-68ccc28711ff",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "6b1f33e4-08f9-470f-b473-d2838100edf5",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-1ccb14bc-2e5",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABoMzoh+/2xHPw2tR4Q+/2yYRMZtR/oo5Y+0+A+ZYugWxjInJBx5ZhVIgBHRPUEhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.640291+00:00"
+  },
+  {
+    "id": "2cedc3c3-d484-46fa-a780-3938b88dd67a",
+    "userId": "test_user_2",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "f53fab13-604b-4479-8321-cb93e4f89e45",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-4adb24ad-0fc",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABhEMDVaL8IoeWwM6F6QKaN+4/9wenJ7HSFb7Vd4s+P84HHFaIzOyU5IgDLAacBhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 2005331118,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.691426+00:00"
+  },
+  {
+    "id": "3d5b0f8e-d0ae-4e64-834f-c56dbb9b62fb",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "7ae3c1bd-b684-4ae7-8b52-5bc343dfd7ef",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-5b42e005-1fe",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACZoPhZE8tMJ3dt7DhXW7B2QPVgbwEqXTmVHnIDcAjT1DYGuOpx5ZhVIgDAV6AEhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.763050+00:00"
+  },
+  {
+    "id": "14629431-b9b5-41d2-bbda-131f9b98ef9e",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "8d3acf03-0ed9-4564-85d2-6302bbc042ea",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-312b4588-5d3",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADApvbQmbW6WhyTfgTZlkSWo4+COlz2EDLrG3qg/aHXiH6N1fNx5ZhVIgAZn4YEhzUHaQQAAQAX8gVpAgAX8gVpAwAX8gVpBAAX8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:15.850563+00:00"
+  },
+  {
+    "id": "08bb3493-661c-4788-a3d5-10193e2b4979",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "e4615b02-f7b4-4de2-9ffe-7bbe6b235fdd",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-48d4b82c-810",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB+qrR7WolHaYzS1eOelJzzerynea+WUfTsCSkBbQx2qUK5mQNx5ZhVIgBqWsIDrTUHaQQAAQA98gVpAgA98gVpAwA98gVpBAA98gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:53.915402+00:00"
+  },
+  {
+    "id": "82f56c09-7e73-4f36-a4ee-64ea2c5393b2",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "c60895c4-7fd5-4a18-81b9-fe0a2b5cb4f9",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-54320daa-4e7",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB8TPtCNbN7lAGqRLYpMaWpe+HfCjLgIFMsQg/Pyb0nmYcp8fBx5ZhVIgByaUwCrTUHaQQAAQA98gVpAgA98gVpAwA98gVpBAA98gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:53.927339+00:00"
+  },
+  {
+    "id": "c62bfc46-ac64-486c-a3ad-edf2905e3c20",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "43c02506-755f-41b0-9e24-1790e62642bc",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-252bbaca-8fa",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACq02+eTfRvt52daGGquGkml++tWqdYPnc3WHpwupJWxfERu3Bx5ZhVIgC40eoFrTUHaQQAAQA98gVpAgA98gVpAwA98gVpBAA98gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:53.992156+00:00"
+  },
+  {
+    "id": "13a7e0f8-3391-4b3d-a89c-17261d867298",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "7f19b442-5f7e-456c-a1aa-bc3af6864a67",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-ec2af291-2d3",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAAY13O3AVTiM55IBY9n3lT31QyGWvHbRiRUjMWXD/nTtZHayhx5ZhVIgCkku8ErjUHaQQAAQA+8gVpAgA+8gVpAwA+8gVpBAA+8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:54.003080+00:00"
+  },
+  {
+    "id": "2fca868b-6192-4bc0-b45b-3e4b1b105e89",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "770b95f7-a6b6-4338-9c69-07abeab9bb77",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-28990bbd-b4f",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAAEl807bP0esLyBIegx57hV8kO+YN8d4QqhPZ842hPTrErLXeFx5ZhVIgCSt/AArjUHaQQAAQA+8gVpAgA+8gVpAwA+8gVpBAA+8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:54.060443+00:00"
+  },
+  {
+    "id": "3712c5d6-bf2a-4d56-aea7-0be5849b42e9",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "3ba50660-f018-46d8-90fe-6bf31ab562f1",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-634ffabe-779",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAC/APUnJOQeXUJ+qRNk1gCDJlX9u4onHwgsJ15XofImpvdIILxx5ZhVIgC6KLEFrjUHaQQAAQA+8gVpAgA+8gVpAwA+8gVpBAA+8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:54.068667+00:00"
+  },
+  {
+    "id": "5f4e4276-c7ff-41de-9f00-d52565402516",
+    "userId": "test_user_2",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "209bcf26-a8c1-4551-9e17-634ec1c571ea",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-abe58e3f-9c3",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACDoYK0iZSLpIgciMqpcVMo3sMbWsCdUf6AllFpOutOFHRR91AzOyU5IgD8ID4CrjUHaQQAAQA+8gVpAgA+8gVpAwA+8gVpBAA+8gVp",
+      "uid": 2005331118,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:54.078233+00:00"
+  },
+  {
+    "id": "b577b719-bf64-464c-b0a7-f23ce3b408ed",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "91e2a6ec-e5a2-4966-a7f9-b9c19d38c86d",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-17ba13dc-2b3",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB3kAdjvArwGXbQBscTa19YydA1+Num9XS+osN3gVHSDiTfaDtx5ZhVIgCm0/QCrjUHaQQAAQA+8gVpAgA+8gVpAwA+8gVpBAA+8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:54.191769+00:00"
+  },
+  {
+    "id": "9d7162f6-d589-4cfe-a7bc-097498ab80c5",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "dea8e30c-df69-4f99-bf9e-63c404f76d32",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-ecf8d29a-37d",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAD7q2fAS+oUlzOJ3jiCDCRcp9ECEqgZ7f9MMKi/inhX14j+CFlx5ZhVIgA6uWEBrjUHaQQAAQA+8gVpAgA+8gVpAwA+8gVpBAA+8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:42:54.282123+00:00"
+  },
+  {
+    "id": "54d26656-cf74-4395-a585-acdc1dac4128",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "756982ba-d2f0-4960-9351-b89131bf167c",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-4bc3de65-431",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IACB6RIMMFwZuTWM4GJX5io7KucLfkwyDG6iFeG69Y0nwq8Ysftx5ZhVIgDHjw0EwDUHaQQAAQBQ8gVpAgBQ8gVpAwBQ8gVpBABQ8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:43:12.281961+00:00"
+  },
+  {
+    "id": "99b83170-240a-4e66-803e-a28580a9342f",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "dcf12e94-6ac9-4c66-9b2b-55a4ef72686d",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-46b78b1e-28a",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IADyBiOOj15p05V37b/VUep3e9kmp3l5VBqs4W0UM9Q6+8Jf0u9x5ZhVIgAokRUCwDUHaQQAAQBQ8gVpAgBQ8gVpAwBQ8gVpBABQ8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:43:12.561854+00:00"
+  },
+  {
+    "id": "d0babf6c-89c6-47a4-ad01-ed63f1c9a8c0",
+    "userId": "test_user_1",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "71ba85ed-0ccb-4d45-92c0-2ac590542511",
+      "callerId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "channelName": "call-26c5689d-890",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABxftaRtx7Ajp/nVcpm2bdP1NDQkHomgn0XPrt3e+MmF3ljJ4px5ZhVIgA4NYgDwDUHaQQAAQBQ8gVpAgBQ8gVpAwBQ8gVpBABQ8gVp",
+      "uid": 1938763669,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-01T10:43:12.884005+00:00"
+  },
+  {
+    "id": "962b63f2-ba9c-4526-920b-d6549bff0b4d",
+    "userId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "type": "friend_request",
+    "payload": {
+      "fromUser": {
+        "id": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+        "email": "bitlaramcharan5@gmail.com",
+        "password": "$2b$12$iCcL6twDSFR5Zhc6Sg.n7ePydxUVB94UZ7Nu2I4geJhpbSxgYaJU6",
+        "name": "Ramcharan Bitla",
+        "handle": "sunnyram27",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=sunnyram27",
+        "bio": "",
+        "isVerified": false,
+        "online": true,
+        "friends": [],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "followers": [],
+        "following": [],
+        "walletBalance": 1000,
+        "onboardingComplete": true,
+        "createdAt": "2025-11-03T04:35:47.211035+00:00",
+        "updatedAt": "2025-11-03T04:52:42.408103+00:00",
+        "lastLogin": "2025-11-03T04:52:42.408091+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-03T05:38:17.318022+00:00"
+  },
+  {
+    "id": "ad5ffe9d-70ac-4f11-9e10-bdbf3164fe37",
+    "userId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "type": "friend_accepted",
+    "payload": {
+      "toUser": {
+        "id": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+        "email": "omshanthisrinath@gmail.com",
+        "password": "$2b$12$j.z3ZXstsaM5PpVCjgXEz.I57.RC0LWDEK/Nybj5xj7EbA.dchgze",
+        "name": "Bitla srinath",
+        "handle": "srinath",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Srinath",
+        "bio": "",
+        "isVerified": false,
+        "online": true,
+        "friends": [
+          "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd"
+        ],
+        "friendRequestsSent": [],
+        "friendRequestsReceived": [],
+        "followers": [],
+        "following": [],
+        "walletBalance": 1000,
+        "onboardingComplete": true,
+        "createdAt": "2025-11-02T05:25:22.987240+00:00",
+        "updatedAt": "2025-11-03T05:54:54.234094+00:00",
+        "lastLogin": "2025-11-03T05:54:54.234082+00:00"
+      }
+    },
+    "message": "",
+    "link": "/profile/513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "fromUserId": "",
+    "fromUserName": "",
+    "fromUserAvatar": "",
+    "contentType": "",
+    "contentId": "",
+    "read": false,
+    "createdAt": "2025-11-03T05:56:32.099772+00:00"
+  },
+  {
+    "id": "eae69ada-bca1-4126-94fa-9c8fa4ec669b",
+    "userId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "type": "call",
+    "title": "Incoming audio call",
+    "message": "Call from user",
+    "data": {
+      "callId": "b8b8dbad-aa63-4aa3-9fac-bd7b7087e256",
+      "callerId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+      "channelName": "call-fdc91fd4-853",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IABQLbtAyH3y4/efhdVH4cWk/Z50j7Kj1Pg/1kPYhfOY0lzELLe3pbVLIgDrGkADo5UJaQQAAQAzUghpAgAzUghpAwAzUghpBAAzUghp",
+      "uid": 1273326348,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-03T05:56:51.467363+00:00"
+  },
+  {
+    "id": "115db299-c79f-4bd2-9a45-e6906078decb",
+    "userId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "type": "call",
+    "title": "Incoming video call",
+    "message": "Call from user",
+    "data": {
+      "callId": "f78965fc-5293-4f23-9d59-ebc08cef606a",
+      "callerId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+      "channelName": "call-19b9395d-0d6",
+      "token": "0069d727260580f40d2ae8c131dbfd8ba08IAB73QQA1ZJQrEj5sCHuwY1l9vKUxFg5/qYx3ivTQZvqnlrPhxa3pbVLIgDKJokEspUJaQQAAQBCUghpAgBCUghpAwBCUghpBABCUghp",
+      "uid": 1273326348,
+      "appId": "9d727260580f40d2ae8c131dbfd8ba08"
+    },
+    "read": false,
+    "createdAt": "2025-11-03T05:57:06.519918+00:00"
+  }
+]

@@ -1,0 +1,496 @@
+[
+  {
+    "userId": "demo_user",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-27T08:04:50.913787+00:00"
+  },
+  {
+    "userId": "u1",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:15:27.180609+00:00"
+  },
+  {
+    "userId": "u2",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:15:28.295313+00:00"
+  },
+  {
+    "userId": "u3",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:15:29.968996+00:00"
+  },
+  {
+    "userId": "u4",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:15:31.604146+00:00"
+  },
+  {
+    "userId": "u5",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:15:32.757228+00:00"
+  },
+  {
+    "userId": "8b52c2c0-8785-420e-b6c1-15f878d244bf",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:15:33.983156+00:00"
+  },
+  {
+    "userId": "eb2dead3-9c2e-463f-b5f1-4e8deb0f3272",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:35:24.246937+00:00"
+  },
+  {
+    "userId": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "categories": {
+      "food": 10,
+      "music": 10,
+      "spiritual": 20,
+      "social": 10,
+      "fitness": 15,
+      "art": 15
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:41:40.936768+00:00"
+  },
+  {
+    "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:41:42.373648+00:00"
+  },
+  {
+    "userId": "c56f7f7f-81da-4dae-975e-a9296fcaa173",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T04:59:22.039822+00:00"
+  },
+  {
+    "userId": "08d72d6d-275e-43ea-934a-17da0bfacfbc",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T06:12:16.232910+00:00"
+  },
+  {
+    "userId": "cbb95c12-02d3-4796-b567-8dac18a6f3ba",
+    "categories": {
+      "food": 10,
+      "music": 10,
+      "spiritual": 15,
+      "social": 5,
+      "fitness": 5,
+      "art": 5
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T08:00:29.066948+00:00"
+  },
+  {
+    "userId": "70ddfbb5-5289-40bb-8936-69fe90823d08",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-26T08:00:35.035018+00:00"
+  },
+  {
+    "userId": "d328cfd2-5824-4519-831a-bc4cca6bb9a2",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-28T04:33:08.231928+00:00"
+  },
+  {
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Social",
+    "topInterests": [],
+    "updatedAt": "2025-10-28T07:11:14.430369+00:00"
+  },
+  {
+    "userId": "1497da46-12a9-44ce-8584-4019e185b9f2",
+    "categories": {
+      "food": 10,
+      "music": 20,
+      "spiritual": 30,
+      "social": 15,
+      "fitness": 10,
+      "art": 15
+    },
+    "personalityType": "Spiritual",
+    "topInterests": [
+      "self-discovery",
+      "mindfulness",
+      "outdoor activities"
+    ],
+    "updatedAt": "2025-10-28T07:11:16.518752+00:00"
+  },
+  {
+    "userId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-28T07:11:18.880117+00:00"
+  },
+  {
+    "userId": "6c1a1d53-f787-4197-9ad3-e8f25c304b27",
+    "categories": {
+      "food": 20,
+      "music": 20,
+      "spiritual": 20,
+      "social": 20,
+      "fitness": 20,
+      "art": 20
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-28T07:11:20.834994+00:00"
+  },
+  {
+    "userId": "7905b0cb-c53d-4acb-af19-8a693621cf20",
+    "categories": {
+      "food": 20,
+      "music": 20,
+      "spiritual": 20,
+      "social": 20,
+      "fitness": 10,
+      "art": 10
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-10-28T07:11:23.315409+00:00"
+  },
+  {
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:14:58.004397+00:00"
+  },
+  {
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "categories": {
+      "food": 20,
+      "music": 20,
+      "spiritual": 20,
+      "social": 20,
+      "fitness": 10,
+      "art": 10
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:14:59.412502+00:00"
+  },
+  {
+    "userId": "0663f991-69f1-4430-a897-1c5be4eed431",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:01.077844+00:00"
+  },
+  {
+    "userId": "1a062556-d1ca-424c-8cd9-6ebcfb3276d3",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:02.874771+00:00"
+  },
+  {
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:04.252242+00:00"
+  },
+  {
+    "userId": "398c08e0-1dfb-4f6c-99e7-97abef959fcc",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:05.760888+00:00"
+  },
+  {
+    "userId": "5cf2983c-f4e3-4269-b38f-a0b60d8bc7bf",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:07.316135+00:00"
+  },
+  {
+    "userId": "970f56ee-f7f5-46ee-9a7f-6a3550ab23a0",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:09.053287+00:00"
+  },
+  {
+    "userId": "e98875a2-34b7-428d-8d96-ee2d85d28090",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T08:15:10.495097+00:00"
+  },
+  {
+    "userId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "categories": {
+      "food": 10,
+      "music": 10,
+      "spiritual": 20,
+      "social": 15,
+      "fitness": 5,
+      "art": 10
+    },
+    "personalityType": "Spiritual",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T09:32:54.447483+00:00"
+  },
+  {
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T09:32:56.898468+00:00"
+  },
+  {
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T09:32:58.995294+00:00"
+  },
+  {
+    "userId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T09:33:00.539131+00:00"
+  },
+  {
+    "userId": "6bb108f1-ed56-4050-ac99-dc804cb4d981",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T09:33:02.526508+00:00"
+  },
+  {
+    "userId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+    "categories": {
+      "food": 0,
+      "music": 0,
+      "spiritual": 0,
+      "social": 0,
+      "fitness": 0,
+      "art": 0
+    },
+    "personalityType": "Explorer",
+    "topInterests": [],
+    "updatedAt": "2025-11-01T09:33:04.559589+00:00"
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "t1",
+    "name": "Tech Builders India",
+    "tags": [
+      "tech",
+      "startups",
+      "coding"
+    ],
+    "type": "public",
+    "description": "A community for builders, makers, and tech enthusiasts across India.",
+    "avatar": "https://api.dicebear.com/7.x/shapes/svg?seed=tech",
+    "ownerId": "u2",
+    "members": [
+      "u2",
+      "u1",
+      "u4"
+    ],
+    "memberCount": 3,
+    "createdAt": "2025-10-30T05:37:10.406728+00:00"
+  },
+  {
+    "id": "t2",
+    "name": "Digital Artists Hub",
+    "tags": [
+      "art",
+      "design",
+      "nft"
+    ],
+    "type": "public",
+    "description": "Share your art, get feedback, collaborate on projects.",
+    "avatar": "https://api.dicebear.com/7.x/shapes/svg?seed=art",
+    "ownerId": "u3",
+    "members": [
+      "u3",
+      "u1"
+    ],
+    "memberCount": 2,
+    "createdAt": "2025-10-30T05:37:10.406735+00:00"
+  },
+  {
+    "id": "t3",
+    "name": "Web3 India",
+    "tags": [
+      "crypto",
+      "blockchain",
+      "web3"
+    ],
+    "type": "public",
+    "description": "India's premier Web3 community. Learn, build, and grow together.",
+    "avatar": "https://api.dicebear.com/7.x/shapes/svg?seed=web3",
+    "ownerId": "u4",
+    "members": [
+      "u4",
+      "u2"
+    ],
+    "memberCount": 2,
+    "createdAt": "2025-10-30T05:37:10.406737+00:00"
+  },
+  {
+    "id": "t4",
+    "name": "Mumbai Foodies",
+    "tags": [
+      "food",
+      "mumbai",
+      "restaurants"
+    ],
+    "type": "public",
+    "description": "Best food spots in Mumbai. Reviews, recommendations, and more!",
+    "avatar": "https://api.dicebear.com/7.x/shapes/svg?seed=food",
+    "ownerId": "u5",
+    "members": [
+      "u5",
+      "u1",
+      "u3"
+    ],
+    "memberCount": 3,
+    "createdAt": "2025-10-30T05:37:10.406739+00:00"
+  },
+  {
+    "id": "t5",
+    "name": "Free Speech Forum",
+    "tags": [
+      "debate",
+      "politics",
+      "society"
+    ],
+    "type": "public",
+    "description": "Open discussions on current affairs, politics, and society.",
+    "avatar": "https://api.dicebear.com/7.x/shapes/svg?seed=forum",
+    "ownerId": "u1",
+    "members": [
+      "u1",
+      "u2",
+      "u4"
+    ],
+    "memberCount": 3,
+    "createdAt": "2025-10-30T05:37:10.406741+00:00"
+  }
+]

@@ -1,0 +1,158 @@
+{
+  "export_date": "2025-11-03T06:33:53.172784",
+  "database": "test_database",
+  "total_collections": 30,
+  "total_documents": 1216,
+  "collections": [
+    {
+      "name": "users",
+      "count": 30,
+      "filename": "/app/database_export/users.json"
+    },
+    {
+      "name": "comments",
+      "count": 1,
+      "filename": "/app/database_export/comments.json"
+    },
+    {
+      "name": "vibe_capsules",
+      "count": 3,
+      "filename": "/app/database_export/vibe_capsules.json"
+    },
+    {
+      "name": "friend_requests",
+      "count": 60,
+      "filename": "/app/database_export/friend_requests.json"
+    },
+    {
+      "name": "calls",
+      "count": 147,
+      "filename": "/app/database_export/calls.json"
+    },
+    {
+      "name": "notifications",
+      "count": 83,
+      "filename": "/app/database_export/notifications.json"
+    },
+    {
+      "name": "friendships",
+      "count": 30,
+      "filename": "/app/database_export/friendships.json"
+    },
+    {
+      "name": "user_interests",
+      "count": 77,
+      "filename": "/app/database_export/user_interests.json"
+    },
+    {
+      "name": "loop_credits",
+      "count": 209,
+      "filename": "/app/database_export/loop_credits.json"
+    },
+    {
+      "name": "vibe_rooms",
+      "count": 62,
+      "filename": "/app/database_export/vibe_rooms.json"
+    },
+    {
+      "name": "event_tickets",
+      "count": 47,
+      "filename": "/app/database_export/event_tickets.json"
+    },
+    {
+      "name": "room_messages",
+      "count": 1,
+      "filename": "/app/database_export/room_messages.json"
+    },
+    {
+      "name": "reels",
+      "count": 10,
+      "filename": "/app/database_export/reels.json"
+    },
+    {
+      "name": "bookmarks",
+      "count": 2,
+      "filename": "/app/database_export/bookmarks.json"
+    },
+    {
+      "name": "venues",
+      "count": 20,
+      "filename": "/app/database_export/venues.json"
+    },
+    {
+      "name": "orders",
+      "count": 10,
+      "filename": "/app/database_export/orders.json"
+    },
+    {
+      "name": "media_files",
+      "count": 112,
+      "filename": "/app/database_export/media_files.json"
+    },
+    {
+      "name": "wallet_transactions",
+      "count": 7,
+      "filename": "/app/database_export/wallet_transactions.json"
+    },
+    {
+      "name": "user_settings",
+      "count": 2,
+      "filename": "/app/database_export/user_settings.json"
+    },
+    {
+      "name": "user_consents",
+      "count": 70,
+      "filename": "/app/database_export/user_consents.json"
+    },
+    {
+      "name": "creators",
+      "count": 2,
+      "filename": "/app/database_export/creators.json"
+    },
+    {
+      "name": "posts",
+      "count": 27,
+      "filename": "/app/database_export/posts.json"
+    },
+    {
+      "name": "taste_dna",
+      "count": 35,
+      "filename": "/app/database_export/taste_dna.json"
+    },
+    {
+      "name": "threads",
+      "count": 4,
+      "filename": "/app/database_export/threads.json"
+    },
+    {
+      "name": "trust_circles",
+      "count": 3,
+      "filename": "/app/database_export/trust_circles.json"
+    },
+    {
+      "name": "dm_threads",
+      "count": 44,
+      "filename": "/app/database_export/dm_threads.json"
+    },
+    {
+      "name": "user_analytics",
+      "count": 93,
+      "filename": "/app/database_export/user_analytics.json"
+    },
+    {
+      "name": "messages",
+      "count": 13,
+      "filename": "/app/database_export/messages.json"
+    },
+    {
+      "name": "tribes",
+      "count": 5,
+      "filename": "/app/database_export/tribes.json"
+    },
+    {
+      "name": "events",
+      "count": 7,
+      "filename": "/app/database_export/events.json"
+    }
+  ]
+}

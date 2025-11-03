@@ -1,0 +1,32 @@
+[
+  {
+    "id": "0de3d0f2-5af9-43d7-b904-bffb06de6638",
+    "name": "Test Circle",
+    "description": "Test circle for messaging",
+    "icon": "\ud83d\udd35",
+    "color": "from-blue-400 to-cyan-500",
+    "createdBy": "demo_user",
+    "members": [],
+    "createdAt": "2025-10-27T05:13:52.251621+00:00"
+  },
+  {
+    "id": "9a9059f1-043e-4f07-ab4a-47d66836c225",
+    "name": "Test Circle",
+    "description": "Test circle for messaging",
+    "icon": "\ud83d\udd35",
+    "color": "from-blue-400 to-cyan-500",
+    "createdBy": "demo_user",
+    "members": [],
+    "createdAt": "2025-10-27T05:14:53.375891+00:00"
+  },
+  {
+    "id": "d686d3f8-4b88-484a-9d98-88a587c46979",
+    "name": "Debug Test Circle",
+    "description": "Testing trust circle creation",
+    "icon": "\ud83d\udd35",
+    "color": "from-blue-400 to-cyan-500",
+    "createdBy": "demo_user",
+    "members": [],
+    "createdAt": "2025-10-27T05:15:15.961658+00:00"
+  }
+]

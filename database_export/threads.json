@@ -1,0 +1,77 @@
+[
+  {
+    "id": "1726b7ff-78fb-4034-86ec-f4b338a21b80",
+    "participants": [
+      "12858231-709c-4d26-a5c9-45b5835d4f5a",
+      "443c5878-c846-48b5-a4c6-a8683e3f3702"
+    ],
+    "type": "direct",
+    "createdAt": "2025-11-01T09:01:59.720338+00:00",
+    "lastMessageAt": "2025-11-01T09:01:59.720349+00:00",
+    "lastMessage": null,
+    "unreadCount": {
+      "443c5878-c846-48b5-a4c6-a8683e3f3702": 0,
+      "12858231-709c-4d26-a5c9-45b5835d4f5a": 0
+    }
+  },
+  {
+    "id": "9410f62d-6666-4cbf-b57b-6a29c19296fd",
+    "participants": [
+      "0ff3f6dd-3474-4267-aa5d-be161e263045",
+      "b090f607-c5e2-4468-9ef7-c531ca1b8fac"
+    ],
+    "type": "direct",
+    "createdAt": "2025-11-01T09:33:13.604556+00:00",
+    "lastMessageAt": "2025-11-01T09:33:45.939717+00:00",
+    "lastMessage": {
+      "id": "ff03e2db-a3df-42eb-b561-7b14cc880302",
+      "text": "Hiu",
+      "senderId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+      "createdAt": "2025-11-01T09:33:45.939717+00:00"
+    },
+    "unreadCount": {
+      "b090f607-c5e2-4468-9ef7-c531ca1b8fac": 0,
+      "0ff3f6dd-3474-4267-aa5d-be161e263045": 2
+    }
+  },
+  {
+    "id": "db4c64b5-fd6b-4731-bfc6-29458c095f48",
+    "participants": [
+      "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "test_user_1"
+    ],
+    "type": "direct",
+    "createdAt": "2025-11-01T09:35:16.972793+00:00",
+    "lastMessageAt": "2025-11-01T09:36:59.991043+00:00",
+    "lastMessage": {
+      "id": "930ebd20-6798-44f5-a377-973031e11f3e",
+      "text": "Test message from authentication fix verification - 09:36:59",
+      "senderId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+      "createdAt": "2025-11-01T09:36:59.991043+00:00"
+    },
+    "unreadCount": {
+      "e141a139-4815-4e81-ba32-3aebd7bfec49": 0,
+      "test_user_1": 2
+    }
+  },
+  {
+    "id": "5a60cb57-b116-431a-b264-016f32a1aa4a",
+    "participants": [
+      "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+      "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd"
+    ],
+    "type": "direct",
+    "createdAt": "2025-11-03T05:56:40.074664+00:00",
+    "lastMessageAt": "2025-11-03T05:56:48.913359+00:00",
+    "lastMessage": {
+      "id": "cdc4dcd7-ca93-4f83-8f13-258c5b12b96c",
+      "text": "Hello",
+      "senderId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+      "createdAt": "2025-11-03T05:56:48.913359+00:00"
+    },
+    "unreadCount": {
+      "513b6979-e588-42ea-b28a-ed3b6aa2c2ac": 0,
+      "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd": 1
+    }
+  }
+]

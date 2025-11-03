@@ -1,0 +1,70 @@
+[
+  {
+    "id": "wt1",
+    "userId": "u1",
+    "type": "topup",
+    "amount": 500.0,
+    "status": "completed",
+    "description": "Initial wallet top-up",
+    "createdAt": "2025-10-30T05:37:10.407300+00:00"
+  },
+  {
+    "id": "wt2",
+    "userId": "u2",
+    "type": "topup",
+    "amount": 1000.0,
+    "status": "completed",
+    "description": "Wallet top-up",
+    "createdAt": "2025-10-30T05:37:10.407308+00:00"
+  },
+  {
+    "id": "wt3",
+    "userId": "u3",
+    "type": "topup",
+    "amount": 750.0,
+    "status": "completed",
+    "description": "Artist fund top-up",
+    "createdAt": "2025-10-30T05:37:10.407310+00:00"
+  },
+  {
+    "id": "wt4",
+    "userId": "u4",
+    "type": "topup",
+    "amount": 2500.0,
+    "status": "completed",
+    "description": "Crypto earnings deposit",
+    "createdAt": "2025-10-30T05:37:10.407312+00:00"
+  },
+  {
+    "id": "wt5",
+    "userId": "u5",
+    "type": "topup",
+    "amount": 300.0,
+    "status": "completed",
+    "description": "Food review earnings",
+    "createdAt": "2025-10-30T05:37:10.407313+00:00"
+  },
+  {
+    "id": "wt6",
+    "userId": "demo_user",
+    "type": "topup",
+    "amount": 1500.0,
+    "status": "completed",
+    "description": "Demo account funding",
+    "createdAt": "2025-10-30T05:37:10.407315+00:00"
+  },
+  {
+    "id": "5c8aa3a6-b311-467d-9c6d-7b912ae97891",
+    "userId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "type": "payment",
+    "amount": 0.0,
+    "status": "completed",
+    "description": "Ticket purchase: Bonalu Festival 2025 (1x Free Entry)",
+    "metadata": {
+      "eventId": "e5",
+      "tier": "Free Entry",
+      "quantity": 1
+    },
+    "createdAt": "2025-11-02T05:36:42.199676+00:00"
+  }
+]

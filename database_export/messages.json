@@ -1,0 +1,152 @@
+[
+  {
+    "id": "msg1",
+    "fromId": "u1",
+    "toId": "demo_user",
+    "text": "Hey! Loved your recent post!",
+    "read": false,
+    "createdAt": "2025-10-30T05:37:10.409756+00:00"
+  },
+  {
+    "id": "msg2",
+    "fromId": "demo_user",
+    "toId": "u1",
+    "text": "Thanks! How have you been?",
+    "read": true,
+    "createdAt": "2025-10-30T05:37:10.409763+00:00"
+  },
+  {
+    "id": "e114eac3-66c8-43cf-a9e0-9a54f1ccec35",
+    "fromId": "5243177a-1f16-4bc3-93d1-ea8be8d44915",
+    "toId": "u1",
+    "text": "Test message sent at 2025-11-01T05:21:12.139134",
+    "read": false,
+    "createdAt": "2025-11-01T05:21:12.144310+00:00"
+  },
+  {
+    "id": "bee9f6f5-1515-439d-82f1-3bbb1c6a9acb",
+    "fromId": "5243177a-1f16-4bc3-93d1-ea8be8d44915",
+    "toId": "u1",
+    "text": "Test message sent at 2025-11-01T05:21:38.868483",
+    "read": false,
+    "createdAt": "2025-11-01T05:21:38.873770+00:00"
+  },
+  {
+    "id": "348e7a32-9179-444e-90ba-918266674c59",
+    "threadId": "2b12aab8-8ff6-432e-bbcb-8af372de8230",
+    "senderId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "text": "h",
+    "mediaUrl": null,
+    "mimeType": null,
+    "readBy": [],
+    "createdAt": "2025-11-01T08:12:24.602254+00:00",
+    "editedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": "db5fdbb6-e4de-4f3a-93e7-91ebe3dc0e33",
+    "threadId": "514a249f-2613-4cec-8362-c8e0f3ea5754",
+    "senderId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "text": "Hi ",
+    "mediaUrl": null,
+    "mimeType": null,
+    "readBy": [],
+    "createdAt": "2025-11-01T08:27:10.425469+00:00",
+    "editedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": "51f2a337-f370-4c1a-ad08-0ac655473bb5",
+    "threadId": "514a249f-2613-4cec-8362-c8e0f3ea5754",
+    "senderId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "text": "Ho",
+    "mediaUrl": null,
+    "mimeType": null,
+    "readBy": [],
+    "createdAt": "2025-11-01T08:37:30.959692+00:00",
+    "editedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": "a74f554d-3b24-43cf-a5dd-0e53e53ec879",
+    "threadId": "3e7643a5-9c15-4baa-926f-f1f773d648a7",
+    "senderId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "text": "Hi",
+    "mediaUrl": null,
+    "mimeType": null,
+    "readBy": [],
+    "createdAt": "2025-11-01T08:58:07.330283+00:00",
+    "editedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": "c7c41c8b-08ea-4099-b44d-f4d1aaa510f2",
+    "threadId": "9410f62d-6666-4cbf-b57b-6a29c19296fd",
+    "senderId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "recipientId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "text": "Hii",
+    "mediaUrl": null,
+    "mediaType": null,
+    "replyToId": null,
+    "reactions": [],
+    "read": false,
+    "createdAt": "2025-11-01T09:33:37.397879+00:00",
+    "updatedAt": "2025-11-01T09:33:37.397888+00:00"
+  },
+  {
+    "id": "ff03e2db-a3df-42eb-b561-7b14cc880302",
+    "threadId": "9410f62d-6666-4cbf-b57b-6a29c19296fd",
+    "senderId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "recipientId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "text": "Hiu",
+    "mediaUrl": null,
+    "mediaType": null,
+    "replyToId": null,
+    "reactions": [],
+    "read": false,
+    "createdAt": "2025-11-01T09:33:45.939717+00:00",
+    "updatedAt": "2025-11-01T09:33:45.939726+00:00"
+  },
+  {
+    "id": "cd38e3b9-7b51-486e-a322-5fc5e954ea3e",
+    "threadId": "db4c64b5-fd6b-4731-bfc6-29458c095f48",
+    "senderId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+    "recipientId": "test_user_1",
+    "text": "Test message from authentication fix verification - 09:36:18",
+    "mediaUrl": null,
+    "mediaType": null,
+    "replyToId": null,
+    "reactions": [],
+    "read": false,
+    "createdAt": "2025-11-01T09:36:18.534146+00:00",
+    "updatedAt": "2025-11-01T09:36:18.534155+00:00"
+  },
+  {
+    "id": "930ebd20-6798-44f5-a377-973031e11f3e",
+    "threadId": "db4c64b5-fd6b-4731-bfc6-29458c095f48",
+    "senderId": "e141a139-4815-4e81-ba32-3aebd7bfec49",
+    "recipientId": "test_user_1",
+    "text": "Test message from authentication fix verification - 09:36:59",
+    "mediaUrl": null,
+    "mediaType": null,
+    "replyToId": null,
+    "reactions": [],
+    "read": false,
+    "createdAt": "2025-11-01T09:36:59.991043+00:00",
+    "updatedAt": "2025-11-01T09:36:59.991052+00:00"
+  },
+  {
+    "id": "cdc4dcd7-ca93-4f83-8f13-258c5b12b96c",
+    "threadId": "5a60cb57-b116-431a-b264-016f32a1aa4a",
+    "senderId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "recipientId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "text": "Hello",
+    "mediaUrl": null,
+    "mediaType": null,
+    "replyToId": null,
+    "reactions": [],
+    "read": false,
+    "createdAt": "2025-11-03T05:56:48.913359+00:00",
+    "updatedAt": "2025-11-03T05:56:48.913370+00:00"
+  }
+]

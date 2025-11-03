@@ -1,0 +1,1883 @@
+[
+  {
+    "id": "28e91b32-85ff-439f-81ba-7079c7405482",
+    "userId": "eba3c086-d5db-441e-b0da-3600f8a9894e",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T15:46:49.828992+00:00"
+  },
+  {
+    "id": "3dddf6d0-3e3a-4693-9b11-6f471f3482fe",
+    "userId": "3c593f13-cac0-4872-b23f-44fb7a2b5728",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T15:54:44.360243+00:00"
+  },
+  {
+    "id": "deed575d-4c09-47de-9a82-9fbdcf854b7a",
+    "userId": "3c593f13-cac0-4872-b23f-44fb7a2b5728",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for TechCrunch Disrupt Mumbai",
+    "createdAt": "2025-10-20T15:55:43.286122+00:00"
+  },
+  {
+    "id": "2819659c-8256-4288-a7db-ebefbcdffc1e",
+    "userId": "db0910c4-e099-41c4-b802-d335f5b7aa95",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T15:58:11.129313+00:00"
+  },
+  {
+    "id": "316484f7-ffb6-4357-bbd5-d2350a6d4d19",
+    "userId": "eba3c086-d5db-441e-b0da-3600f8a9894e",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for Mumbai Food Festival",
+    "createdAt": "2025-10-20T15:59:02.374704+00:00"
+  },
+  {
+    "id": "bfed4938-29c9-4d9d-b5b1-0e89a1060888",
+    "userId": "db0910c4-e099-41c4-b802-d335f5b7aa95",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for TechCrunch Disrupt Mumbai",
+    "createdAt": "2025-10-20T16:03:31.399011+00:00"
+  },
+  {
+    "id": "9f6d9c61-3934-4f43-8b3a-dc468824b4a2",
+    "userId": "b41a6060-2db7-4d23-a037-1ac73c657ef3",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T16:24:45.797660+00:00"
+  },
+  {
+    "id": "192cadce-df06-4594-9b65-2002dc359801",
+    "userId": "8a2b8d44-4881-4d32-8ca5-95fbafc68de4",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T16:32:31.306241+00:00"
+  },
+  {
+    "id": "7c340a53-eeb5-49c4-9080-4748009915af",
+    "userId": "4f775eb7-7fbf-4fa9-ac55-f31654542379",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T16:35:26.566175+00:00"
+  },
+  {
+    "id": "ed56e3fa-d451-45b4-85d5-866ba7dbc223",
+    "userId": "8a2b8d44-4881-4d32-8ca5-95fbafc68de4",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for TechCrunch Disrupt Mumbai",
+    "createdAt": "2025-10-20T16:35:53.416345+00:00"
+  },
+  {
+    "id": "67864d65-b470-4923-8735-3309f85f9f57",
+    "userId": "3379e5cf-3dc7-4226-bd5c-2351d9563eb0",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T16:59:20.575579+00:00"
+  },
+  {
+    "id": "9064d27b-7a27-4c66-ac1b-246cf52cdf4c",
+    "userId": "fb31c5f4-9327-4e16-8f8d-f2a2457ac36c",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T17:02:24.852884+00:00"
+  },
+  {
+    "id": "50ce94f2-adf4-4cd6-b260-318512ac1e85",
+    "userId": "fb31c5f4-9327-4e16-8f8d-f2a2457ac36c",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-20T17:02:25.178879+00:00"
+  },
+  {
+    "id": "a75be935-4f31-41cc-8254-0468652e3dba",
+    "userId": "fb31c5f4-9327-4e16-8f8d-f2a2457ac36c",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for TechCrunch Disrupt Mumbai",
+    "createdAt": "2025-10-20T17:08:10.808640+00:00"
+  },
+  {
+    "id": "c94f5a88-7df7-49b8-9abe-8f1b2ef5e45c",
+    "userId": "c61c3e89-05f2-4e8f-8a75-1ade669af438",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T17:26:02.783370+00:00"
+  },
+  {
+    "id": "9ec7f98c-a327-45b2-a782-1aeb187d5e98",
+    "userId": "c61c3e89-05f2-4e8f-8a75-1ade669af438",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-20T17:26:03.117099+00:00"
+  },
+  {
+    "id": "704d98ad-8fee-4d3b-9528-62c8039a3a8a",
+    "userId": "c23320fc-32cb-424d-9848-e21962c327ff",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T17:40:59.972442+00:00"
+  },
+  {
+    "id": "38470931-05bf-403a-8b82-3582d42487bf",
+    "userId": "edfbab9c-db72-499e-9989-c6c062316e7a",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T17:55:37.523863+00:00"
+  },
+  {
+    "id": "e812c51b-8a22-42f5-b814-8065b76cdda7",
+    "userId": "edfbab9c-db72-499e-9989-c6c062316e7a",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-20T17:55:37.852943+00:00"
+  },
+  {
+    "id": "f394bce4-3037-4fa9-83c6-9e370e190f57",
+    "userId": "48c7d431-60a4-40ac-80e7-adf2a4615ade",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T18:10:56.740023+00:00"
+  },
+  {
+    "id": "0ded6d4d-4f0e-4d28-8ea4-48441d37e085",
+    "userId": "e4030a7c-8aa2-4e3f-ba36-50362c94266d",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-20T18:13:28.226062+00:00"
+  },
+  {
+    "id": "a3323ccf-73c9-4eb4-8f45-24b1d2379e51",
+    "userId": "e4030a7c-8aa2-4e3f-ba36-50362c94266d",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-20T18:13:28.576237+00:00"
+  },
+  {
+    "id": "831d26e7-b0d3-4c86-90b3-064bbe99f212",
+    "userId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T04:33:57.809184+00:00"
+  },
+  {
+    "id": "992ef171-ad41-4d45-b6a2-a4ae853a6f2b",
+    "userId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T04:33:58.191287+00:00"
+  },
+  {
+    "id": "2495c3d2-fcfb-4806-befe-980375387575",
+    "userId": "633f2cbf-567f-4fe0-8246-94a071115042",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T04:35:59.278572+00:00"
+  },
+  {
+    "id": "3f6191bd-efb9-4d21-8422-4569fa918666",
+    "userId": "633f2cbf-567f-4fe0-8246-94a071115042",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T04:35:59.639947+00:00"
+  },
+  {
+    "id": "44851f45-9bf2-4ee9-8972-5d7d2a3da8a3",
+    "userId": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-21T04:36:17.739773+00:00"
+  },
+  {
+    "id": "34e5ea3c-7c23-45ba-aa0e-58fe1dcebd02",
+    "userId": "633f2cbf-567f-4fe0-8246-94a071115042",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-21T04:36:17.741164+00:00"
+  },
+  {
+    "id": "79b149bd-1d47-4f8e-acb7-acaeb22d03b2",
+    "userId": "0df92a9d-cd9d-4804-9335-41efac6914c4",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T04:39:17.248841+00:00"
+  },
+  {
+    "id": "77f2567b-47ca-4b08-9dc6-f090f3eaf11d",
+    "userId": "0df92a9d-cd9d-4804-9335-41efac6914c4",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T04:39:17.565004+00:00"
+  },
+  {
+    "id": "beed93d6-835d-42cb-8b29-ec7c94d67887",
+    "userId": "0df92a9d-cd9d-4804-9335-41efac6914c4",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for TechCrunch Disrupt Mumbai",
+    "createdAt": "2025-10-21T04:42:17.601439+00:00"
+  },
+  {
+    "id": "c14eb9e0-7ab3-48bd-9fa3-15387b5026d9",
+    "userId": "u2",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-21T05:04:17.606012+00:00"
+  },
+  {
+    "id": "8aca00c8-4053-41e2-af41-61afb3d04e84",
+    "userId": "u1",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-21T05:04:17.635308+00:00"
+  },
+  {
+    "id": "4f4a435d-8c61-4191-9ec9-0e4c3257848d",
+    "userId": "17c4462d-982c-45d1-accb-2d5afb4a383c",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T05:35:10.815410+00:00"
+  },
+  {
+    "id": "82e8bca1-e393-4c2e-964a-96c9e3049f70",
+    "userId": "767fcac4-6d1a-4e58-b3fe-b2c2f92b8bbe",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T06:30:53.550156+00:00"
+  },
+  {
+    "id": "1419e86c-6014-4990-984f-b27b5785204e",
+    "userId": "767fcac4-6d1a-4e58-b3fe-b2c2f92b8bbe",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T06:30:53.865083+00:00"
+  },
+  {
+    "id": "a63857b7-c4e3-48fc-aedc-316fc6aeeead",
+    "userId": "767fcac4-6d1a-4e58-b3fe-b2c2f92b8bbe",
+    "amount": 20,
+    "type": "earn",
+    "source": "ticket_booking",
+    "description": "Booked tickets for Art Mumbai 2025",
+    "createdAt": "2025-10-21T06:34:32.473766+00:00"
+  },
+  {
+    "id": "43e63a09-f509-4172-bb22-0be5797bebaf",
+    "userId": "fb4b8ded-2488-4302-b36f-13dbc225990e",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T06:50:58.481002+00:00"
+  },
+  {
+    "id": "eb225d03-9dad-49de-997c-f436498abdd1",
+    "userId": "09a63735-67fd-4e07-9df3-37554b67b2ff",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T07:12:44.896832+00:00"
+  },
+  {
+    "id": "6289fafd-3a59-4a7c-a186-1c3c808a5f97",
+    "userId": "09a63735-67fd-4e07-9df3-37554b67b2ff",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T07:12:45.215742+00:00"
+  },
+  {
+    "id": "72aaae6f-f506-4801-a063-34cff2ca1da4",
+    "userId": "128a39e2-096e-4c72-b65a-c85d8fe186d3",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T08:39:13.073760+00:00"
+  },
+  {
+    "id": "ceb3b4d8-2642-4127-845b-d33af83ad99d",
+    "userId": "3e2e4476-7218-4230-8fc1-1b200ecf3579",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T09:47:21.960303+00:00"
+  },
+  {
+    "id": "9859d871-6815-461c-9ea8-c32746a217ef",
+    "userId": "3e2e4476-7218-4230-8fc1-1b200ecf3579",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T09:47:22.288378+00:00"
+  },
+  {
+    "id": "93d42607-6cc1-4a09-8371-c333a05bbda4",
+    "userId": "7bfc2e44-15a5-4998-99fc-14880580f83c",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T09:49:36.795527+00:00"
+  },
+  {
+    "id": "c97028b2-9b93-45f6-8f35-41f3b7da738a",
+    "userId": "7bfc2e44-15a5-4998-99fc-14880580f83c",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T09:49:37.112175+00:00"
+  },
+  {
+    "id": "080b1e80-9875-443f-a063-9d6390922fc8",
+    "userId": "3e2e4476-7218-4230-8fc1-1b200ecf3579",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-21T09:49:54.426236+00:00"
+  },
+  {
+    "id": "c2fa3257-2e56-4f79-86cd-11c51907dff3",
+    "userId": "7bfc2e44-15a5-4998-99fc-14880580f83c",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-21T09:49:54.427604+00:00"
+  },
+  {
+    "id": "90ac058d-f297-4610-8482-1bcf3a659d70",
+    "userId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T10:24:46.923845+00:00"
+  },
+  {
+    "id": "4e8a1cbb-bcd7-44df-bffa-9bcbafc627c6",
+    "userId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T10:24:47.324315+00:00"
+  },
+  {
+    "id": "7f355459-8c19-45c1-85c5-55ce9a5a3c05",
+    "userId": "42f98a5b-dec6-45dc-8cee-4344850cf36a",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T10:30:45.455176+00:00"
+  },
+  {
+    "id": "d661b391-e9e1-4aa9-a080-c2f90ead8773",
+    "userId": "42f98a5b-dec6-45dc-8cee-4344850cf36a",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T10:30:45.777760+00:00"
+  },
+  {
+    "id": "47e626c5-4cfc-4f7e-9c74-fd4b7f43eea3",
+    "userId": "42f98a5b-dec6-45dc-8cee-4344850cf36a",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-21T10:31:12.699279+00:00"
+  },
+  {
+    "id": "28ad91ea-f1b4-40eb-bb5b-263ec0aebbc1",
+    "userId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-21T10:31:12.701521+00:00"
+  },
+  {
+    "id": "54af8d17-1184-4acb-a4b5-f9d7988e9119",
+    "userId": "dfb29e40-7c43-4102-ba4f-ae00dd2aba1f",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T10:34:05.395523+00:00"
+  },
+  {
+    "id": "efc5e963-4494-4433-bc1e-7556f5715519",
+    "userId": "dfb29e40-7c43-4102-ba4f-ae00dd2aba1f",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T10:34:05.722551+00:00"
+  },
+  {
+    "id": "1a359098-d6a1-46b2-830a-de8502f8b761",
+    "userId": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-21T10:34:49.163787+00:00"
+  },
+  {
+    "id": "2b9693cc-e387-4722-9418-dd94b0c1a9f6",
+    "userId": "dfb29e40-7c43-4102-ba4f-ae00dd2aba1f",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-21T10:34:49.165209+00:00"
+  },
+  {
+    "id": "b53e5950-888e-42f2-8416-daa0b48ead5d",
+    "userId": "a856c3e9-8bbf-4750-b9fe-d454989928d8",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T13:18:31.955514+00:00"
+  },
+  {
+    "id": "a23b7cef-c408-4643-963e-5059c417f9cc",
+    "userId": "a856c3e9-8bbf-4750-b9fe-d454989928d8",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T13:18:32.280769+00:00"
+  },
+  {
+    "id": "47bd04de-21de-42a7-8345-21895d917d4c",
+    "userId": "e88e1e36-9dab-430e-b2fa-44b2ef139358",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-21T13:54:34.599254+00:00"
+  },
+  {
+    "id": "3f6d7e3e-acb8-4737-bf2b-8e4b5268a283",
+    "userId": "e88e1e36-9dab-430e-b2fa-44b2ef139358",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-21T13:54:34.932009+00:00"
+  },
+  {
+    "id": "6be3161b-e98c-439e-9d29-691e6ed28947",
+    "userId": "91bb9353-90af-4a68-a55d-51a06f60bbf9",
+    "amount": 5,
+    "type": "earn",
+    "source": "payment_cashback",
+    "description": "2% cashback on \u20b9250.0 payment",
+    "createdAt": "2025-10-21T14:19:46.742838+00:00"
+  },
+  {
+    "id": "d3d51d72-97dc-44dc-94ea-4f8a5288f9a7",
+    "userId": "6ff68536-a8cb-4171-ab75-3925f1408f2d",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-23T09:18:04.874435+00:00"
+  },
+  {
+    "id": "fab9bf3b-145f-4a20-8929-eebd767027c2",
+    "userId": "6ff68536-a8cb-4171-ab75-3925f1408f2d",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-23T09:18:05.197282+00:00"
+  },
+  {
+    "id": "c1e9f8d8-94ca-4ac0-a8fb-13382efe35b2",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-23T09:57:58.500245+00:00"
+  },
+  {
+    "id": "95cfa674-d090-40a3-8dea-624955066974",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-23T09:58:33.534224+00:00"
+  },
+  {
+    "id": "f29be056-4ab9-4a6e-acb1-a9a5b22cfd82",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-24T00:27:23.202187+00:00"
+  },
+  {
+    "id": "8cdb64c5-822c-4802-8fd3-662f3e0f4438",
+    "userId": "ca55a75f-abeb-43ab-88ec-5e5137af1c33",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-24T10:14:26.477926+00:00"
+  },
+  {
+    "id": "c504413a-6a87-4b7e-8b26-66035e472a4d",
+    "userId": "ca55a75f-abeb-43ab-88ec-5e5137af1c33",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-24T10:14:26.788931+00:00"
+  },
+  {
+    "id": "19628b9e-44b9-439d-b7e9-9faf76983db1",
+    "userId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-24T10:16:53.905019+00:00"
+  },
+  {
+    "id": "ea29c2d0-4b94-4f11-b33c-59b3e8ead66d",
+    "userId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-24T10:16:54.230831+00:00"
+  },
+  {
+    "id": "9fc659bf-f0ca-4473-9933-79f8aaf0d919",
+    "userId": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-24T10:17:12.834401+00:00"
+  },
+  {
+    "id": "739b2477-57a8-4d36-8739-859ecc4cabc3",
+    "userId": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-24T10:17:13.120951+00:00"
+  },
+  {
+    "id": "fb180bad-255e-45cc-add9-453291d8cf8e",
+    "userId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-24T10:17:43.082608+00:00"
+  },
+  {
+    "id": "ebb69518-a416-4e16-858e-77264cdd0e7a",
+    "userId": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-24T10:17:43.083940+00:00"
+  },
+  {
+    "id": "ee478602-2514-4a80-81c5-c97730940965",
+    "userId": "b859ada0-d714-4084-9bad-c0a62961e119",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-24T10:29:36.646265+00:00"
+  },
+  {
+    "id": "782e677e-2146-4c3a-b43a-e113df847092",
+    "userId": "b859ada0-d714-4084-9bad-c0a62961e119",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-24T10:29:36.955409+00:00"
+  },
+  {
+    "id": "2766ab82-c5c2-40b6-9d20-7cb52d02ad1e",
+    "userId": "85338454-6550-43ee-827d-5e5718db4928",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-24T11:26:19.108251+00:00"
+  },
+  {
+    "id": "1ba6f5df-8651-401d-a2c7-535a593bbb54",
+    "userId": "85338454-6550-43ee-827d-5e5718db4928",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-24T11:26:19.477245+00:00"
+  },
+  {
+    "id": "bef6af7f-13c7-4c70-9dd1-66289f87e260",
+    "userId": "39a8b505-f627-4d53-b2dc-d72dcf4b8490",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-24T11:26:50.005387+00:00"
+  },
+  {
+    "id": "3ec2953b-2bb1-4481-9acc-b9b23f572240",
+    "userId": "39a8b505-f627-4d53-b2dc-d72dcf4b8490",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-24T11:26:50.403058+00:00"
+  },
+  {
+    "id": "7d77e9f1-b49c-4915-a69c-b66f6e6aaf05",
+    "userId": "85338454-6550-43ee-827d-5e5718db4928",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-24T11:27:02.684769+00:00"
+  },
+  {
+    "id": "7a6666f4-a6dd-420b-a835-c7d8c7514c90",
+    "userId": "39a8b505-f627-4d53-b2dc-d72dcf4b8490",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-24T11:27:02.685913+00:00"
+  },
+  {
+    "id": "65511978-ea95-4092-9666-ebf631278364",
+    "userId": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-25T05:41:51.448421+00:00"
+  },
+  {
+    "id": "0504204d-1612-4e67-8cc9-63e697fcef68",
+    "userId": "ca55a75f-abeb-43ab-88ec-5e5137af1c33",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-25T05:41:51.450857+00:00"
+  },
+  {
+    "id": "0b22ee38-34fd-4504-b647-4ec83d079ab9",
+    "userId": "1b0783b9-a6bb-4d18-9a07-921f2aef0b9a",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-25T09:05:12.254643+00:00"
+  },
+  {
+    "id": "bee18c7c-1de9-45d5-9f13-45eb06861630",
+    "userId": "1b0783b9-a6bb-4d18-9a07-921f2aef0b9a",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-25T09:05:12.593679+00:00"
+  },
+  {
+    "id": "3e6bb4d7-34a1-4f38-b665-e2ff10e3174f",
+    "userId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-25T09:50:21.698742+00:00"
+  },
+  {
+    "id": "39f384bb-571d-44c1-9caf-d6585c3ccefe",
+    "userId": "68aa1fd8-f3e6-45c8-8dde-107a7762b04a",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-25T09:50:22.025944+00:00"
+  },
+  {
+    "id": "4e0e4f17-215b-466b-bef5-6e09fa979894",
+    "userId": "5c0166b2-0fc0-401b-92c4-2cc23f4f267c",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-25T13:31:05.494366+00:00"
+  },
+  {
+    "id": "5543c5d0-395d-47c5-ae1f-51c2cdc095ba",
+    "userId": "5c0166b2-0fc0-401b-92c4-2cc23f4f267c",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-25T13:31:06.002774+00:00"
+  },
+  {
+    "id": "f6d69cc9-e221-4c7a-8ad6-2c1cc42416e0",
+    "userId": "5e0b4cc2-1429-49ab-a395-fd0c23942d24",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T00:25:16.850953+00:00"
+  },
+  {
+    "id": "403e591d-e216-477a-bbf8-8c338cd0cdad",
+    "userId": "5e0b4cc2-1429-49ab-a395-fd0c23942d24",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T00:25:17.958029+00:00"
+  },
+  {
+    "id": "4bdce79d-e91e-4755-b6c5-f5536bf9bb0b",
+    "userId": "a8c1aed0-c9d6-40c7-ba7c-9896d0e5a846",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T02:38:48.186119+00:00"
+  },
+  {
+    "id": "a79d1a93-31d0-4d37-b6bf-e4bb88138685",
+    "userId": "a8c1aed0-c9d6-40c7-ba7c-9896d0e5a846",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T02:38:48.530741+00:00"
+  },
+  {
+    "id": "a817e2e2-4e08-4182-8ba4-3305361a5476",
+    "userId": "a8c1aed0-c9d6-40c7-ba7c-9896d0e5a846",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-26T02:39:31.748521+00:00"
+  },
+  {
+    "id": "8960faca-e26a-4f7d-8bb2-58aa8fa02738",
+    "userId": "9c2ef4f8-eaf0-4a6d-bed9-032a92677ec9",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T03:29:27.150664+00:00"
+  },
+  {
+    "id": "03c62fc4-7102-474a-9fad-752cc9f5dc9f",
+    "userId": "9c2ef4f8-eaf0-4a6d-bed9-032a92677ec9",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T03:29:27.460619+00:00"
+  },
+  {
+    "id": "7ffbdf1a-293d-44b2-81bd-912133885f77",
+    "userId": "066c1ab4-404c-4a09-b3ab-99414084eec6",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T03:52:25.186787+00:00"
+  },
+  {
+    "id": "8496acaa-f5e2-4742-905b-371f6415b6d8",
+    "userId": "066c1ab4-404c-4a09-b3ab-99414084eec6",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T03:52:25.500149+00:00"
+  },
+  {
+    "id": "6ce5ca7d-d377-4b8b-abe7-018d8738da77",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T04:15:22.714266+00:00"
+  },
+  {
+    "id": "8c5830e4-146b-4e4b-8ede-e0b3d48a5631",
+    "userId": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T04:41:27.387407+00:00"
+  },
+  {
+    "id": "cd4e55e8-db8c-44d8-a7b2-e1de838d9b1d",
+    "userId": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T04:41:27.806493+00:00"
+  },
+  {
+    "id": "3f1bd406-8e1e-43f6-896c-44995e8d4f38",
+    "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T04:42:09.822284+00:00"
+  },
+  {
+    "id": "003fc87f-7880-4be2-8a40-6519624bfb03",
+    "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T04:42:10.195665+00:00"
+  },
+  {
+    "id": "926c34da-f9f4-4f50-803a-602d51198069",
+    "userId": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-26T04:42:24.259618+00:00"
+  },
+  {
+    "id": "378fe81b-6e38-4bc4-a056-fa3d942087f1",
+    "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-26T04:42:24.260953+00:00"
+  },
+  {
+    "id": "7951726a-5ec4-4c6b-932b-f283cd1386a5",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T04:47:03.506626+00:00"
+  },
+  {
+    "id": "81ac919c-776f-4a64-b633-24c89b047866",
+    "userId": "9ccde212-b2a6-4bb0-879f-442608a6fb00",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T04:56:32.349925+00:00"
+  },
+  {
+    "id": "54e46721-e651-479a-8451-5ad37ec44d3d",
+    "userId": "9ccde212-b2a6-4bb0-879f-442608a6fb00",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T04:56:32.690168+00:00"
+  },
+  {
+    "id": "b4e4c2d3-c477-473d-b568-a186a3cf0752",
+    "userId": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-26T04:57:41.394155+00:00"
+  },
+  {
+    "id": "932a29a6-1127-4533-b0c2-dc58042c91a1",
+    "userId": "9ccde212-b2a6-4bb0-879f-442608a6fb00",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-26T04:57:41.395385+00:00"
+  },
+  {
+    "id": "550a44c3-1fcf-4185-8d7b-9378d4ee3737",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T04:59:17.560997+00:00"
+  },
+  {
+    "id": "09fadcd8-980a-4f9d-afa6-406bf716946f",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T05:00:30.801074+00:00"
+  },
+  {
+    "id": "837a0447-57f9-44a0-bfea-b486961278f9",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T05:02:31.957235+00:00"
+  },
+  {
+    "id": "12e7915e-e2ba-4b8a-b319-1f99d1bcebca",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T05:02:47.283749+00:00"
+  },
+  {
+    "id": "6361de1e-a8dd-4f66-955e-7c25769c3522",
+    "userId": "c56f7f7f-81da-4dae-975e-a9296fcaa173",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T05:07:28.596795+00:00"
+  },
+  {
+    "id": "85b49443-1276-4a2b-aab8-2432e5031a76",
+    "userId": "c56f7f7f-81da-4dae-975e-a9296fcaa173",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T05:07:28.912255+00:00"
+  },
+  {
+    "id": "7b3f6074-6bf7-4edf-b76e-8790c9321d04",
+    "userId": "70ddfbb5-5289-40bb-8936-69fe90823d08",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T07:38:07.051610+00:00"
+  },
+  {
+    "id": "b928b97e-f8d8-40f4-9ef8-f4bc803e8674",
+    "userId": "70ddfbb5-5289-40bb-8936-69fe90823d08",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T07:38:07.381956+00:00"
+  },
+  {
+    "id": "87658bc4-4216-4ee4-8696-07e64e1b9ccf",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-26T07:40:27.785243+00:00"
+  },
+  {
+    "id": "e74c652e-096f-4d53-bbdf-d0f95f0c5f8b",
+    "userId": "4f4bf663-b0ee-4e4f-8799-3cb3b94c9bc8",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T08:10:48.420202+00:00"
+  },
+  {
+    "id": "b8c7d6c4-1cca-4798-8499-e9b66be5339d",
+    "userId": "4f4bf663-b0ee-4e4f-8799-3cb3b94c9bc8",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T08:10:48.736857+00:00"
+  },
+  {
+    "id": "1f0eae25-0a77-4ebe-a11b-8c7e7d86afe2",
+    "userId": "cbb95c12-02d3-4796-b567-8dac18a6f3ba",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T08:17:17.202022+00:00"
+  },
+  {
+    "id": "3a1e2adf-a6f5-4843-a00a-19fb24604c4b",
+    "userId": "cbb95c12-02d3-4796-b567-8dac18a6f3ba",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T08:17:17.521034+00:00"
+  },
+  {
+    "id": "ee6cfa3f-8d9a-4cf0-99b1-4aeb9f7a082f",
+    "userId": "7b25cdb2-93b4-4201-847d-18f581ef59c4",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T08:41:10.248512+00:00"
+  },
+  {
+    "id": "a1fb803d-5988-47d3-b932-bb3377a8f743",
+    "userId": "7b25cdb2-93b4-4201-847d-18f581ef59c4",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T08:41:10.548078+00:00"
+  },
+  {
+    "id": "64a3767f-15b9-4bc7-8260-bd5f264e8161",
+    "userId": "c618316e-75c6-464f-aa41-0465537384de",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T10:00:48.344753+00:00"
+  },
+  {
+    "id": "b093035e-5219-460c-b0bd-c6683c6b4685",
+    "userId": "c618316e-75c6-464f-aa41-0465537384de",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T10:00:48.726608+00:00"
+  },
+  {
+    "id": "e3dccd39-5f6a-465e-9e63-140f9a9b38c5",
+    "userId": "c618316e-75c6-464f-aa41-0465537384de",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-26T10:08:53.149466+00:00"
+  },
+  {
+    "id": "b5a93cb6-9828-46d8-bc27-854d8ce08522",
+    "userId": "c618316e-75c6-464f-aa41-0465537384de",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-26T10:08:56.417894+00:00"
+  },
+  {
+    "id": "02862e82-df72-42e2-8819-e57bea8f9559",
+    "userId": "c618316e-75c6-464f-aa41-0465537384de",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-26T10:22:21.310968+00:00"
+  },
+  {
+    "id": "2bfe1dda-8254-492b-b8cd-83e95be7a67f",
+    "userId": "c5ca4676-90da-4f29-ad88-7eb08c68f9d5",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-26T10:26:00.654912+00:00"
+  },
+  {
+    "id": "1e614d1e-b1e4-42eb-a820-e59511103a92",
+    "userId": "9e705370-6dd6-4255-9696-7582bd6a9214",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T11:00:18.839954+00:00"
+  },
+  {
+    "id": "924e8bb4-a24a-476a-a405-5f6d0ecf6e81",
+    "userId": "9e705370-6dd6-4255-9696-7582bd6a9214",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T11:00:19.176270+00:00"
+  },
+  {
+    "id": "6e2c4a22-11d1-4b59-8172-ea25e6b0c8d3",
+    "userId": "3b96941a-498a-466b-9954-d585891b8182",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-26T11:01:11.146541+00:00"
+  },
+  {
+    "id": "dc954bbd-a2c0-4419-987a-e1fa86293729",
+    "userId": "3b96941a-498a-466b-9954-d585891b8182",
+    "amount": 50,
+    "type": "earn",
+    "source": "kyc",
+    "description": "Bonus for completing eKYC verification",
+    "createdAt": "2025-10-26T11:01:11.646195+00:00"
+  },
+  {
+    "id": "5e655efa-73c1-4119-b945-4bf091a8db0d",
+    "userId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T04:42:29.426122+00:00"
+  },
+  {
+    "id": "33018733-3ee0-4de5-b4ba-651634c3140b",
+    "userId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T04:49:09.524884+00:00"
+  },
+  {
+    "id": "c51d93ba-0f47-459d-860c-4a7aead0adbe",
+    "userId": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T04:50:17.924104+00:00"
+  },
+  {
+    "id": "39a6256d-6fc8-456e-a6fe-8b65992a852f",
+    "userId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T04:50:17.925440+00:00"
+  },
+  {
+    "id": "15fd5fa2-d8a7-4e65-b66f-e0ee0415f797",
+    "userId": "62db2d81-2946-4e47-bd1e-46fc4ef6a04c",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T04:56:31.176161+00:00"
+  },
+  {
+    "id": "9ad5658f-6e6a-437b-a552-81b2a459d89b",
+    "userId": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T05:03:05.265035+00:00"
+  },
+  {
+    "id": "360e6555-e517-402a-91a4-4ce39c002e8f",
+    "userId": "62db2d81-2946-4e47-bd1e-46fc4ef6a04c",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T05:03:05.266383+00:00"
+  },
+  {
+    "id": "a141324f-6c79-4ef9-abd5-bd720468db63",
+    "userId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T06:06:16.063727+00:00"
+  },
+  {
+    "id": "3e154f2e-fd0c-4524-b57b-a7f4ecf8c38f",
+    "userId": "c777588a-e6b1-4dab-a32a-3be629dc59b5",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T06:54:14.045400+00:00"
+  },
+  {
+    "id": "871b474f-fcad-48a8-9a86-65b19ddc728e",
+    "userId": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T07:45:14.320595+00:00"
+  },
+  {
+    "id": "337b66da-e040-427b-8c4c-0351c83ece78",
+    "userId": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T07:45:33.424626+00:00"
+  },
+  {
+    "id": "ff0b77d9-d1b9-4b25-80ba-2261260fa2ec",
+    "userId": "c777588a-e6b1-4dab-a32a-3be629dc59b5",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T07:45:33.425584+00:00"
+  },
+  {
+    "id": "ca74b9c8-5fa9-497e-bc17-10687c5869ac",
+    "userId": "demo_user",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-27T08:04:48.500655+00:00"
+  },
+  {
+    "id": "5065862c-4033-4084-a3d7-5aeb096078ed",
+    "userId": "e476bc6d-b9ca-4fa2-8308-05ff78d478b9",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T08:11:45.703121+00:00"
+  },
+  {
+    "id": "b2f71436-1e92-4573-92f9-f105db42eb9f",
+    "userId": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T08:12:39.261118+00:00"
+  },
+  {
+    "id": "bc83b4a9-f263-4af9-a973-e9ecb604223e",
+    "userId": "e476bc6d-b9ca-4fa2-8308-05ff78d478b9",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T08:12:39.262107+00:00"
+  },
+  {
+    "id": "0001fc74-142a-49cb-95f4-598aebd5b251",
+    "userId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T08:20:33.213807+00:00"
+  },
+  {
+    "id": "59a53890-8f58-4fa4-9b3d-fa824fc1200f",
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T08:23:22.053532+00:00"
+  },
+  {
+    "id": "cd567c61-a46d-43be-8af1-fc03f3d56430",
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T08:24:22.477065+00:00"
+  },
+  {
+    "id": "e7e5bc22-288e-4864-875a-68044e2a0f09",
+    "userId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T08:24:22.478010+00:00"
+  },
+  {
+    "id": "d661ebf9-de98-4af0-896c-75b12452916e",
+    "userId": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T08:57:05.713058+00:00"
+  },
+  {
+    "id": "42fe6065-089c-4266-8d1d-cb4c7e565ab4",
+    "userId": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T08:58:30.564405+00:00"
+  },
+  {
+    "id": "2d2f6606-0ed9-4fb6-a245-3134ab9f356d",
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T08:58:30.565373+00:00"
+  },
+  {
+    "id": "ef3187c3-aef0-476f-a5b2-0d732ba25d25",
+    "userId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T09:19:52.023836+00:00"
+  },
+  {
+    "id": "6dc917b2-fba9-407b-897d-5a02bde3b9a9",
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T09:19:52.024842+00:00"
+  },
+  {
+    "id": "e7292744-cad1-4617-8467-b90a73dceee4",
+    "userId": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T09:21:25.529997+00:00"
+  },
+  {
+    "id": "fb78a038-88fa-4f46-9abe-f75fce80d0e3",
+    "userId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T09:21:25.530981+00:00"
+  },
+  {
+    "id": "374a1bbc-24fe-4968-9ad6-2810c281e7aa",
+    "userId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T09:22:08.012437+00:00"
+  },
+  {
+    "id": "b49b9860-fed7-4b61-ab95-8a9276b61dfd",
+    "userId": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T09:22:08.013562+00:00"
+  },
+  {
+    "id": "75fde75a-5bf7-4bd4-8568-4f1b28e3ce9e",
+    "userId": "555a1f46-b829-4ad4-92ae-1b9bcdb3c4c6",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-27T09:37:16.393493+00:00"
+  },
+  {
+    "id": "5209e77a-dbcd-4e73-9e51-c464392962cd",
+    "userId": "555a1f46-b829-4ad4-92ae-1b9bcdb3c4c6",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-27T09:38:03.798363+00:00"
+  },
+  {
+    "id": "742b6ec5-16b3-475e-a526-a6e98a01d1b2",
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-27T09:38:03.799484+00:00"
+  },
+  {
+    "id": "f340506b-1012-4e8a-89a5-022f2dbbfb3a",
+    "userId": "d328cfd2-5824-4519-831a-bc4cca6bb9a2",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-28T04:26:23.319515+00:00"
+  },
+  {
+    "id": "24fac192-3e3c-4604-b0e3-c45f94094758",
+    "userId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-28T05:32:30.879299+00:00"
+  },
+  {
+    "id": "3bbc1e8c-8eaf-421d-8faa-f12e543e5281",
+    "userId": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-28T05:33:13.037353+00:00"
+  },
+  {
+    "id": "f8ffba56-4871-4072-bf20-5e354418f4fb",
+    "userId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-28T05:33:13.038689+00:00"
+  },
+  {
+    "id": "2336d237-ce3b-4ab7-ac0c-1fd98a1dd0e1",
+    "userId": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-28T05:36:15.159945+00:00"
+  },
+  {
+    "id": "3d375db2-38a3-4dd6-95b2-692a453df6df",
+    "userId": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-28T05:36:15.161362+00:00"
+  },
+  {
+    "id": "8642ea7b-d7be-469e-8680-f25a8d049ca8",
+    "userId": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-28T06:53:10.319043+00:00"
+  },
+  {
+    "id": "f170fe57-6edf-416c-893a-395d9d3d64ec",
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-28T07:09:05.706009+00:00"
+  },
+  {
+    "id": "1311de4d-8d2c-40e2-a904-b6026a8c21f9",
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T07:11:40.231839+00:00"
+  },
+  {
+    "id": "01d53c5e-3c71-4c60-9f6a-e2cf77af6858",
+    "userId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-28T07:13:34.363817+00:00"
+  },
+  {
+    "id": "56bac6f1-6310-43e8-ac02-706ef310f02e",
+    "userId": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-10-28T07:14:11.936331+00:00"
+  },
+  {
+    "id": "ccbd2e9b-df92-4215-ae1e-16ddd1b2111d",
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-10-28T07:14:11.937826+00:00"
+  },
+  {
+    "id": "1d93cc13-b8c3-4b75-ba5e-981b72a967d3",
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T07:16:00.857459+00:00"
+  },
+  {
+    "id": "998c12ea-c865-43e0-94a5-58994f6451f2",
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T07:25:00.241481+00:00"
+  },
+  {
+    "id": "eef1366d-131c-4f79-afff-ff2658f77709",
+    "userId": "941e5db0-eddc-4a9d-8d0b-7eb2797d4999",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T07:26:20.569473+00:00"
+  },
+  {
+    "id": "04233962-4e18-452b-b3a5-6d01eab5e0e1",
+    "userId": "941e5db0-eddc-4a9d-8d0b-7eb2797d4999",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-28T07:26:20.616556+00:00"
+  },
+  {
+    "id": "9b340d2f-5121-4eb8-a502-4a8b14b1ef30",
+    "userId": "73c7ac7a-8020-4149-91a2-287c9adc61a6",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T07:27:21.891838+00:00"
+  },
+  {
+    "id": "aa408c59-0fc8-4a07-a4ae-b94663334bbe",
+    "userId": "73c7ac7a-8020-4149-91a2-287c9adc61a6",
+    "amount": 40,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 2 ticket(s)",
+    "createdAt": "2025-10-28T07:27:21.982416+00:00"
+  },
+  {
+    "id": "93bf3adc-8995-4446-8aca-60d37c858cf4",
+    "userId": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T08:26:26.305549+00:00"
+  },
+  {
+    "id": "4ac488b5-f5ee-4ee3-b48a-755e8104a241",
+    "userId": "0224f586-604a-4ed6-8ad7-6be2a8da8e5a",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T10:19:33.069929+00:00"
+  },
+  {
+    "id": "1f82d2aa-cdaf-4b46-952a-41a18ebc50d1",
+    "userId": "0224f586-604a-4ed6-8ad7-6be2a8da8e5a",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-10-28T10:21:06.168414+00:00"
+  },
+  {
+    "id": "a468f75d-8d82-43d1-8351-34c5472c08b9",
+    "userId": "970f56ee-f7f5-46ee-9a7f-6a3550ab23a0",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-10-30T05:41:43.582557+00:00"
+  },
+  {
+    "id": "b0990286-4baa-4fc0-b778-cee4af72413a",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-11-01T04:50:39.005152+00:00"
+  },
+  {
+    "id": "b2d07564-37bd-4cf6-bc71-9005a4438aae",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-11-01T06:04:58.651357+00:00"
+  },
+  {
+    "id": "7e5bcf0b-ec11-404c-871c-d30b4529d73c",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-11-01T07:29:59.450888+00:00"
+  },
+  {
+    "id": "72e94722-a036-41de-a094-8c3dde2a2204",
+    "userId": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-11-01T07:47:24.942057+00:00"
+  },
+  {
+    "id": "607d85e8-6ed9-4e81-bee2-adbc9434646d",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-11-01T07:47:24.943299+00:00"
+  },
+  {
+    "id": "0a680152-ee19-42fe-a92b-adc9eea7bdb1",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-11-01T08:12:59.983385+00:00"
+  },
+  {
+    "id": "06e629aa-ddb8-4611-9631-143bec9e5064",
+    "userId": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-11-01T08:12:59.984678+00:00"
+  },
+  {
+    "id": "c9003193-5e5d-480c-a27c-2cf9e81f4ca0",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-11-01T08:26:44.103142+00:00"
+  },
+  {
+    "id": "4d3404b3-8a79-4932-a5f1-a4bc9ca0bfc3",
+    "userId": "3d660770-65e5-4374-950b-315900fb5892",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-11-01T08:27:01.316968+00:00"
+  },
+  {
+    "id": "53f227a7-0e63-441d-b562-9a4e490d2d8b",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-11-01T08:27:01.317852+00:00"
+  },
+  {
+    "id": "bee87708-f7a3-4282-ba86-05af7faba67c",
+    "userId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "amount": 100,
+    "type": "earn",
+    "source": "onboarding",
+    "description": "Welcome bonus for completing onboarding",
+    "createdAt": "2025-11-01T08:49:42.937299+00:00"
+  },
+  {
+    "id": "e694a39f-73dd-408f-ba67-fa585ff47947",
+    "userId": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-11-01T08:57:59.653507+00:00"
+  },
+  {
+    "id": "45292925-c7e1-487a-9ae7-fefca210c6a4",
+    "userId": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-11-01T08:57:59.654881+00:00"
+  },
+  {
+    "id": "900a68c3-e58e-45c9-8bba-c88015955002",
+    "userId": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-11-01T09:33:06.442016+00:00"
+  },
+  {
+    "id": "30921688-de8d-45ad-8883-6f9564e32a78",
+    "userId": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-11-01T09:33:06.444932+00:00"
+  },
+  {
+    "id": "89508287-8e8a-4e48-b2cf-5003827e4ce4",
+    "userId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "amount": 20,
+    "type": "earn",
+    "source": "event",
+    "description": "Bonus for buying 1 ticket(s)",
+    "createdAt": "2025-11-02T05:36:42.205532+00:00"
+  },
+  {
+    "id": "40f2df68-4fc3-49fe-8df0-64aace76d57c",
+    "userId": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "Friend request accepted",
+    "createdAt": "2025-11-03T05:56:32.100405+00:00"
+  },
+  {
+    "id": "409dcb47-d636-4109-bd57-43c5cb4ac6ff",
+    "userId": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "amount": 10,
+    "type": "earn",
+    "source": "friend",
+    "description": "New friend added",
+    "createdAt": "2025-11-03T05:56:32.103226+00:00"
+  }
+]

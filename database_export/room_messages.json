@@ -1,0 +1,12 @@
+[
+  {
+    "id": "331c3eb3-48ec-45c2-8ac7-78cbea5db33f",
+    "roomId": "f2dd8bd6-49bd-4cc0-977b-e36b514c13a4",
+    "userId": "623acd6c-00cb-4811-aa5e-cf2e4a2a814e",
+    "userName": "Demo User",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+    "message": "Hello everyone! Welcome to the room!",
+    "type": "text",
+    "createdAt": "2025-10-23T08:34:47.344043+00:00"
+  }
+]

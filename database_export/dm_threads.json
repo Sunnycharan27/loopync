@@ -1,0 +1,310 @@
+[
+  {
+    "id": "9417a295-bfff-48de-aff6-1944dcab6413",
+    "user1Id": "633f2cbf-567f-4fe0-8246-94a071115042",
+    "user2Id": "6523e276-4ea3-4d60-99a6-8a76eaf4c225",
+    "createdAt": "2025-10-21T04:36:17.715046+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "ccaebad9-fb39-493a-9236-30ed355c9ce9",
+    "user1Id": "u1",
+    "user2Id": "u2",
+    "createdAt": "2025-10-21T05:04:17.600554+00:00",
+    "lastMessageAt": "2025-10-27T08:04:48.229547+00:00"
+  },
+  {
+    "id": "fae84f98-4910-4043-9a26-ffaa325aa35a",
+    "user1Id": "3e2e4476-7218-4230-8fc1-1b200ecf3579",
+    "user2Id": "7bfc2e44-15a5-4998-99fc-14880580f83c",
+    "createdAt": "2025-10-21T09:49:54.418148+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "28f2ca1d-1f4a-4a12-bfc5-63f4cda16cee",
+    "user1Id": "42f98a5b-dec6-45dc-8cee-4344850cf36a",
+    "user2Id": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "createdAt": "2025-10-21T10:31:12.692211+00:00",
+    "lastMessageAt": "2025-10-21T10:32:03.781076+00:00"
+  },
+  {
+    "id": "9a523bec-18cb-4834-a60c-3f4554f2d238",
+    "user1Id": "6dd685a8-1dc5-4c31-9808-bdefe77cd3d4",
+    "user2Id": "dfb29e40-7c43-4102-ba4f-ae00dd2aba1f",
+    "createdAt": "2025-10-21T10:34:49.161760+00:00",
+    "lastMessageAt": "2025-10-21T10:37:13.737668+00:00"
+  },
+  {
+    "id": "a839aa05-83f8-4202-ac58-2c4704bdff3f",
+    "user1Id": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "user2Id": "cf8d30ab-f563-448e-9d05-465a90035ace",
+    "createdAt": "2025-10-24T10:17:43.077494+00:00",
+    "lastMessageAt": "2025-10-24T10:20:11.922600+00:00"
+  },
+  {
+    "id": "ea41adf8-737c-49f5-8067-b12dd91dc160",
+    "user1Id": "39a8b505-f627-4d53-b2dc-d72dcf4b8490",
+    "user2Id": "85338454-6550-43ee-827d-5e5718db4928",
+    "createdAt": "2025-10-24T11:27:02.675888+00:00",
+    "lastMessageAt": "2025-10-24T11:27:58.935698+00:00"
+  },
+  {
+    "id": "9cbaaa58-028f-440e-8c1f-3c59c7fe3f0c",
+    "user1Id": "4600fffa-1f82-4f7c-980b-642233504ca2",
+    "user2Id": "ca55a75f-abeb-43ab-88ec-5e5137af1c33",
+    "createdAt": "2025-10-25T05:41:51.443207+00:00",
+    "lastMessageAt": "2025-10-25T05:41:59.979399+00:00"
+  },
+  {
+    "id": "78cd7654-fcbd-4b84-9ebe-616b1274548a",
+    "user1Id": "03142cfd-e017-4e66-8323-a4b3e7114332",
+    "user2Id": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "createdAt": "2025-10-26T04:42:24.254900+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "4e06cd18-e09c-4be9-bcee-a131c6a04380",
+    "user1Id": "9ccde212-b2a6-4bb0-879f-442608a6fb00",
+    "user2Id": "aa5a4bc5-6871-4b92-923e-664bf9a0a671",
+    "createdAt": "2025-10-26T04:57:41.391034+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "ebbb3018-4183-428b-8b2f-ae997a342e88",
+    "user1Id": "aa743481-0663-407e-9c10-24cccd5cf494",
+    "user2Id": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "createdAt": "2025-10-27T04:50:17.918606+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "7ab09563-a16d-4d0d-9fca-a729d79cb0e0",
+    "user1Id": "62db2d81-2946-4e47-bd1e-46fc4ef6a04c",
+    "user2Id": "ba7138c2-f798-4160-9dd3-5165492f7fef",
+    "createdAt": "2025-10-27T05:03:05.263096+00:00",
+    "lastMessageAt": "2025-10-27T05:03:58.782078+00:00"
+  },
+  {
+    "id": "307e7ea0-32b4-4e5e-9538-f8e5c2fb36f5",
+    "user1Id": "12115449-522b-497d-886f-f560e9dfd73b",
+    "user2Id": "demo_user",
+    "createdAt": "2025-10-27T05:14:53.742110+00:00",
+    "lastMessageAt": "2025-10-27T05:14:53.795932+00:00"
+  },
+  {
+    "id": "312a202f-949c-4394-bb83-59ca64af41dd",
+    "user1Id": "0f5c83c6-e10f-4bf3-aa78-652b63bd1119",
+    "user2Id": "697b7e7e-cfa9-46a7-9847-3faf89373d65",
+    "createdAt": "2025-10-27T05:23:54.993690+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "146c174b-4e97-4e2d-bfc0-1e9936900020",
+    "user1Id": "1cd8863d-e455-4b2c-b9f3-e359058cce2b",
+    "user2Id": "9e7b4921-a9ed-4c2f-9e09-2b839707f4a1",
+    "createdAt": "2025-10-27T05:24:07.875883+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "dfcf2ed4-c415-4505-81ca-1857487a989e",
+    "user1Id": "demo_user",
+    "user2Id": "u1",
+    "createdAt": "2025-10-27T06:04:11.452952+00:00",
+    "lastMessageAt": "2025-10-27T06:05:15.252720+00:00"
+  },
+  {
+    "id": "d7fc391f-a3c3-41d9-b233-6b0e08c7998e",
+    "user1Id": "6a367539-9af6-4118-9b1c-bcf76a959758",
+    "user2Id": "u1",
+    "createdAt": "2025-10-27T06:10:42.621665+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "f9d087da-3d34-4924-ab85-9609c88c51e2",
+    "user1Id": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "user2Id": "c777588a-e6b1-4dab-a32a-3be629dc59b5",
+    "createdAt": "2025-10-27T07:45:33.423174+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "f4986c3d-3894-4cc6-9c33-b9414493c83f",
+    "user1Id": "22d17232-fda8-4d10-8636-b3d71b13832d",
+    "user2Id": "e476bc6d-b9ca-4fa2-8308-05ff78d478b9",
+    "createdAt": "2025-10-27T08:12:39.257924+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "5c05722c-11fe-4a6c-95a1-083cb9cf33a6",
+    "user1Id": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "user2Id": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "createdAt": "2025-10-27T08:24:22.475760+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "0a07631d-3054-40ee-bb29-228ebd1e6c69",
+    "user1Id": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "user2Id": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "createdAt": "2025-10-27T08:58:30.563101+00:00",
+    "lastMessageAt": "2025-10-27T08:59:21.453394+00:00"
+  },
+  {
+    "id": "d866e0ae-b2b7-442c-b446-bc6b23a3982a",
+    "user1Id": "c8e55c2a-5b80-4269-ac41-364d5df4a04b",
+    "user2Id": "u1",
+    "createdAt": "2025-10-27T09:02:45.263113+00:00",
+    "lastMessageAt": "2025-10-27T09:02:45.273082+00:00"
+  },
+  {
+    "id": "f098cd7f-73f8-478c-9511-b1882b908abf",
+    "user1Id": "c8e55c2a-5b80-4269-ac41-364d5df4a04b",
+    "user2Id": "u2",
+    "createdAt": "2025-10-27T09:02:45.327719+00:00",
+    "lastMessageAt": "2025-10-27T09:02:45.344944+00:00"
+  },
+  {
+    "id": "6fe88bdd-05bd-40cb-9cad-9a970e9fb0f2",
+    "user1Id": "c8e55c2a-5b80-4269-ac41-364d5df4a04b",
+    "user2Id": "u3",
+    "createdAt": "2025-10-27T09:02:45.403687+00:00",
+    "lastMessageAt": "2025-10-27T09:02:45.413677+00:00"
+  },
+  {
+    "id": "50c7ec7c-6be9-463d-bc5b-97566ad9a7a1",
+    "user1Id": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "user2Id": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "createdAt": "2025-10-27T09:19:52.022370+00:00",
+    "lastMessageAt": "2025-10-28T04:00:09.027918+00:00"
+  },
+  {
+    "id": "dbe366ca-621e-444c-9aff-24468b523231",
+    "user1Id": "427916d6-fb42-44a2-ba35-d68aa67c82c5",
+    "user2Id": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "createdAt": "2025-10-27T09:21:25.528565+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "d56c956b-ed08-4fec-a378-d511902879f8",
+    "user1Id": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "user2Id": "9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0",
+    "createdAt": "2025-10-27T09:22:08.010902+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "2fdd3c64-fa94-48d0-ab89-32a79c156534",
+    "user1Id": "c86d2a02-81ed-44c2-8661-e3ddabcaffb2",
+    "user2Id": "u1",
+    "createdAt": "2025-10-27T09:30:57.889119+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "c0d5bb3b-0204-4e3f-ae22-48797e86b0ae",
+    "user1Id": "555a1f46-b829-4ad4-92ae-1b9bcdb3c4c6",
+    "user2Id": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "createdAt": "2025-10-27T09:38:03.797017+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "e93b2cea-8115-4525-b57a-b76491a29e2f",
+    "user1Id": "0f4909ee-9f3b-4f8d-9335-4ce7fdd4c9f0",
+    "user2Id": "u1",
+    "createdAt": "2025-10-28T03:37:45.396809+00:00",
+    "lastMessageAt": "2025-10-28T03:37:56.188364+00:00"
+  },
+  {
+    "id": "d83ab16b-f6b9-4a69-97eb-817cbcb2323a",
+    "user1Id": "6c64de25-d398-48a6-a148-2bde43df045d",
+    "user2Id": "u1",
+    "createdAt": "2025-10-28T04:34:50.185781+00:00",
+    "lastMessageAt": "2025-10-28T04:34:50.205778+00:00"
+  },
+  {
+    "id": "c0c43480-9805-4961-9453-655029227fca",
+    "user1Id": "dcab7536-b111-447d-a107-f162bc22dbab",
+    "user2Id": "u1",
+    "createdAt": "2025-10-28T05:24:27.355423+00:00",
+    "lastMessageAt": "2025-10-28T05:25:11.286287+00:00"
+  },
+  {
+    "id": "33e8531a-11d2-4a68-86f6-30e76456bc81",
+    "user1Id": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "user2Id": "b1a68570-99a3-49fa-8309-347cbe3499df",
+    "createdAt": "2025-10-28T05:33:13.035553+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "aa4f448e-fcb6-434d-94bc-e0679d2e65be",
+    "user1Id": "1962c398-33f3-43de-9bca-e3b2224039f7",
+    "user2Id": "45b26c1b-cf16-4540-9b5c-c8420bf40d8f",
+    "createdAt": "2025-10-28T05:36:15.158022+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "908cde09-f3aa-48ef-8027-09a33fb44576",
+    "user1Id": "1497da46-12a9-44ce-8584-4019e185b9f2",
+    "user2Id": "dcab7536-b111-447d-a107-f162bc22dbab",
+    "createdAt": "2025-10-28T05:46:53.763545+00:00",
+    "lastMessageAt": "2025-10-28T05:46:53.825719+00:00"
+  },
+  {
+    "id": "de7ae20f-da7a-44c5-8328-d3defbbdf329",
+    "user1Id": "22214d62-396a-4d37-8bdc-de8adb9048d5",
+    "user2Id": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "createdAt": "2025-10-28T07:14:11.924524+00:00",
+    "lastMessageAt": "2025-10-28T07:35:03.444948+00:00"
+  },
+  {
+    "id": "1ac824c1-d971-4b07-ab80-4ab83f96ac9c",
+    "user1Id": "0224f586-604a-4ed6-8ad7-6be2a8da8e5a",
+    "user2Id": "u1",
+    "createdAt": "2025-10-28T10:21:06.199944+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "580ff4f9-a356-49d8-94ea-f53cc600aa81",
+    "user1Id": "30d3fe80-df53-42d9-a95e-732336f4e8b9",
+    "user2Id": "dc6b9391-46b1-4c7d-bf2a-85c82b926a5c",
+    "createdAt": "2025-11-01T04:38:54.775288+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "2b12aab8-8ff6-432e-bbcb-8af372de8230",
+    "user1Id": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "user2Id": "36259b9c-7b12-41c2-97dd-1c2e81a4d1b1",
+    "createdAt": "2025-11-01T07:47:24.931918+00:00",
+    "lastMessageAt": "2025-11-01T08:12:24.602254+00:00"
+  },
+  {
+    "id": "bd2beaa7-7bdd-4581-ba9c-3cf76341d79c",
+    "user1Id": "0194cc98-2bff-4a8d-ae8a-3ef9eecf09cc",
+    "user2Id": "3d660770-65e5-4374-950b-315900fb5892",
+    "createdAt": "2025-11-01T08:12:59.981613+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "514a249f-2613-4cec-8362-c8e0f3ea5754",
+    "user1Id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "user2Id": "3d660770-65e5-4374-950b-315900fb5892",
+    "createdAt": "2025-11-01T08:27:01.315734+00:00",
+    "lastMessageAt": "2025-11-01T08:37:30.959692+00:00"
+  },
+  {
+    "id": "3e7643a5-9c15-4baa-926f-f1f773d648a7",
+    "user1Id": "12858231-709c-4d26-a5c9-45b5835d4f5a",
+    "user2Id": "443c5878-c846-48b5-a4c6-a8683e3f3702",
+    "createdAt": "2025-11-01T08:57:59.651537+00:00",
+    "lastMessageAt": "2025-11-01T08:58:07.330283+00:00"
+  },
+  {
+    "id": "03112bff-c31c-4a20-a192-ed21f28c7739",
+    "user1Id": "0ff3f6dd-3474-4267-aa5d-be161e263045",
+    "user2Id": "b090f607-c5e2-4468-9ef7-c531ca1b8fac",
+    "createdAt": "2025-11-01T09:33:06.432798+00:00",
+    "lastMessageAt": null
+  },
+  {
+    "id": "bf66927c-0d89-4878-af1a-e583e3832b10",
+    "user1Id": "513b6979-e588-42ea-b28a-ed3b6aa2c2ac",
+    "user2Id": "609f3200-d75f-4b2a-8f4c-8ecf2fa8f5bd",
+    "createdAt": "2025-11-03T05:56:32.090162+00:00",
+    "lastMessageAt": null
+  }
+]
