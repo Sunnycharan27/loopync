@@ -3853,7 +3853,7 @@ async def seed_data():
 
 @api_router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    """Upload image or video file"""
+    """Upload image or video file - stores in MongoDB for persistence across deployments"""
     # Validate file type
     allowed_types = {
         'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
@@ -3863,25 +3863,45 @@ async def upload_file(file: UploadFile = File(...)):
     if file.content_type not in allowed_types:
         raise HTTPException(status_code=400, detail="File type not supported")
     
-    # Generate unique filename
-    file_ext = file.filename.split('.')[-1]
-    unique_filename = f"{uuid.uuid4()}.{file_ext}"
-    file_path = UPLOAD_DIR / unique_filename
+    # Read file content
+    file_content = await file.read()
     
-    # Save file
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    # Check file size (MongoDB has 16MB document limit)
+    file_size_mb = len(file_content) / (1024 * 1024)
+    if file_size_mb > 15:
+        raise HTTPException(status_code=400, detail=f"File too large ({file_size_mb:.2f}MB). Maximum size is 15MB")
     
-    # Get base URL from environment or use default
-    base_url = os.environ.get('FRONTEND_URL', 'https://media-fix-8.preview.emergentagent.com')
+    # Generate unique ID for the file
+    file_id = str(uuid.uuid4())
+    file_ext = file.filename.split('.')[-1] if '.' in file.filename else ''
     
-    # Return FULL absolute URL for immediate use
-    file_url = f"{base_url}/api/uploads/{unique_filename}"
+    # Convert file to base64 for MongoDB storage
+    file_base64 = base64.b64encode(file_content).decode('utf-8')
+    
+    # Store in MongoDB
+    media_doc = {
+        "id": file_id,
+        "filename": file.filename,
+        "content_type": file.content_type,
+        "file_extension": file_ext,
+        "file_data": file_base64,
+        "file_size": len(file_content),
+        "uploaded_at": datetime.now(timezone.utc).isoformat(),
+    }
+    
+    await db.media_files.insert_one(media_doc)
+    
+    # Get base URL from environment
+    base_url = os.environ.get('FRONTEND_URL')
+    
+    # Return URL pointing to our serve endpoint
+    file_url = f"{base_url}/api/media/{file_id}"
     
     return {
         "url": file_url,
-        "filename": unique_filename,
-        "content_type": file.content_type
+        "filename": f"{file_id}.{file_ext}",
+        "content_type": file.content_type,
+        "size": len(file_content)
     }
 
 # ===== USER PROFILE UPDATE ROUTES =====
