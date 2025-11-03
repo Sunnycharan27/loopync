@@ -20,9 +20,14 @@ export const getMediaUrl = (mediaUrl) => {
     return mediaUrl;
   }
   
-  // If it's a relative path starting with /api/uploads or /uploads, prepend backend URL
-  if (mediaUrl.startsWith('/api/uploads') || mediaUrl.startsWith('/uploads')) {
+  // For relative URLs (starting with /api/), prepend backend URL
+  if (mediaUrl.startsWith('/api/')) {
     return `${BACKEND_URL}${mediaUrl}`;
+  }
+  
+  // For /uploads paths, prepend backend URL with /api prefix
+  if (mediaUrl.startsWith('/uploads')) {
+    return `${BACKEND_URL}/api${mediaUrl}`;
   }
   
   // Default: prepend backend URL
