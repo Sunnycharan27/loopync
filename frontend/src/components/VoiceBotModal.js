@@ -4,7 +4,10 @@ import { Mic, MicOff, Send, Volume2, VolumeX, X } from 'lucide-react';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+const API_URL = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
+if (!API_URL) {
+  console.error('REACT_APP_BACKEND_URL is not configured');
+}
 
 const VoiceBotModal = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([]);
