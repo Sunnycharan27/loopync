@@ -578,20 +578,39 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
     formData.append("file", selectedFile);
 
     try {
-      console.log('Uploading avatar to:', `${API}/upload`);
-      const res = await axios.post(`${API}/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const uploadUrl = `${API}/api/upload`;
+      console.log('🔄 Uploading avatar to:', uploadUrl);
+      console.log('📁 File details:', {
+        name: selectedFile.name,
+        type: selectedFile.type,
+        size: selectedFile.size
+      });
+      
+      const res = await axios.post(uploadUrl, formData, {
+        headers: { 
+          "Content-Type": "multipart/form-data"
+        },
         timeout: 30000
       });
       
-      console.log('Upload response:', res.data);
+      console.log('✅ Upload response:', res.data);
       const uploadedPath = res.data.url;
-      console.log('Uploaded avatar path:', uploadedPath);
+      console.log('📸 Uploaded avatar path:', uploadedPath);
+      
+      if (!uploadedPath) {
+        throw new Error('No URL returned from upload');
+      }
       
       toast.success("Avatar uploaded successfully!");
       return uploadedPath;
     } catch (error) {
-      console.error("Upload error:", error);
+      console.error("❌ Upload error:", error);
+      console.error("Error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
+      
       const errorMsg = error.response?.data?.detail || error.message || "Failed to upload avatar";
       toast.error(`Upload failed: ${errorMsg}`);
       return null;
