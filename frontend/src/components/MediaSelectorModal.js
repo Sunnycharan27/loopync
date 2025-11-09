@@ -134,7 +134,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const uploadRes = await axios.post(`${API}/api/upload`, formData, {
+      const uploadRes = await axios.post(`${API}/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
