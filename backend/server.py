@@ -5275,9 +5275,9 @@ async def get_admin_dashboard(adminUserId: str):
 
 # ===== USER SETTINGS ROUTES =====
 
-@api_router.put("/users/{userId}/settings")
-async def update_user_settings(userId: str, updates: dict):
-    """Update user profile settings"""
+@api_router.put("/users/{userId}/profile")
+async def update_user_profile(userId: str, updates: dict):
+    """Update user profile information"""
     user = await db.users.find_one({"id": userId}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
