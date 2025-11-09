@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
-import { API, AuthContext, WebSocketContext } from "../App";
+import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
 import { 
   ArrowLeft, Mic, MicOff, Hand, UserPlus, MoreVertical, 
