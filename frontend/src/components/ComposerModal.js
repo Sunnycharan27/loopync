@@ -84,8 +84,8 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Validate file size (max 50MB for videos, 10MB for images)
-    const maxSize = file.type.startsWith('video/') ? 50 * 1024 * 1024 : 10 * 1024 * 1024;
+    // Validate file size (max 150MB for videos, 10MB for images)
+    const maxSize = file.type.startsWith('video/') ? 150 * 1024 * 1024 : 10 * 1024 * 1024;
     if (file.size > maxSize) {
       toast.error(`File size must be less than ${maxSize / (1024 * 1024)}MB`);
       return;
@@ -94,10 +94,10 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated }) => {
     // Validate file type
     const allowedTypes = [
       'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
-      'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'
+      'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/mpeg'
     ];
     if (!allowedTypes.includes(file.type)) {
-      toast.error("Only images (JPEG, PNG, GIF, WebP) and videos (MP4, MOV, AVI, WebM) are supported");
+      toast.error("Only images (JPEG, PNG, GIF, WebP) and videos (MP4, MOV, AVI, WebM, MPEG) are supported");
       return;
     }
 
