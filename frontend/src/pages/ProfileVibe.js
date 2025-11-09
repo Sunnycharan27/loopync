@@ -21,8 +21,6 @@ const ProfileVibe = () => {
   const [loopCredits, setLoopCredits] = useState(0);
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState("");
-  const [uploadingAvatar, setUploadingAvatar] = useState(false);
-  const avatarInputRef = useRef(null);
 
   useEffect(() => {
     fetchProfileData();
