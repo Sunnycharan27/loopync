@@ -205,39 +205,20 @@ const RoomDetailClubhouse = () => {
   // Update audio permissions when role changes
   useEffect(() => {
     const updateAudioPermissions = async () => {
-      if (!agoraClient.current || !isConnected) return;
+      if (!audioManager.current || !isConnected) return;
       
       const myRole = getCurrentUserRole();
       const isNowSpeaker = myRole !== "audience";
-      const hasAudioTrack = localAudioTrack.current !== null;
 
-      // If promoted to speaker but don't have audio track
-      if (isNowSpeaker && !hasAudioTrack) {
+      // If promoted to speaker
+      if (isNowSpeaker && !audioManager.current.getConnectionState()) {
         try {
-          // Request microphone permission first
-          try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            stream.getTracks().forEach(track => track.stop());
-          } catch (permError) {
-            console.error("Microphone permission denied:", permError);
-            toast.error("Please allow microphone access to speak. Check browser permissions.");
-            return;
-          }
-          
-          // Change client role to host
-          await agoraClient.current.setClientRole("host");
-          
-          // Create and publish audio track
-          localAudioTrack.current = await AgoraRTC.createMicrophoneAudioTrack({
-            encoderConfig: "music_standard",
-          });
-          await agoraClient.current.publish([localAudioTrack.current]);
-          
+          await audioManager.current.initialize();
           setIsMuted(false);
           toast.success("🎤 You're on stage! You can now speak.");
         } catch (error) {
           console.error("Failed to enable microphone:", error);
-          if (error.message?.includes("permission")) {
+          if (error.message?.includes("permission") || error.name === "NotAllowedError") {
             toast.error("Microphone access denied. Please allow microphone in browser settings.");
           } else {
             toast.error("Failed to enable microphone. Please try again.");
@@ -245,17 +226,10 @@ const RoomDetailClubhouse = () => {
         }
       }
       
-      // If demoted to audience but have audio track
-      if (!isNowSpeaker && hasAudioTrack) {
+      // If demoted to audience
+      if (!isNowSpeaker && audioManager.current.getConnectionState()) {
         try {
-          // Unpublish and close audio track
-          await agoraClient.current.unpublish([localAudioTrack.current]);
-          localAudioTrack.current.close();
-          localAudioTrack.current = null;
-          
-          // Change client role to audience
-          await agoraClient.current.setClientRole("audience");
-          
+          await audioManager.current.cleanup();
           setIsMuted(true);
           toast.info("Moved to audience");
         } catch (error) {
