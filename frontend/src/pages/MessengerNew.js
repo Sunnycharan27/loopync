@@ -327,14 +327,11 @@ const MessengerNew = () => {
       // Trigger outgoing call modal by dispatching custom event
       const callData = {
         callId: response.data.callId,
-        channelName: response.data.channelName,
-        appId: response.data.appId,
-        callerToken: response.data.callerToken,
-        callerUid: response.data.callerUid,
         callType: callType,
-        peerName: selectedThread.otherUser.name,
-        peerAvatar: selectedThread.otherUser.avatar,
-        isInitiator: true
+        otherUserId: selectedThread.otherUser.id,
+        otherUserName: selectedThread.otherUser.name,
+        otherUserAvatar: selectedThread.otherUser.avatar,
+        isIncoming: false
       };
       
       // Dispatch custom event that CallManager will listen to
