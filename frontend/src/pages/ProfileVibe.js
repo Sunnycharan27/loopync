@@ -60,8 +60,8 @@ const ProfileVibe = () => {
       return;
     }
     try {
-      await axios.patch(`${API}/users/${currentUser.id}/profile`, { name: editedName });
-      setCurrentUser({ ...currentUser, name: editedName });
+      await axios.patch(`${API}/api/users/${currentUser.id}/profile`, { name: editedName });
+      await refreshUserData();
       setIsEditingName(false);
       toast.success("Name updated!");
     } catch (error) {
