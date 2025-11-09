@@ -337,14 +337,21 @@ class ComprehensiveBackendTester:
                 call_response = response.json()
                 self.log("✅ Call initiation successful!")
                 
-                # Verify WebRTC response format
-                required_fields = ["callId", "channelName", "appId"]
+                # Verify call response format (actual structure from API)
+                required_fields = ["success", "callId", "callType", "otherUserId", "otherUserName"]
                 for field in required_fields:
                     if field in call_response:
                         self.log(f"   ✅ {field}: {str(call_response[field])[:50]}")
                     else:
                         self.log(f"   ❌ Missing field: {field}", "ERROR")
                         return False
+                
+                # Verify success is true
+                if call_response.get('success') == True:
+                    self.log("   ✅ Call initiation success flag is true")
+                else:
+                    self.log(f"   ❌ Call initiation success flag is false", "ERROR")
+                    return False
                 
                 return True
             else:
