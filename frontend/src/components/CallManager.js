@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useWebSocket } from '../context/WebSocketContext';
 import IncomingCallModal from './IncomingCallModal';
-import AgoraCallModal from './AgoraCallModal';
+import WebRTCCallModal from './WebRTCCallModal';
 import { toast } from 'sonner';
 import axios from 'axios';
 
