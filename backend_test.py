@@ -443,53 +443,104 @@ class ComprehensiveBackendTester:
             self.log(f"❌ Failed to get vibe capsules: {response.status_code} - {response.text}", "ERROR")
             return False
     
+    def test_response_times(self):
+        """Test response times for critical endpoints"""
+        self.log("\n⏱️ TEST 8: Response Times")
+        
+        endpoints_to_test = [
+            ("GET /api/posts", f"{BASE_URL}/posts"),
+            ("GET /api/reels", f"{BASE_URL}/reels"),
+            ("GET /api/users", f"{BASE_URL}/users"),
+            ("GET /api/auth/me", f"{BASE_URL}/auth/me")
+        ]
+        
+        slow_endpoints = []
+        
+        for endpoint_name, url in endpoints_to_test:
+            start_time = time.time()
+            response = self.session.get(url)
+            end_time = time.time()
+            
+            response_time = (end_time - start_time) * 1000  # Convert to milliseconds
+            
+            self.log(f"   {endpoint_name}: {response_time:.0f}ms")
+            
+            if response_time > 500:  # Threshold: 500ms
+                slow_endpoints.append((endpoint_name, response_time))
+                self.log(f"     ⚠️ Slow response (>{500}ms)", "WARNING")
+            else:
+                self.log(f"     ✅ Good response time (<500ms)")
+        
+        if slow_endpoints:
+            self.log(f"   ⚠️ {len(slow_endpoints)} endpoints are slow:")
+            for endpoint, time_ms in slow_endpoints:
+                self.log(f"     - {endpoint}: {time_ms:.0f}ms")
+        else:
+            self.log("   ✅ All endpoints respond within 500ms")
+        
+        return True
+    
     def run_all_tests(self):
-        """Run all call functionality tests"""
-        self.log("🚀 Starting CRITICAL CALL FUNCTIONALITY TESTING")
+        """Run comprehensive backend API tests"""
+        self.log("🚀 Starting COMPREHENSIVE BACKEND API TESTING")
+        self.log("=" * 80)
+        self.log("🎯 Testing all critical backend endpoints for production readiness")
+        self.log(f"📍 API Base URL: {BASE_URL}")
+        self.log(f"👤 Test Credentials: {TEST_EMAIL} / {TEST_PASSWORD}")
         self.log("=" * 80)
         
-        # Login first
+        # Login first (this is also Test 2: Authentication)
         if not self.login():
             return False
         
-        # Get friends list
-        if not self.get_friends():
+        # Test protected endpoints
+        if not self.test_protected_endpoints():
             return False
         
-        # Run all tests
+        # Run all priority tests
         tests = [
-            ("Audio Call Initiation", self.test_audio_call_initiation),
-            ("Video Call Initiation", self.test_video_call_initiation),
-            ("Error Scenarios", self.test_error_scenarios),
-            ("Agora Token Generation", self.test_agora_token_generation),
-            ("Call Management", self.test_call_management),
-            ("Call History", self.test_call_history)
+            ("Profile Picture Upload (CRITICAL)", self.test_profile_picture_upload),
+            ("Posts API", self.test_posts_api),
+            ("Media Serving", self.test_media_serving),
+            ("WebSocket/Calling", self.test_webrtc_calling),
+            ("Reels API", self.test_reels_api),
+            ("Vibe Capsules API", self.test_vibe_capsules_api),
+            ("Response Times", self.test_response_times)
         ]
         
         passed = 0
         total = len(tests)
+        failed_tests = []
         
         for test_name, test_func in tests:
             try:
+                self.log(f"\n{'='*20} {test_name} {'='*20}")
                 if test_func():
                     passed += 1
                     self.log(f"✅ {test_name}: PASSED")
                 else:
+                    failed_tests.append(test_name)
                     self.log(f"❌ {test_name}: FAILED", "ERROR")
             except Exception as e:
+                failed_tests.append(test_name)
                 self.log(f"❌ {test_name}: EXCEPTION - {str(e)}", "ERROR")
         
         # Summary
         self.log("\n" + "=" * 80)
-        self.log(f"🎯 CALL FUNCTIONALITY TEST RESULTS")
+        self.log(f"🎯 COMPREHENSIVE BACKEND API TEST RESULTS")
         self.log(f"   Tests Passed: {passed}/{total}")
         self.log(f"   Success Rate: {(passed/total)*100:.1f}%")
         
+        if failed_tests:
+            self.log(f"\n❌ FAILED TESTS:")
+            for test in failed_tests:
+                self.log(f"   - {test}")
+        
         if passed == total:
-            self.log("🎉 ALL TESTS PASSED - CALL FUNCTIONALITY IS WORKING!")
+            self.log("\n🎉 ALL TESTS PASSED - BACKEND IS PRODUCTION READY!")
             return True
         else:
-            self.log("⚠️  SOME TESTS FAILED - CALL FUNCTIONALITY NEEDS FIXES")
+            self.log(f"\n⚠️  {len(failed_tests)} TESTS FAILED - BACKEND NEEDS FIXES")
             return False
 
 if __name__ == "__main__":
