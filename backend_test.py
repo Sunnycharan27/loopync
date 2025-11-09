@@ -410,8 +410,10 @@ class ComprehensiveBackendTester:
             self.log(f"✅ Retrieved {len(capsules)} vibe capsules")
             
             if capsules:
-                # Check first few capsules
-                for i, capsule in enumerate(capsules[:3]):
+                # Check first few capsules (limit to 3)
+                capsules_to_check = capsules[:3] if len(capsules) >= 3 else capsules
+                
+                for i, capsule in enumerate(capsules_to_check):
                     self.log(f"   Capsule {i+1}: ID {capsule.get('id')}")
                     
                     # Check media URL
