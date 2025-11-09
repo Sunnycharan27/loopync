@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Phone, PhoneOff, Video, VideoOff, Mic, MicOff, X, Maximize2, Minimize2 } from 'lucide-react';
-import AgoraRTC from 'agora-rtc-sdk-ng';
+// import AgoraRTC from 'agora-rtc-sdk-ng'; // Removed - replaced by WebRTC
 import { toast } from 'sonner';
 import axios from 'axios';
 
