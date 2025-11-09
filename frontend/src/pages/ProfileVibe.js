@@ -71,8 +71,8 @@ const ProfileVibe = () => {
 
   const handleProfilePictureSelect = async (mediaUrl) => {
     try {
-      await axios.patch(`${API}/users/${currentUser.id}/profile`, { avatar: mediaUrl });
-      setCurrentUser({ ...currentUser, avatar: mediaUrl });
+      await axios.patch(`${API}/api/users/${currentUser.id}/profile`, { avatar: mediaUrl });
+      await refreshUserData();
       setShowMediaSelector(false);
       toast.success("Profile picture updated!");
     } catch (error) {
