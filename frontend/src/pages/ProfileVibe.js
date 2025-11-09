@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
 import { 
-  Settings, Grid, Users, Ticket, Edit3, Camera, X, Check, Phone, Video, MessageCircle, ShoppingBag
+  Settings, Grid, Users, Ticket, Edit3, X, Check, Phone, Video, MessageCircle, ShoppingBag
 } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
