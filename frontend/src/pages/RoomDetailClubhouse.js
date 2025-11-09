@@ -69,7 +69,7 @@ const RoomDetailClubhouse = () => {
       
       // Only initialize audio for speakers/hosts
       if (myRole !== "audience") {
-        audioManager.current = new AudioRoomManager(socket, roomId, currentUser.id);
+        audioManager.current = new AudioRoomManager(null, roomId, currentUser.id);
         await audioManager.current.initialize();
         setIsMuted(false);
         toast.success("🎤 You're on stage! You can now speak.");
