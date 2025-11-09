@@ -3863,11 +3863,11 @@ async def seed_data():
 
 @api_router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    """Upload image or video file - stores in MongoDB for persistence across deployments"""
+    """Upload image or video file - hybrid storage: MongoDB for small files, disk for large files"""
     # Validate file type
     allowed_types = {
         'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
-        'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'
+        'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/mpeg'
     }
     
     if file.content_type not in allowed_types:
@@ -3876,30 +3876,65 @@ async def upload_file(file: UploadFile = File(...)):
     # Read file content
     file_content = await file.read()
     
-    # Check file size (MongoDB has 16MB document limit)
+    # Check file size (now supports up to 150MB)
     file_size_mb = len(file_content) / (1024 * 1024)
-    if file_size_mb > 15:
-        raise HTTPException(status_code=400, detail=f"File too large ({file_size_mb:.2f}MB). Maximum size is 15MB")
+    if file_size_mb > 150:
+        raise HTTPException(status_code=400, detail=f"File too large ({file_size_mb:.2f}MB). Maximum size is 150MB")
     
     # Generate unique ID for the file
     file_id = str(uuid.uuid4())
     file_ext = file.filename.split('.')[-1] if '.' in file.filename else ''
     
-    # Convert file to base64 for MongoDB storage
-    file_base64 = base64.b64encode(file_content).decode('utf-8')
+    # Use hybrid storage approach
+    # Small files (<15MB) -> MongoDB (base64)
+    # Large files (15MB-150MB) -> Disk storage
     
-    # Store in MongoDB
-    media_doc = {
-        "id": file_id,
-        "filename": file.filename,
-        "content_type": file.content_type,
-        "file_extension": file_ext,
-        "file_data": file_base64,
-        "file_size": len(file_content),
-        "uploaded_at": datetime.now(timezone.utc).isoformat(),
-    }
-    
-    await db.media_files.insert_one(media_doc)
+    if file_size_mb <= 15:
+        # Store in MongoDB for persistence
+        logging.info(f"Storing small file ({file_size_mb:.2f}MB) in MongoDB: {file_id}")
+        
+        file_base64 = base64.b64encode(file_content).decode('utf-8')
+        
+        media_doc = {
+            "id": file_id,
+            "filename": file.filename,
+            "content_type": file.content_type,
+            "file_extension": file_ext,
+            "file_data": file_base64,
+            "file_size": len(file_content),
+            "storage_type": "mongodb",
+            "uploaded_at": datetime.now(timezone.utc).isoformat(),
+        }
+        
+        await db.media_files.insert_one(media_doc)
+        
+    else:
+        # Store large files on disk
+        logging.info(f"Storing large file ({file_size_mb:.2f}MB) on disk: {file_id}")
+        
+        # Ensure upload directory exists
+        UPLOAD_DIR.mkdir(exist_ok=True)
+        
+        # Save to disk
+        file_path = UPLOAD_DIR / f"{file_id}.{file_ext}"
+        with open(file_path, "wb") as f:
+            f.write(file_content)
+        
+        # Store metadata in MongoDB (without file data)
+        media_doc = {
+            "id": file_id,
+            "filename": file.filename,
+            "content_type": file.content_type,
+            "file_extension": file_ext,
+            "file_size": len(file_content),
+            "storage_type": "disk",
+            "disk_path": str(file_path),
+            "uploaded_at": datetime.now(timezone.utc).isoformat(),
+        }
+        
+        await db.media_files.insert_one(media_doc)
+        
+        logging.info(f"Large file saved to disk: {file_path}")
     
     # Return RELATIVE URL so it works on any deployment domain
     file_url = f"/api/media/{file_id}"
@@ -3908,7 +3943,8 @@ async def upload_file(file: UploadFile = File(...)):
         "url": file_url,
         "filename": f"{file_id}.{file_ext}",
         "content_type": file.content_type,
-        "size": len(file_content)
+        "size": len(file_content),
+        "storage_type": "mongodb" if file_size_mb <= 15 else "disk"
     }
 
 
