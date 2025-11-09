@@ -103,7 +103,7 @@ const Profile = () => {
         {/* Profile Header */}
         <div className="glass-card p-6 mb-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="relative">
+            <div className="relative group">
               <img
                 src={
                   currentUser.avatar 
@@ -115,7 +115,13 @@ const Profile = () => {
                 alt={currentUser.name}
                 className="w-20 h-20 rounded-full border-4 border-cyan-400 object-cover"
               />
-              <div className="absolute -bottom-2 -right-2 text-3xl">
+              <button
+                onClick={() => setShowMediaSelector(true)}
+                className="absolute inset-0 bg-black/0 group-hover:bg-black/60 rounded-full transition-all flex items-center justify-center opacity-0 group-hover:opacity-100"
+              >
+                <Camera size={20} className="text-white" />
+              </button>
+              <div className="absolute -bottom-2 -right-2 text-3xl pointer-events-none">
                 {getTierEmoji(analytics?.tier || "Bronze")}
               </div>
             </div>
