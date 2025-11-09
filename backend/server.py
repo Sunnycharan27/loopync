@@ -46,7 +46,6 @@ security = HTTPBearer()
 
 # Create the main app
 app = FastAPI()
-api_router = APIRouter(prefix="/api")
 
 # Create Socket.IO server
 sio = socketio.AsyncServer(
@@ -56,9 +55,10 @@ sio = socketio.AsyncServer(
     engineio_logger=True
 )
 
-# Mount Socket.IO to the FastAPI app
-sio_asgi_app = socketio.ASGIApp(sio)
-app.mount('/socket.io', sio_asgi_app)
+# Create Socket.IO ASGI app (this will be mounted)
+sio_asgi_app = socketio.ASGIApp(sio, other_asgi_app=app)
+
+api_router = APIRouter(prefix="/api")
 
 # Store connected clients: {userId: sid}
 connected_clients = {}
