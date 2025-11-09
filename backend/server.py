@@ -4027,6 +4027,10 @@ async def update_user_profile(userId: str, updates: UserProfileUpdate):
             update_data["avatar"] = updates.avatar
         if updates.coverPhoto is not None:
             update_data["coverPhoto"] = updates.coverPhoto
+        if updates.location is not None:
+            update_data["location"] = updates.location
+        if updates.website is not None:
+            update_data["website"] = updates.website
         
         if not update_data:
             raise HTTPException(status_code=400, detail="No updates provided")
