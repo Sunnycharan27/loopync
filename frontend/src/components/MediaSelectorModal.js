@@ -92,6 +92,57 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
     }
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    // Validate file size (150MB limit)
+    if (file.size > 150 * 1024 * 1024) {
+      toast.error('File size must be less than 150MB');
+      return;
+    }
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUploadPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUpload = async () => {
+    const file = fileInputRef.current?.files[0];
+    if (!file) {
+      toast.error('Please select a file to upload');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const uploadRes = await axios.post(`${API}/upload`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      const mediaUrl = uploadRes.data.url;
+      toast.success('Image uploaded successfully!');
+      onSelect(mediaUrl);
+    } catch (error) {
+      console.error('Upload failed:', error);
+      toast.error('Failed to upload image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const getMediaUrl = (url) => {
     if (!url) return '';
     if (url.startsWith('http')) return url;
