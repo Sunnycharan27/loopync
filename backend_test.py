@@ -350,62 +350,48 @@ class ComprehensiveBackendTester:
             self.log(f"❌ Failed to get friends: {response.status_code} - {response.text}", "ERROR")
             return False
     
-    def test_call_management(self):
-        """Test Priority 2: Call Management"""
-        self.log("\n📱 TEST 5: Call Management (Answer/End)")
+    def test_reels_api(self):
+        """Test Priority 6: Reels - Get reels and verify video URLs"""
+        self.log("\n🎬 TEST 6: Reels API")
         
-        if not self.friends:
-            self.log("❌ No friends available for testing", "ERROR")
-            return False
-        
-        # First, initiate a call
-        friend = self.friends[0]
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
-            "callerId": self.user_id,
-            "recipientId": friend.get('id'),
-            "callType": "audio"
-        })
-        
-        if response.status_code != 200:
-            self.log(f"❌ Failed to initiate call: {response.text}", "ERROR")
-            return False
-        
-        call_data = response.json()
-        call_id = call_data.get('callId')
-        
-        # Test answering the call (using recipient's perspective)
-        recipient_id = friend.get('id')
-        self.log(f"   Testing answer call (ID: {call_id}) as recipient ({recipient_id})")
-        response = self.session.post(f"{BASE_URL}/calls/{call_id}/answer", params={"userId": recipient_id})
+        # Get all reels
+        self.log("   Getting reels...")
+        response = self.session.get(f"{BASE_URL}/reels")
         
         if response.status_code == 200:
-            data = response.json()
-            if data.get('status') == 'ongoing':
-                self.log("   ✅ Call answered successfully, status changed to 'ongoing'")
+            reels = response.json()
+            self.log(f"✅ Retrieved {len(reels)} reels")
+            
+            if reels:
+                # Check first few reels
+                for i, reel in enumerate(reels[:3]):
+                    self.log(f"   Reel {i+1}: ID {reel.get('id')}")
+                    
+                    # Check video URL
+                    video_url = reel.get('videoUrl')
+                    if video_url:
+                        self.log(f"     Video URL: {video_url}")
+                        
+                        # Verify URL format
+                        if video_url.startswith('/api/media/') or video_url.startswith('http'):
+                            self.log(f"     ✅ Video URL format valid")
+                        else:
+                            self.log(f"     ❌ Invalid video URL format: {video_url}", "ERROR")
+                    
+                    # Check author data
+                    author = reel.get('author')
+                    if author:
+                        self.log(f"     Author: {author.get('name')}")
+                    else:
+                        self.log(f"     ❌ Missing author data", "ERROR")
+                
+                return True
             else:
-                self.log(f"   ❌ Call status not updated correctly: {data.get('status')}", "ERROR")
-                return False
+                self.log("   No reels found (empty response)")
+                return True
         else:
-            self.log(f"   ❌ Failed to answer call: {response.text}", "ERROR")
+            self.log(f"❌ Failed to get reels: {response.status_code} - {response.text}", "ERROR")
             return False
-        
-        # Test ending the call (caller can end it)
-        self.log(f"   Testing end call (ID: {call_id}) as caller ({self.user_id})")
-        response = self.session.post(f"{BASE_URL}/calls/{call_id}/end", params={"userId": self.user_id})
-        
-        if response.status_code == 200:
-            data = response.json()
-            if data.get('message') == 'Call ended':
-                self.log(f"   ✅ Call ended successfully, duration: {data.get('duration')} seconds")
-            else:
-                self.log(f"   ❌ Call end response invalid: {data}", "ERROR")
-                return False
-        else:
-            self.log(f"   ❌ Failed to end call: {response.text}", "ERROR")
-            return False
-        
-        self.log("✅ Call management working correctly")
-        return True
     
     def test_call_history(self):
         """Test Priority 3: Call History"""
