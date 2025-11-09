@@ -102,59 +102,81 @@ class ComprehensiveBackendTester:
         self.session.headers["Authorization"] = old_auth
         return True
     
-    def test_audio_call_initiation(self):
-        """Test Priority 1: Audio Call Initiation"""
-        self.log("\n📞 TEST 1: Audio Call Initiation")
+    def test_profile_picture_upload(self):
+        """Test Priority 1: Profile Picture Upload (CRITICAL - reported as broken)"""
+        self.log("\n📸 TEST 1: Profile Picture Upload (CRITICAL)")
         
-        if not self.friends:
-            self.log("❌ No friends available for testing", "ERROR")
-            return False
-            
-        friend = self.friends[0]  # Use first friend
-        friend_id = friend.get('id')
-        friend_name = friend.get('name')
+        # Create a test image
+        self.log("   Creating test image...")
+        img = Image.new('RGB', (100, 100), color='red')
+        img_buffer = io.BytesIO()
+        img.save(img_buffer, format='PNG')
+        img_buffer.seek(0)
         
-        self.log(f"   Initiating audio call to {friend_name} (ID: {friend_id})")
+        # Test file upload
+        self.log("   Uploading test image to /api/upload...")
+        files = {'file': ('test_avatar.png', img_buffer, 'image/png')}
         
-        request_body = {
-            "callerId": self.user_id,
-            "recipientId": friend_id,
-            "callType": "audio"
-        }
+        # Remove Content-Type header for file upload
+        headers = dict(self.session.headers)
+        if 'Content-Type' in headers:
+            del headers['Content-Type']
         
-        self.log(f"   Request body: {json.dumps(request_body, indent=2)}")
+        response = self.session.post(f"{BASE_URL}/upload", files=files, headers=headers)
         
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json=request_body)
-        
-        self.log(f"   Response status: {response.status_code}")
+        self.log(f"   Upload response status: {response.status_code}")
         
         if response.status_code == 200:
-            data = response.json()
-            self.log("✅ Audio call initiation successful!")
+            upload_data = response.json()
+            media_url = upload_data.get('url')
+            media_id = upload_data.get('id')
             
-            # Verify response structure
-            required_fields = ["callId", "channelName", "appId", "callerToken", "callerUid", "recipientToken", "recipientUid", "expiresIn"]
-            missing_fields = []
+            self.log(f"✅ File upload successful!")
+            self.log(f"   Media URL: {media_url}")
+            self.log(f"   Media ID: {media_id}")
             
-            for field in required_fields:
-                if field not in data:
-                    missing_fields.append(field)
-                else:
-                    self.log(f"   ✅ {field}: {str(data[field])[:50]}{'...' if len(str(data[field])) > 50 else ''}")
-            
-            if missing_fields:
-                self.log(f"❌ Missing required fields: {missing_fields}", "ERROR")
+            # Verify URL format is relative
+            if media_url and media_url.startswith('/api/media/'):
+                self.log("✅ Media URL uses correct relative format (/api/media/{id})")
+            else:
+                self.log(f"❌ Media URL format incorrect: {media_url}", "ERROR")
                 return False
             
-            # Verify no Pydantic errors
-            if isinstance(data.get('detail'), dict):
-                self.log("❌ Response contains object in detail field (Pydantic error)", "ERROR")
-                return False
+            self.uploaded_media_id = media_id
+            
+            # Test updating user profile with uploaded avatar
+            self.log("   Updating user profile with uploaded avatar...")
+            
+            # Restore Content-Type for JSON requests
+            self.session.headers.update({"Content-Type": "application/json"})
+            
+            response = self.session.put(f"{BASE_URL}/users/{self.user_id}/profile", json={
+                "avatar": media_url
+            })
+            
+            if response.status_code == 200:
+                self.log("✅ Profile avatar updated successfully")
                 
-            self.log("✅ All required fields present and properly formatted")
-            return True
+                # Verify avatar appears in user data
+                response = self.session.get(f"{BASE_URL}/users")
+                if response.status_code == 200:
+                    users = response.json()
+                    demo_user = next((u for u in users if u.get('id') == self.user_id), None)
+                    
+                    if demo_user and demo_user.get('avatar') == media_url:
+                        self.log("✅ Avatar appears correctly in user response")
+                        return True
+                    else:
+                        self.log(f"❌ Avatar not found in user response: {demo_user.get('avatar') if demo_user else 'User not found'}", "ERROR")
+                        return False
+                else:
+                    self.log(f"❌ Failed to verify avatar in user list: {response.status_code}", "ERROR")
+                    return False
+            else:
+                self.log(f"❌ Failed to update profile avatar: {response.status_code} - {response.text}", "ERROR")
+                return False
         else:
-            self.log(f"❌ Audio call initiation failed: {response.text}", "ERROR")
+            self.log(f"❌ File upload failed: {response.status_code} - {response.text}", "ERROR")
             return False
     
     def test_video_call_initiation(self):
