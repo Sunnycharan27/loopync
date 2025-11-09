@@ -534,12 +534,7 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
   const [bio, setBio] = useState(currentUser.bio || "");
   const [location, setLocation] = useState(currentUser.location || "");
   const [website, setWebsite] = useState(currentUser.website || "");
-  const [avatar, setAvatar] = useState(currentUser.avatar || "");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(currentUser.avatar || "");
-  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const fileInputRef = React.useRef(null);
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
