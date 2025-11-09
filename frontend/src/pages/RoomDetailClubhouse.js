@@ -13,6 +13,7 @@ import AudioRoomManager from "../utils/audioRoomManager";
 const RoomDetailClubhouse = () => {
   const { roomId } = useParams();
   const { currentUser } = useContext(AuthContext);
+  const socket = useContext(WebSocketContext);
   const navigate = useNavigate();
   
   const [room, setRoom] = useState(null);
@@ -22,9 +23,8 @@ const RoomDetailClubhouse = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   
-  // Agora client refs
-  const agoraClient = useRef(null);
-  const localAudioTrack = useRef(null);
+  // Audio room manager ref
+  const audioManager = useRef(null);
 
   useEffect(() => {
     fetchRoom();
