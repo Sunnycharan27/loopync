@@ -3950,30 +3950,46 @@ async def upload_file(file: UploadFile = File(...)):
 
 @api_router.get("/media/{file_id}")
 async def serve_media_file(file_id: str):
-    """Serve media file from MongoDB storage"""
-    from fastapi.responses import Response
+    """Serve media file from MongoDB or disk storage"""
+    from fastapi.responses import Response, FileResponse
     
-    # Retrieve file from MongoDB
+    # Retrieve file metadata from MongoDB
     media_doc = await db.media_files.find_one({"id": file_id}, {"_id": 0})
     
     if not media_doc:
         raise HTTPException(status_code=404, detail="Media file not found")
     
-    # Decode base64 file data
-    try:
-        file_data = base64.b64decode(media_doc["file_data"])
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error decoding file: {str(e)}")
+    storage_type = media_doc.get("storage_type", "mongodb")
     
-    # Return file with proper content type
-    return Response(
-        content=file_data,
-        media_type=media_doc["content_type"],
-        headers={
-            "Content-Disposition": f'inline; filename="{media_doc["filename"]}"',
-            "Cache-Control": "public, max-age=31536000",  # Cache for 1 year
-        }
-    )
+    if storage_type == "disk":
+        # Serve from disk
+        disk_path = media_doc.get("disk_path")
+        if not disk_path or not os.path.exists(disk_path):
+            raise HTTPException(status_code=404, detail="Media file not found on disk")
+        
+        return FileResponse(
+            path=disk_path,
+            media_type=media_doc["content_type"],
+            filename=media_doc["filename"],
+            headers={
+                "Cache-Control": "public, max-age=31536000",  # Cache for 1 year
+            }
+        )
+    else:
+        # Serve from MongoDB
+        try:
+            file_data = base64.b64decode(media_doc["file_data"])
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error decoding file: {str(e)}")
+        
+        return Response(
+            content=file_data,
+            media_type=media_doc["content_type"],
+            headers={
+                "Content-Disposition": f'inline; filename="{media_doc["filename"]}"',
+                "Cache-Control": "public, max-age=31536000",  # Cache for 1 year
+            }
+        )
 
 # ===== USER PROFILE UPDATE ROUTES =====
 
