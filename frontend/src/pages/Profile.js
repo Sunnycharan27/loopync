@@ -599,35 +599,6 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
         </div>
 
         <div className="space-y-4">
-          {/* Profile Picture Upload */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Profile Picture</label>
-            <div className="flex items-center gap-4">
-              <img
-                src={previewUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.handle}`}
-                alt="Profile preview"
-                className="w-20 h-20 rounded-full border-4 border-cyan-400 object-cover"
-              />
-              <div className="flex-1">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
-                  onChange={handleFileSelect}
-                  className="hidden"
-                />
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="w-full px-4 py-2 rounded-lg bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400/20 font-medium text-sm"
-                >
-                  {selectedFile ? "Change Photo" : "Upload Photo"}
-                </button>
-                <p className="text-xs text-gray-500 mt-1">Max 5MB, JPG/PNG/GIF/WebP</p>
-              </div>
-            </div>
-          </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">Name</label>
             <input
