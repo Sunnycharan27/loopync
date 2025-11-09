@@ -509,6 +509,7 @@ const Profile = () => {
           onClose={() => setShowSettings(false)}
           onSave={() => {
             setShowSettings(false);
+            refreshUserData();
             fetchProfileData();
           }}
         />
