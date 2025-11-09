@@ -103,8 +103,14 @@ const ProfileVibe = () => {
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-8">
         <div className="relative">
           <div className="flex items-center gap-6">
-            <div className="w-24 h-24 rounded-full border-4 border-cyan-400/30 overflow-hidden bg-gray-800 shadow-lg shadow-cyan-400/20">
+            <div className="relative group w-24 h-24 rounded-full border-4 border-cyan-400/30 overflow-hidden bg-gray-800 shadow-lg shadow-cyan-400/20">
               <img src={currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`} alt={currentUser.name} className="w-full h-full object-cover" />
+              <button
+                onClick={() => setShowMediaSelector(true)}
+                className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100"
+              >
+                <Camera size={20} className="text-white" />
+              </button>
             </div>
 
             <div className="flex-1">
