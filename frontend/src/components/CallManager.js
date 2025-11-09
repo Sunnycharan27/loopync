@@ -63,17 +63,14 @@ const CallManager = ({ currentUser }) => {
       console.error('Failed to notify backend of answer:', error);
     }
 
-    // Join the call with recipient token
+    // Join the call - WebRTC will handle the connection
     const callData = {
       callId: incomingCall.callId,
-      channelName: incomingCall.channelName,
-      appId: incomingCall.appId,
-      callerToken: incomingCall.token, // Use recipient token
-      callerUid: incomingCall.uid, // Use recipient UID
       callType: incomingCall.callType,
-      peerName: incomingCall.callerName,
-      peerAvatar: incomingCall.callerAvatar,
-      isInitiator: false
+      otherUserId: incomingCall.callerId,
+      otherUserName: incomingCall.callerName,
+      otherUserAvatar: incomingCall.callerAvatar,
+      isIncoming: true
     };
 
     setActiveCall(callData);
