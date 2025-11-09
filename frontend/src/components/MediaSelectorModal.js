@@ -125,6 +125,12 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
 
     setUploading(true);
     try {
+      console.log('📤 Starting upload:', {
+        filename: file.name,
+        size: `${(file.size / (1024 * 1024)).toFixed(2)}MB`,
+        type: file.type
+      });
+
       const formData = new FormData();
       formData.append('file', file);
 
@@ -132,12 +138,20 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
+      console.log('✅ Upload response:', uploadRes.data);
       const mediaUrl = uploadRes.data.url;
       toast.success('Image uploaded successfully!');
       onSelect(mediaUrl);
     } catch (error) {
-      console.error('Upload failed:', error);
-      toast.error('Failed to upload image');
+      console.error('❌ Upload failed:', error);
+      console.error('Error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
+      
+      const errorMsg = error.response?.data?.detail || error.message || 'Failed to upload image';
+      toast.error(`Upload failed: ${errorMsg}`);
     } finally {
       setUploading(false);
     }
