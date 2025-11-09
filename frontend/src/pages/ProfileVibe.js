@@ -52,32 +52,6 @@ const ProfileVibe = () => {
     }
   };
 
-  const handleAvatarUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file || !file.type.startsWith('image/')) {
-      toast.error("Please upload an image file");
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image size should be less than 5MB");
-      return;
-    }
-    setUploadingAvatar(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const uploadRes = await axios.post(`${API}/upload`, formData, { headers: { "Content-Type": "multipart/form-data" } });
-      const avatarUrl = `${API}${uploadRes.data.url}`;
-      await axios.patch(`${API}/users/${currentUser.id}/profile`, { avatar: avatarUrl });
-      setCurrentUser({ ...currentUser, avatar: avatarUrl });
-      toast.success("Profile picture updated!");
-    } catch (error) {
-      toast.error("Failed to upload profile picture");
-    } finally {
-      setUploadingAvatar(false);
-    }
-  };
-
   const handleNameEdit = async () => {
     if (!editedName.trim()) {
       toast.error("Name cannot be empty");
