@@ -531,6 +531,18 @@ const Profile = () => {
         />
       )}
 
+      {/* Simple Avatar Upload Modal */}
+      {showAvatarUpload && (
+        <SimpleAvatarUploadModal
+          user={currentUser}
+          onClose={() => setShowAvatarUpload(false)}
+          onSuccess={() => {
+            refreshUserData();
+            fetchProfileData();
+          }}
+        />
+      )}
+
       <BottomNav active="profile" />
     </div>
   );
