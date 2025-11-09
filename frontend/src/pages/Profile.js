@@ -626,18 +626,24 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
       
       // Upload file if selected
       if (selectedFile) {
+        console.log('📤 Uploading new avatar...');
         const uploadedUrl = await handleUpload();
         if (uploadedUrl) {
           avatarUrl = uploadedUrl;
-          console.log('Avatar URL to be saved:', avatarUrl);
+          console.log('✅ Avatar URL to be saved:', avatarUrl);
         } else {
+          console.error('❌ Upload returned null');
           toast.error("Failed to upload avatar");
           setSaving(false);
           return;
         }
       }
 
-      await axios.put(`${API}/users/${currentUser.id}/profile`, {
+      const updateUrl = `${API}/api/users/${currentUser.id}/profile`;
+      console.log('💾 Updating profile at:', updateUrl);
+      console.log('📝 Update data:', { name, bio, location, website, avatar: avatarUrl });
+      
+      const response = await axios.put(updateUrl, {
         name,
         bio,
         location,
