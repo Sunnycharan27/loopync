@@ -18,6 +18,8 @@ import random
 import razorpay
 import jwt
 import qrcode
+import base64
+from io import BytesIO
 import io
 import base64
 from PIL import Image
