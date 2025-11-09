@@ -91,9 +91,15 @@ const Profile = () => {
           <div className="flex items-center gap-4 mb-4">
             <div className="relative">
               <img
-                src={currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.handle}`}
+                src={
+                  currentUser.avatar 
+                    ? (currentUser.avatar.startsWith('http') 
+                        ? currentUser.avatar 
+                        : `${API}${currentUser.avatar}`)
+                    : `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.handle}`
+                }
                 alt={currentUser.name}
-                className="w-20 h-20 rounded-full border-4 border-cyan-400"
+                className="w-20 h-20 rounded-full border-4 border-cyan-400 object-cover"
               />
               <div className="absolute -bottom-2 -right-2 text-3xl">
                 {getTierEmoji(analytics?.tier || "Bronze")}
