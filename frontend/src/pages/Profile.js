@@ -89,7 +89,7 @@ const Profile = () => {
         {/* Profile Header */}
         <div className="glass-card p-6 mb-6">
           <div className="flex items-center gap-4 mb-4">
-            <div className="relative group">
+            <div className="relative">
               <img
                 src={
                   currentUser.avatar 
@@ -101,14 +101,6 @@ const Profile = () => {
                 alt={currentUser.name}
                 className="w-20 h-20 rounded-full border-4 border-cyan-400 object-cover"
               />
-              {/* Camera Button Overlay */}
-              <button
-                onClick={() => setShowAvatarUpload(true)}
-                className="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                aria-label="Change profile picture"
-              >
-                <Camera size={28} className="text-white" />
-              </button>
               <div className="absolute -bottom-2 -right-2 text-3xl">
                 {getTierEmoji(analytics?.tier || "Bronze")}
               </div>
