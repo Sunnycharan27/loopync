@@ -25,10 +25,10 @@ const VibeCapsuleUpload = ({ currentUser, onUploadComplete }) => {
       return;
     }
 
-    // Validate file size (max 50MB for video, 10MB for image)
-    const maxSize = isVideo ? 50 * 1024 * 1024 : 10 * 1024 * 1024;
+    // Validate file size (max 150MB for video, 10MB for image)
+    const maxSize = isVideo ? 150 * 1024 * 1024 : 10 * 1024 * 1024;
     if (file.size > maxSize) {
-      toast.error(`File too large. Max ${isVideo ? '50MB for video' : '10MB for image'}`);
+      toast.error(`File too large. Max ${isVideo ? '150MB for video' : '10MB for image'}`);
       return;
     }
 
