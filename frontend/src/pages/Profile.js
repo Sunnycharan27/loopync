@@ -615,7 +615,7 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
         }
       }
 
-      await axios.put(`${API}/users/${currentUser.id}/settings`, {
+      await axios.put(`${API}/users/${currentUser.id}/profile`, {
         name,
         bio,
         location,
