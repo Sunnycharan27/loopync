@@ -6484,52 +6484,6 @@ async def initiate_call(req: CallInitiateRequest):
         "otherUserId": req.recipientId,
         "otherUserName": recipient.get("name", "User") if recipient else "User"
     }
-                "callerId": req.callerId,
-                "channelName": channel_name,
-                "token": recipient_token,
-                "uid": recipient_uid,
-                "appId": agora_app_id
-            },
-            "read": False,
-            "createdAt": datetime.now(timezone.utc).isoformat()
-        }
-        await db.notifications.insert_one(notification)
-        
-        # Emit WebSocket event to recipient for real-time call notification
-        logger.info(f"🔔 Attempting to send incoming_call notification to recipientId: {req.recipientId}")
-        try:
-            emit_success = await emit_to_user(req.recipientId, 'incoming_call', {
-                "callId": call["id"],
-                "callerId": req.callerId,
-                "callType": req.callType,
-                "channelName": channel_name,
-                "token": recipient_token,
-                "uid": recipient_uid,
-                "appId": agora_app_id,
-                "callerName": caller_info.get("name", "Unknown") if caller_info else "Unknown",
-                "callerAvatar": caller_info.get("avatar", "") if caller_info else ""
-            })
-            if emit_success:
-                logger.info(f"✅ Successfully sent incoming_call notification to {req.recipientId}")
-            else:
-                logger.warning(f"⚠️ Recipient {req.recipientId} not connected to WebSocket")
-        except Exception as ws_error:
-            logger.warning(f"❌ Failed to send WebSocket notification: {str(ws_error)}")
-        
-        return {
-            "callId": call["id"],
-            "channelName": channel_name,
-            "appId": agora_app_id,
-            "callerToken": caller_token,
-            "callerUid": caller_uid,
-            "recipientToken": recipient_token,
-            "recipientUid": recipient_uid,
-            "expiresIn": 3600
-        }
-        
-    except Exception as e:
-        logger.error(f"Call initiation failed: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Call initiation failed: {str(e)}")
 
 @api_router.post("/calls/{callId}/answer")
 async def answer_call(callId: str):
