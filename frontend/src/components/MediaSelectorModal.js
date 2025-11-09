@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { X, Image, Video, Film } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, Image, Video, Film, Upload, Plus } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
 const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
 
 const MediaSelectorModal = ({ user, onClose, onSelect }) => {
+  const [activeTab, setActiveTab] = useState('existing'); // 'existing' or 'upload'
   const [loading, setLoading] = useState(true);
   const [media, setMedia] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadPreview, setUploadPreview] = useState(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     fetchUserMedia();
