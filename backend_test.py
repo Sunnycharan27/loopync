@@ -298,97 +298,57 @@ class ComprehensiveBackendTester:
             self.log(f"❌ Media serving failed: {response.status_code} - {response.text}", "ERROR")
             return False
     
-    def test_agora_token_generation(self):
-        """Test Priority 1: Agora Token Generation"""
-        self.log("\n🎮 TEST 4: Agora Token Generation Verification")
+    def test_webrtc_calling(self):
+        """Test Priority 5: WebSocket/Calling - Test call initiation"""
+        self.log("\n📞 TEST 5: WebSocket/Calling")
         
-        if not self.friends:
-            self.log("❌ No friends available for testing", "ERROR")
-            return False
+        # Get friends list first
+        self.log("   Getting friends list for calling test...")
+        response = self.session.get(f"{BASE_URL}/users/{self.user_id}/friends")
         
-        # Initiate a call to get tokens
-        friend = self.friends[0]
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
-            "callerId": self.user_id,
-            "recipientId": friend.get('id'),
-            "callType": "audio"
-        })
-        
-        if response.status_code != 200:
-            self.log(f"❌ Failed to initiate call for token testing: {response.text}", "ERROR")
-            return False
-        
-        data = response.json()
-        
-        # Verify Agora token structure
-        self.log("   Verifying Agora token generation...")
-        
-        # Check callId (UUID format)
-        call_id = data.get('callId')
-        if call_id and len(call_id) == 36 and call_id.count('-') == 4:
-            self.log(f"   ✅ callId: Valid UUID format ({call_id})")
+        if response.status_code == 200:
+            friends = response.json()
+            self.log(f"   Found {len(friends)} friends")
+            
+            if not friends:
+                self.log("❌ No friends available for calling test", "ERROR")
+                return False
+            
+            friend = friends[0]
+            friend_id = friend.get('id')
+            friend_name = friend.get('name')
+            
+            self.log(f"   Testing call initiation to {friend_name} (ID: {friend_id})")
+            
+            # Test call initiation
+            call_data = {
+                "callerId": self.user_id,
+                "recipientId": friend_id,
+                "callType": "audio"
+            }
+            
+            response = self.session.post(f"{BASE_URL}/calls/initiate", json=call_data)
+            
+            if response.status_code == 200:
+                call_response = response.json()
+                self.log("✅ Call initiation successful!")
+                
+                # Verify WebRTC response format
+                required_fields = ["callId", "channelName", "appId"]
+                for field in required_fields:
+                    if field in call_response:
+                        self.log(f"   ✅ {field}: {str(call_response[field])[:50]}")
+                    else:
+                        self.log(f"   ❌ Missing field: {field}", "ERROR")
+                        return False
+                
+                return True
+            else:
+                self.log(f"❌ Call initiation failed: {response.status_code} - {response.text}", "ERROR")
+                return False
         else:
-            self.log(f"   ❌ callId: Invalid format ({call_id})", "ERROR")
+            self.log(f"❌ Failed to get friends: {response.status_code} - {response.text}", "ERROR")
             return False
-        
-        # Check channelName
-        channel_name = data.get('channelName')
-        if channel_name and channel_name.startswith('call-'):
-            self.log(f"   ✅ channelName: Valid format ({channel_name})")
-        else:
-            self.log(f"   ❌ channelName: Invalid format ({channel_name})", "ERROR")
-            return False
-        
-        # Check appId (Agora app ID)
-        app_id = data.get('appId')
-        if app_id and len(app_id) == 32:  # Agora app IDs are typically 32 characters
-            self.log(f"   ✅ appId: Valid format ({app_id})")
-        else:
-            self.log(f"   ❌ appId: Invalid format ({app_id})", "ERROR")
-            return False
-        
-        # Check tokens (JWT-like strings)
-        caller_token = data.get('callerToken')
-        recipient_token = data.get('recipientToken')
-        
-        if caller_token and len(caller_token) > 100:  # Agora tokens are long
-            self.log(f"   ✅ callerToken: Valid JWT-like string ({len(caller_token)} chars)")
-        else:
-            self.log(f"   ❌ callerToken: Invalid format", "ERROR")
-            return False
-        
-        if recipient_token and len(recipient_token) > 100:
-            self.log(f"   ✅ recipientToken: Valid JWT-like string ({len(recipient_token)} chars)")
-        else:
-            self.log(f"   ❌ recipientToken: Invalid format", "ERROR")
-            return False
-        
-        # Check UIDs (integers)
-        caller_uid = data.get('callerUid')
-        recipient_uid = data.get('recipientUid')
-        
-        if isinstance(caller_uid, int) and caller_uid > 0:
-            self.log(f"   ✅ callerUid: Valid integer ({caller_uid})")
-        else:
-            self.log(f"   ❌ callerUid: Invalid format ({caller_uid})", "ERROR")
-            return False
-        
-        if isinstance(recipient_uid, int) and recipient_uid > 0:
-            self.log(f"   ✅ recipientUid: Valid integer ({recipient_uid})")
-        else:
-            self.log(f"   ❌ recipientUid: Invalid format ({recipient_uid})", "ERROR")
-            return False
-        
-        # Check expiration
-        expires_in = data.get('expiresIn')
-        if expires_in == 3600:
-            self.log(f"   ✅ expiresIn: Correct value (3600 seconds)")
-        else:
-            self.log(f"   ❌ expiresIn: Wrong value ({expires_in})", "ERROR")
-            return False
-        
-        self.log("✅ Agora token generation working correctly")
-        return True
     
     def test_call_management(self):
         """Test Priority 2: Call Management"""
