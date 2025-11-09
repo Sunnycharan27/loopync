@@ -22,6 +22,7 @@ const ProfileVibe = () => {
   const [loopCredits, setLoopCredits] = useState(0);
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState("");
+  const [showMediaSelector, setShowMediaSelector] = useState(false);
 
   useEffect(() => {
     fetchProfileData();
