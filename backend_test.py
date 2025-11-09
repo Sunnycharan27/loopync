@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
 """
-CRITICAL CALL FUNCTIONALITY TESTING - Audio & Video Call Initiation Fix Verification
+COMPREHENSIVE BACKEND API TESTING - Production Readiness Verification
 
-🎯 **TESTING SCOPE**: Test call initiation after backend Pydantic model fix
+🎯 **TESTING SCOPE**: Complete backend API testing as per review request
 
-**USER ISSUE**: 
-- React error when initiating calls: "Objects are not valid as a React child"
-- Call initiation failing for both audio and video calls
+**PRIORITY TESTS**:
+1. Profile Picture Upload (CRITICAL - reported as broken)
+2. Authentication (login with demo credentials)
+3. Posts (get all posts, verify media URLs)
+4. Media Serving (test serving existing media files)
+5. WebSocket/Calling (test call initiation)
+6. Reels (get reels, verify video URLs)
+7. Vibe Capsules (get capsules, verify media URLs)
 
-**FIXES APPLIED**:
-1. Backend: Changed call initiation endpoint to use Pydantic model (CallInitiateRequest)
-2. Frontend: Enhanced error handling to properly extract error messages as strings
-
-**BACKEND URL**: https://media-fix-8.preview.emergentagent.com/api
+**API BASE URL**: https://media-fix-8.preview.emergentagent.com
 **TEST CREDENTIALS**: demo@loopync.com / password123
 """
 
 import requests
 import json
 import sys
+import io
+import time
 from datetime import datetime
+from PIL import Image
 
 # Configuration
 BASE_URL = "https://media-fix-8.preview.emergentagent.com/api"
