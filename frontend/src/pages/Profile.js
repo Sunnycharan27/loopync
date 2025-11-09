@@ -536,114 +536,18 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
   const [website, setWebsite] = useState(currentUser.website || "");
   const [saving, setSaving] = useState(false);
 
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // Validate file type (images only)
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    if (!allowedTypes.includes(file.type)) {
-      toast.error("Only images (JPEG, PNG, GIF, WebP) are supported");
-      return;
-    }
-
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image size must be less than 5MB");
-      return;
-    }
-
-    setSelectedFile(file);
-    
-    // Create preview
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
-    
-    toast.success("Image selected! Click 'Save Changes' to upload.");
-  };
-
-  const handleUpload = async () => {
-    if (!selectedFile) return null;
-
-    setUploading(true);
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
-    try {
-      const uploadUrl = `${API}/api/upload`;
-      console.log('🔄 Uploading avatar to:', uploadUrl);
-      console.log('📁 File details:', {
-        name: selectedFile.name,
-        type: selectedFile.type,
-        size: selectedFile.size
-      });
-      
-      const res = await axios.post(uploadUrl, formData, {
-        headers: { 
-          "Content-Type": "multipart/form-data"
-        },
-        timeout: 30000
-      });
-      
-      console.log('✅ Upload response:', res.data);
-      const uploadedPath = res.data.url;
-      console.log('📸 Uploaded avatar path:', uploadedPath);
-      
-      if (!uploadedPath) {
-        throw new Error('No URL returned from upload');
-      }
-      
-      toast.success("Avatar uploaded successfully!");
-      return uploadedPath;
-    } catch (error) {
-      console.error("❌ Upload error:", error);
-      console.error("Error details:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status
-      });
-      
-      const errorMsg = error.response?.data?.detail || error.message || "Failed to upload avatar";
-      toast.error(`Upload failed: ${errorMsg}`);
-      return null;
-    } finally {
-      setUploading(false);
-    }
-  };
-
   const handleSave = async () => {
     setSaving(true);
     try {
-      let avatarUrl = avatar;
-      
-      // Upload file if selected
-      if (selectedFile) {
-        console.log('📤 Uploading new avatar...');
-        const uploadedUrl = await handleUpload();
-        if (uploadedUrl) {
-          avatarUrl = uploadedUrl;
-          console.log('✅ Avatar URL to be saved:', avatarUrl);
-        } else {
-          console.error('❌ Upload returned null');
-          toast.error("Failed to upload avatar");
-          setSaving(false);
-          return;
-        }
-      }
-
       const updateUrl = `${API}/api/users/${currentUser.id}/profile`;
       console.log('💾 Updating profile at:', updateUrl);
-      console.log('📝 Update data:', { name, bio, location, website, avatar: avatarUrl });
+      console.log('📝 Update data:', { name, bio, location, website });
       
       const response = await axios.put(updateUrl, {
         name,
         bio,
         location,
-        website,
-        avatar: avatarUrl
+        website
       });
       
       console.log('✅ Profile update response:', response.data);
