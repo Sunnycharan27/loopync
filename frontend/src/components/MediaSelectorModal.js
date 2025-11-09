@@ -154,17 +154,45 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col border border-cyan-400/20 shadow-2xl">
         {/* Header */}
-        <div className="p-6 border-b border-gray-700 flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-white">Select Profile Picture</h2>
-            <p className="text-gray-400 text-sm mt-1">Choose from your posts, reels, or stories</p>
+        <div className="p-6 border-b border-gray-700">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-2xl font-bold text-white">Profile Picture</h2>
+              <p className="text-gray-400 text-sm mt-1">Upload new or choose existing</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-700 rounded-full transition-colors"
+            >
+              <X size={24} className="text-gray-400" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-700 rounded-full transition-colors"
-          >
-            <X size={24} className="text-gray-400" />
-          </button>
+          
+          {/* Tabs */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => setActiveTab('upload')}
+              className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all ${
+                activeTab === 'upload'
+                  ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              }`}
+            >
+              <Upload size={16} className="inline mr-2" />
+              Upload New
+            </button>
+            <button
+              onClick={() => setActiveTab('existing')}
+              className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all ${
+                activeTab === 'existing'
+                  ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              }`}
+            >
+              <Image size={16} className="inline mr-2" />
+              Your Media
+            </button>
+          </div>
         </div>
 
         {/* Content */}
