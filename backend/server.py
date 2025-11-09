@@ -1065,6 +1065,106 @@ async def typing(sid, data):
     except Exception as e:
         logging.error(f"Typing indicator error: {e}")
 
+
+# ===== WEBRTC SIGNALING EVENTS =====
+
+@sio.event
+async def webrtc_offer(sid, data):
+    """Handle WebRTC offer from caller"""
+    try:
+        to_user_id = data.get('to')
+        from_user_id = data.get('from')
+        offer = data.get('offer')
+        call_id = data.get('callId')
+        call_type = data.get('callType')
+        caller_name = data.get('callerName')
+        
+        logging.info(f"📤 WebRTC offer from {from_user_id} to {to_user_id}")
+        
+        # Forward offer to recipient
+        await emit_to_user(to_user_id, 'webrtc-offer', {
+            'offer': offer,
+            'from': from_user_id,
+            'callId': call_id,
+            'callType': call_type,
+            'callerName': caller_name
+        })
+        
+    except Exception as e:
+        logging.error(f"WebRTC offer error: {e}")
+
+@sio.event
+async def webrtc_answer(sid, data):
+    """Handle WebRTC answer from callee"""
+    try:
+        to_user_id = data.get('to')
+        answer = data.get('answer')
+        call_id = data.get('callId')
+        
+        logging.info(f"📤 WebRTC answer to {to_user_id}")
+        
+        # Forward answer to caller
+        await emit_to_user(to_user_id, 'webrtc-answer', {
+            'answer': answer,
+            'callId': call_id
+        })
+        
+    except Exception as e:
+        logging.error(f"WebRTC answer error: {e}")
+
+@sio.event
+async def webrtc_ice_candidate(sid, data):
+    """Handle ICE candidate exchange"""
+    try:
+        to_user_id = data.get('to')
+        candidate = data.get('candidate')
+        call_id = data.get('callId')
+        
+        logging.info(f"📤 ICE candidate to {to_user_id}")
+        
+        # Forward ICE candidate to peer
+        await emit_to_user(to_user_id, 'webrtc-ice-candidate', {
+            'candidate': candidate,
+            'callId': call_id
+        })
+        
+    except Exception as e:
+        logging.error(f"ICE candidate error: {e}")
+
+@sio.event
+async def end_call(sid, data):
+    """Handle call end notification"""
+    try:
+        to_user_id = data.get('to')
+        call_id = data.get('callId')
+        
+        logging.info(f"📞 Call ended, notifying {to_user_id}")
+        
+        # Notify other user that call ended
+        await emit_to_user(to_user_id, 'call-ended', {
+            'callId': call_id
+        })
+        
+    except Exception as e:
+        logging.error(f"End call error: {e}")
+
+@sio.event
+async def reject_call(sid, data):
+    """Handle call rejection"""
+    try:
+        to_user_id = data.get('to')
+        call_id = data.get('callId')
+        
+        logging.info(f"❌ Call rejected, notifying {to_user_id}")
+        
+        # Notify caller that call was rejected
+        await emit_to_user(to_user_id, 'call-rejected', {
+            'callId': call_id
+        })
+        
+    except Exception as e:
+        logging.error(f"Reject call error: {e}")
+
 # ===== AUTH ROUTES (MONGODB AUTHENTICATION) =====
 
 @api_router.get("/auth/check-handle/{handle}")
