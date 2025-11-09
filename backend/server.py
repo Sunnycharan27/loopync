@@ -6465,7 +6465,11 @@ async def initiate_call(req: CallInitiateRequest):
     await db.notifications.insert_one(notification)
     
     # Send WebSocket event to recipient
-    await emit_to_user(req.recipientId, 'incoming_call', {
+    logging.info(f"📞 Attempting to emit incoming_call to user {req.recipientId}")
+    logging.info(f"📊 Currently connected users: {list(connected_clients.keys())}")
+    logging.info(f"🔍 Is recipient {req.recipientId} connected? {req.recipientId in connected_clients}")
+    
+    emit_success = await emit_to_user(req.recipientId, 'incoming_call', {
         'callId': call['id'],
         'callType': req.callType,
         'callerId': req.callerId,
@@ -6474,6 +6478,11 @@ async def initiate_call(req: CallInitiateRequest):
         'recipientId': req.recipientId,
         'recipientName': recipient.get('name', 'User') if recipient else 'User'
     })
+    
+    if emit_success:
+        logger.info(f"✅ Successfully sent incoming_call event to {req.recipientId}")
+    else:
+        logger.warning(f"⚠️ Failed to send incoming_call event - user {req.recipientId} not connected to WebSocket")
     
     logger.info(f"📞 Call initiated from {req.callerId} to {req.recipientId}")
     
