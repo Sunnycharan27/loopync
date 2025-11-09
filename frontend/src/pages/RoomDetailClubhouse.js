@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
-import AgoraRTC from "agora-rtc-sdk-ng";
+// import AgoraRTC from "agora-rtc-sdk-ng"; // Removed - migrated to WebRTC
 import { 
   ArrowLeft, Mic, MicOff, Hand, UserPlus, MoreVertical, 
   Share2, Users, Crown, Shield, Volume2, VolumeX, LogOut
