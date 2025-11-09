@@ -1680,6 +1680,7 @@ async def reset_password(data: dict):
         {"email": email},
         {
             "$set": {
+                "password": new_password_hash,
                 "resetPasswordToken": None,
                 "resetPasswordExpires": None
             }
