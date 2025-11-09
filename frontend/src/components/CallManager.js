@@ -112,9 +112,10 @@ const CallManager = ({ currentUser }) => {
       )}
 
       {activeCall && (
-        <AgoraCallModal
+        <WebRTCCallModal
           callData={activeCall}
-          currentUserId={currentUser?.id}
+          currentUser={currentUser}
+          socket={socket}
           onClose={handleCloseCall}
           isIncoming={!activeCall.isInitiator}
         />
