@@ -148,3 +148,11 @@ frontend/node_modules/.cache/default-development/11.pack
 *.env.*
 frontend/node_modules/.cache/default-development/13.pack
 database_export/media_files.json
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
