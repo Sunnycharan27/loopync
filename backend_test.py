@@ -179,57 +179,74 @@ class ComprehensiveBackendTester:
             self.log(f"❌ File upload failed: {response.status_code} - {response.text}", "ERROR")
             return False
     
-    def test_video_call_initiation(self):
-        """Test Priority 1: Video Call Initiation"""
-        self.log("\n📹 TEST 2: Video Call Initiation")
+    def test_posts_api(self):
+        """Test Priority 3: Posts - Get all posts and verify media URLs"""
+        self.log("\n📝 TEST 3: Posts API")
         
-        if not self.friends:
-            self.log("❌ No friends available for testing", "ERROR")
-            return False
-            
-        friend = self.friends[0]  # Use first friend
-        friend_id = friend.get('id')
-        friend_name = friend.get('name')
-        
-        self.log(f"   Initiating video call to {friend_name} (ID: {friend_id})")
-        
-        request_body = {
-            "callerId": self.user_id,
-            "recipientId": friend_id,
-            "callType": "video"
-        }
-        
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json=request_body)
-        
-        self.log(f"   Response status: {response.status_code}")
+        # Get all posts
+        self.log("   Getting all posts...")
+        response = self.session.get(f"{BASE_URL}/posts")
         
         if response.status_code == 200:
-            data = response.json()
-            self.log("✅ Video call initiation successful!")
+            posts = response.json()
+            self.log(f"✅ Retrieved {len(posts)} posts")
             
-            # Verify response structure
-            required_fields = ["callId", "channelName", "appId", "callerToken", "callerUid", "recipientToken", "recipientUid", "expiresIn"]
-            missing_fields = []
+            # Verify posts structure and media URLs
+            posts_with_media = 0
+            relative_urls = 0
             
-            for field in required_fields:
-                if field not in data:
-                    missing_fields.append(field)
-                else:
-                    self.log(f"   ✅ {field}: {str(data[field])[:50]}{'...' if len(str(data[field])) > 50 else ''}")
-            
-            if missing_fields:
-                self.log(f"❌ Missing required fields: {missing_fields}", "ERROR")
-                return False
-            
-            # Verify no Pydantic errors
-            if isinstance(data.get('detail'), dict):
-                self.log("❌ Response contains object in detail field (Pydantic error)", "ERROR")
-                return False
+            for i, post in enumerate(posts[:5]):  # Check first 5 posts
+                self.log(f"   Post {i+1}: ID {post.get('id')}")
                 
-            self.log("✅ All required fields present and properly formatted")
-            return True
+                # Check if post has author data
+                author = post.get('author')
+                if author:
+                    self.log(f"     Author: {author.get('name')} ({author.get('handle')})")
+                else:
+                    self.log(f"     ❌ Missing author data", "ERROR")
+                
+                # Check media URL if present
+                media_url = post.get('media')
+                if media_url:
+                    posts_with_media += 1
+                    self.log(f"     Media URL: {media_url}")
+                    
+                    if media_url.startswith('/api/media/'):
+                        relative_urls += 1
+                        self.log(f"     ✅ Media URL uses relative format")
+                    else:
+                        self.log(f"     ❌ Media URL not relative: {media_url}", "ERROR")
+            
+            self.log(f"   Posts with media: {posts_with_media}")
+            self.log(f"   Relative URLs: {relative_urls}/{posts_with_media}")
+            
+            # Test creating a new post with media
+            if self.uploaded_media_id:
+                self.log("   Creating new post with uploaded media...")
+                
+                new_post_data = {
+                    "text": f"Test post with media - {datetime.now().strftime('%H:%M:%S')}",
+                    "media": f"/api/media/{self.uploaded_media_id}",
+                    "hashtags": ["test", "backend"]
+                }
+                
+                response = self.session.post(f"{BASE_URL}/posts", 
+                                           json=new_post_data,
+                                           params={"authorId": self.user_id})
+                
+                if response.status_code == 200:
+                    new_post = response.json()
+                    self.log(f"✅ New post created: {new_post.get('id')}")
+                    self.log(f"   Media URL: {new_post.get('media')}")
+                    return True
+                else:
+                    self.log(f"❌ Failed to create post: {response.status_code} - {response.text}", "ERROR")
+                    return False
+            else:
+                self.log("   Skipping post creation (no uploaded media)")
+                return True
         else:
-            self.log(f"❌ Video call initiation failed: {response.text}", "ERROR")
+            self.log(f"❌ Failed to get posts: {response.status_code} - {response.text}", "ERROR")
             return False
     
     def test_error_scenarios(self):
