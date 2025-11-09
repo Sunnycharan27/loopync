@@ -3999,6 +3999,8 @@ class UserProfileUpdate(BaseModel):
     bio: Optional[str] = None
     avatar: Optional[str] = None
     coverPhoto: Optional[str] = None
+    location: Optional[str] = None
+    website: Optional[str] = None
 
 @api_router.patch("/users/{userId}/profile")
 async def update_user_profile(userId: str, updates: UserProfileUpdate):
