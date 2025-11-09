@@ -111,7 +111,7 @@ const RoomDetailClubhouse = () => {
 
   const handleLeaveRoom = async () => {
     try {
-      await cleanupAgoraResources();
+      await cleanupAudioResources();
       await axios.post(`${API}/rooms/${roomId}/leave?userId=${currentUser.id}`);
       toast.success("Left VibeRoom");
       navigate("/viberooms");
@@ -121,27 +121,24 @@ const RoomDetailClubhouse = () => {
   };
 
   const toggleMute = async () => {
-    if (!localAudioTrack.current) {
+    if (!audioManager.current) {
       const myRole = getCurrentUserRole();
       if (myRole === "audience") {
         toast.error("You need to be on stage to speak. Raise your hand to request!");
         return;
       }
       toast.error("Microphone not available");
-      console.error("❌ Cannot toggle mute - no audio track available");
       return;
     }
 
     try {
       const newMutedState = !isMuted;
-      await localAudioTrack.current.setEnabled(!newMutedState);
+      audioManager.current.setMuted(newMutedState);
       setIsMuted(newMutedState);
       
       if (newMutedState) {
-        console.log("🔇 Microphone muted");
         toast.info("🔇 Microphone muted");
       } else {
-        console.log("🔊 Microphone unmuted - you can be heard!");
         toast.success("🔊 Microphone unmuted");
       }
     } catch (error) {
