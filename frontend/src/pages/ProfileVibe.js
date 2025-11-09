@@ -69,6 +69,18 @@ const ProfileVibe = () => {
     }
   };
 
+  const handleProfilePictureSelect = async (mediaUrl) => {
+    try {
+      await axios.patch(`${API}/users/${currentUser.id}/profile`, { avatar: mediaUrl });
+      setCurrentUser({ ...currentUser, avatar: mediaUrl });
+      setShowMediaSelector(false);
+      toast.success("Profile picture updated!");
+    } catch (error) {
+      console.error("Failed to update profile picture:", error);
+      toast.error("Failed to update profile picture");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
