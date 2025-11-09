@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 
 const Profile = () => {
-  const { currentUser, logout } = useContext(AuthContext);
+  const { currentUser, logout, refreshUserData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [analytics, setAnalytics] = useState(null);
