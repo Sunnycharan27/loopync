@@ -96,7 +96,13 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
 
       <div className="flex items-start gap-3">
         <img
-          src={post.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.authorId}`}
+          src={
+            post.author?.avatar 
+              ? (post.author.avatar.startsWith('http') 
+                  ? post.author.avatar 
+                  : getMediaUrl(post.author.avatar))
+              : `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.authorId}`
+          }
           alt={post.author?.name || 'User'}
           className="w-12 h-12 rounded-full ring-2 ring-cyan-400/20 cursor-pointer hover:ring-cyan-400/50 transition-all"
           onClick={() => navigate(`/profile/${post.authorId}`)}
