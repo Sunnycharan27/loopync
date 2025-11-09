@@ -6417,107 +6417,73 @@ class CallInitiateRequest(BaseModel):
 
 @api_router.post("/calls/initiate")
 async def initiate_call(req: CallInitiateRequest):
-    """Initiate 1-on-1 call with Agora"""
-    from agora_token_builder import RtcTokenBuilder
+    """Initiate 1-on-1 call with WebRTC"""
     
     # Check if users are friends before initiating call
-    caller = await db.users.find_one({"id": req.callerId}, {"_id": 0, "friends": 1})
+    caller = await db.users.find_one({"id": req.callerId}, {"_id": 0, "friends": 1, "name": 1, "avatar": 1})
     if not caller:
         raise HTTPException(status_code=404, detail="Caller not found")
     
     if req.recipientId not in caller.get("friends", []):
         raise HTTPException(status_code=403, detail="You can only call friends")
     
-    # Get Agora credentials
-    agora_app_id = os.environ.get("AGORA_APP_ID")
-    agora_app_certificate = os.environ.get("AGORA_APP_CERTIFICATE")
+    # Create call record in database
+    call_id = str(uuid.uuid4())
+    call = {
+        "id": call_id,
+        "callerId": req.callerId,
+        "recipientId": req.recipientId,
+        "callType": req.callType,
+        "status": "ringing",
+        "startedAt": datetime.now(timezone.utc).isoformat(),
+        "endedAt": None
+    }
     
-    if not agora_app_id or not agora_app_certificate:
-        raise HTTPException(status_code=500, detail="Agora credentials not configured")
+    await db.calls.insert_one(call)
+    call.pop("_id", None)
     
-    # Generate unique channel name for this call
-    channel_name = f"call-{str(uuid.uuid4())[:12]}"
+    # Get recipient info
+    recipient = await db.users.find_one({"id": req.recipientId}, {"_id": 0, "name": 1, "avatar": 1})
     
-    # Token expiration (1 hour)
-    current_timestamp = int(datetime.now(timezone.utc).timestamp())
-    expiration_timestamp = current_timestamp + 3600
-    
-    try:
-        # Generate unique UIDs for both caller and recipient
-        # Use hashlib for consistent, deterministic hashing
-        import hashlib
-        
-        def generate_uid(user_id: str) -> int:
-            """Generate a consistent unique integer UID from user ID string"""
-            # Use MD5 hash of user_id and take first 8 hex chars
-            hash_obj = hashlib.md5(user_id.encode())
-            hash_hex = hash_obj.hexdigest()[:8]
-            # Convert to integer (max 32-bit for Agora compatibility)
-            uid = int(hash_hex, 16) % (2**31)  # Ensure positive 32-bit int
-            return uid
-        
-        caller_uid = generate_uid(req.callerId)
-        recipient_uid = generate_uid(req.recipientId)
-        
-        # Ensure UIDs are different (should never happen with proper user IDs)
-        if caller_uid == recipient_uid:
-            # Add offset to recipient to guarantee uniqueness
-            recipient_uid = (recipient_uid + 1) % (2**31)
-        
-        logger.info(f"🎯 Generated UIDs - Caller: {caller_uid}, Recipient: {recipient_uid}")
-        
-        # Generate token for caller
-        caller_token = RtcTokenBuilder.buildTokenWithUid(
-            appId=agora_app_id,
-            appCertificate=agora_app_certificate,
-            channelName=channel_name,
-            uid=caller_uid,
-            role=1,  # Role 1 = Publisher/Host
-            privilegeExpiredTs=expiration_timestamp
-        )
-        
-        # Generate token for recipient
-        recipient_token = RtcTokenBuilder.buildTokenWithUid(
-            appId=agora_app_id,
-            appCertificate=agora_app_certificate,
-            channelName=channel_name,
-            uid=recipient_uid,
-            role=1,
-            privilegeExpiredTs=expiration_timestamp
-        )
-        
-        # Create call record in database
-        call = {
-            "id": str(uuid.uuid4()),
-            "callerId": req.callerId,
-            "recipientId": req.recipientId,
+    # Create notification for recipient
+    notification = {
+        "id": str(uuid.uuid4()),
+        "userId": req.recipientId,
+        "type": "call",
+        "title": f"Incoming {req.callType} call",
+        "message": f"Call from {caller.get('name', 'User')}",
+        "data": {
+            "callId": call["id"],
             "callType": req.callType,
-            "status": "ringing",
-            "channelName": channel_name,
-            "agoraAppId": agora_app_id,
-            "callerToken": caller_token,
-            "recipientToken": recipient_token,
-            "callerUid": caller_uid,
-            "recipientUid": recipient_uid,
-            "startedAt": datetime.now(timezone.utc).isoformat(),
-            "endedAt": None
-        }
-        
-        await db.calls.insert_one(call)
-        call.pop("_id", None)
-        
-        # Get caller info for notification
-        caller_info = await db.users.find_one({"id": req.callerId}, {"_id": 0, "name": 1, "avatar": 1})
-        
-        # Send notification to recipient
-        notification = {
-            "id": str(uuid.uuid4()),
-            "userId": req.recipientId,
-            "type": "call",
-            "title": f"Incoming {req.callType} call",
-            "message": f"Call from user",
-            "data": {
-                "callId": call["id"],
+            "callerId": req.callerId,
+            "callerName": caller.get("name", "User"),
+            "callerAvatar": caller.get("avatar")
+        },
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "read": False
+    }
+    await db.notifications.insert_one(notification)
+    
+    # Send WebSocket event to recipient
+    await emit_to_user(req.recipientId, 'incoming_call', {
+        'callId': call['id'],
+        'callType': req.callType,
+        'callerId': req.callerId,
+        'callerName': caller.get('name', 'User'),
+        'callerAvatar': caller.get('avatar'),
+        'recipientId': req.recipientId,
+        'recipientName': recipient.get('name', 'User') if recipient else 'User'
+    })
+    
+    logger.info(f"📞 Call initiated from {req.callerId} to {req.recipientId}")
+    
+    return {
+        "success": True,
+        "callId": call["id"],
+        "callType": req.callType,
+        "otherUserId": req.recipientId,
+        "otherUserName": recipient.get("name", "User") if recipient else "User"
+    }
                 "callerId": req.callerId,
                 "channelName": channel_name,
                 "token": recipient_token,
