@@ -527,6 +527,9 @@ const Profile = () => {
 };
 
 const SettingsModal = ({ currentUser, onClose, onSave }) => {
+  // Get API URL from environment
+  const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
+  
   const [name, setName] = useState(currentUser.name || "");
   const [bio, setBio] = useState(currentUser.bio || "");
   const [location, setLocation] = useState(currentUser.location || "");
