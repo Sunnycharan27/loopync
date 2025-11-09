@@ -23,16 +23,16 @@ const ReelComposerModal = ({ currentUser, onClose, onReelCreated }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Validate file size (max 100MB for videos)
-    if (file.size > 100 * 1024 * 1024) {
-      toast.error("Video size must be less than 100MB");
+    // Validate file size (max 150MB for videos)
+    if (file.size > 150 * 1024 * 1024) {
+      toast.error("Video size must be less than 150MB");
       return;
     }
 
     // Validate file type
-    const allowedTypes = ['video/mp4', 'video/quicktime', 'video/webm', 'video/avi'];
+    const allowedTypes = ['video/mp4', 'video/quicktime', 'video/webm', 'video/avi', 'video/mpeg'];
     if (!allowedTypes.includes(file.type)) {
-      toast.error("Only videos (MP4, MOV, WebM, AVI) are supported");
+      toast.error("Only videos (MP4, MOV, WebM, AVI, MPEG) are supported");
       return;
     }
 
