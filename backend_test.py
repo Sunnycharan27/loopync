@@ -73,21 +73,34 @@ class ComprehensiveBackendTester:
             self.log(f"❌ Login failed: {response.status_code} - {response.text}", "ERROR")
             return False
     
-    def get_friends(self):
-        """Get user's friends list"""
-        self.log("👥 Getting friends list...")
+    def test_protected_endpoints(self):
+        """Test JWT token validation on protected endpoints"""
+        self.log("🔒 Testing JWT token validation...")
         
-        response = self.session.get(f"{BASE_URL}/users/{self.user_id}/friends")
-        
+        # Test with valid token
+        response = self.session.get(f"{BASE_URL}/auth/me")
         if response.status_code == 200:
-            self.friends = response.json()
-            self.log(f"✅ Found {len(self.friends)} friends")
-            for friend in self.friends:
-                self.log(f"   - {friend.get('name')} (ID: {friend.get('id')})")
-            return True
+            user_data = response.json()
+            self.log(f"✅ Protected endpoint accessible with valid token")
+            self.log(f"   User: {user_data.get('name')} ({user_data.get('email')})")
         else:
-            self.log(f"❌ Failed to get friends: {response.status_code} - {response.text}", "ERROR")
+            self.log(f"❌ Protected endpoint failed with valid token: {response.status_code}", "ERROR")
             return False
+        
+        # Test with invalid token
+        old_auth = self.session.headers.get("Authorization")
+        self.session.headers["Authorization"] = "Bearer invalid_token"
+        
+        response = self.session.get(f"{BASE_URL}/auth/me")
+        if response.status_code == 401:
+            self.log("✅ Invalid token properly rejected with 401")
+        else:
+            self.log(f"❌ Invalid token not rejected properly: {response.status_code}", "ERROR")
+            return False
+        
+        # Restore valid token
+        self.session.headers["Authorization"] = old_auth
+        return True
     
     def test_audio_call_initiation(self):
         """Test Priority 1: Audio Call Initiation"""
