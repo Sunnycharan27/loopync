@@ -1671,12 +1671,11 @@ async def reset_password(data: dict):
         if datetime.now(timezone.utc) > expires:
             raise HTTPException(status_code=400, detail="Reset code has expired")
     
-    # Update password in Google Sheets
-    sheets_user = sheets_db.find_user_by_email(email)
-    if sheets_user:
-        sheets_db.update_user_password(email, new_password)
+    # Hash new password and update in MongoDB
+    from passlib.hash import bcrypt
+    new_password_hash = bcrypt.hash(new_password)
     
-    # Clear reset token
+    # Clear reset token and update password
     await db.users.update_one(
         {"email": email},
         {
