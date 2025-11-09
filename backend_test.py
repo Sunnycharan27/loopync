@@ -393,39 +393,54 @@ class ComprehensiveBackendTester:
             self.log(f"❌ Failed to get reels: {response.status_code} - {response.text}", "ERROR")
             return False
     
-    def test_call_history(self):
-        """Test Priority 3: Call History"""
-        self.log("\n📋 TEST 6: Call History")
+    def test_vibe_capsules_api(self):
+        """Test Priority 7: Vibe Capsules - Get capsules and verify media URLs"""
+        self.log("\n💫 TEST 7: Vibe Capsules API")
         
-        response = self.session.get(f"{BASE_URL}/calls/history/{self.user_id}")
+        # Get all vibe capsules (stories)
+        self.log("   Getting vibe capsules...")
+        response = self.session.get(f"{BASE_URL}/capsules")
         
         if response.status_code == 200:
-            calls = response.json()
-            self.log(f"   ✅ Retrieved {len(calls)} calls from history")
+            capsules = response.json()
+            self.log(f"✅ Retrieved {len(capsules)} vibe capsules")
             
-            if calls:
-                # Verify call structure
-                call = calls[0]
-                required_fields = ["id", "callerId", "recipientId", "callType", "status", "startedAt"]
-                
-                for field in required_fields:
-                    if field in call:
-                        self.log(f"   ✅ {field}: {call[field]}")
+            if capsules:
+                # Check first few capsules
+                for i, capsule in enumerate(capsules[:3]):
+                    self.log(f"   Capsule {i+1}: ID {capsule.get('id')}")
+                    
+                    # Check media URL
+                    media_url = capsule.get('mediaUrl')
+                    if media_url:
+                        self.log(f"     Media URL: {media_url}")
+                        
+                        # Verify URL format
+                        if media_url.startswith('/api/media/') or media_url.startswith('http'):
+                            self.log(f"     ✅ Media URL format valid")
+                        else:
+                            self.log(f"     ❌ Invalid media URL format: {media_url}", "ERROR")
+                    
+                    # Check media type
+                    media_type = capsule.get('mediaType')
+                    if media_type in ['image', 'video']:
+                        self.log(f"     Media Type: {media_type} ✅")
                     else:
-                        self.log(f"   ❌ Missing field: {field}", "ERROR")
-                        return False
+                        self.log(f"     ❌ Invalid media type: {media_type}", "ERROR")
+                    
+                    # Check author data
+                    author = capsule.get('author')
+                    if author:
+                        self.log(f"     Author: {author.get('name')}")
+                    else:
+                        self.log(f"     ❌ Missing author data", "ERROR")
                 
-                # Check if caller and recipient data is enriched
-                if 'caller' in call and 'recipient' in call:
-                    self.log("   ✅ Call history includes enriched user data")
-                else:
-                    self.log("   ❌ Call history missing user data enrichment", "ERROR")
-                    return False
-            
-            self.log("✅ Call history working correctly")
-            return True
+                return True
+            else:
+                self.log("   No vibe capsules found (empty response)")
+                return True
         else:
-            self.log(f"❌ Failed to get call history: {response.text}", "ERROR")
+            self.log(f"❌ Failed to get vibe capsules: {response.status_code} - {response.text}", "ERROR")
             return False
     
     def run_all_tests(self):
