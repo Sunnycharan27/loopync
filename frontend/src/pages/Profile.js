@@ -21,6 +21,7 @@ const Profile = () => {
   const [userContent, setUserContent] = useState({ posts: [], reels: [], products: [] });
   const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showMediaSelector, setShowMediaSelector] = useState(false);
 
   useEffect(() => {
     fetchProfileData();
