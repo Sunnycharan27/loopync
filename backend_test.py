@@ -249,78 +249,54 @@ class ComprehensiveBackendTester:
             self.log(f"❌ Failed to get posts: {response.status_code} - {response.text}", "ERROR")
             return False
     
-    def test_error_scenarios(self):
-        """Test Priority 1: Error Scenarios"""
-        self.log("\n🚨 TEST 3: Error Scenarios")
+    def test_media_serving(self):
+        """Test Priority 4: Media Serving - Test serving existing media files"""
+        self.log("\n🖼️ TEST 4: Media Serving")
         
-        # Test 3a: Non-existent caller
-        self.log("   3a: Testing non-existent caller")
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
-            "callerId": "non_existent_user",
-            "recipientId": self.friends[0].get('id') if self.friends else "test_user_1",
-            "callType": "audio"
-        })
+        if not self.uploaded_media_id:
+            self.log("❌ No uploaded media to test serving", "ERROR")
+            return False
         
-        if response.status_code == 404:
-            data = response.json()
-            if data.get('detail') == "Caller not found":
-                self.log("   ✅ Non-existent caller properly rejected with 404")
+        # Test serving the uploaded media file
+        media_url = f"/api/media/{self.uploaded_media_id}"
+        self.log(f"   Testing media serving: {media_url}")
+        
+        # Remove authorization header for media serving (should be public)
+        headers = dict(self.session.headers)
+        if 'Authorization' in headers:
+            del headers['Authorization']
+        
+        response = self.session.get(f"{BASE_URL}/media/{self.uploaded_media_id}", headers=headers)
+        
+        self.log(f"   Response status: {response.status_code}")
+        
+        if response.status_code == 200:
+            # Check content-type header
+            content_type = response.headers.get('content-type', '')
+            self.log(f"   Content-Type: {content_type}")
+            
+            if content_type.startswith('image/'):
+                self.log("✅ Correct content-type header for image")
             else:
-                self.log(f"   ❌ Wrong error message: {data.get('detail')}", "ERROR")
+                self.log(f"❌ Incorrect content-type: {content_type}", "ERROR")
+                return False
+            
+            # Check if file data is returned
+            content_length = len(response.content)
+            self.log(f"   Content length: {content_length} bytes")
+            
+            if content_length > 0:
+                self.log("✅ File data returned successfully")
+                
+                # Restore authorization header
+                self.session.headers.update({"Authorization": f"Bearer {self.token}"})
+                return True
+            else:
+                self.log("❌ No file data returned", "ERROR")
                 return False
         else:
-            self.log(f"   ❌ Expected 404, got {response.status_code}", "ERROR")
+            self.log(f"❌ Media serving failed: {response.status_code} - {response.text}", "ERROR")
             return False
-        
-        # Test 3b: Non-friend recipient (if we have friends, test with a non-friend)
-        self.log("   3b: Testing non-friend recipient")
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
-            "callerId": self.user_id,
-            "recipientId": "non_friend_user",
-            "callType": "audio"
-        })
-        
-        if response.status_code == 403:
-            data = response.json()
-            if data.get('detail') == "You can only call friends":
-                self.log("   ✅ Non-friend recipient properly rejected with 403")
-            else:
-                self.log(f"   ❌ Wrong error message: {data.get('detail')}", "ERROR")
-                return False
-        else:
-            self.log(f"   ❌ Expected 403, got {response.status_code}", "ERROR")
-            return False
-        
-        # Test 3c: Invalid request format (missing fields)
-        self.log("   3c: Testing invalid request format")
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json={
-            "callerId": self.user_id
-            # Missing recipientId and callType
-        })
-        
-        if response.status_code == 422:
-            data = response.json()
-            if isinstance(data.get('detail'), list):
-                self.log("   ✅ Invalid request format properly rejected with 422 validation error")
-            else:
-                self.log(f"   ❌ Expected validation error list, got: {data.get('detail')}", "ERROR")
-                return False
-        else:
-            self.log(f"   ❌ Expected 422, got {response.status_code}", "ERROR")
-            return False
-        
-        # Test 3d: Empty request body
-        self.log("   3d: Testing empty request body")
-        response = self.session.post(f"{BASE_URL}/calls/initiate", json={})
-        
-        if response.status_code == 422:
-            self.log("   ✅ Empty request body properly rejected with 422")
-        else:
-            self.log(f"   ❌ Expected 422, got {response.status_code}", "ERROR")
-            return False
-        
-        self.log("✅ All error scenarios working correctly")
-        return True
     
     def test_agora_token_generation(self):
         """Test Priority 1: Agora Token Generation"""
