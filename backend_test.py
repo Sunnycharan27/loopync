@@ -131,6 +131,10 @@ class ComprehensiveBackendTester:
             media_url = upload_data.get('url')
             media_id = upload_data.get('id')
             
+            # Extract media ID from URL if not provided directly
+            if not media_id and media_url and '/api/media/' in media_url:
+                media_id = media_url.split('/api/media/')[-1]
+            
             self.log(f"✅ File upload successful!")
             self.log(f"   Media URL: {media_url}")
             self.log(f"   Media ID: {media_id}")
