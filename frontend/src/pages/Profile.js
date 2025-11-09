@@ -651,11 +651,19 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
         avatar: avatarUrl
       });
       
+      console.log('✅ Profile update response:', response.data);
       toast.success("Profile updated successfully!");
       onSave();
     } catch (error) {
-      console.error("Failed to update profile:", error);
-      toast.error("Failed to update profile");
+      console.error("❌ Failed to update profile:", error);
+      console.error("Error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
+      
+      const errorMsg = error.response?.data?.detail || error.message || "Failed to update profile";
+      toast.error(`Update failed: ${errorMsg}`);
     } finally {
       setSaving(false);
     }
