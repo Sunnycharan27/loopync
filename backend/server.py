@@ -1499,21 +1499,27 @@ async def unblock_user(userId: str, blockedUserId: str):
 @api_router.post("/auth/change-password")
 async def change_password(data: dict):
     """Change user password"""
+    from passlib.hash import bcrypt
+    
     userId = data.get("userId")
     current_password = data.get("currentPassword")
     new_password = data.get("newPassword")
     
-    # Verify current password with Google Sheets DB
-    user = sheets_db.find_user_by_id(userId)
+    # Get user from MongoDB
+    user = await db.users.find_one({"id": userId}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
     # Verify current password
-    if not sheets_db.verify_password(user.get("email"), current_password):
+    if not bcrypt.verify(current_password, user.get("password", "")):
         raise HTTPException(status_code=401, detail="Current password is incorrect")
     
-    # Update password in Google Sheets
-    sheets_db.update_user_password(user.get("email"), new_password)
+    # Hash new password and update in MongoDB
+    new_password_hash = bcrypt.hash(new_password)
+    await db.users.update_one(
+        {"id": userId},
+        {"$set": {"password": new_password_hash}}
+    )
     
     return {"success": True, "message": "Password changed successfully"}
 
