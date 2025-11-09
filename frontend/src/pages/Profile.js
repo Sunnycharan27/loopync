@@ -559,11 +559,11 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const updateUrl = `${API}/api/users/${currentUser.id}/profile`;
+      const updateUrl = `${API}/users/${currentUser.id}/profile`;
       console.log('💾 Updating profile at:', updateUrl);
       console.log('📝 Update data:', { name, bio, location, website });
       
-      const response = await axios.put(updateUrl, {
+      const response = await axios.patch(updateUrl, {
         name,
         bio,
         location,
