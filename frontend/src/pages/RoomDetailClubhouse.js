@@ -13,7 +13,6 @@ import AudioRoomManager from "../utils/audioRoomManager";
 const RoomDetailClubhouse = () => {
   const { roomId } = useParams();
   const { currentUser } = useContext(AuthContext);
-  const socket = useContext(WebSocketContext);
   const navigate = useNavigate();
   
   const [room, setRoom] = useState(null);
