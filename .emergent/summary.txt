@@ -1,60 +1,117 @@
 <analysis>
-The previous AI engineer initially focused on deployment readiness and comprehensive testing of the audio/video calling functionality, which passed all backend tests. The main bulk of the work then shifted to critical media visibility issues across Vibe Capsules (stories), Reels, and Posts. Recurring problems included outdated/broken media URLs in the database (from old deployments, relative paths, or  constructs), aggressive frontend video error handling leading to  and , and inconsistent media rendering in various frontend components. The engineer systematically cleaned up invalid database entries, fixed URL construction logic in both frontend components (, , ) and the backend's  endpoint ( now returns full URLs). Error handling was improved in  and . The final stage of the trajectory involves debugging a persistent media display issue in posts, with the engineer having confirmed correct API responses and preparing to trace frontend rendering with debug logs.
+The previous AI engineer's work spanned several critical phases to evolve the Loopync Superapp. Initially, deployment readiness and testing of audio/video calling were confirmed. The focus then shifted to resolving widespread media visibility issues across Vibe Capsules, Reels, and Posts. This involved extensive database cleanup, URL construction fixes, and a pivotal decision to store media directly in MongoDB with dynamic URL generation, resolving cross-deployment media breakages. Subsequently, the engineer rebuilt the entire audio/video calling system using WebRTC, replacing Agora.io, and meticulously debugged WebSocket connection issues by correcting the  configuration. Profile picture upload functionality was implemented and refined through several iterations, including resolving duplicate backend endpoints and improving frontend integration. Finally, the upload size limit was increased to 150MB for various media types. The current task involves removing the dedicated avatar upload feature, transitioning to a more general media upload approach.
 </analysis>
 
 <product_requirements>
-Loopync is conceived as a Superapp encompassing social media, e-commerce, communication, and fintech functionalities. The primary development goals included establishing robust, persistent user authentication via MongoDB (replacing Google Sheets), implementing secure login/signup, and password hashing. A major emphasis was on advanced communication, requiring a comprehensive friend graph, 1:1 text/image/voice messaging, and transitioning to Agora.io for audio/video calls, complete with features like presence, read receipts, and push notifications. The entire messenger and calling system was to be rebuilt in an Instagram-like style. Other objectives included dynamic Vibe Capsules for content sharing, enhanced user profiles, location-based services, API stability, expanded social media features, and integration of an AI voice bot using an Emergent LLM Key. The overarching aim was to deliver a fully functional and real-time working perfectly working app with a consistent UI/UX. To date, the messenger and calling system have been rebuilt, with recent fixes addressing authentication persistence, call initiation, UI, and various media visibility issues across posts, reels, and stories.
+Loopync is envisioned as a Superapp integrating social media, e-commerce, communication, and fintech. Key requirements included:
+1.  **User Authentication:** Robust, persistent authentication using MongoDB, secure login/signup, and password hashing.
+2.  **Advanced Communication:** Comprehensive friend graph, 1:1 text/image/voice messaging, and a transition to Agora.io (later replaced with WebRTC) for audio/video calls with features like presence, read receipts, and push notifications. The messenger and calling system were to be Instagram-like.
+3.  **Content Sharing:** Dynamic Vibe Capsules (stories), Reels, and Posts for media sharing.
+4.  **User Profiles:** Enhanced user profiles, including profile picture uploads.
+5.  **Technical Stability:** API stability, location-based services, and integration of an AI voice bot using an Emergent LLM Key.
+The overarching goal was a fully functional and real-time working perfectly working app with consistent UI/UX. To date, the messenger and calling system are rebuilt, authentication issues fixed, and various media visibility and upload functionalities (posts, reels, stories, profile pictures) addressed.
 </product_requirements>
 
 <key_technical_concepts>
 -   **Full-Stack:** FastAPI (Python), React (JavaScript)
 -   **Database:** MongoDB (for user persistence),  (password hashing)
--   **Real-time:** Socket.IO, Agora.io (calling), Web Speech API (voice bot)
+-   **Real-time:** Socket.IO (for WebRTC signaling), WebRTC (audio/video calling), Web Speech API (voice bot)
 -   **Authentication:** JWT
 -   **AI/LLM:** Emergent LLM Key, 
 -   **DevOps:** Kubernetes, Supervisor
 </key_technical_concepts>
 
 <code_architecture>
-The application utilizes a React frontend and a FastAPI backend, communicating via REST APIs and WebSockets (Socket.IO), with MongoDB as the primary database.
+The application uses a React frontend and a FastAPI backend, communicating via REST APIs and WebSockets (Socket.IO), with MongoDB as the primary database.
+
 
 
 -   ****: Main backend logic and API endpoints.
-    -   **Importance**: Handles authentication, posts, reels, vibe capsules, calls, and file uploads.
-    -   **Changes**: Removed duplicate signup endpoint, refactored , fixed Agora UID generation. Modified  to return full absolute URLs. Public endpoints for posts, reels, and capsules were confirmed to have no friend filtering.
--   ****: Dedicated service for user authentication.
-    -   **Importance**: Ensures secure and persistent user management via MongoDB.
-    -   **Changes**: Used by  for user signups/logins.
--   ****: Frontend messenger interface.
-    -   **Importance**: Core component for 1:1 messaging and call initiation.
-    -   **Changes**: Improved call initiation error handling and dispatched  for . Unified color scheme.
--   ****: Manages call UI states.
-    -   **Importance**: Central control for showing incoming/outgoing call modals.
-    -   **Changes**: Listens for  events to display the appropriate call UI.
--   ****: Displays Vibe Capsule stories.
-    -   **Importance**: Renders story content, including media.
-    -   **Changes**: Added a helper function to construct correct media URLs and implemented error handling with a placeholder for broken or external media.
+    -   **Importance**: Handles authentication, posts, reels, vibe capsules, calls, and file uploads. Contains core FastAPI routes and Socket.IO events.
+    -   **Changes**:
+        -   : Modified to store media files directly into MongoDB and return relative  URLs, supporting up to 150MB.
+        -   : New endpoint added to serve media directly from MongoDB (or local filesystem for older files, implicitly).
+        -   : Duplicate endpoint issues resolved by renaming profile update to .
+        -   : Refactored to use WebRTC signaling instead of Agora.io.
+        -   Socket.IO: Added , , ,  events for WebRTC signaling. Corrected  config to run .
+        -   Legacy code: Removed  imports and replaced associated logic (e.g., password reset) with MongoDB operations. Removed duplicate WebRTC event handlers.
+        -   Configuration: Removed hardcoded JWT secret fallback and payment callback URL.
+-   ****: Main homepage displaying user posts.
+    -   **Importance**: Central feed for user-generated content.
+    -   **Changes**: Added debug logging to  to diagnose media issues.
+-   ****: User profile page.
+    -   **Importance**: Displays user information, settings, and now profile picture upload.
+    -   **Changes**: Added UI and logic for profile picture upload using . Integrated  from . Renamed endpoint calls to . Later, a simpler  was integrated and a camera button added to the avatar for direct upload. Avatar display updated to use . Ongoing work to remove the avatar feature entirely.
+-   ****: Renders individual posts.
+    -   **Importance**: Displays post text, media, and interactive elements.
+    -   **Changes**: Simplified media rendering logic, added debug logging, and updated avatar display to use .
+-   ****: Modal for creating new posts.
+    -   **Importance**: Handles text and media submission for posts.
+    -   **Changes**: Increased file size limit to 150MB for media uploads.
+-   ****: Modal for creating reels.
+    -   **Importance**: Allows video uploads for reels.
+    -   **Changes**: Fixed URL construction to prevent  issues. Increased file size limit to 150MB.
 -   ****: Handles Vibe Capsule uploads.
     -   **Importance**: Manages media file selection and submission for stories.
-    -   **Changes**: Corrected URL construction for uploaded media to prevent  issues.
--   ****: Modal for creating and uploading reels.
-    -   **Importance**: Allows users to select video files, add captions, and upload them as reels.
-    -   **Changes**: Fixed URL construction for uploaded video ( issue). Enhanced error handling to display detailed error messages.
+    -   **Changes**: Corrected URL construction for uploaded media. Increased file size limit to 150MB.
+-   ****: Displays Vibe Capsule stories.
+    -   **Importance**: Renders story content.
+    -   **Changes**: Added helper function for correct media URLs and error handling. Removed hardcoded localhost fallback.
 -   ****: Page dedicated to viewing reels.
-    -   **Importance**: Fetches and renders the list of reels, integrating with the reel creation modal.
-    -   **Changes**: Addressed and removed incorrect URL normalization logic in  that caused  errors.
+    -   **Importance**: Fetches and renders reels.
+    -   **Changes**: Removed incorrect URL normalization logic.
 -   ****: Displays individual reels for playback.
-    -   **Importance**: Manages video playback, navigation between reels, and error states.
-    -   **Changes**: Removed  attribute from video elements to mitigate CORS issues. Implemented retry logic and  handler to recover from video loading failures. Updated  to correctly handle  paths.
--   ****: Main homepage displaying user posts.
-    -   **Importance**: Central feed for user-generated content (posts).
-    -   **Changes**: Added debug logging to  to aid in diagnosing persistent media visibility issues.
--   ****: Renders individual posts in the feed.
-    -   **Importance**: Responsible for displaying post text, media (images/videos), and interactive elements.
-    -   **Changes**: Simplified media rendering logic and introduced debug logging to pinpoint why media might not be displaying.
+    -   **Importance**: Manages video playback and error states.
+    -   **Changes**: Removed  attribute. Implemented retry logic. Updated  to handle  paths. Removed hardcoded localhost fallback.
 -   ****: Utility functions for media URL handling.
-    -   **Importance**: Provides helper functions to validate and process media URLs.
-    -   **Changes**: The logic within , , and  was examined and confirmed to be correct for its purpose.
+    -   **Importance**: Validates and processes media URLs.
+    -   **Changes**: Updated to dynamically construct full media URLs from relative  paths. Removed hardcoded localhost fallback.
+-   ****: Manages call UI states.
+    -   **Importance**: Central control for showing incoming/outgoing call modals.
+    -   **Changes**: Updated to use  instead of . Modified  handler to match WebRTC data format. Removed hardcoded localhost fallback.
+-   ****: New component for WebRTC calls.
+    -   **Importance**: Provides the UI and logic for 1:1 audio/video calls using WebRTC.
+    -   **Changes**: Newly created to replace Agora.io modal.
+-   ****: Frontend messenger interface.
+    -   **Importance**: Core component for 1:1 messaging and call initiation.
+    -   **Changes**: Updated  to handle WebRTC response format.
+-   ****: Manages WebSocket connection.
+    -   **Importance**: Establishes and maintains the Socket.IO connection for real-time features.
+    -   **Changes**: Fixed a WebSocket fallback warning.
+-   ****: Modal for AI voice bot.
+    -   **Importance**: Integrates with the AI voice bot feature.
+    -   **Changes**: Removed hardcoded localhost fallback.
+-   ****: Old Agora.io call modal.
+    -   **Importance**: Previously managed Agora.io calls.
+    -   **Changes**: Removed hardcoded localhost fallback. Replaced by .
+-   ****: Backend environment variables.
+    -   **Importance**: Stores sensitive configuration like , , , etc.
+    -   **Changes**: Verified  and  were present.  and  are still present but no longer used by the new WebRTC implementation.
+-   ****: Frontend environment variables.
+    -   **Importance**: Stores  and .
+    -   **Changes**:  is still present but no longer used.
+-   ****: Python dependencies.
+    -   **Changes**:  removed.
+-   ****: Node.js dependencies.
+    -   **Changes**:  removed.
+-   ****: Script to export current MongoDB data.
+    -   **Importance**: Facilitates migration of sample data to new deployments.
+    -   **Changes**: Newly created.
+-   ****: Script to import MongoDB data.
+    -   **Importance**: Facilitates populating new deployments with sample data.
+    -   **Changes**: Newly created.
+-   ****: Documentation for media storage.
+    -   **Importance**: Explains the MongoDB-based media storage and dynamic URL generation.
+    -   **Changes**: Newly created.
+-   ****: Documentation for deployment.
+    -   **Importance**: Provides instructions for deploying the application.
+    -   **Changes**: Newly created.
+-   ****: Documentation for calling setup.
+    -   **Importance**: Explains the WebRTC calling implementation.
+    -   **Changes**: Newly created.
+-   ****: Simple modal for avatar upload.
+    -   **Importance**: Provides a direct, simple UI for profile picture uploads.
+    -   **Changes**: Newly created.
 </code_architecture>
 
 <pending_tasks>
@@ -65,13 +122,23 @@ The application utilizes a React frontend and a FastAPI backend, communicating v
 -   Integrate remaining advanced AI features and Discover page enhancements.
 -   Complete all Instagram, TikTok, and Twitter-like social media features (frontend UI/UX for feeds, likes, comments, explore, short videos, retweets, trending topics).
 -   Full implementation and testing of the AI voice bot feature beyond basic text chat.
--   Debug and fix the issue where a user's own uploaded story is not visible in their timeline/story place immediately after upload.
+-   Remove avatar upload functionality completely, leaving only general media upload.
 </pending_tasks>
 
 <current_work>
-The AI engineer's immediate focus is resolving a persistent issue where uploaded post media is not consistently visible in the timeline (), despite the backend API () returning correct, full absolute media URLs. Previous efforts addressed similar media visibility problems in Vibe Capsules and Reels, including database cleanup of invalid/old URLs, fixing  URL construction errors in  and , and updating the backend's  endpoint in  to consistently return full absolute URLs. An  error in  was also fixed by removing unnecessary URL normalization. The engineer has verified that the API is indeed returning media URLs correctly for posts. The current belief is that the issue lies in the frontend rendering layer, specifically within the  component, or a data flow problem that prevents the media from being displayed. The last action taken was simplifying the media rendering logic in  and adding debug logging to  to trace the data flow and diagnose the exact rendering failure.
+The AI engineer is currently in the process of **removing all avatar-specific upload functionality** from the application, as explicitly requested by the user. The goal is to retain only general media upload capabilities for posts, reels, and stories, effectively eliminating the dedicated profile picture (avatar) upload feature.
+
+This work commenced by removing:
+1.  The import for  from .
+2.  The state variable associated with the simple avatar modal () from .
+3.  The camera button UI element that triggered the simple avatar upload modal from the user's avatar display in .
+4.  The avatar upload section from the  component in .
+5.  All avatar-specific handler functions (e.g.,  for avatar) from .
+6.  The avatar upload UI from the .
+
+The latest action taken in the trajectory was modifying  to remove the avatar upload UI from the SettingsModal. This indicates the task is still ongoing and not yet complete. The intent is to streamline the profile editing experience to focus solely on general profile information without a dedicated avatar upload mechanism.
 </current_work>
 
 <optional_next_step>
-Restart the frontend and take a screenshot with console logs to debug the media rendering issue in  for posts.
+Complete the removal of all avatar-related code, UI, and functionality from the frontend.
 </optional_next_step>

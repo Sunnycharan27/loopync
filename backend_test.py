@@ -13,7 +13,7 @@ COMPREHENSIVE BACKEND API TESTING - Production Readiness Verification
 6. Reels (get reels, verify video URLs)
 7. Vibe Capsules (get capsules, verify media URLs)
 
-**API BASE URL**: https://media-fix-8.preview.emergentagent.com
+**API BASE URL**: https://media-messenger-15.preview.emergentagent.com
 **TEST CREDENTIALS**: demo@loopync.com / password123
 """
 
@@ -26,7 +26,7 @@ from datetime import datetime
 from PIL import Image
 
 # Configuration
-BASE_URL = "https://media-fix-8.preview.emergentagent.com/api"
+BASE_URL = "https://media-messenger-15.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 
