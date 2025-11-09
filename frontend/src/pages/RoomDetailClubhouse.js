@@ -277,7 +277,7 @@ const RoomDetailClubhouse = () => {
           <h1 className="text-xl font-bold text-white">{room?.name}</h1>
           <p className="text-sm text-gray-400 mt-1">{room?.description}</p>
           {isConnected && (
-            <p className="text-xs text-green-400 mt-1">🎙️ Connected • Powered by Agora</p>
+            <p className="text-xs text-green-400 mt-1">🎙️ Connected • Live Audio</p>
           )}
         </div>
       </div>
