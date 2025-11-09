@@ -24,9 +24,9 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       
       // Fetch posts, reels, and vibe capsules with media
       const [postsRes, reelsRes, capsulesRes] = await Promise.all([
-        axios.get(`${API}/api/posts`).catch(() => ({ data: [] })),
-        axios.get(`${API}/api/reels`).catch(() => ({ data: [] })),
-        axios.get(`${API}/api/vibe-capsules/${user.id}`).catch(() => ({ data: [] }))
+        axios.get(`${API}/posts`).catch(() => ({ data: [] })),
+        axios.get(`${API}/reels`).catch(() => ({ data: [] })),
+        axios.get(`${API}/vibe-capsules/${user.id}`).catch(() => ({ data: [] }))
       ]);
 
       // Filter and format media
