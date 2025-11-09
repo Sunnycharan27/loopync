@@ -413,41 +413,52 @@ class ComprehensiveBackendTester:
         response = self.session.get(f"{BASE_URL}/capsules")
         
         if response.status_code == 200:
-            capsules = response.json()
-            self.log(f"✅ Retrieved {len(capsules)} vibe capsules")
+            capsules_data = response.json()
+            stories = capsules_data.get('stories', [])
+            self.log(f"✅ Retrieved {len(stories)} story groups")
             
-            if capsules:
-                # Check first few capsules (limit to 3)
-                capsules_to_check = capsules[:3] if len(capsules) >= 3 else capsules
+            if stories:
+                # Check first few story groups
+                total_capsules = 0
                 
-                for i, capsule in enumerate(capsules_to_check):
-                    self.log(f"   Capsule {i+1}: ID {capsule.get('id')}")
+                for i, story_group in enumerate(stories[:3]):
+                    author = story_group.get('author', {})
+                    capsules = story_group.get('capsules', [])
+                    total_capsules += len(capsules)
                     
-                    # Check media URL
-                    media_url = capsule.get('mediaUrl')
-                    if media_url:
-                        self.log(f"     Media URL: {media_url}")
+                    self.log(f"   Story Group {i+1}: Author {author.get('name')} ({len(capsules)} capsules)")
+                    
+                    # Check first capsule in each group
+                    if capsules:
+                        capsule = capsules[0]
+                        self.log(f"     Capsule ID: {capsule.get('id')}")
                         
-                        # Verify URL format
-                        if media_url.startswith('/api/media/') or media_url.startswith('http'):
-                            self.log(f"     ✅ Media URL format valid")
+                        # Check media URL
+                        media_url = capsule.get('mediaUrl')
+                        if media_url:
+                            self.log(f"     Media URL: {media_url}")
+                            
+                            # Verify URL format
+                            if media_url.startswith('/api/media/') or media_url.startswith('http'):
+                                self.log(f"     ✅ Media URL format valid")
+                            else:
+                                self.log(f"     ❌ Invalid media URL format: {media_url}", "ERROR")
+                        
+                        # Check media type
+                        media_type = capsule.get('mediaType')
+                        if media_type in ['image', 'video']:
+                            self.log(f"     Media Type: {media_type} ✅")
                         else:
-                            self.log(f"     ❌ Invalid media URL format: {media_url}", "ERROR")
-                    
-                    # Check media type
-                    media_type = capsule.get('mediaType')
-                    if media_type in ['image', 'video']:
-                        self.log(f"     Media Type: {media_type} ✅")
-                    else:
-                        self.log(f"     ❌ Invalid media type: {media_type}", "ERROR")
-                    
-                    # Check author data
-                    author = capsule.get('author')
-                    if author:
-                        self.log(f"     Author: {author.get('name')}")
-                    else:
-                        self.log(f"     ❌ Missing author data", "ERROR")
+                            self.log(f"     ❌ Invalid media type: {media_type}", "ERROR")
+                        
+                        # Check author data
+                        capsule_author = capsule.get('author')
+                        if capsule_author:
+                            self.log(f"     Author: {capsule_author.get('name')}")
+                        else:
+                            self.log(f"     ❌ Missing author data", "ERROR")
                 
+                self.log(f"   Total capsules across all story groups: {total_capsules}")
                 return True
             else:
                 self.log("   No vibe capsules found (empty response)")
