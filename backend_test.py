@@ -30,12 +30,13 @@ BASE_URL = "https://media-fix-8.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 
-class CallTester:
+class ComprehensiveBackendTester:
     def __init__(self):
         self.session = requests.Session()
         self.token = None
         self.user_id = None
         self.friends = []
+        self.uploaded_media_id = None
         
     def log(self, message, level="INFO"):
         """Log messages with timestamp"""
@@ -43,8 +44,8 @@ class CallTester:
         print(f"[{timestamp}] {level}: {message}")
         
     def login(self):
-        """Login and get JWT token"""
-        self.log("🔐 Logging in with demo credentials...")
+        """Test Priority 2: Authentication - Login with demo credentials"""
+        self.log("🔐 TEST 2: Authentication - Logging in with demo credentials...")
         
         response = self.session.post(f"{BASE_URL}/auth/login", json={
             "email": TEST_EMAIL,
@@ -54,13 +55,18 @@ class CallTester:
         if response.status_code == 200:
             data = response.json()
             self.token = data.get("token")
-            self.user_id = data.get("user", {}).get("id")
-            self.log(f"✅ Login successful! User ID: {self.user_id}")
+            user_data = data.get("user", {})
+            self.user_id = user_data.get("id")
+            
+            self.log(f"✅ Login successful!")
+            self.log(f"   User ID: {self.user_id}")
+            self.log(f"   User Name: {user_data.get('name')}")
+            self.log(f"   User Email: {user_data.get('email')}")
+            self.log(f"   JWT Token: {self.token[:50]}...")
             
             # Set authorization header for future requests
             self.session.headers.update({
-                "Authorization": f"Bearer {self.token}",
-                "Content-Type": "application/json"
+                "Authorization": f"Bearer {self.token}"
             })
             return True
         else:
