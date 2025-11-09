@@ -19,7 +19,6 @@ const Profile = () => {
   const [walletBalance, setWalletBalance] = useState(0);
   const [userContent, setUserContent] = useState({ posts: [], reels: [], products: [] });
   const [showSettings, setShowSettings] = useState(false);
-  const [showAvatarUpload, setShowAvatarUpload] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
