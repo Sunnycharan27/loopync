@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 const ProfileVibe = () => {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser, refreshUserData } = useContext(AuthContext);
   const navigate = useNavigate();
   
   const [activeTab, setActiveTab] = useState("posts");
