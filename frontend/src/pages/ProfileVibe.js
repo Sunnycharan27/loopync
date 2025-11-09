@@ -323,6 +323,15 @@ const ProfileVibe = () => {
       </div>
 
       <BottomNav active="profile" />
+
+      {/* Media Selector Modal */}
+      {showMediaSelector && (
+        <MediaSelectorModal
+          user={currentUser}
+          onClose={() => setShowMediaSelector(false)}
+          onSelect={handleProfilePictureSelect}
+        />
+      )}
     </div>
   );
 };
