@@ -290,8 +290,16 @@ const RoomDetailClubhouse = () => {
         <div className="text-center">
           <h1 className="text-xl font-bold text-white">{room?.name}</h1>
           <p className="text-sm text-gray-400 mt-1">{room?.description}</p>
-          {isConnected && (
+          {isConnected && audioManager.current && (
             <p className="text-xs text-green-400 mt-1">🎙️ Connected • Live Audio</p>
+          )}
+          {!isConnected && getCurrentUserRole() !== "audience" && (
+            <button
+              onClick={initializeAudio}
+              className="text-xs text-yellow-400 mt-1 hover:text-yellow-300 underline"
+            >
+              ⚠️ Click to enable microphone
+            </button>
           )}
         </div>
       </div>
