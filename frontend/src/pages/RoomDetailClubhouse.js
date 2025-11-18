@@ -67,32 +67,41 @@ const RoomDetailClubhouse = () => {
     try {
       const myRole = getCurrentUserRole();
       
-      // Only initialize audio for speakers/hosts
+      // Only initialize audio for speakers/hosts/moderators
       if (myRole !== "audience") {
-        audioManager.current = new AudioRoomManager(null, roomId, currentUser.id);
-        await audioManager.current.initialize();
-        setIsMuted(false);
-        toast.success("🎤 You're on stage! You can now speak.");
+        try {
+          audioManager.current = new AudioRoomManager(null, roomId, currentUser.id);
+          await audioManager.current.initialize();
+          setIsMuted(true); // Start muted by default
+          setIsConnected(true);
+          toast.success("🎤 You're on stage! Unmute to speak.");
+          console.log(`✅ Audio initialized. Role: ${myRole}, Muted: true`);
+        } catch (audioError) {
+          console.error("Audio initialization error:", audioError);
+          setIsConnected(false);
+          
+          // Specific error handling
+          if (audioError.name === "NotAllowedError") {
+            toast.error("Microphone access denied. Please allow microphone access and refresh.", { duration: 5000 });
+          } else if (audioError.name === "NotFoundError") {
+            toast.error("No microphone found. Please connect a microphone.", { duration: 5000 });
+          } else if (audioError.name === "NotReadableError") {
+            toast.error("Microphone is being used by another application.", { duration: 5000 });
+          } else {
+            toast.error("Failed to access microphone. Please check your browser permissions.", { duration: 5000 });
+          }
+          throw audioError;
+        }
       } else {
         console.log(`👂 Joined as audience - listening only`);
         setIsMuted(true);
+        setIsConnected(true);
+        toast.success("🎵 Connected to audio room!");
       }
-
-      setIsConnected(true);
-      toast.success("🎵 Connected to audio room!");
-      console.log(`✅ Audio initialization complete. Role: ${myRole}`);
       
     } catch (error) {
-      console.error("Failed to initialize audio:", error);
-      
-      // Provide user-friendly error messages
-      if (error.message?.includes("permission") || error.name === "NotAllowedError") {
-        toast.error("Microphone access denied. Please allow microphone in your browser settings.");
-      } else if (error.name === "NotFoundError") {
-        toast.error("No microphone found. Please connect a microphone device.");
-      } else {
-        toast.error(`Failed to connect to audio: ${error.message || 'Please try again'}`);
-      }
+      console.error("Failed to initialize audio room:", error);
+      setIsConnected(false);
     }
   };
 
