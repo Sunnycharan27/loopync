@@ -213,21 +213,25 @@ const RoomDetailClubhouse = () => {
   // Update audio permissions when role changes
   useEffect(() => {
     const updateAudioPermissions = async () => {
-      if (!audioManager.current || !isConnected) return;
+      if (!room?.participants || !currentUser?.id) return;
       
       const myRole = getCurrentUserRole();
       const isNowSpeaker = myRole !== "audience";
 
       // If promoted to speaker
-      if (isNowSpeaker && !audioManager.current.getConnectionState()) {
+      if (isNowSpeaker && !audioManager.current) {
         try {
+          audioManager.current = new AudioRoomManager(null, roomId, currentUser.id);
           await audioManager.current.initialize();
-          setIsMuted(false);
-          toast.success("🎤 You're on stage! You can now speak.");
+          setIsMuted(true);
+          setIsConnected(true);
+          toast.success("🎤 You're on stage! Unmute to speak.");
         } catch (error) {
           console.error("Failed to enable microphone:", error);
-          if (error.message?.includes("permission") || error.name === "NotAllowedError") {
+          if (error.name === "NotAllowedError") {
             toast.error("Microphone access denied. Please allow microphone in browser settings.");
+          } else if (error.name === "NotFoundError") {
+            toast.error("No microphone found.");
           } else {
             toast.error("Failed to enable microphone. Please try again.");
           }
@@ -235,10 +239,12 @@ const RoomDetailClubhouse = () => {
       }
       
       // If demoted to audience
-      if (!isNowSpeaker && audioManager.current.getConnectionState()) {
+      if (!isNowSpeaker && audioManager.current) {
         try {
           await audioManager.current.cleanup();
+          audioManager.current = null;
           setIsMuted(true);
+          setIsConnected(false);
           toast.info("Moved to audience");
         } catch (error) {
           console.error("Failed to disable microphone:", error);
@@ -247,7 +253,7 @@ const RoomDetailClubhouse = () => {
     };
 
     updateAudioPermissions();
-  }, [room?.participants, isConnected]);
+  }, [room?.participants, currentUser?.id]);
 
   if (loading) {
     return (
