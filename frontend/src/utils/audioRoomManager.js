@@ -1,4 +1,4 @@
-// Simple Audio Room Manager using Web Audio API and WebRTC
+// Simple Audio Room Manager using Web Audio API
 class AudioRoomManager {
   constructor(socket, roomId, userId) {
     this.socket = socket;
@@ -8,20 +8,14 @@ class AudioRoomManager {
     this.peerConnections = new Map();
     this.isMuted = true;
     this.isConnected = false;
+    this.microphoneReady = false;
   }
 
   async initialize() {
     try {
-      // Request microphone access
-      this.localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
-      // Mute by default
-      this.localStream.getAudioTracks().forEach(track => {
-        track.enabled = false;
-      });
-      
+      // Don't request microphone immediately, just mark as ready to use
       this.isConnected = true;
-      console.log('✅ Audio room initialized');
+      console.log('✅ Audio room initialized (mic will be requested on unmute)');
       return true;
     } catch (error) {
       console.error('Failed to initialize audio room:', error);
@@ -29,8 +23,46 @@ class AudioRoomManager {
     }
   }
 
-  setMuted(muted) {
-    if (!this.localStream) return;
+  async requestMicrophone() {
+    if (this.localStream) {
+      return true; // Already have access
+    }
+
+    try {
+      console.log('🎤 Requesting microphone access...');
+      this.localStream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+      
+      // Start muted
+      this.localStream.getAudioTracks().forEach(track => {
+        track.enabled = false;
+      });
+      
+      this.microphoneReady = true;
+      console.log('✅ Microphone access granted');
+      return true;
+    } catch (error) {
+      console.error('Failed to get microphone access:', error);
+      this.microphoneReady = false;
+      throw error;
+    }
+  }
+
+  async setMuted(muted) {
+    // If trying to unmute and don't have microphone yet, request it
+    if (!muted && !this.localStream) {
+      await this.requestMicrophone();
+    }
+
+    if (!this.localStream) {
+      console.warn('No microphone stream available');
+      return;
+    }
     
     this.localStream.getAudioTracks().forEach(track => {
       track.enabled = !muted;
@@ -52,6 +84,7 @@ class AudioRoomManager {
     this.peerConnections.clear();
     
     this.isConnected = false;
+    this.microphoneReady = false;
     console.log('🔇 Audio room cleanup complete');
   }
 
@@ -61,6 +94,10 @@ class AudioRoomManager {
 
   getConnectionState() {
     return this.isConnected;
+  }
+
+  hasMicrophone() {
+    return this.microphoneReady;
   }
 }
 
