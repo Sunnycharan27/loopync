@@ -8,6 +8,7 @@ import {
 import MediaSelectorModal from "../components/MediaSelectorModal";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { getMediaUrl } from "../utils/mediaUtils";
 
 const ProfileVibe = () => {
   const { currentUser, refreshUserData } = useContext(AuthContext);
