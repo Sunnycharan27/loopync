@@ -7083,6 +7083,326 @@ async def search_messages(userId: str, query: str, limit: int = 20):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ===== MARKETPLACE ROUTES =====
+
+# Import marketplace models
+from marketplace_models import Product, ProductCreate, Cart, CartItem, Order, OrderCreate, ProductReview, ReviewCreate, OrderItem, DeliveryInfo
+from delivery_service import delivery_service
+
+@api_router.get("/products")
+async def get_products(
+    category: Optional[str] = None,
+    search: Optional[str] = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    limit: int = 50,
+    skip: int = 0
+):
+    """Get products with filters"""
+    query = {"status": "active"}
+    if category:
+        query["category"] = category
+    if search:
+        query["$or"] = [
+            {"name": {"$regex": search, "$options": "i"}},
+            {"description": {"$regex": search, "$options": "i"}},
+            {"tags": {"$regex": search, "$options": "i"}}
+        ]
+    if min_price is not None:
+        query["price"] = {"$gte": min_price}
+    if max_price is not None:
+        query.setdefault("price", {})["$lte"] = max_price
+    
+    products = await db.products.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    return products
+
+@api_router.post("/products")
+async def create_product(product: ProductCreate, sellerId: str):
+    """Create a new product"""
+    seller = await db.users.find_one({"id": sellerId}, {"_id": 0})
+    if not seller:
+        raise HTTPException(status_code=404, detail="Seller not found")
+    
+    product_obj = Product(sellerId=sellerId, sellerName=seller.get("name", ""), **product.model_dump())
+    await db.products.insert_one(product_obj.model_dump())
+    return product_obj
+
+@api_router.get("/products/{productId}")
+async def get_product(productId: str):
+    """Get product details"""
+    product = await db.products.find_one({"id": productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    await db.products.update_one({"id": productId}, {"$inc": {"views": 1}})
+    reviews = await db.product_reviews.find({"productId": productId}, {"_id": 0}).sort("createdAt", -1).limit(10).to_list(10)
+    product["reviews"] = reviews
+    return product
+
+@api_router.get("/cart/{userId}")
+async def get_cart(userId: str):
+    """Get user's cart"""
+    cart = await db.carts.find_one({"userId": userId}, {"_id": 0})
+    if not cart:
+        return {"userId": userId, "items": [], "total": 0}
+    return cart
+
+@api_router.post("/cart/{userId}/add")
+async def add_to_cart(userId: str, item: CartItem):
+    """Add item to cart"""
+    product = await db.products.find_one({"id": item.productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    if product["stock"] < item.quantity:
+        raise HTTPException(status_code=400, detail="Insufficient stock")
+    
+    cart = await db.carts.find_one({"userId": userId}, {"_id": 0})
+    if not cart:
+        cart = {"id": str(uuid.uuid4()), "userId": userId, "items": [], "total": 0, "updatedAt": datetime.now(timezone.utc).isoformat()}
+    
+    existing_item = None
+    for i, cart_item in enumerate(cart["items"]):
+        if cart_item["productId"] == item.productId:
+            existing_item = i
+            break
+    
+    if existing_item is not None:
+        cart["items"][existing_item]["quantity"] += item.quantity
+    else:
+        cart["items"].append({
+            "productId": item.productId,
+            "quantity": item.quantity,
+            "price": product["price"],
+            "productName": product["name"],
+            "productImage": product["images"][0] if product["images"] else ""
+        })
+    
+    cart["total"] = sum(i["price"] * i["quantity"] for i in cart["items"])
+    cart["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    await db.carts.update_one({"userId": userId}, {"$set": cart}, upsert=True)
+    return cart
+
+@api_router.post("/orders")
+async def create_order(order_data: OrderCreate, userId: str):
+    """Create order"""
+    user = await db.users.find_one({"id": userId}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    subtotal = sum(item.price * item.quantity for item in order_data.items)
+    shipping_rate = delivery_service.get_shipping_rate("shiprocket", "110001", order_data.shippingAddress.pincode, 1.0, {"length": 10, "width": 10, "height": 10}, order_data.paymentMethod)
+    shipping_cost = shipping_rate["total"]
+    tax = subtotal * 0.18
+    total = subtotal + shipping_cost + tax
+    
+    if order_data.paymentMethod == "wallet" and user.get("walletBalance", 0) < total:
+        raise HTTPException(status_code=400, detail="Insufficient wallet balance")
+    
+    order_items = []
+    for item in order_data.items:
+        product = await db.products.find_one({"id": item.productId}, {"_id": 0})
+        order_items.append(OrderItem(
+            productId=item.productId,
+            productName=product["name"],
+            productImage=product["images"][0] if product["images"] else "",
+            quantity=item.quantity,
+            price=item.price,
+            total=item.price * item.quantity,
+            sellerId=product["sellerId"]
+        ))
+    
+    order = Order(
+        userId=userId,
+        items=order_items,
+        subtotal=subtotal,
+        shippingCost=shipping_cost,
+        tax=tax,
+        total=total,
+        shippingAddress=order_data.shippingAddress,
+        billingAddress=order_data.billingAddress or order_data.shippingAddress,
+        paymentMethod=order_data.paymentMethod,
+        paymentStatus="paid" if order_data.paymentMethod == "wallet" else "pending",
+        orderStatus="placed"
+    )
+    
+    if order_data.paymentMethod == "wallet":
+        await db.users.update_one({"id": userId}, {"$inc": {"walletBalance": -total}})
+        order.paymentStatus = "paid"
+    
+    try:
+        shipment = await delivery_service.create_shipment(
+            "shiprocket", order.orderNumber,
+            [{"name": i.productName, "quantity": i.quantity} for i in order_items],
+            {"location_name": "Default Store"},
+            order_data.shippingAddress.model_dump(),
+            1.0, {"length": 10, "width": 10, "height": 10},
+            "prepaid" if order_data.paymentMethod != "cod" else "cod"
+        )
+        order.deliveryInfo = DeliveryInfo(
+            partner="shiprocket",
+            trackingId=shipment["tracking_id"],
+            awb=shipment["awb"],
+            courierName=shipment["courier_name"],
+            estimatedDelivery=shipment["estimated_delivery"],
+            currentStatus="pickup_scheduled"
+        )
+        order.orderStatus = "confirmed"
+    except Exception as e:
+        logger.error(f"Shipment creation failed: {e}")
+    
+    await db.orders.insert_one(order.model_dump())
+    await db.carts.delete_one({"userId": userId})
+    
+    for item in order_items:
+        await db.products.update_one({"id": item.productId}, {"$inc": {"stock": -item.quantity, "sales": item.quantity}})
+    
+    return order
+
+@api_router.get("/orders/user/{userId}")
+async def get_user_orders(userId: str, limit: int = 50):
+    """Get user's orders"""
+    orders = await db.orders.find({"userId": userId}, {"_id": 0}).sort("createdAt", -1).limit(limit).to_list(limit)
+    return orders
+
+# ===== VIDEO STREAMING ROUTES =====
+
+from video_models import Channel, ChannelCreate, Video, VideoCreate, VideoComment, CommentCreate, Subscription, LiveStream, LiveStreamCreate, WatchHistory
+
+@api_router.post("/channels")
+async def create_channel(channel: ChannelCreate, userId: str):
+    """Create a creator channel"""
+    existing = await db.channels.find_one({"userId": userId}, {"_id": 0})
+    if existing:
+        raise HTTPException(status_code=400, detail="Channel already exists")
+    
+    user = await db.users.find_one({"id": userId}, {"_id": 0})
+    channel_obj = Channel(userId=userId, avatar=user.get("avatar", ""), **channel.model_dump())
+    await db.channels.insert_one(channel_obj.model_dump())
+    return channel_obj
+
+@api_router.get("/channels/{channelId}")
+async def get_channel(channelId: str):
+    """Get channel details"""
+    channel = await db.channels.find_one({"id": channelId}, {"_id": 0})
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+    videos = await db.videos.find({"channelId": channelId, "status": "published"}, {"_id": 0}).sort("publishedAt", -1).limit(20).to_list(20)
+    channel["videos"] = videos
+    return channel
+
+@api_router.post("/videos/upload")
+async def upload_video(video: VideoCreate, userId: str):
+    """Upload a video"""
+    channel = await db.channels.find_one({"userId": userId}, {"_id": 0})
+    if not channel:
+        raise HTTPException(status_code=404, detail="Create a channel first")
+    
+    video_obj = Video(
+        channelId=channel["id"],
+        userId=userId,
+        publishedAt=datetime.now(timezone.utc).isoformat() if video.visibility == "public" else None,
+        **video.model_dump()
+    )
+    await db.videos.insert_one(video_obj.model_dump())
+    await db.channels.update_one({"id": channel["id"]}, {"$inc": {"totalVideos": 1}})
+    return video_obj
+
+@api_router.get("/videos/feed")
+async def get_videos_feed(category: Optional[str] = None, search: Optional[str] = None, limit: int = 50, skip: int = 0):
+    """Get videos feed"""
+    query = {"status": "published", "visibility": "public"}
+    if category:
+        query["category"] = category
+    if search:
+        query["$or"] = [
+            {"title": {"$regex": search, "$options": "i"}},
+            {"description": {"$regex": search, "$options": "i"}}
+        ]
+    
+    videos = await db.videos.find(query, {"_id": 0}).sort("publishedAt", -1).skip(skip).limit(limit).to_list(limit)
+    for video in videos:
+        channel = await db.channels.find_one({"id": video["channelId"]}, {"_id": 0, "name": 1, "avatar": 1, "subscribers": 1})
+        video["channel"] = channel
+    return videos
+
+@api_router.get("/videos/{videoId}")
+async def get_video(videoId: str, userId: Optional[str] = None):
+    """Get video details"""
+    video = await db.videos.find_one({"id": videoId}, {"_id": 0})
+    if not video:
+        raise HTTPException(status_code=404, detail="Video not found")
+    
+    await db.videos.update_one({"id": videoId}, {"$inc": {"views": 1}})
+    channel = await db.channels.find_one({"id": video["channelId"]}, {"_id": 0})
+    video["channel"] = channel
+    
+    if userId:
+        video["isLiked"] = userId in video.get("likedBy", [])
+        watch_history = WatchHistory(userId=userId, videoId=videoId, channelId=video["channelId"])
+        await db.watch_history.insert_one(watch_history.model_dump())
+    
+    comments = await db.video_comments.find({"videoId": videoId}, {"_id": 0}).sort("createdAt", -1).limit(20).to_list(20)
+    video["comments"] = comments
+    return video
+
+@api_router.post("/videos/{videoId}/like")
+async def like_video(videoId: str, userId: str):
+    """Like a video"""
+    video = await db.videos.find_one({"id": videoId}, {"_id": 0})
+    if not video:
+        raise HTTPException(status_code=404, detail="Video not found")
+    
+    if userId in video.get("likedBy", []):
+        await db.videos.update_one({"id": videoId}, {"$pull": {"likedBy": userId}, "$inc": {"likes": -1}})
+        return {"liked": False}
+    else:
+        await db.videos.update_one({"id": videoId}, {"$addToSet": {"likedBy": userId}, "$inc": {"likes": 1}})
+        return {"liked": True}
+
+@api_router.post("/videos/{videoId}/comments")
+async def add_video_comment(videoId: str, comment: CommentCreate, userId: str):
+    """Add comment to video"""
+    user = await db.users.find_one({"id": userId}, {"_id": 0})
+    comment_obj = VideoComment(videoId=videoId, userId=userId, userName=user.get("name", ""), userAvatar=user.get("avatar", ""), **comment.model_dump())
+    await db.video_comments.insert_one(comment_obj.model_dump())
+    await db.videos.update_one({"id": videoId}, {"$inc": {"commentCount": 1}})
+    return comment_obj
+
+@api_router.post("/channels/{channelId}/subscribe")
+async def subscribe_channel(channelId: str, userId: str):
+    """Subscribe to a channel"""
+    existing = await db.subscriptions.find_one({"userId": userId, "channelId": channelId}, {"_id": 0})
+    if existing:
+        await db.subscriptions.delete_one({"userId": userId, "channelId": channelId})
+        await db.channels.update_one({"id": channelId}, {"$inc": {"subscribers": -1}})
+        return {"subscribed": False}
+    else:
+        sub = Subscription(userId=userId, channelId=channelId)
+        await db.subscriptions.insert_one(sub.model_dump())
+        await db.channels.update_one({"id": channelId}, {"$inc": {"subscribers": 1}})
+        return {"subscribed": True}
+
+@api_router.post("/livestreams/create")
+async def create_livestream(stream: LiveStreamCreate, userId: str):
+    """Create a live stream"""
+    channel = await db.channels.find_one({"userId": userId}, {"_id": 0})
+    if not channel:
+        raise HTTPException(status_code=404, detail="Create a channel first")
+    
+    agora_channel = f"livestream_{str(uuid.uuid4())[:8]}"
+    agora_app_id = os.environ.get('AGORA_APP_ID', '')
+    stream_obj = LiveStream(channelId=channel["id"], userId=userId, agoraChannel=agora_channel, agoraAppId=agora_app_id, **stream.model_dump())
+    await db.livestreams.insert_one(stream_obj.model_dump())
+    return stream_obj
+
+@api_router.get("/livestreams")
+async def get_livestreams(status: str = "live"):
+    """Get live streams"""
+    streams = await db.livestreams.find({"status": status}, {"_id": 0}).sort("startedAt", -1).limit(50).to_list(50)
+    for stream in streams:
+        channel = await db.channels.find_one({"id": stream["channelId"]}, {"_id": 0})
+        stream["channel"] = channel
+    return streams
+
 # Include router
 app.include_router(api_router)
 
