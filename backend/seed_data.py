@@ -358,14 +358,33 @@ async def seed_database():
     db = client[DB_NAME]
     
     try:
-        # Get demo user
+        # Get or create demo user
         demo_user = await db.users.find_one({"email": "demo@loopync.com"}, {"_id": 0})
         if not demo_user:
-            print("❌ Demo user not found. Please login first.")
-            return
+            print("📝 Creating demo user...")
+            from passlib.context import CryptContext
+            pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+            
+            demo_user = {
+                "id": str(uuid.uuid4()),
+                "email": "demo@loopync.com",
+                "name": "Demo User",
+                "password": pwd_context.hash("password123"),
+                "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
+                "bio": "Welcome to Loopync! 🚀 Creator, seller, and content enthusiast.",
+                "phone": "+1234567890",
+                "location": "San Francisco, CA",
+                "website": "https://loopync.com",
+                "walletBalance": 50000,
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+                "updatedAt": datetime.now(timezone.utc).isoformat()
+            }
+            await db.users.insert_one(demo_user)
+            print(f"✅ Created demo user: {demo_user['name']}")
+        else:
+            print(f"✅ Found demo user: {demo_user['name']}")
         
         user_id = demo_user["id"]
-        print(f"✅ Found demo user: {demo_user['name']}")
         
         # Clear existing mock data
         await db.products.delete_many({"sellerId": user_id})
