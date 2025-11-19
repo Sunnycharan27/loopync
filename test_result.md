@@ -8118,10 +8118,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Call functionality testing completed successfully"
-  stuck_tasks: []
+    - "Email-based Authentication UI"
+    - "VibeRooms Frontend (Clubhouse-style Audio Chat)"
+  stuck_tasks:
+    - "Email-based Authentication UI"
   test_all: false
-  test_priority: "high_first"
+  test_priority: "critical_first"
 
 backend:
   - task: "Agora Video/Audio Calling System - Complete Call Flow"
