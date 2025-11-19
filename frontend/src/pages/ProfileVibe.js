@@ -309,7 +309,31 @@ const ProfileVibe = () => {
           )}
 
           {activeTab === "marketplace" && (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-4">
+              {/* New Marketplace Promo */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-400/20">
+                <div className="text-center">
+                  <div className="text-5xl mb-4">🛍️</div>
+                  <h3 className="text-xl font-bold text-white mb-2">New Marketplace Available!</h3>
+                  <p className="text-gray-400 mb-4">Buy & sell products with integrated delivery</p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => navigate("/products")}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-black rounded-xl font-bold"
+                    >
+                      Shop Now
+                    </button>
+                    <button
+                      onClick={() => navigate("/seller-dashboard")}
+                      className="flex-1 px-6 py-3 bg-white/5 border border-cyan-400/30 text-cyan-400 rounded-xl font-bold"
+                    >
+                      Start Selling
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
               {marketplaceItems.length > 0 ? marketplaceItems.map(item => (
                 <div key={item.id} className="rounded-xl overflow-hidden bg-gray-900/30 border border-gray-800 hover:border-cyan-400/30 transition-all cursor-pointer" onClick={() => navigate(`/marketplace/${item.id}`)}>
                   <div className="aspect-square bg-gray-800">
