@@ -60,12 +60,25 @@ const ProfileVibe = () => {
       return;
     }
     try {
-      await axios.patch(`${API}/api/users/${currentUser.id}/profile`, { name: editedName });
+      const token = localStorage.getItem("loopync_token");
+      if (!token) {
+        toast.error("Please login again");
+        navigate("/auth");
+        return;
+      }
+
+      await axios.patch(
+        `${API}/api/users/${currentUser.id}/profile`, 
+        { name: editedName },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
       await refreshUserData();
       setIsEditingName(false);
       toast.success("Name updated!");
     } catch (error) {
-      toast.error("Failed to update name");
+      console.error("Failed to update name:", error);
+      toast.error(error.response?.data?.detail || "Failed to update name");
     }
   };
 
