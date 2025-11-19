@@ -71,13 +71,28 @@ const ProfileVibe = () => {
 
   const handleProfilePictureSelect = async (mediaUrl) => {
     try {
-      await axios.patch(`${API}/api/users/${currentUser.id}/profile`, { avatar: mediaUrl });
+      const token = localStorage.getItem("loopync_token");
+      if (!token) {
+        toast.error("Please login again");
+        navigate("/auth");
+        return;
+      }
+
+      console.log("Updating profile picture with URL:", mediaUrl);
+      
+      await axios.patch(
+        `${API}/api/users/${currentUser.id}/profile`, 
+        { avatar: mediaUrl },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
       await refreshUserData();
       setShowMediaSelector(false);
       toast.success("Profile picture updated!");
     } catch (error) {
       console.error("Failed to update profile picture:", error);
-      toast.error("Failed to update profile picture");
+      console.error("Error details:", error.response?.data);
+      toast.error(error.response?.data?.detail || "Failed to update profile picture");
     }
   };
 
