@@ -142,7 +142,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
 
       console.log('✅ Upload response:', uploadRes.data);
       const mediaUrl = uploadRes.data.url;
-      toast.success('Image uploaded successfully!');
+      toast.success('Photo uploaded successfully!');
       onSelect(mediaUrl);
     } catch (error) {
       console.error('❌ Upload failed:', error);
