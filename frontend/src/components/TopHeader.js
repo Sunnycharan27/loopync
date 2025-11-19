@@ -76,7 +76,7 @@ const TopHeader = ({ title, subtitle, showIcons = true }) => {
             >
               {currentUser.avatar ? (
                 <img 
-                  src={currentUser.avatar.startsWith('http') ? currentUser.avatar : `${process.env.REACT_APP_BACKEND_URL}${currentUser.avatar}`} 
+                  src={getMediaUrl(currentUser.avatar)} 
                   alt="Profile" 
                   className="w-full h-full object-cover"
                   onError={(e) => {
