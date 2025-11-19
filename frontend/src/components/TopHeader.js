@@ -65,6 +65,30 @@ const TopHeader = ({ title, subtitle, showIcons = true }) => {
             <MessageCircle size={20} />
             <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-cyan-400"></div>
           </button>
+          
+          {/* Profile Icon */}
+          {currentUser ? (
+            <button
+              onClick={() => navigate('/profile')}
+              className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-400 hover:border-cyan-300 transition-colors"
+              data-testid="header-profile-btn"
+            >
+              {currentUser.avatar ? (
+                <img src={currentUser.avatar} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-400 to-blue-500 text-black">
+                  <User size={20} />
+                </div>
+              )}
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate('/auth')}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-700 text-white hover:bg-gray-600 transition-colors"
+            >
+              <User size={20} />
+            </button>
+          )}
         </div>
       )}
     </div>
