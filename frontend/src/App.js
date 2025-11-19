@@ -311,6 +311,18 @@ function App() {
               }
             />
             <Route
+              path="/profile"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <Profile />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
               path="/profile/:userId"
               element={
                 !authLoaded ? (
