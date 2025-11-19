@@ -19,20 +19,22 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
   }, [user.id]);
 
   const fetchUserMedia = async () => {
+    setLoading(true);
+    
     try {
-      setLoading(true);
-      
       const token = localStorage.getItem('loopync_token');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
-      // Fetch posts and reels with media
+      console.log('📸 Fetching user media from posts and reels...');
+      
+      // Fetch posts and reels with media - silently fail if endpoints don't work
       const [postsRes, reelsRes] = await Promise.all([
         axios.get(`${API}/api/posts`, { headers }).catch((err) => {
-          console.error('Failed to fetch posts:', err.response?.status);
+          console.log('Posts fetch failed (will show empty):', err.response?.status || err.message);
           return { data: [] };
         }),
         axios.get(`${API}/api/reels`, { headers }).catch((err) => {
-          console.error('Failed to fetch reels:', err.response?.status);
+          console.log('Reels fetch failed (will show empty):', err.response?.status || err.message);
           return { data: [] };
         })
       ]);
