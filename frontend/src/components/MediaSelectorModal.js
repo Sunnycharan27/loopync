@@ -247,7 +247,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
                 >
                   <Plus size={64} className="text-gray-600 group-hover:text-cyan-400 transition-colors mb-4" />
                   <p className="text-lg font-semibold text-gray-300 group-hover:text-white transition-colors">
-                    Upload New Image
+                    Upload New Photo
                   </p>
                   <p className="text-sm text-gray-500 mt-2">
                     JPG, PNG, GIF or WebP • Max 150MB
