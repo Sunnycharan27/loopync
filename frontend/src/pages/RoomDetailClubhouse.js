@@ -22,8 +22,9 @@ const RoomDetailClubhouse = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   
-  // Audio room manager ref
-  const audioManager = useRef(null);
+  // Agora client refs
+  const agoraClient = useRef(null);
+  const localAudioTrack = useRef(null);
 
   useEffect(() => {
     fetchRoom();
