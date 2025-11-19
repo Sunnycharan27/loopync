@@ -463,13 +463,31 @@ const RoomDetailClubhouse = () => {
             </div>
           )}
 
-          <div className="mt-4 text-center">
+          <div className="mt-4 text-center space-y-2">
             <p className="text-sm text-gray-400">
-              {myRole === "host" && "🎙️ You're hosting"}
+              {myRole === "host" && "🎙️ You're hosting this room"}
               {myRole === "moderator" && "🛡️ You're a moderator"}
               {myRole === "speaker" && "🎤 You're on stage"}
               {myRole === "audience" && "👂 You're listening"}
             </p>
+            
+            {myRole !== "audience" && !isMuted && (
+              <p className="text-xs text-green-400">
+                🔊 Your microphone is live
+              </p>
+            )}
+            
+            {myRole !== "audience" && isMuted && (
+              <p className="text-xs text-yellow-400">
+                🔇 Unmute to speak to the room
+              </p>
+            )}
+            
+            {myRole === "audience" && (
+              <p className="text-xs text-gray-500">
+                Raise your hand to join the conversation
+              </p>
+            )}
           </div>
         </div>
       </div>
