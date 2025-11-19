@@ -87,9 +87,9 @@ const RoomDetailClubhouse = () => {
       const uid = hashCode(currentUser.id) % 10000;
       const role = myRole === "audience" ? "subscriber" : "publisher";
       
-      // Get Agora token
+      // Get Agora token  
       const tokenRes = await axios.post(
-        `${API}/api/agora/token?channelName=${encodeURIComponent(room.agoraChannel)}&uid=${uid}&role=${role}`
+        `${API}/agora/token?channelName=${encodeURIComponent(room.agoraChannel)}&uid=${uid}&role=${role}`
       );
       
       if (!tokenRes.data?.token) {
