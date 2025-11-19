@@ -186,7 +186,7 @@ const RoomDetailClubhouse = () => {
 
   const handleLeaveRoom = async () => {
     try {
-      await cleanupAudioResources();
+      await cleanupAgoraResources();
       await axios.post(`${API}/rooms/${roomId}/leave?userId=${currentUser.id}`);
       toast.success("Left VibeRoom");
       navigate("/viberooms");
