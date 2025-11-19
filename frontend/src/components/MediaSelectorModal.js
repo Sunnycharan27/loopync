@@ -57,29 +57,15 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       // Reels
       if (reelsRes.data) {
         const userReels = reelsRes.data
-          .filter(r => r.authorId === user.id && r.videoUrl)
+          .filter(r => r.authorId === user.id && (r.videoUrl || r.thumbnailUrl))
           .map(r => ({
             id: r.id,
-            url: r.videoUrl,
-            type: 'video',
+            url: r.thumbnailUrl || r.videoUrl, // Use thumbnail for display
+            type: 'image',
             source: 'reel',
             timestamp: r.createdAt
           }));
         allMedia.push(...userReels);
-      }
-
-      // Vibe Capsules
-      if (capsulesRes.data) {
-        const userCapsules = capsulesRes.data
-          .filter(c => c.mediaUrl)
-          .map(c => ({
-            id: c.id,
-            url: c.mediaUrl,
-            type: c.mediaUrl.includes('.mp4') || c.mediaUrl.includes('video') ? 'video' : 'image',
-            source: 'capsule',
-            timestamp: c.createdAt
-          }));
-        allMedia.push(...userCapsules);
       }
 
       // Sort by timestamp (most recent first)
