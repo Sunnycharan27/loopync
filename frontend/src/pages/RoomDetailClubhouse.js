@@ -34,10 +34,10 @@ const RoomDetailClubhouse = () => {
 
   useEffect(() => {
     const initAudio = async () => {
-      if (room?.id && currentUser?.id && !isConnected) {
+      if (room?.agoraChannel && currentUser?.id && !isConnected) {
         try {
           await axios.post(`${API}/rooms/${roomId}/join?userId=${currentUser.id}`);
-          await initializeAudio();
+          await initializeAgoraAudio();
         } catch (error) {
           console.error("Failed to join room:", error);
           toast.error("Failed to join room");
@@ -48,9 +48,9 @@ const RoomDetailClubhouse = () => {
     initAudio();
     
     return () => {
-      cleanupAudioResources();
+      cleanupAgoraResources();
     };
-  }, [room?.id, currentUser?.id]);
+  }, [room?.agoraChannel, currentUser?.id]);
 
   const fetchRoom = async () => {
     try {
