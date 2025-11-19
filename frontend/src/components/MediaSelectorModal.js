@@ -73,12 +73,12 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       // Sort by timestamp (most recent first)
       allMedia.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-      console.log(`✅ Loaded ${allMedia.length} media items from posts, reels, and capsules`);
+      console.log(`✅ Loaded ${allMedia.length} media items from posts and reels`);
       setMedia(allMedia);
     } catch (error) {
-      console.error('Failed to fetch media:', error);
-      console.error('Error details:', error.response?.data);
-      // Don't show error toast - user can still upload
+      // Silent error handling - user can still upload new photos
+      console.log('Media fetch had errors (this is OK, user can upload):', error.message);
+      setMedia([]); // Set empty media
     } finally {
       setLoading(false);
     }
