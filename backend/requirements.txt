@@ -81,3 +81,4 @@ aiohttp==3.13.1
 python-socketio==5.14.2
 qrcode[pil]
 passlib[bcrypt]
+agora-token-builder==1.0.0
