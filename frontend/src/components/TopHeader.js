@@ -3,6 +3,7 @@ import { MessageCircle, Bell, Mic, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import VoiceBotModal from "./VoiceBotModal";
 import { AuthContext } from "../App";
+import { getMediaUrl } from "../utils/mediaUtils";
 
 const TopHeader = ({ title, subtitle, showIcons = true }) => {
   const navigate = useNavigate();
