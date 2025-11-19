@@ -6,6 +6,7 @@ import { AuthContext } from "../App";
 
 const TopHeader = ({ title, subtitle, showIcons = true }) => {
   const navigate = useNavigate();
+  const { currentUser } = useContext(AuthContext);
   const [showVoiceBot, setShowVoiceBot] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
