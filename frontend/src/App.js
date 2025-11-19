@@ -28,6 +28,19 @@ import Analytics from "./pages/Analytics";
 import Auth from "./pages/Auth";
 import AuthComplete from "./pages/AuthComplete";
 import { Toaster } from "sonner";
+
+// Marketplace Pages
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
+import SellerDashboard from "./pages/SellerDashboard";
+
+// Video Platform Pages
+import Videos from "./pages/Videos";
+import VideoPlayer from "./pages/VideoPlayer";
+import VideoUpload from "./pages/VideoUpload";
 import { WebSocketProvider } from "./context/WebSocketContext";
 import CallManager from "./components/CallManager";
 
