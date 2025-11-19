@@ -2,11 +2,11 @@
 Marketplace & Video Streaming API Routes
 Complete implementation for E-commerce and YouTube-like platform
 """
-from fastapi import APIRouter, HTTPException, Depends, UploadFile, File
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Query
 from typing import List, Optional
 from datetime import datetime, timezone
-from motor.motor_asyncio import AsyncIOMotorDatabase
 import uuid
+import os
 
 from marketplace_models import (
     Product, ProductCreate, Cart, CartItem, Order, OrderCreate,
@@ -20,7 +20,15 @@ from video_models import (
 from delivery_service import delivery_service
 
 # This router will be included in main server.py
+# Database will be injected via dependency
 marketplace_video_router = APIRouter()
+
+# Database will be set by server.py
+db = None
+
+def get_db():
+    """Dependency to get database instance"""
+    return db
 
 
 # ========================================
