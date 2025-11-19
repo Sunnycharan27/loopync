@@ -125,18 +125,24 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
 
     setUploading(true);
     try {
+      const token = localStorage.getItem('loopync_token');
+      
       console.log('📤 Starting upload:', {
         filename: file.name,
         size: `${(file.size / (1024 * 1024)).toFixed(2)}MB`,
-        type: file.type
+        type: file.type,
+        hasToken: !!token
       });
 
       const formData = new FormData();
       formData.append('file', file);
 
-      const uploadRes = await axios.post(`${API}/api/upload`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const headers = { 'Content-Type': 'multipart/form-data' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const uploadRes = await axios.post(`${API}/api/upload`, formData, { headers });
 
       console.log('✅ Upload response:', uploadRes.data);
       const mediaUrl = uploadRes.data.url;
