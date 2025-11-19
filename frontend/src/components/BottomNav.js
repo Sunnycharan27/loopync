@@ -1,15 +1,15 @@
 import React from "react";
-import { Home, Film, Compass, Wallet, User, Radio, Users } from "lucide-react";
+import { Home, ShoppingBag, PlayCircle, Radio, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const BottomNav = ({ active }) => {
   const navigate = useNavigate();
 
   const navItems = [
-    { id: "home", label: "Timeline", icon: Home, path: "/" },
-    { id: "vibezone", label: "VibeZone", icon: Film, path: "/vibezone" },
-    { id: "viberooms", label: "VibeRooms", icon: Radio, path: "/viberooms" },
-    { id: "discover", label: "Discover", icon: Compass, path: "/discover" },
+    { id: "home", label: "Home", icon: Home, path: "/" },
+    { id: "products", label: "Shop", icon: ShoppingBag, path: "/products" },
+    { id: "videos", label: "Videos", icon: PlayCircle, path: "/videos" },
+    { id: "viberooms", label: "Rooms", icon: Radio, path: "/viberooms" },
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
   ];
 
