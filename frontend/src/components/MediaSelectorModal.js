@@ -173,8 +173,8 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
         <div className="p-6 border-b border-gray-700">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-2xl font-bold text-white">Profile Picture</h2>
-              <p className="text-gray-400 text-sm mt-1">Upload new or choose existing</p>
+              <h2 className="text-2xl font-bold text-white">Update Profile Photo</h2>
+              <p className="text-gray-400 text-sm mt-1">Upload new photo or choose from existing media</p>
             </div>
             <button
               onClick={onClose}
