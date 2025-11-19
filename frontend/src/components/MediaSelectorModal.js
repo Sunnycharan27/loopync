@@ -89,10 +89,12 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       // Sort by timestamp (most recent first)
       allMedia.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
+      console.log(`✅ Loaded ${allMedia.length} media items from posts, reels, and capsules`);
       setMedia(allMedia);
     } catch (error) {
       console.error('Failed to fetch media:', error);
-      toast.error('Failed to load media');
+      console.error('Error details:', error.response?.data);
+      // Don't show error toast - user can still upload
     } finally {
       setLoading(false);
     }
