@@ -408,6 +408,20 @@ function App() {
                 )
               }
             />
+
+            {/* Marketplace Routes */}
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:productId" element={<ProductDetail />} />
+            <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/auth" />} />
+            <Route path="/checkout" element={isAuthenticated ? <Checkout /> : <Navigate to="/auth" />} />
+            <Route path="/orders" element={isAuthenticated ? <Orders /> : <Navigate to="/auth" />} />
+            <Route path="/seller-dashboard" element={isAuthenticated ? <SellerDashboard /> : <Navigate to="/auth" />} />
+
+            {/* Video Platform Routes */}
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/videos/watch/:videoId" element={<VideoPlayer />} />
+            <Route path="/video-upload" element={isAuthenticated ? <VideoUpload /> : <Navigate to="/auth" />} />
+
           </Routes>
         </BrowserRouter>
         <Toaster position="top-center" richColors />
