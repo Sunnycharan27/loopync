@@ -129,29 +129,47 @@ const RoomDetailClubhouse = () => {
   };
 
   const toggleMute = async () => {
+    const myRole = getCurrentUserRole();
+    
+    if (myRole === "audience") {
+      toast.error("You need to be on stage to speak. Raise your hand to request!");
+      return;
+    }
+
     if (!audioManager.current) {
-      const myRole = getCurrentUserRole();
-      if (myRole === "audience") {
-        toast.error("You need to be on stage to speak. Raise your hand to request!");
-        return;
-      }
-      toast.error("Microphone not available");
+      toast.error("Audio room not initialized");
       return;
     }
 
     try {
       const newMutedState = !isMuted;
-      audioManager.current.setMuted(newMutedState);
+      
+      // If unmuting, request microphone access
+      if (!newMutedState && !audioManager.current.hasMicrophone()) {
+        toast.info("Requesting microphone access...");
+      }
+      
+      await audioManager.current.setMuted(newMutedState);
       setIsMuted(newMutedState);
       
       if (newMutedState) {
         toast.info("🔇 Microphone muted");
       } else {
-        toast.success("🔊 Microphone unmuted");
+        toast.success("🔊 Microphone unmuted - You can now speak!");
       }
     } catch (error) {
       console.error("Failed to toggle mute:", error);
-      toast.error("Failed to toggle microphone");
+      
+      // Provide specific error messages
+      if (error.name === "NotAllowedError") {
+        toast.error("Microphone access denied. Please allow microphone in your browser settings.", { duration: 5000 });
+      } else if (error.name === "NotFoundError") {
+        toast.error("No microphone found. Please connect a microphone.", { duration: 5000 });
+      } else if (error.name === "NotReadableError") {
+        toast.error("Microphone is being used by another application.", { duration: 5000 });
+      } else {
+        toast.error("Failed to access microphone. Please try again.");
+      }
     }
   };
 
