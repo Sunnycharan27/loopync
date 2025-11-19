@@ -22,11 +22,23 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
     try {
       setLoading(true);
       
+      const token = localStorage.getItem('loopync_token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
       // Fetch posts, reels, and vibe capsules with media
       const [postsRes, reelsRes, capsulesRes] = await Promise.all([
-        axios.get(`${API}/api/posts`).catch(() => ({ data: [] })),
-        axios.get(`${API}/api/reels`).catch(() => ({ data: [] })),
-        axios.get(`${API}/api/vibe-capsules/${user.id}`).catch(() => ({ data: [] }))
+        axios.get(`${API}/api/posts`, { headers }).catch((err) => {
+          console.error('Failed to fetch posts:', err.response?.status);
+          return { data: [] };
+        }),
+        axios.get(`${API}/api/reels`, { headers }).catch((err) => {
+          console.error('Failed to fetch reels:', err.response?.status);
+          return { data: [] };
+        }),
+        axios.get(`${API}/api/vibe-capsules/${user.id}`, { headers }).catch((err) => {
+          console.error('Failed to fetch capsules:', err.response?.status);
+          return { data: [] };
+        })
       ]);
 
       // Filter and format media
