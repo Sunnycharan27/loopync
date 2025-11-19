@@ -25,18 +25,14 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       const token = localStorage.getItem('loopync_token');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
-      // Fetch posts, reels, and vibe capsules with media
-      const [postsRes, reelsRes, capsulesRes] = await Promise.all([
+      // Fetch posts and reels with media
+      const [postsRes, reelsRes] = await Promise.all([
         axios.get(`${API}/api/posts`, { headers }).catch((err) => {
           console.error('Failed to fetch posts:', err.response?.status);
           return { data: [] };
         }),
         axios.get(`${API}/api/reels`, { headers }).catch((err) => {
           console.error('Failed to fetch reels:', err.response?.status);
-          return { data: [] };
-        }),
-        axios.get(`${API}/api/vibe-capsules/${user.id}`, { headers }).catch((err) => {
-          console.error('Failed to fetch capsules:', err.response?.status);
           return { data: [] };
         })
       ]);
