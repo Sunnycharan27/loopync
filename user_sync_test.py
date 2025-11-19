@@ -9,7 +9,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://media-messenger-15.preview.emergentagent.com/api"
+BACKEND_URL = "https://connect-stream-3.preview.emergentagent.com/api"
 DEMO_EMAIL = "demo@loopync.com"
 DEMO_PASSWORD = "password123"
 
