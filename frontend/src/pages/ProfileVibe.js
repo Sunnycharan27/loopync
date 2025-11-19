@@ -354,13 +354,8 @@ const ProfileVibe = () => {
                     </div>
                   </div>
                 </div>
-              )) : (
-                <div className="col-span-2 py-16 text-center">
-                  <ShoppingBag size={48} className="mx-auto mb-4 text-gray-700" />
-                  <p className="text-gray-500 mb-4">No items listed yet</p>
-                  <button onClick={() => navigate('/marketplace')} className="px-6 py-2.5 bg-cyan-400 hover:bg-cyan-500 text-black rounded-xl font-semibold transition-all">Browse Marketplace</button>
-                </div>
-              )}
+              )) : null}
+              </div>
             </div>
           )}
         </div>
