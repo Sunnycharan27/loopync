@@ -64,57 +64,123 @@ const RoomDetailClubhouse = () => {
     }
   };
 
-  const initializeAudio = async () => {
+  const initializeAgoraAudio = async () => {
+    if (!room?.agoraChannel) {
+      toast.error("Audio room not available");
+      return;
+    }
+
     try {
       const myRole = getCurrentUserRole();
       
-      // Only initialize audio for speakers/hosts/moderators
+      // Generate a valid Agora UID (must be 0-10000)
+      const hashCode = (str) => {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          const char = str.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash;
+        }
+        return Math.abs(hash);
+      };
+      
+      const uid = hashCode(currentUser.id) % 10000;
+      const role = myRole === "audience" ? "subscriber" : "publisher";
+      
+      // Get Agora token
+      const tokenRes = await axios.post(
+        `${API}/api/agora/token?channelName=${encodeURIComponent(room.agoraChannel)}&uid=${uid}&role=${role}`
+      );
+      
+      if (!tokenRes.data?.token) {
+        throw new Error("Failed to get Agora token");
+      }
+
+      const { token, appId } = tokenRes.data;
+
+      // Create Agora client
+      agoraClient.current = AgoraRTC.createClient({ 
+        mode: "live", 
+        codec: "vp8" 
+      });
+
+      // Set client role
+      await agoraClient.current.setClientRole(
+        myRole === "audience" ? "audience" : "host"
+      );
+
+      // Event listeners
+      agoraClient.current.on("user-published", async (user, mediaType) => {
+        try {
+          await agoraClient.current.subscribe(user, mediaType);
+          
+          if (mediaType === "audio" && user.audioTrack) {
+            await user.audioTrack.play();
+            toast.success(`🔊 ${user.uid} is speaking`);
+          }
+        } catch (error) {
+          console.error(`Error subscribing to user ${user.uid}:`, error);
+        }
+      });
+
+      agoraClient.current.on("user-unpublished", (user, mediaType) => {
+        if (mediaType === "audio") {
+          toast.info(`User stopped speaking`);
+        }
+      });
+
+      agoraClient.current.on("user-left", (user) => {
+        fetchRoom();
+      });
+
+      // Join channel
+      await agoraClient.current.join(appId, room.agoraChannel, token, uid);
+      console.log(`✅ Joined Agora channel: ${room.agoraChannel}`);
+
+      // Create and publish local audio track for speakers/hosts
       if (myRole !== "audience") {
         try {
-          audioManager.current = new AudioRoomManager(null, roomId, currentUser.id);
-          await audioManager.current.initialize();
-          setIsMuted(true); // Start muted by default
-          setIsConnected(true);
-          toast.success("🎤 You're on stage! Unmute to speak.");
-          console.log(`✅ Audio initialized. Role: ${myRole}, Muted: true`);
-        } catch (audioError) {
-          console.error("Audio initialization error:", audioError);
-          setIsConnected(false);
+          localAudioTrack.current = await AgoraRTC.createMicrophoneAudioTrack({
+            encoderConfig: "music_standard",
+          });
           
-          // Specific error handling
-          if (audioError.name === "NotAllowedError") {
-            toast.error("Microphone access denied. Please allow microphone access and refresh.", { duration: 5000 });
-          } else if (audioError.name === "NotFoundError") {
-            toast.error("No microphone found. Please connect a microphone.", { duration: 5000 });
-          } else if (audioError.name === "NotReadableError") {
-            toast.error("Microphone is being used by another application.", { duration: 5000 });
-          } else {
-            toast.error("Failed to access microphone. Please check your browser permissions.", { duration: 5000 });
-          }
-          throw audioError;
+          await agoraClient.current.publish([localAudioTrack.current]);
+          setIsMuted(true);
+          localAudioTrack.current.setEnabled(false);
+          toast.success("🎤 You're on stage! Unmute to speak.");
+        } catch (audioError) {
+          console.error("Failed to create audio track:", audioError);
+          toast.error("Failed to enable microphone. Please check your device settings.");
         }
       } else {
-        console.log(`👂 Joined as audience - listening only`);
         setIsMuted(true);
-        setIsConnected(true);
-        toast.success("🎵 Connected to audio room!");
       }
+
+      setIsConnected(true);
+      toast.success("🎵 Connected to audio room!");
       
     } catch (error) {
-      console.error("Failed to initialize audio room:", error);
+      console.error("Failed to initialize Agora audio:", error);
+      toast.error(`Failed to connect: ${error.message || 'Please try again'}`);
       setIsConnected(false);
     }
   };
 
-  const cleanupAudioResources = async () => {
+  const cleanupAgoraResources = async () => {
     try {
-      if (audioManager.current) {
-        await audioManager.current.cleanup();
-        audioManager.current = null;
+      if (localAudioTrack.current) {
+        localAudioTrack.current.close();
+        localAudioTrack.current = null;
       }
+
+      if (agoraClient.current) {
+        await agoraClient.current.leave();
+        agoraClient.current = null;
+      }
+
       setIsConnected(false);
     } catch (error) {
-      console.error("Error cleaning up audio:", error);
+      console.error("Error cleaning up Agora:", error);
     }
   };
 
