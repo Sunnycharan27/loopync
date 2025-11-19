@@ -28,9 +28,6 @@ from PIL import Image
 from messenger_service import MessengerService, SendMessageRequest, AIMessageRequest, UpdateReadStatusRequest
 from auth_service import AuthService
 
-# Import marketplace and video streaming routes
-from marketplace_video_routes import marketplace_video_router
-
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
