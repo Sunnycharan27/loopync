@@ -147,6 +147,26 @@ const ProfileVibe = () => {
               <Phone size={18} />Call
             </button>
           </div>
+
+          {/* Quick Actions - New Features */}
+          <div className="grid grid-cols-2 gap-3 mt-4">
+            <button
+              onClick={() => navigate("/orders")}
+              className="p-3 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-400/20 hover:border-cyan-400/40 transition-all"
+            >
+              <ShoppingBag size={20} className="text-cyan-400 mb-1" />
+              <p className="text-white text-sm font-semibold">My Orders</p>
+              <p className="text-gray-500 text-xs">Track purchases</p>
+            </button>
+            <button
+              onClick={() => navigate("/seller-dashboard")}
+              className="p-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-400/20 hover:border-purple-400/40 transition-all"
+            >
+              <ShoppingBag size={20} className="text-purple-400 mb-1" />
+              <p className="text-white text-sm font-semibold">Sell Products</p>
+              <p className="text-gray-500 text-xs">Start earning</p>
+            </button>
+          </div>
         </div>
 
         <div className="flex gap-2 border-b border-gray-800 overflow-x-auto">
