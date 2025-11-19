@@ -152,7 +152,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
         status: error.response?.status
       });
       
-      const errorMsg = error.response?.data?.detail || error.message || 'Failed to upload image';
+      const errorMsg = error.response?.data?.detail || error.message || 'Failed to upload photo';
       toast.error(`Upload failed: ${errorMsg}`);
     } finally {
       setUploading(false);
