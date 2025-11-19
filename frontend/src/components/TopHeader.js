@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { MessageCircle, Bell, Mic } from "lucide-react";
+import React, { useState, useEffect, useContext } from "react";
+import { MessageCircle, Bell, Mic, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import VoiceBotModal from "./VoiceBotModal";
+import { AuthContext } from "../App";
 
 const TopHeader = ({ title, subtitle, showIcons = true }) => {
   const navigate = useNavigate();
