@@ -333,13 +333,11 @@ const Discover = () => {
                 Events
               </button>
               <button
-                onClick={() => setActiveTab("marketplace")}
-                className={`px-4 py-3 rounded-full font-semibold whitespace-nowrap transition-all ${
-                  activeTab === "marketplace" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                }`}
-                data-testid="discover-marketplace-tab"
+                onClick={() => navigate("/products")}
+                className="px-4 py-3 rounded-full font-semibold whitespace-nowrap transition-all bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-cyan-400"
+                data-testid="discover-shop-tab"
               >
-                Marketplace
+                🛍️ Shop
               </button>
               <button
                 onClick={() => setActiveTab("tribes")}
