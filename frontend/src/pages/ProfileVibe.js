@@ -92,7 +92,7 @@ const ProfileVibe = () => {
         return;
       }
 
-      console.log("Updating profile picture with URL:", mediaUrl);
+      console.log("Updating profile photo with URL:", mediaUrl);
       
       await axios.patch(
         `${API}/api/users/${currentUser.id}/profile`, 
@@ -102,11 +102,11 @@ const ProfileVibe = () => {
       
       await refreshUserData();
       setShowMediaSelector(false);
-      toast.success("Profile picture updated!");
+      toast.success("Profile photo updated!");
     } catch (error) {
-      console.error("Failed to update profile picture:", error);
+      console.error("Failed to update profile photo:", error);
       console.error("Error details:", error.response?.data);
-      toast.error(error.response?.data?.detail || "Failed to update profile picture");
+      toast.error(error.response?.data?.detail || "Failed to update profile photo");
     }
   };
 
