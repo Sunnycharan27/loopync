@@ -343,7 +343,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
               disabled={!uploadPreview || uploading}
               className="flex-1 py-3 px-6 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-cyan-400/20"
             >
-              {uploading ? 'Uploading...' : 'Upload & Set as Profile Picture'}
+              {uploading ? 'Uploading...' : 'Upload & Set as Profile Photo'}
             </button>
           ) : (
             <button
@@ -351,7 +351,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
               disabled={!selectedMedia}
               className="flex-1 py-3 px-6 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-cyan-400/20"
             >
-              Set as Profile Picture
+              Set as Profile Photo
             </button>
           )}
         </div>
