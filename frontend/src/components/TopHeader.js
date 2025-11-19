@@ -74,7 +74,15 @@ const TopHeader = ({ title, subtitle, showIcons = true }) => {
               data-testid="header-profile-btn"
             >
               {currentUser.avatar ? (
-                <img src={currentUser.avatar} alt="Profile" className="w-full h-full object-cover" />
+                <img 
+                  src={currentUser.avatar.startsWith('http') ? currentUser.avatar : `${process.env.REACT_APP_BACKEND_URL}${currentUser.avatar}`} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || currentUser.email}`;
+                  }}
+                />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-400 to-blue-500 text-black">
                   <User size={20} />
