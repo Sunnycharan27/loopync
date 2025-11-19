@@ -106,6 +106,51 @@ const Home = () => {
         {/* Vibe Capsules (Stories) */}
         <VibeCapsules currentUser={currentUser} />
 
+        {/* New Features - Marketplace & Videos */}
+        <div className="px-4 mt-4">
+          <div className="grid grid-cols-2 gap-3">
+            {/* Marketplace Card */}
+            <div
+              onClick={() => window.location.href = '/products'}
+              className="glass-card p-4 rounded-2xl cursor-pointer hover:scale-105 transition-transform"
+              style={{
+                background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)',
+                border: '1px solid rgba(6, 182, 212, 0.3)'
+              }}
+            >
+              <div className="w-12 h-12 rounded-full bg-cyan-400/20 flex items-center justify-center mb-3">
+                <span className="text-2xl">🛍️</span>
+              </div>
+              <h3 className="text-white font-bold text-lg mb-1">Marketplace</h3>
+              <p className="text-gray-400 text-sm">Shop & Sell Products</p>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="px-2 py-1 rounded-full bg-cyan-400/20 text-cyan-400 text-xs font-semibold">NEW</span>
+                <span className="text-gray-500 text-xs">Free Delivery</span>
+              </div>
+            </div>
+
+            {/* Videos Card */}
+            <div
+              onClick={() => window.location.href = '/videos'}
+              className="glass-card p-4 rounded-2xl cursor-pointer hover:scale-105 transition-transform"
+              style={{
+                background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%)',
+                border: '1px solid rgba(239, 68, 68, 0.3)'
+              }}
+            >
+              <div className="w-12 h-12 rounded-full bg-red-400/20 flex items-center justify-center mb-3">
+                <span className="text-2xl">🎥</span>
+              </div>
+              <h3 className="text-white font-bold text-lg mb-1">Videos</h3>
+              <p className="text-gray-400 text-sm">Watch & Upload</p>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="px-2 py-1 rounded-full bg-red-400/20 text-red-400 text-xs font-semibold">NEW</span>
+                <span className="text-gray-500 text-xs">HD Streaming</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* User Status Bar - Only for authenticated users */}
         {currentUser && (
           <div className="px-4 py-3 flex items-center justify-between gap-3 border-b border-gray-800">
