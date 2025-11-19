@@ -282,38 +282,41 @@ const RoomDetailClubhouse = () => {
   // Update audio permissions when role changes
   useEffect(() => {
     const updateAudioPermissions = async () => {
-      if (!room?.participants || !currentUser?.id) return;
+      if (!agoraClient.current || !isConnected) return;
       
       const myRole = getCurrentUserRole();
       const isNowSpeaker = myRole !== "audience";
+      const hasAudioTrack = localAudioTrack.current !== null;
 
-      // If promoted to speaker
-      if (isNowSpeaker && !audioManager.current) {
+      // If promoted to speaker but don't have audio track
+      if (isNowSpeaker && !hasAudioTrack) {
         try {
-          audioManager.current = new AudioRoomManager(null, roomId, currentUser.id);
-          await audioManager.current.initialize();
+          await agoraClient.current.setClientRole("host");
+          
+          localAudioTrack.current = await AgoraRTC.createMicrophoneAudioTrack({
+            encoderConfig: "music_standard",
+          });
+          await agoraClient.current.publish([localAudioTrack.current]);
+          
           setIsMuted(true);
-          setIsConnected(true);
+          localAudioTrack.current.setEnabled(false);
           toast.success("🎤 You're on stage! Unmute to speak.");
         } catch (error) {
           console.error("Failed to enable microphone:", error);
-          if (error.name === "NotAllowedError") {
-            toast.error("Microphone access denied. Please allow microphone in browser settings.");
-          } else if (error.name === "NotFoundError") {
-            toast.error("No microphone found.");
-          } else {
-            toast.error("Failed to enable microphone. Please try again.");
-          }
+          toast.error("Failed to enable microphone. Please try again.");
         }
       }
       
-      // If demoted to audience
-      if (!isNowSpeaker && audioManager.current) {
+      // If demoted to audience but have audio track
+      if (!isNowSpeaker && hasAudioTrack) {
         try {
-          await audioManager.current.cleanup();
-          audioManager.current = null;
+          await agoraClient.current.unpublish([localAudioTrack.current]);
+          localAudioTrack.current.close();
+          localAudioTrack.current = null;
+          
+          await agoraClient.current.setClientRole("audience");
+          
           setIsMuted(true);
-          setIsConnected(false);
           toast.info("Moved to audience");
         } catch (error) {
           console.error("Failed to disable microphone:", error);
@@ -322,7 +325,7 @@ const RoomDetailClubhouse = () => {
     };
 
     updateAudioPermissions();
-  }, [room?.participants, currentUser?.id]);
+  }, [room?.participants, isConnected]);
 
   if (loading) {
     return (
