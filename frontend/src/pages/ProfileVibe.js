@@ -134,11 +134,7 @@ const ProfileVibe = () => {
           <div className="flex items-center gap-6">
             <div className="relative group w-24 h-24 rounded-full border-4 border-cyan-400/30 overflow-hidden bg-gray-800 shadow-lg shadow-cyan-400/20">
               <img 
-                src={
-                  currentUser.avatar 
-                    ? (currentUser.avatar.startsWith('http') ? currentUser.avatar : `${process.env.REACT_APP_BACKEND_URL}${currentUser.avatar}`)
-                    : `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`
-                } 
+                src={currentUser.avatar ? getMediaUrl(currentUser.avatar) : `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`} 
                 alt={currentUser.name} 
                 className="w-full h-full object-cover"
                 onError={(e) => {
