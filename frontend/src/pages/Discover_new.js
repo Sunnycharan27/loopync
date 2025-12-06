@@ -1,0 +1,310 @@
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { API, AuthContext } from "../App";
+import BottomNav from "../components/BottomNav";
+import { Search, X, Sparkles, Video, FileText, Hash, TrendingUp } from "lucide-react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import FindYourParallel from "../components/FindYourParallel";
+import PostCard from "../components/PostCard";
+
+const Discover = () => {
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("posts");
+  const [loading, setLoading] = useState(true);
+  const [showParallels, setShowParallels] = useState(false);
+  
+  // Content states
+  const [posts, setPosts] = useState([]);
+  const [reels, setReels] = useState([]);
+  const [trendingHashtags, setTrendingHashtags] = useState([]);
+  
+  // Search states
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
+  const [searching, setSearching] = useState(false);
+
+  useEffect(() => {
+    fetchContent();
+  }, [activeTab]);
+
+  const fetchContent = async () => {
+    setLoading(true);
+    try {
+      if (activeTab === "posts") {
+        const res = await axios.get(`${API}/posts`);
+        setPosts(res.data);
+      } else if (activeTab === "reels") {
+        const res = await axios.get(`${API}/reels`);
+        setReels(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to load content:", error);
+      toast.error("Failed to load content");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLike = async (postId) => {
+    try {
+      const res = await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`);
+      setPosts(posts.map(p => p.id === postId ? { ...p, ...res.data } : p));
+    } catch (error) {
+      toast.error("Failed to like post");
+    }
+  };
+
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    
+    if (query.length < 2) {
+      setSearchResults(null);
+      return;
+    }
+
+    setSearching(true);
+    try {
+      const res = await axios.get(`${API}/search?q=${encodeURIComponent(query)}&currentUserId=${currentUser?.id || ''}`);
+      setSearchResults(res.data);
+    } catch (error) {
+      toast.error("Search failed");
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const handleHashtagClick = (hashtag) => {
+    setSearchQuery(hashtag);
+    handleSearch(hashtag);
+  };
+
+  if (loading && !searchResults) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0f021e' }}>
+        <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="sticky top-0 z-10 glass-surface p-4 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-2xl font-bold neon-text">Discover</h1>
+              <p className="text-sm text-gray-400">Explore posts and reels</p>
+            </div>
+            <button
+              onClick={() => setShowParallels(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all"
+            >
+              <Sparkles size={18} />
+              Find Parallel
+            </button>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Search posts, reels, hashtags..."
+              className="w-full px-4 py-3 pl-12 pr-12 rounded-full bg-gray-800/50 border-2 border-gray-700 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none"
+            />
+            <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            {searchQuery && (
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSearchResults(null);
+                }}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+            )}
+            {searching && (
+              <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
+                <div className="animate-spin w-5 h-5 border-2 border-cyan-400 border-t-transparent rounded-full"></div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Search Results */}
+        {searchResults && searchQuery.length >= 2 ? (
+          <div className="px-4 space-y-6">
+            {/* Posts Results */}
+            {searchResults.posts && searchResults.posts.length > 0 && (
+              <div>
+                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <FileText size={20} className="text-cyan-400" />
+                  Posts ({searchResults.posts.length})
+                </h3>
+                <div className="space-y-4">
+                  {searchResults.posts.map(post => (
+                    <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Reels Results */}
+            {searchResults.reels && searchResults.reels.length > 0 && (
+              <div>
+                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <Video size={20} className="text-cyan-400" />
+                  Reels ({searchResults.reels.length})
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {searchResults.reels.map(reel => (
+                    <div
+                      key={reel.id}
+                      onClick={() => navigate('/vibezone')}
+                      className="glass-card overflow-hidden cursor-pointer hover:scale-105 transition-transform aspect-[9/16]"
+                    >
+                      <div className="relative h-full">
+                        <video
+                          src={reel.videoUrl}
+                          poster={reel.thumb}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                          <p className="text-white text-sm font-semibold line-clamp-2">{reel.caption}</p>
+                          <div className="flex items-center gap-3 mt-1 text-xs text-gray-300">
+                            <span>👁️ {reel.stats?.views || 0}</span>
+                            <span>❤️ {reel.stats?.likes || 0}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* No Results */}
+            {(!searchResults.posts || searchResults.posts.length === 0) && 
+             (!searchResults.reels || searchResults.reels.length === 0) && (
+              <div className="glass-card p-8 text-center">
+                <p className="text-gray-400">No results found for "{searchQuery}"</p>
+                <p className="text-sm text-gray-500 mt-2">Try searching with different keywords</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            {/* Tabs */}
+            <div className="flex gap-2 px-4 mb-6">
+              <button
+                onClick={() => setActiveTab("posts")}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all ${
+                  activeTab === "posts" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                <FileText size={18} />
+                Posts
+              </button>
+              <button
+                onClick={() => setActiveTab("reels")}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all ${
+                  activeTab === "reels" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                <Video size={18} />
+                Reels
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="px-4">
+              {activeTab === "posts" && (
+                <div className="space-y-4">
+                  {loading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+                    </div>
+                  ) : posts.length > 0 ? (
+                    posts.map(post => (
+                      <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} />
+                    ))
+                  ) : (
+                    <div className="glass-card p-8 text-center">
+                      <FileText size={48} className="mx-auto text-gray-600 mb-3" />
+                      <p className="text-gray-400">No posts yet</p>
+                      <p className="text-sm text-gray-500 mt-2">Be the first to create content!</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {activeTab === "reels" && (
+                <div>
+                  {loading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+                    </div>
+                  ) : reels.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {reels.map(reel => (
+                        <div
+                          key={reel.id}
+                          onClick={() => navigate('/vibezone')}
+                          className="glass-card overflow-hidden cursor-pointer hover:scale-105 transition-transform aspect-[9/16]"
+                        >
+                          <div className="relative h-full">
+                            <video
+                              src={reel.videoUrl}
+                              poster={reel.thumb}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                              <p className="text-white text-sm font-semibold line-clamp-2">{reel.caption || 'Untitled'}</p>
+                              <div className="flex items-center gap-3 mt-1 text-xs text-gray-300">
+                                <span>👁️ {reel.stats?.views || 0}</span>
+                                <span>❤️ {reel.stats?.likes || 0}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="glass-card p-8 text-center">
+                      <Video size={48} className="mx-auto text-gray-600 mb-3" />
+                      <p className="text-gray-400">No reels yet</p>
+                      <p className="text-sm text-gray-500 mt-2">Check out VibeZone to watch reels!</p>
+                      <button
+                        onClick={() => navigate('/vibezone')}
+                        className="mt-4 px-6 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300"
+                      >
+                        Go to VibeZone
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+
+      <BottomNav active="discover" />
+      
+      {/* Find Your Parallel Modal */}
+      {showParallels && (
+        <FindYourParallel
+          currentUser={currentUser}
+          onClose={() => setShowParallels(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Discover;
