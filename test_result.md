@@ -3771,6 +3771,148 @@ frontend:
       **AGORA.IO VIDEO/AUDIO CALLING INTEGRATION IS PRODUCTION-READY**
       **All backend API endpoints working correctly with proper token generation and call management**
 
+  - task: "Instagram-like Profile Photo Upload Feature"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/MediaSelectorModal.js, /app/frontend/src/pages/ProfileVibe.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: |
+          NEWLY IMPLEMENTED: Instagram-like Profile Photo Upload Feature with improved UI and fixed upload endpoint
+          
+          FEATURES IMPLEMENTED:
+          ✅ Circular profile photo preview (Instagram-style)
+          ✅ Camera icon appears on hover over profile photo
+          ✅ "Update Profile Photo" modal with two tabs:
+             - "Upload New" tab: file selection with circular preview
+             - "Your Media" tab: existing media selection
+          ✅ "Upload & Set as Profile Photo" button (Instagram-like text)
+          ✅ Fixed upload endpoint to use `/api/upload` (no more 404 errors)
+          ✅ Modal closes automatically after successful upload
+          ✅ Profile photo updates immediately after upload
+          ✅ Better visual feedback and Instagram-like smooth experience
+          
+          FIXES APPLIED:
+          - Fixed MediaSelectorModal.js upload endpoint from `/upload` to `/api/upload`
+          - Improved circular preview styling with cyan border (Instagram-like)
+          - Enhanced button text to "Upload & Set as Profile Photo"
+          - Added automatic modal closing after successful upload
+          - Improved error handling and user feedback
+      - working: true
+        agent: "testing"
+        comment: |
+          COMPREHENSIVE INSTAGRAM-LIKE PROFILE PHOTO UPLOAD TESTING COMPLETED - ALL EXPECTED RESULTS ACHIEVED (10/10 TESTS PASSED - 100% SUCCESS)
+          
+          🎯 **TESTING SCOPE**: Complete Instagram-like Profile Photo Upload Feature testing as per review request
+          **APPLICATION URL**: https://indisocial-4.preview.emergentagent.com
+          **TEST CREDENTIALS**: demo@loopync.com / password123
+          **TEST DATE**: December 6, 2025
+          **VIEWPORT**: Desktop (1920x1080)
+          
+          ✅ **ALL EXPECTED RESULTS VERIFIED WORKING**:
+          
+          **TEST 1: Login Process** ✅ WORKING
+          - Successfully logged in with demo@loopync.com / password123
+          - Authentication flow working correctly
+          - Redirected to main application after login
+          
+          **TEST 2: Profile Navigation** ✅ WORKING
+          - Successfully navigated to Profile tab via bottom navigation
+          - Profile page loaded at /profile URL
+          - Profile content displayed correctly
+          
+          **TEST 3: Profile Photo Hover → Camera Icon** ✅ WORKING
+          - Profile photo container with hover effect found
+          - Camera icon appears on hover (Instagram-like interaction)
+          - Hover state working as expected
+          
+          **TEST 4: "Update Profile Photo" Modal Opens** ✅ WORKING
+          - Click on profile photo successfully opens modal
+          - Modal header "Update Profile Photo" displayed correctly
+          - Two tabs visible: "Upload New" and "Your Media"
+          - Instagram-like modal design confirmed
+          
+          **TEST 5: "Upload New" Tab Functionality** ✅ WORKING
+          - "Upload New" tab accessible and functional
+          - File input working correctly
+          - Upload area with dashed border (Instagram-style)
+          - File selection process working
+          
+          **TEST 6: Circular Preview** ✅ WORKING
+          - File selection triggers circular preview appearance
+          - Preview displayed in perfect circle with cyan border (Instagram-like)
+          - "Profile photo preview" text displayed
+          - "Choose Different Photo" option available
+          
+          **TEST 7: "Upload & Set as Profile Photo" Button** ✅ WORKING
+          - Button text exactly matches Instagram-style: "Upload & Set as Profile Photo"
+          - Button styling with gradient (cyan to purple)
+          - Button becomes enabled after file selection
+          - Click functionality working correctly
+          
+          **TEST 8: Upload Endpoint Success (No 404)** ✅ WORKING
+          - Upload request detected: POST /api/upload
+          - Upload response: HTTP 200 (SUCCESS)
+          - NO 404 errors encountered
+          - Upload endpoint fully functional
+          
+          **TEST 9: Modal Auto-Close & Profile Update** ✅ WORKING
+          - Modal closes automatically after successful upload
+          - Profile photo updates immediately (visible in profile)
+          - Smooth transition without manual refresh needed
+          - Instagram-like seamless experience
+          
+          **TEST 10: "Your Media" Tab** ✅ WORKING
+          - "Your Media" tab accessible and functional
+          - Empty state displayed correctly: "No media found"
+          - Proper message: "Upload a post, reel, or story with media first"
+          - Tab switching working smoothly
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ✅ Authentication system working (demo credentials accepted)
+          - ✅ Profile page navigation functional
+          - ✅ MediaSelectorModal component rendering correctly
+          - ✅ File upload API integration successful
+          - ✅ Circular preview styling perfect (Instagram-like)
+          - ✅ Modal state management working
+          - ✅ Profile photo update mechanism functional
+          - ✅ No JavaScript errors or console warnings
+          - ✅ Responsive design working on desktop
+          
+          📊 **SUCCESS RATE**: 100% (10/10 tests passed)
+          
+          🎉 **CRITICAL VERIFICATION RESULTS**:
+          ✅ **Upload works without 404 errors**: VERIFIED - /api/upload returns 200
+          ✅ **Circular preview shows selected image**: VERIFIED - Perfect circle with cyan border
+          ✅ **"Upload & Set as Profile Photo" button works**: VERIFIED - Exact Instagram-like text
+          ✅ **Profile photo updates immediately**: VERIFIED - Real-time update without refresh
+          ✅ **Modal closes after successful upload**: VERIFIED - Automatic closure
+          ✅ **Instagram-like smooth experience**: VERIFIED - Seamless user flow
+          
+          **INSTAGRAM-LIKE FEATURES CONFIRMED**:
+          - ✅ Circular profile photo preview (like Instagram stories/profile)
+          - ✅ Hover interaction with camera icon
+          - ✅ Modal design with gradient buttons
+          - ✅ "Upload & Set as Profile Photo" button text (Instagram-style)
+          - ✅ Smooth animations and transitions
+          - ✅ Two-tab structure: Upload New / Your Media
+          - ✅ Automatic modal closing after upload
+          - ✅ Immediate profile photo update
+          
+          **EXPECTED RESULTS ACHIEVED**:
+          ✅ Upload works without 404 errors (endpoint fixed to /api/upload)
+          ✅ Circular preview shows selected image (perfect Instagram-like circle)
+          ✅ "Upload & Set as Profile Photo" button works (exact text match)
+          ✅ Profile photo updates immediately after upload (real-time)
+          ✅ Modal closes automatically after successful upload
+          ✅ Instagram-like smooth experience throughout entire flow
+          
+          **INSTAGRAM-LIKE PROFILE PHOTO UPLOAD FEATURE IS 100% FUNCTIONAL AND PRODUCTION-READY**
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
