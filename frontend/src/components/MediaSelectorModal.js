@@ -140,7 +140,7 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const uploadRes = await axios.post(`${API}/upload`, formData, { headers });
+      const uploadRes = await axios.post(`${API}/api/upload`, formData, { headers });
 
       console.log('✅ Upload response:', uploadRes.data);
       const mediaUrl = uploadRes.data.url;
