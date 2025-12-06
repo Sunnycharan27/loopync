@@ -270,7 +270,8 @@ const Discover = () => {
 
             {/* No Results */}
             {(!searchResults.posts || searchResults.posts.length === 0) && 
-             (!searchResults.reels || searchResults.reels.length === 0) && (
+             (!searchResults.reels || searchResults.reels.length === 0) &&
+             (!searchResults.users || searchResults.users.length === 0) && (
               <div className="glass-card p-8 text-center">
                 <p className="text-gray-400">No results found for "{searchQuery}"</p>
                 <p className="text-sm text-gray-500 mt-2">Try searching with different keywords</p>
@@ -280,10 +281,10 @@ const Discover = () => {
         ) : (
           <>
             {/* Tabs */}
-            <div className="flex gap-2 px-4 mb-6">
+            <div className="flex gap-2 px-4 mb-6 overflow-x-auto">
               <button
                 onClick={() => setActiveTab("posts")}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold whitespace-nowrap transition-all ${
                   activeTab === "posts" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
                 }`}
               >
@@ -292,7 +293,7 @@ const Discover = () => {
               </button>
               <button
                 onClick={() => setActiveTab("reels")}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold whitespace-nowrap transition-all ${
                   activeTab === "reels" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
                 }`}
               >
