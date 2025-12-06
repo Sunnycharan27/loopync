@@ -379,6 +379,68 @@ const Discover = () => {
                   )}
                 </div>
               )}
+
+              {activeTab === "people" && (
+                <div>
+                  {loading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+                    </div>
+                  ) : people.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {people.map(user => (
+                        <div key={user.id} className="glass-card p-4 hover:bg-gray-800/50 transition-all">
+                          <div className="flex items-start gap-3">
+                            <img
+                              src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.handle}`}
+                              alt={user.name}
+                              className="w-16 h-16 rounded-full cursor-pointer"
+                              onClick={() => navigate(`/profile/${user.id}`)}
+                            />
+                            <div className="flex-1">
+                              <h3 
+                                className="font-semibold text-white cursor-pointer hover:underline"
+                                onClick={() => navigate(`/profile/${user.id}`)}
+                              >
+                                {user.name}
+                              </h3>
+                              <p className="text-sm text-gray-400">@{user.handle}</p>
+                              {user.bio && <p className="text-sm text-gray-300 mt-1 line-clamp-2">{user.bio}</p>}
+                              
+                              <div className="flex items-center gap-2 mt-3">
+                                {currentUser && user.id !== currentUser.id && !user.requestSent && (
+                                  <button
+                                    onClick={() => sendFriendRequest(user.id)}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition-all text-sm"
+                                  >
+                                    <UserPlus size={16} />
+                                    Add Friend
+                                  </button>
+                                )}
+                                {user.requestSent && (
+                                  <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-400 text-sm">Requested</span>
+                                )}
+                                <button
+                                  onClick={() => navigate(`/profile/${user.id}`)}
+                                  className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition text-sm"
+                                >
+                                  View Profile
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="glass-card p-8 text-center">
+                      <Users size={48} className="mx-auto text-gray-600 mb-3" />
+                      <p className="text-gray-400">No people to discover</p>
+                      <p className="text-sm text-gray-500 mt-2">Use search to find specific users</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </>
         )}
