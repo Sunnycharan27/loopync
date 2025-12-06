@@ -31,16 +31,21 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       console.log('📸 Fetching user media from posts and reels...');
       
       // Fetch posts and reels with media - silently fail if endpoints don't work
-      const [postsRes, reelsRes] = await Promise.all([
-        axios.get(`${API}/api/posts`, { headers }).catch((err) => {
-          console.log('Posts fetch failed (will show empty):', err.response?.status || err.message);
-          return { data: [] };
-        }),
-        axios.get(`${API}/api/reels`, { headers }).catch((err) => {
-          console.log('Reels fetch failed (will show empty):', err.response?.status || err.message);
-          return { data: [] };
-        })
+      // Use Promise.allSettled to prevent any unhandled errors
+      const results = await Promise.allSettled([
+        axios.get(`${API}/api/posts`, { headers }),
+        axios.get(`${API}/api/reels`, { headers })
       ]);
+      
+      const postsRes = results[0].status === 'fulfilled' ? results[0].value : { data: [] };
+      const reelsRes = results[1].status === 'fulfilled' ? results[1].value : { data: [] };
+      
+      if (results[0].status === 'rejected') {
+        console.log('Posts fetch failed (will show empty):', results[0].reason?.response?.status || results[0].reason?.message);
+      }
+      if (results[1].status === 'rejected') {
+        console.log('Reels fetch failed (will show empty):', results[1].reason?.response?.status || results[1].reason?.message);
+      }
 
       // Filter and format media
       const allMedia = [];
