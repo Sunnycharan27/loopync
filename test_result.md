@@ -6467,9 +6467,9 @@ frontend:
     implemented: true
     working: false
     file: "/app/frontend/src/pages/VibeZone.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: true
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: false
     status_history:
       - working: false
         agent: "testing"
