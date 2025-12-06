@@ -2,30 +2,28 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
-import { MapPin, Calendar, Users, Star, ArrowRight, ShoppingBag, DollarSign, Search, X, UserPlus, Sparkles, MessageCircle, Clock, UserCheck, Zap, TrendingUp, Award } from "lucide-react";
+import { Search, X, Sparkles, TrendingUp, Video, FileText, Hash } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import FindYourParallel from "../components/FindYourParallel";
-import FriendButton from "../components/FriendButton";
+import PostCard from "../components/PostCard";
 
 const Discover = () => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [venues, setVenues] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [creators, setCreators] = useState([]);
-  const [tribes, setTribes] = useState([]);
-  const [people, setPeople] = useState([]);
-  const [friendRequests, setFriendRequests] = useState([]);
-  const [activeTab, setActiveTab] = useState("venues");
+  const [activeTab, setActiveTab] = useState("posts");
   const [loading, setLoading] = useState(true);
   const [showParallels, setShowParallels] = useState(false);
+  
+  // Content states
+  const [posts, setPosts] = useState([]);
+  const [reels, setReels] = useState([]);
+  const [trendingHashtags, setTrendingHashtags] = useState([]);
   
   // Search states
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [searching, setSearching] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     fetchDiscoverData();
