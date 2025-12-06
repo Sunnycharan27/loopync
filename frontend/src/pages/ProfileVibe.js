@@ -33,21 +33,15 @@ const ProfileVibe = () => {
   const fetchProfileData = async () => {
     try {
       setLoading(true);
-      const [postsRes, tribesRes, creditsRes, ticketsRes, marketplaceRes] = await Promise.all([
+      const [postsRes, tribesRes] = await Promise.all([
         axios.get(`${API}/posts`),
-        axios.get(`${API}/tribes`),
-        axios.get(`${API}/credits/${currentUser.id}`),
-        axios.get(`${API}/tickets/${currentUser.id}`),
-        axios.get(`${API}/marketplace/items?sellerId=${currentUser.id}`).catch(() => ({ data: [] }))
+        axios.get(`${API}/tribes`)
       ]);
 
       const myPosts = postsRes.data.filter(p => p.authorId === currentUser.id);
       const myTribes = tribesRes.data.filter(t => t.members?.includes(currentUser.id) || t.creatorId === currentUser.id);
       setUserPosts(myPosts);
       setUserTribes(myTribes);
-      setLoopCredits(creditsRes.data?.credits || 0);
-      setUserTickets(ticketsRes.data || []);
-      setMarketplaceItems(marketplaceRes.data || []);
     } catch (error) {
       console.error("Failed to fetch profile data:", error);
       toast.error("Failed to load profile");
