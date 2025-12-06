@@ -7,7 +7,7 @@ import UniversalShareModal from "./UniversalShareModal";
 
 const ReelViewer = ({ reels, currentUser, onLike }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true);  // Start muted for autoplay to work
   const [showComments, setShowComments] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [bookmarked, setBookmarked] = useState({});
