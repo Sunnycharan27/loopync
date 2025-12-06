@@ -183,6 +183,57 @@ const Discover = () => {
               </div>
             )}
 
+            {/* People Results */}
+            {searchResults.users && searchResults.users.length > 0 && (
+              <div>
+                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <Users size={20} className="text-cyan-400" />
+                  People ({searchResults.users.length})
+                </h3>
+                <div className="space-y-3">
+                  {searchResults.users.map(user => (
+                    <div key={user.id} className="glass-card p-4">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.handle}`}
+                          alt={user.name}
+                          className="w-16 h-16 rounded-full cursor-pointer"
+                          onClick={() => navigate(`/profile/${user.id}`)}
+                        />
+                        <div className="flex-1">
+                          <h3 
+                            className="font-semibold text-white cursor-pointer hover:underline"
+                            onClick={() => navigate(`/profile/${user.id}`)}
+                          >
+                            {user.name}
+                          </h3>
+                          <p className="text-sm text-gray-400">@{user.handle}</p>
+                          {user.bio && <p className="text-sm text-gray-300 mt-1 line-clamp-2">{user.bio}</p>}
+                        </div>
+                        <div className="flex gap-2">
+                          {user.id !== currentUser?.id && !user.isFriend && !user.requestSent && (
+                            <button
+                              onClick={() => sendFriendRequest(user.id)}
+                              className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition-all"
+                            >
+                              <UserPlus size={16} />
+                              Add
+                            </button>
+                          )}
+                          {user.requestSent && (
+                            <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-400 text-sm">Requested</span>
+                          )}
+                          {user.isFriend && (
+                            <span className="px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm">Friends</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Reels Results */}
             {searchResults.reels && searchResults.reels.length > 0 && (
               <div>
