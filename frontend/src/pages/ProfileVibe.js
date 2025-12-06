@@ -180,8 +180,8 @@ const ProfileVibe = () => {
             <button onClick={() => navigate("/messenger")} className="flex-1 py-2.5 rounded-xl bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 font-semibold hover:bg-cyan-400/20 transition-all flex items-center justify-center gap-2">
               <MessageCircle size={18} />Message
             </button>
-            <button className="flex-1 py-2.5 rounded-xl bg-purple-400/10 border border-purple-400/30 text-purple-400 font-semibold hover:bg-purple-400/20 transition-all flex items-center justify-center gap-2">
-              <Phone size={18} />Call
+            <button onClick={() => navigate("/analytics")} className="flex-1 py-2.5 rounded-xl bg-purple-400/10 border border-purple-400/30 text-purple-400 font-semibold hover:bg-purple-400/20 transition-all flex items-center justify-center gap-2">
+              <Phone size={18} />Analytics
             </button>
           </div>
 
