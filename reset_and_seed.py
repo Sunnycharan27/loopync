@@ -8,7 +8,7 @@ import requests
 import json
 from datetime import datetime
 
-BACKEND_URL = "https://connect-stream-3.preview.emergentagent.com/api"
+BACKEND_URL = "https://indisocial-4.preview.emergentagent.com/api"
 
 print("=" * 80)
 print("COMPLETE DATABASE RESET AND FRESH SEED")
