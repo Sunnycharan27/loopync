@@ -11859,6 +11859,40 @@ agent_communication:
 agent_communication:
   - agent: "testing"
     message: |
+      CRITICAL AUTHENTICATION ISSUE BLOCKING PROFILE PHOTO TESTING
+      
+      🚨 **URGENT**: Profile photo upload and visibility testing FAILED due to critical frontend authentication barrier.
+      
+      **ISSUE SUMMARY**:
+      - Instagram-like profile photo features appear to be implemented correctly in code
+      - However, ALL testing is blocked by broken frontend authentication system
+      - Users cannot access Profile page where photo upload functionality resides
+      - "Login or Sign Up" overlay appears on all pages even after login attempts
+      - Authentication state not properly maintained in frontend
+      
+      **TESTING RESULTS**: 0/5 tests passed (0% success rate)
+      ❌ Profile page access: BLOCKED
+      ❌ Profile photo upload interface: INACCESSIBLE  
+      ❌ Photo visibility testing: CANNOT PERFORM
+      ❌ Instagram-like experience: COMPLETELY BLOCKED
+      
+      **ROOT CAUSE**: Same authentication issue affecting multiple frontend tasks
+      - JWT token storage/validation broken
+      - Protected routes not working properly
+      - Authentication state management fundamentally broken
+      
+      **IMMEDIATE ACTION REQUIRED**:
+      1. **CRITICAL**: Fix frontend authentication system first
+      2. **CRITICAL**: Ensure users can access Profile page after login
+      3. **HIGH**: Retest profile photo functionality after auth fix
+      
+      **RECOMMENDATION**: 
+      The profile photo upload and visibility features are well-implemented in the code (ProfileVibe.js, MediaSelectorModal.js) but cannot be tested or used due to the authentication barrier. Fix the authentication system first, then the Instagram-like profile photo functionality should work as intended.
+      
+      **STATUS**: Profile photo testing blocked - requires authentication fix before retesting.
+  
+  - agent: "testing"
+    message: |
       VIBEROOMS TESTING COMPLETED - CRITICAL AUTHENTICATION ISSUE BLOCKING ACCESS
       
       🎯 **TESTING SUMMARY**: VibeRooms (Clubhouse-style Audio Chat) End-to-End Testing
