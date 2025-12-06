@@ -15,7 +15,9 @@ async def cleanup_reels():
         return
     
     client = AsyncIOMotorClient(mongo_url)
-    db = client['loopync']
+    db_name = os.environ.get('DB_NAME', 'test_database')
+    db = client[db_name]
+    print(f"📦 Using database: {db_name}")
     
     print("🔍 Fetching all reels...")
     all_reels = await db.reels.find({}, {"_id": 0}).to_list(None)
