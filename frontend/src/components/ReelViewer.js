@@ -196,7 +196,8 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
               poster={reel.thumb}
               onError={(e) => handleVideoError(reel.id, e)}
               onCanPlay={() => handleVideoCanPlay(reel.id)}
-              preload="auto"
+              preload={idx === currentIndex ? "auto" : "metadata"}
+              crossOrigin="anonymous"
             />
 
             {/* Top Bar */}
