@@ -29,11 +29,11 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
       
       // Fetch posts and reels with media - silently fail if endpoints don't work
       const [postsRes, reelsRes] = await Promise.all([
-        axios.get(`${API}/api/posts`, { headers }).catch((err) => {
+        axios.get(`${API}/posts`, { headers }).catch((err) => {
           console.log('Posts fetch failed (will show empty):', err.response?.status || err.message);
           return { data: [] };
         }),
-        axios.get(`${API}/api/reels`, { headers }).catch((err) => {
+        axios.get(`${API}/reels`, { headers }).catch((err) => {
           console.log('Reels fetch failed (will show empty):', err.response?.status || err.message);
           return { data: [] };
         })
