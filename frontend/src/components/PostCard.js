@@ -189,7 +189,7 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
             </div>
           </div>
 
-          <p className="text-gray-200 mb-3">{post.text}</p>
+          <p className="text-gray-200 mb-3" dangerouslySetInnerHTML={{ __html: highlightHashtags(post.text) }}></p>
 
           {/* Media Rendering */}
           {post.media && post.media.trim() !== '' && (() => {
