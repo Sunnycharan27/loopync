@@ -228,18 +228,19 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
               
               {uploadPreview ? (
                 <div className="w-full max-w-md">
-                  <div className="relative aspect-square rounded-2xl overflow-hidden mb-4 border-2 border-cyan-400">
+                  <div className="relative aspect-square rounded-full overflow-hidden mb-4 border-4 border-cyan-400 shadow-2xl shadow-cyan-400/30">
                     <img
                       src={uploadPreview}
                       alt="Preview"
                       className="w-full h-full object-cover"
                     />
                   </div>
+                  <p className="text-center text-gray-400 mb-4 text-sm">Profile photo preview</p>
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full py-3 rounded-xl border-2 border-gray-600 text-gray-300 font-semibold hover:bg-gray-800 transition-all"
+                    className="w-full py-3 rounded-xl border-2 border-gray-600 text-gray-300 font-semibold hover:bg-gray-800 transition-all mb-2"
                   >
-                    Choose Different Image
+                    Choose Different Photo
                   </button>
                 </div>
               ) : (
