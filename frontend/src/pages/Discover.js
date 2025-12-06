@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
-import { Search, X, Sparkles, Video, FileText, Hash, TrendingUp } from "lucide-react";
+import { Search, X, Sparkles, Video, FileText, Users, UserPlus, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import FindYourParallel from "../components/FindYourParallel";
@@ -18,7 +18,7 @@ const Discover = () => {
   // Content states
   const [posts, setPosts] = useState([]);
   const [reels, setReels] = useState([]);
-  const [trendingHashtags, setTrendingHashtags] = useState([]);
+  const [people, setPeople] = useState([]);
   
   // Search states
   const [searchQuery, setSearchQuery] = useState("");
