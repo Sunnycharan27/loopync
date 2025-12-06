@@ -3953,9 +3953,9 @@ async def upload_file(file: UploadFile = File(...)):
 
 
 @api_router.get("/media/{file_id}")
-async def serve_media_file(file_id: str):
-    """Serve media file from MongoDB or disk storage"""
-    from fastapi.responses import Response, FileResponse
+async def serve_media_file(file_id: str, request: Request):
+    """Serve media file from MongoDB or disk storage with Range request support"""
+    from fastapi.responses import Response, FileResponse, StreamingResponse
     
     # Retrieve file metadata from MongoDB
     media_doc = await db.media_files.find_one({"id": file_id}, {"_id": 0})
@@ -3964,34 +3964,71 @@ async def serve_media_file(file_id: str):
         raise HTTPException(status_code=404, detail="Media file not found")
     
     storage_type = media_doc.get("storage_type", "mongodb")
+    content_type = media_doc.get("content_type", "application/octet-stream")
     
     if storage_type == "disk":
-        # Serve from disk
+        # Serve from disk - FileResponse handles Range requests automatically
         disk_path = media_doc.get("disk_path")
         if not disk_path or not os.path.exists(disk_path):
             raise HTTPException(status_code=404, detail="Media file not found on disk")
         
         return FileResponse(
             path=disk_path,
-            media_type=media_doc["content_type"],
+            media_type=content_type,
             filename=media_doc["filename"],
             headers={
-                "Cache-Control": "public, max-age=31536000",  # Cache for 1 year
+                "Cache-Control": "public, max-age=31536000",
+                "Accept-Ranges": "bytes",
             }
         )
     else:
-        # Serve from MongoDB
+        # Serve from MongoDB with Range request support
         try:
             file_data = base64.b64decode(media_doc["file_data"])
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error decoding file: {str(e)}")
         
+        file_size = len(file_data)
+        range_header = request.headers.get("range")
+        
+        # Handle Range requests for video streaming
+        if range_header:
+            try:
+                # Parse range header (e.g., "bytes=0-1024")
+                range_match = range_header.replace("bytes=", "").split("-")
+                start = int(range_match[0]) if range_match[0] else 0
+                end = int(range_match[1]) if len(range_match) > 1 and range_match[1] else file_size - 1
+                
+                # Ensure end doesn't exceed file size
+                end = min(end, file_size - 1)
+                content_length = end - start + 1
+                
+                # Return partial content
+                return Response(
+                    content=file_data[start:end + 1],
+                    status_code=206,  # Partial Content
+                    media_type=content_type,
+                    headers={
+                        "Content-Range": f"bytes {start}-{end}/{file_size}",
+                        "Accept-Ranges": "bytes",
+                        "Content-Length": str(content_length),
+                        "Cache-Control": "public, max-age=31536000",
+                        "Content-Disposition": f'inline; filename="{media_doc["filename"]}"',
+                    }
+                )
+            except Exception as e:
+                # If range parsing fails, fall back to full file
+                logger.warning(f"Range request parsing failed: {e}")
+        
+        # Return full file if no range requested
         return Response(
             content=file_data,
-            media_type=media_doc["content_type"],
+            media_type=content_type,
             headers={
+                "Content-Length": str(file_size),
+                "Accept-Ranges": "bytes",
                 "Content-Disposition": f'inline; filename="{media_doc["filename"]}"',
-                "Cache-Control": "public, max-age=31536000",  # Cache for 1 year
+                "Cache-Control": "public, max-age=31536000",
             }
         )
 
