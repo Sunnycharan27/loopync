@@ -300,6 +300,15 @@ const Discover = () => {
                 <Video size={18} />
                 Reels
               </button>
+              <button
+                onClick={() => setActiveTab("people")}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold whitespace-nowrap transition-all ${
+                  activeTab === "people" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                <Users size={18} />
+                People
+              </button>
             </div>
 
             {/* Content */}
