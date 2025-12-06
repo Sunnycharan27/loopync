@@ -189,7 +189,13 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
             </div>
           </div>
 
-          <p className="text-gray-200 mb-3">{highlightHashtags(post.text)}</p>
+          <p className="text-gray-200 mb-3">
+            {highlightHashtags(post.text, (hashtag) => {
+              // Navigate to hashtag search or show hashtag posts
+              toast.info(`Viewing posts with #${hashtag}`);
+              // TODO: Implement hashtag filtering/search
+            })}
+          </p>
 
           {/* Media Rendering */}
           {post.media && post.media.trim() !== '' && (() => {
