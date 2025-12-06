@@ -8331,10 +8331,12 @@ metadata:
 
 test_plan:
   current_focus:
+    - "MediaSelectorModal API Endpoint Fix"
     - "Email-based Authentication UI"
     - "VibeRooms Frontend (Clubhouse-style Audio Chat)"
   stuck_tasks:
     - "Email-based Authentication UI"
+    - "VibeRooms Frontend (Clubhouse-style Audio Chat)"
   test_all: false
   test_priority: "critical_first"
 
