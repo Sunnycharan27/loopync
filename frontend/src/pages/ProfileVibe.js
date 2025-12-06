@@ -183,8 +183,7 @@ const ProfileVibe = () => {
           {[
             { id: "posts", label: "Posts", icon: Grid }, 
             { id: "friends", label: "Friends", icon: Users }, 
-            { id: "tribes", label: "Tribes", icon: Users }, 
-            { id: "tickets", label: "Tickets", icon: Ticket }
+            { id: "tribes", label: "Tribes", icon: Users }
           ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex items-center gap-2 px-4 py-3 font-semibold transition-all whitespace-nowrap ${activeTab === tab.id ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-gray-500 hover:text-gray-300'}`}>
               <tab.icon size={18} />{tab.label}
