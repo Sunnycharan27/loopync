@@ -38,6 +38,14 @@ const Discover = () => {
       } else if (activeTab === "reels") {
         const res = await axios.get(`${API}/reels`);
         setReels(res.data);
+      } else if (activeTab === "people") {
+        const res = await axios.get(`${API}/users`);
+        // Filter out current user and existing friends
+        const filtered = res.data.filter(u => {
+          if (!currentUser) return true;
+          return u.id !== currentUser.id && !currentUser.friends?.includes(u.id);
+        });
+        setPeople(filtered);
       }
     } catch (error) {
       console.error("Failed to load content:", error);
