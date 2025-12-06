@@ -191,15 +191,25 @@ const ProfileVibe = () => {
           ))}
         </div>
 
-        <div>
+        <div className="mt-6">
           {activeTab === "posts" && (
-            <div className="grid grid-cols-3 gap-2">
+            <div className="space-y-4">
               {userPosts.length > 0 ? userPosts.map((post) => (
-                <div key={post.id} className="aspect-square rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-all border border-gray-800 hover:border-cyan-400" onClick={() => navigate(`/post/${post.id}`)}>
-                  {post.mediaUrl ? <img src={post.mediaUrl} alt="Post" className="w-full h-full object-cover" /> : <div className="w-full h-full bg-gray-900/50 flex items-center justify-center p-3"><p className="text-xs text-center text-gray-500 line-clamp-4">{post.text}</p></div>}
-                </div>
+                <PostCard 
+                  key={post.id} 
+                  post={post} 
+                  currentUser={currentUser}
+                  onLike={async (postId) => {
+                    try {
+                      const res = await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`);
+                      setUserPosts(userPosts.map(p => p.id === postId ? { ...p, ...res.data } : p));
+                    } catch (error) {
+                      toast.error("Failed to like post");
+                    }
+                  }}
+                />
               )) : (
-                <div className="col-span-3 py-16 text-center">
+                <div className="py-16 text-center glass-card">
                   <Grid size={48} className="mx-auto mb-4 text-gray-700" />
                   <p className="text-gray-500 mb-4">No posts yet</p>
                   <button onClick={() => navigate("/")} className="px-6 py-2.5 bg-cyan-400 hover:bg-cyan-500 text-black rounded-xl font-semibold transition-all">Create Post</button>
