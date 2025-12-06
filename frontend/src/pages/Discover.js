@@ -83,9 +83,30 @@ const Discover = () => {
     }
   };
 
-  const handleHashtagClick = (hashtag) => {
-    setSearchQuery(hashtag);
-    handleSearch(hashtag);
+  const sendFriendRequest = async (toUserId) => {
+    if (!currentUser) {
+      toast.error("Please login to add friends");
+      navigate('/auth');
+      return;
+    }
+    
+    try {
+      await axios.post(`${API}/friend-requests?fromUserId=${currentUser.id}&toUserId=${toUserId}`);
+      toast.success("Friend request sent!");
+      
+      // Update people list
+      setPeople(people.map(p => p.id === toUserId ? { ...p, requestSent: true } : p));
+      
+      // Update search results if active
+      if (searchResults?.users) {
+        setSearchResults({
+          ...searchResults,
+          users: searchResults.users.map(u => u.id === toUserId ? { ...u, requestSent: true } : u)
+        });
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to send request");
+    }
   };
 
   if (loading && !searchResults) {
