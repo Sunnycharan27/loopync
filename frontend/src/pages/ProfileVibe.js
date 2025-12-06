@@ -247,56 +247,6 @@ const ProfileVibe = () => {
             </div>
           )}
 
-          {activeTab === "marketplace" && (
-            <div className="space-y-4">
-              {/* New Marketplace Promo */}
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-400/20">
-                <div className="text-center">
-                  <div className="text-5xl mb-4">🛍️</div>
-                  <h3 className="text-xl font-bold text-white mb-2">New Marketplace Available!</h3>
-                  <p className="text-gray-400 mb-4">Buy & sell products with integrated delivery</p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => navigate("/products")}
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-black rounded-xl font-bold"
-                    >
-                      Shop Now
-                    </button>
-                    <button
-                      onClick={() => navigate("/seller-dashboard")}
-                      className="flex-1 px-6 py-3 bg-white/5 border border-cyan-400/30 text-cyan-400 rounded-xl font-bold"
-                    >
-                      Start Selling
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-              {marketplaceItems.length > 0 ? marketplaceItems.map(item => (
-                <div key={item.id} className="rounded-xl overflow-hidden bg-gray-900/30 border border-gray-800 hover:border-cyan-400/30 transition-all cursor-pointer" onClick={() => navigate(`/marketplace/${item.id}`)}>
-                  <div className="aspect-square bg-gray-800">
-                    {item.images && item.images[0] ? (
-                      <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <ShoppingBag size={48} className="text-gray-700" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-3">
-                    <h3 className="font-semibold text-white text-sm mb-1 truncate">{item.name || 'Product'}</h3>
-                    <div className="flex items-center justify-between">
-                      <p className="text-cyan-400 font-bold text-lg">₹{item.price || 0}</p>
-                      {item.sold && <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-xs font-semibold">Sold</span>}
-                      {!item.sold && item.stock > 0 && <span className="px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-semibold">{item.stock} left</span>}
-                    </div>
-                  </div>
-                </div>
-              )) : null}
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
