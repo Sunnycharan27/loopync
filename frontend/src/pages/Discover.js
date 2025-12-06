@@ -26,29 +26,26 @@ const Discover = () => {
   const [searching, setSearching] = useState(false);
 
   useEffect(() => {
-    fetchDiscoverData();
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === 'people') {
-      fetchPeople();
-    }
+    fetchContent();
   }, [activeTab]);
 
-  const fetchDiscoverData = async () => {
+  const fetchContent = async () => {
+    setLoading(true);
     try {
-      const [venuesRes, eventsRes, creatorsRes, tribesRes] = await Promise.all([
-        axios.get(`${API}/venues`),
-        axios.get(`${API}/events`),
-        axios.get(`${API}/creators`),
-        axios.get(`${API}/tribes`)
-      ]);
-      setVenues(venuesRes.data);
-      setEvents(eventsRes.data);
-      setCreators(creatorsRes.data);
-      setTribes(tribesRes.data);
+      if (activeTab === "posts") {
+        const res = await axios.get(`${API}/posts`);
+        setPosts(res.data);
+      } else if (activeTab === "reels") {
+        const res = await axios.get(`${API}/reels`);
+        setReels(res.data);
+      }
+      
+      // Fetch trending hashtags
+      const hashtagsRes = await axios.get(`${API}/trending-hashtags`);
+      setTrendingHashtags(hashtagsRes.data || []);
     } catch (error) {
-      toast.error("Failed to load discover data");
+      console.error("Failed to load content:", error);
+      toast.error("Failed to load content");
     } finally {
       setLoading(false);
     }
