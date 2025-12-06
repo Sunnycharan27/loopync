@@ -8611,14 +8611,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "MediaSelectorModal API Endpoint Fix"
     - "Email-based Authentication UI"
-    - "VibeRooms Frontend (Clubhouse-style Audio Chat)"
+    - "Profile Photo Upload and Visibility (Instagram-like)"
   stuck_tasks:
     - "Email-based Authentication UI"
-    - "VibeRooms Frontend (Clubhouse-style Audio Chat)"
+    - "Profile Photo Upload and Visibility (Instagram-like)"
   test_all: false
-  test_priority: "critical_first"
+  test_priority: "stuck_first"
 
 backend:
   - task: "Agora Video/Audio Calling System - Complete Call Flow"
