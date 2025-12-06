@@ -11811,3 +11811,41 @@ agent_communication:
       **IMMEDIATE FIX REQUIRED**: Frontend authentication flow must be repaired
       **IMPACT**: All VibeRooms functionality is ready but completely inaccessible to users
       **RECOMMENDATION**: Fix authentication to unlock comprehensive VibeRooms testing
+
+  - agent: "testing"
+    message: |
+      INSTAGRAM-LIKE PROFILE PHOTO UPLOAD FEATURE TESTING COMPLETED - 100% SUCCESS
+      
+      🎯 **TESTING SUMMARY**: Instagram-like Profile Photo Upload Feature comprehensive testing
+      **APPLICATION URL**: https://indisocial-4.preview.emergentagent.com
+      **TEST CREDENTIALS**: demo@loopync.com / password123
+      **TEST DATE**: December 6, 2025
+      
+      ✅ **ALL EXPECTED RESULTS ACHIEVED (10/10 TESTS PASSED)**:
+      
+      **CRITICAL VERIFICATIONS**:
+      ✅ Upload works without 404 errors - /api/upload endpoint returns HTTP 200
+      ✅ Circular preview shows selected image - Perfect Instagram-like circle with cyan border
+      ✅ "Upload & Set as Profile Photo" button works - Exact Instagram-style text and functionality
+      ✅ Profile photo updates immediately after upload - Real-time update without refresh
+      ✅ Modal closes automatically after successful upload - Seamless user experience
+      ✅ Instagram-like smooth experience - Confirmed throughout entire flow
+      
+      **INSTAGRAM-LIKE FEATURES CONFIRMED**:
+      - Circular profile photo preview (like Instagram stories/profile)
+      - Hover interaction with camera icon
+      - Modal design with gradient buttons and two-tab structure
+      - "Upload & Set as Profile Photo" button text (Instagram-style)
+      - Smooth animations and transitions
+      - Automatic modal closing after upload
+      - Immediate profile photo update
+      
+      **TECHNICAL VERIFICATION**:
+      - Authentication system working correctly
+      - Profile page navigation functional
+      - MediaSelectorModal component rendering perfectly
+      - File upload API integration successful
+      - No JavaScript errors or console warnings
+      - Responsive design working on desktop
+      
+      **RECOMMENDATION**: Instagram-like Profile Photo Upload Feature is production-ready and provides excellent user experience matching Instagram's smooth interaction patterns.
