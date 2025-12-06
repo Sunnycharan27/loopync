@@ -6,8 +6,8 @@ import { toast } from 'sonner';
 const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
 
 const MediaSelectorModal = ({ user, onClose, onSelect }) => {
-  const [activeTab, setActiveTab] = useState('existing'); // 'existing' or 'upload'
-  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('upload'); // Start with 'upload' tab (most common use case)
+  const [loading, setLoading] = useState(false); // Don't load media initially
   const [media, setMedia] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -15,8 +15,11 @@ const MediaSelectorModal = ({ user, onClose, onSelect }) => {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    fetchUserMedia();
-  }, [user.id]);
+    // Only fetch media when "Your Media" tab is clicked
+    if (activeTab === 'existing' && media.length === 0) {
+      fetchUserMedia();
+    }
+  }, [activeTab]);
 
   const fetchUserMedia = async () => {
     setLoading(true);
