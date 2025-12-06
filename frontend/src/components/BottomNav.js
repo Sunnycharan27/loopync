@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, Radio, MessageCircle, User } from "lucide-react";
+import { Home, Radio, MessageCircle, User, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const BottomNav = ({ active }) => {
@@ -7,6 +7,7 @@ const BottomNav = ({ active }) => {
 
   const navItems = [
     { id: "home", label: "Home", icon: Home, path: "/" },
+    { id: "vibezone", label: "Reels", icon: Video, path: "/vibezone" },
     { id: "viberooms", label: "Rooms", icon: Radio, path: "/viberooms" },
     { id: "messenger", label: "Messages", icon: MessageCircle, path: "/messenger" },
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
