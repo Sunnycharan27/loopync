@@ -1336,6 +1336,144 @@ frontend:
           
           **PROFILE PAGE WITH POSTS DISPLAY IS 100% FUNCTIONAL AND MEETS ALL REQUIREMENTS**
 
+  - task: "Profile Photo Upload and Visibility (Instagram-like)"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/ProfileVibe.js, /app/frontend/src/components/MediaSelectorModal.js"
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: |
+          NEWLY IMPLEMENTED: Complete Instagram-like profile photo upload and visibility system
+          
+          BACKEND FEATURES IMPLEMENTED:
+          ✅ POST /api/users/{userId}/profile - Update user profile including avatar field
+          ✅ Profile photo URL storage in MongoDB user documents
+          ✅ Profile photo visibility across all user interactions
+          ✅ Proper image URL handling and validation
+          
+          FRONTEND FEATURES IMPLEMENTED:
+          ✅ ProfileVibe.js - Profile page with hover-to-reveal camera icon
+          ✅ MediaSelectorModal.js - Instagram-style photo selection modal
+          ✅ Two-tab modal: "Upload New" and "Your Media" tabs
+          ✅ Circular profile photo preview with upload functionality
+          ✅ Real-time profile photo updates without page refresh
+          ✅ Profile photo visibility in posts, comments, and user cards
+          ✅ Consistent avatar display across Home, Discover, and Profile pages
+          
+          INSTAGRAM-LIKE FEATURES:
+          - Hover over profile photo reveals camera icon
+          - Click camera icon opens beautiful gradient modal
+          - Upload new photos with circular preview
+          - Select from existing media (posts, reels)
+          - Immediate profile photo update after selection
+          - Photo visible to current user across all pages
+          - Photo visible to other users in search, discover, posts
+          - Seamless experience like Instagram profile photo changes
+          
+          NEEDS COMPREHENSIVE TESTING:
+          - Test complete upload flow: hover → camera → modal → upload → update
+          - Test visibility to current user (profile, home feed, posts)
+          - Test visibility to other users (discover, search, user profiles)
+          - Test real-time updates without manual refresh
+          - Test Instagram-like seamless experience
+          - Verify no broken images or "Not Found" errors
+      - working: false
+        agent: "testing"
+        comment: |
+          COMPREHENSIVE INSTAGRAM-LIKE PROFILE PHOTO TESTING COMPLETED - CRITICAL AUTHENTICATION BLOCKING ISSUE IDENTIFIED (0/5 TESTS PASSED - 0% SUCCESS)
+          
+          🎯 **TESTING SCOPE**: Complete Instagram-like profile photo upload and visibility testing as per review request
+          **APPLICATION URL**: https://indisocial-4.preview.emergentagent.com
+          **TEST CREDENTIALS**: demo@loopync.com / password123
+          **TEST DATE**: December 6, 2025
+          **VIEWPORT**: Desktop (1920x1080)
+          
+          ❌ **CRITICAL AUTHENTICATION BARRIER - ALL TESTS BLOCKED**:
+          
+          **ROOT CAUSE**: Frontend authentication system is completely broken
+          - Users cannot access any protected pages including Profile
+          - "Login or Sign Up" overlay appears on all pages even after login attempts
+          - Authentication state not properly maintained in frontend
+          - Profile page inaccessible due to authentication barrier
+          - Cannot test profile photo functionality without profile access
+          
+          **SPECIFIC FAILURES IDENTIFIED**:
+          
+          **TEST 1: Profile Page Access** ❌ BLOCKED
+          - Direct URL navigation to /profile fails
+          - Profile navigation button click fails
+          - Authentication overlay blocks all profile functionality
+          - Cannot access profile photo elements
+          - 0 profile images found on profile page
+          
+          **TEST 2: Profile Photo Upload Interface** ❌ BLOCKED
+          - Cannot test camera icon hover functionality
+          - Cannot test MediaSelectorModal opening
+          - Cannot test upload tabs (Upload New, Your Media)
+          - Cannot test file selection and preview
+          - Profile photo upload completely inaccessible
+          
+          **TEST 3: Profile Photo Visibility (Current User)** ❌ BLOCKED
+          - Cannot test profile photo display on profile page
+          - Cannot test photo visibility in home feed
+          - Cannot test photo updates after upload
+          - Cannot verify real-time updates without refresh
+          
+          **TEST 4: Profile Photo Visibility (Other Users)** ❌ BLOCKED
+          - Cannot test photo visibility in Discover page
+          - Cannot test photo in search results
+          - Cannot test photo in user profiles
+          - Cannot verify Instagram-like visibility across platform
+          
+          **TEST 5: Instagram-like Experience** ❌ BLOCKED
+          - Cannot test seamless upload flow
+          - Cannot test hover interactions
+          - Cannot test modal functionality
+          - Cannot verify smooth user experience
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ❌ Profile page access: BLOCKED by authentication
+          - ❌ Profile photo elements: NOT ACCESSIBLE
+          - ❌ MediaSelectorModal: CANNOT OPEN
+          - ❌ Upload functionality: CANNOT TEST
+          - ❌ Visibility testing: CANNOT PERFORM
+          - ❌ Instagram-like features: COMPLETELY BLOCKED
+          
+          **AUTHENTICATION ISSUE DETAILS**:
+          - Login form appears but authentication doesn't complete properly
+          - JWT token may not be stored or validated correctly
+          - Protected routes redirect to login even with valid credentials
+          - Frontend authentication state management broken
+          - Users stuck in authentication loop
+          
+          📊 **SUCCESS RATE**: 0% (0/5 major tests passed)
+          
+          🚨 **IMMEDIATE FIXES REQUIRED**:
+          1. **CRITICAL PRIORITY**: Fix frontend authentication system
+          2. **CRITICAL PRIORITY**: Ensure JWT token storage and validation works
+          3. **CRITICAL PRIORITY**: Fix protected route access (Profile page)
+          4. **HIGH PRIORITY**: Test profile photo functionality after auth fix
+          5. **HIGH PRIORITY**: Verify Instagram-like experience works end-to-end
+          
+          **PROFILE PHOTO FEATURES CANNOT BE TESTED DUE TO AUTHENTICATION BARRIER**
+          
+          **EXPECTED RESULTS BLOCKED**:
+          ❌ Cannot hover over profile photo → camera icon appears
+          ❌ Cannot click camera icon → modal opens  
+          ❌ Cannot test "Upload New" tab functionality
+          ❌ Cannot test profile photo selection and upload
+          ❌ Cannot verify success message and modal close
+          ❌ Cannot test profile photo visibility across pages
+          ❌ Cannot verify Instagram-like seamless experience
+          
+          **ROOT CAUSE**: This is the same authentication issue documented in other frontend tasks. The frontend authentication flow is fundamentally broken, preventing access to all protected features including profile photo functionality.
+          
+          **RECOMMENDATION**: Fix the frontend authentication system first, then retest profile photo functionality. All Instagram-like features appear to be implemented correctly in the code but are completely inaccessible due to the authentication barrier.
+
   - task: "Starbucks-style Wallet Page"
     implemented: true
     working: true
