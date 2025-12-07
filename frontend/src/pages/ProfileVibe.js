@@ -207,6 +207,18 @@ const ProfileVibe = () => {
                       toast.error("Failed to like post");
                     }
                   }}
+                  onDelete={async (postId) => {
+                    if (!window.confirm("Are you sure you want to delete this post?")) {
+                      return;
+                    }
+                    try {
+                      await axios.delete(`${API}/posts/${postId}`);
+                      setUserPosts(userPosts.filter(p => p.id !== postId));
+                      toast.success("Post deleted!");
+                    } catch (error) {
+                      toast.error("Failed to delete post");
+                    }
+                  }}
                 />
               )) : (
                 <div className="py-16 text-center glass-card">
