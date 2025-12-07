@@ -308,11 +308,19 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
                   setMuted(!muted);
                   setHasInteracted(true);  // User has interacted, remember preference
                 }}
-                className={`w-14 h-14 rounded-full backdrop-blur flex items-center justify-center transition-all ${
-                  muted ? 'bg-white/20 animate-pulse' : 'bg-cyan-400'
+                className={`relative w-14 h-14 rounded-full backdrop-blur flex items-center justify-center transition-all ${
+                  muted ? 'bg-white/20' : 'bg-gradient-to-br from-cyan-400 to-blue-500'
                 }`}
               >
-                {muted ? <VolumeX size={28} className="text-white" /> : <Volume2 size={28} className="text-white" />}
+                {muted ? (
+                  <VolumeX size={28} className="text-white" />
+                ) : (
+                  <>
+                    <Volume2 size={28} className="text-white relative z-10" />
+                    {/* Pulsing waves when audio is playing - Like Instagram */}
+                    <div className="absolute inset-0 rounded-full bg-cyan-400/30 animate-ping"></div>
+                  </>
+                )}
               </button>
             </div>
 
