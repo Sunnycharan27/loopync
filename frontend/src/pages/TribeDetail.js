@@ -101,7 +101,7 @@ const TribeDetail = () => {
         const formData = new FormData();
         formData.append('file', newPostMedia);
         
-        const uploadRes = await axios.post(`${API}/upload`, formData, {
+        const uploadRes = await axios.post(`${API}/api/upload`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${localStorage.getItem('loopync_token')}`
@@ -119,7 +119,7 @@ const TribeDetail = () => {
         mediaUrl: mediaUrl
       };
 
-      const postRes = await axios.post(`${API}/tribes/${tribeId}/posts`, postData);
+      const postRes = await axios.post(`${API}/api/tribes/${tribeId}/posts`, postData);
       
       // Add to posts list
       setPosts([postRes.data, ...posts]);
