@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
-  Search, Send, Phone, Video, Image, Smile, MoreVertical,
+  Search, Send, Image, Smile, MoreVertical,
   ArrowLeft, Check, CheckCheck, Circle, Mic, X, Sparkles
 } from 'lucide-react';
 import axios from 'axios';
