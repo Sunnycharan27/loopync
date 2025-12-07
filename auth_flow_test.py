@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://indisocial-4.preview.emergentagent.com/api"
+BACKEND_URL = "https://vibely.preview.emergentagent.com/api"
 
 class AuthFlowTester:
     def __init__(self):
