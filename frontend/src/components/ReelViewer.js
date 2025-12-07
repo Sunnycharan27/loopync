@@ -104,6 +104,13 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
     }
   };
 
+  // Callback ref to attach observer to each reel container
+  const reelContainerRef = useCallback((element, idx) => {
+    if (element && observerRef.current) {
+      observerRef.current.observe(element);
+    }
+  }, []);
+
   if (validReels.length === 0) {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black p-8 text-center">
