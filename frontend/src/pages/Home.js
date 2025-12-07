@@ -117,60 +117,6 @@ const Home = () => {
         {/* Live Activity Feed - Only for authenticated users */}
         {currentUser && <LiveActivityFeed />}
 
-        {/* AI Quick Actions - Only for authenticated users */}
-        {currentUser && (
-        <div className="px-4 mt-2">
-          <div className="glass-card p-4 rounded-2xl">
-            <p className="text-sm text-gray-300 mb-2">AI Quick Actions</p>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={async () => {
-                  const text = prompt('Enter text to check for safety');
-                  if (!text) return;
-                  const res = await emergentApi.safety(text);
-                  toast.info(res.safe ? 'Looks safe ✅' : `Flagged ❗ Categories: ${res.categories?.join(', ')}`);
-                }}
-                className="px-3 py-2 rounded-full bg-red-400/20 text-red-300 border border-red-500/30 text-xs"
-               data-testid="btn-ai-safety">Safety Check</button>
-              <button
-                onClick={async () => {
-                  const text = prompt('Enter text to translate');
-                  if (!text) return;
-                  const target = prompt('Target language code (e.g., hi, en, es)') || 'en';
-                  const res = await emergentApi.translate(text, target);
-                  toast.success(res.translated_text || 'No result');
-                }}
-                className="px-3 py-2 rounded-full bg-cyan-400/20 text-cyan-300 border border-cyan-500/30 text-xs"
-               data-testid="btn-ai-translate">Translate</button>
-              <button
-                onClick={async () => {
-                  const query = prompt('Enter ranking query');
-                  const docsRaw = prompt('Enter documents (comma separated)');
-                  if (!query || !docsRaw) return;
-                  const docs = docsRaw.split(',').map(s => s.trim());
-                  const res = await emergentApi.rank(query, docs);
-                  toast.message('Ranking Done', { description: JSON.stringify(res.items).slice(0, 160) + '…' });
-                }}
-                className="px-3 py-2 rounded-full bg-purple-400/20 text-purple-300 border border-purple-500/30 text-xs"
-               data-testid="btn-ai-rank">Rank</button>
-              <button
-                onClick={async () => {
-                  const text = prompt('Enter text for insights or summary');
-                  if (!text) return;
-                  const res = await emergentApi.insight(text, 'summarize');
-                  toast.message('Insights', { description: (res.result || '').slice(0, 180) + '…' });
-                }}
-                className="px-3 py-2 rounded-full bg-yellow-400/20 text-yellow-300 border border-yellow-500/30 text-xs"
-               data-testid="btn-ai-insights">Insights</button>
-            </div>
-          </div>
-        </div>
-        )}
-        {/* Guided Tours Launcher */}
-        <div className="px-4 mt-2">
-          <p className="text-xs text-gray-500 mb-1">Need a quick walkthrough?</p>
-        </div>
-
         {/* Posts Feed */}
         <div className="space-y-4 px-4 mt-4">
           {loading ? (
