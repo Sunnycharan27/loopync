@@ -347,6 +347,15 @@ const Discover = () => {
                 <Users size={18} />
                 People
               </button>
+              <button
+                onClick={() => setActiveTab("tribes")}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold whitespace-nowrap transition-all ${
+                  activeTab === "tribes" ? 'bg-cyan-400 text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                <UsersRound size={18} />
+                Tribes
+              </button>
             </div>
 
             {/* Content */}
