@@ -113,6 +113,40 @@ const Discover = () => {
     }
   };
 
+  const joinTribe = async (tribeId) => {
+    if (!currentUser) {
+      toast.error("Please login to join tribes");
+      navigate('/auth');
+      return;
+    }
+    
+    try {
+      await axios.post(`${API}/tribes/${tribeId}/join?userId=${currentUser.id}`);
+      toast.success("Joined tribe successfully!");
+      
+      // Update tribes list
+      setTribes(tribes.map(t => t.id === tribeId ? { 
+        ...t, 
+        members: [...(t.members || []), currentUser.id],
+        isMember: true 
+      } : t));
+      
+      // Update search results if active
+      if (searchResults?.tribes) {
+        setSearchResults({
+          ...searchResults,
+          tribes: searchResults.tribes.map(t => t.id === tribeId ? { 
+            ...t, 
+            members: [...(t.members || []), currentUser.id],
+            isMember: true 
+          } : t)
+        });
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to join tribe");
+    }
+  };
+
   if (loading && !searchResults) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0f021e' }}>
