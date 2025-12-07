@@ -121,7 +121,7 @@ const Discover = () => {
     }
     
     try {
-      await axios.post(`${API}/api/tribes/${tribeId}/join?userId=${currentUser.id}`);
+      await axios.post(`${API}/tribes/${tribeId}/join?userId=${currentUser.id}`);
       toast.success("Joined tribe successfully!");
       
       // Update tribes list
