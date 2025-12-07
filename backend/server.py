@@ -2907,16 +2907,64 @@ async def leave_tribe(tribeId: str, userId: str):
 
 @api_router.get("/tribes/{tribeId}/posts")
 async def get_tribe_posts(tribeId: str, limit: int = 50):
-    # Mock: return posts with tribe tag or from tribe members
+    # Return posts specifically for this tribe
     tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
     if not tribe:
         raise HTTPException(status_code=404, detail="Tribe not found")
     
-    posts = await db.posts.find({"authorId": {"$in": tribe.get("members", [])}}, {"_id": 0}).sort("createdAt", -1).to_list(limit)
+    # Get posts that have this tribeId
+    posts = await db.posts.find({"tribeId": tribeId}, {"_id": 0}).sort("createdAt", -1).to_list(limit)
     for post in posts:
         author = await db.users.find_one({"id": post["authorId"]}, {"_id": 0})
         post["author"] = author
     return posts
+
+@api_router.post("/tribes/{tribeId}/posts")
+async def create_tribe_post(tribeId: str, post_data: dict):
+    """Create a post in a tribe"""
+    # Verify tribe exists
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    # Verify user is a member
+    author_id = post_data.get("authorId")
+    if author_id not in tribe.get("members", []):
+        raise HTTPException(status_code=403, detail="Must be a tribe member to post")
+    
+    # Create post with tribeId
+    from uuid import uuid4
+    post_id = str(uuid4())
+    
+    post_obj = {
+        "id": post_id,
+        "authorId": author_id,
+        "tribeId": tribeId,
+        "text": post_data.get("text", ""),
+        "mediaUrl": post_data.get("mediaUrl"),
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "likedBy": [],
+        "stats": {
+            "likes": 0,
+            "comments": 0,
+            "reposts": 0
+        }
+    }
+    
+    # Insert post
+    await db.posts.insert_one(post_obj)
+    
+    # Remove _id and enrich with author
+    post_obj.pop("_id", None)
+    author = await db.users.find_one({"id": author_id}, {"_id": 0})
+    post_obj["author"] = {
+        "id": author["id"],
+        "name": author["name"],
+        "handle": author["handle"],
+        "avatar": author.get("avatar", f"https://api.dicebear.com/7.x/avataaars/svg?seed={author['handle']}")
+    }
+    
+    return post_obj
 
 # ===== AGORA.IO INTEGRATION (CLUBHOUSE-STYLE AUDIO) =====
 
