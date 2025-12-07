@@ -28,8 +28,8 @@ const TribeDetail = () => {
     setLoading(true);
     try {
       const [tribeRes, postsRes] = await Promise.all([
-        axios.get(`${API}/api/tribes/${tribeId}`),
-        axios.get(`${API}/api/tribes/${tribeId}/posts`)
+        axios.get(`${API}/tribes/${tribeId}`),
+        axios.get(`${API}/tribes/${tribeId}/posts`)
       ]);
       
       setTribe(tribeRes.data);
