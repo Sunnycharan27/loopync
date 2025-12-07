@@ -198,10 +198,11 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
           </p>
 
           {/* Media Rendering */}
-          {post.media && post.media.trim() !== '' && (() => {
-            const mediaUrl = getMediaUrl(post.media);
+          {(post.media || post.mediaUrl) && (post.media?.trim() !== '' || post.mediaUrl?.trim() !== '') && (() => {
+            const mediaSource = post.mediaUrl || post.media;
+            const mediaUrl = getMediaUrl(mediaSource);
             
-            return isVideoUrl(post.media) ? (
+            return isVideoUrl(mediaSource) ? (
               <video
                 src={mediaUrl}
                 controls
