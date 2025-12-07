@@ -139,7 +139,7 @@ const TribeDetail = () => {
 
   const handleLike = async (postId) => {
     try {
-      const res = await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`);
+      const res = await axios.post(`${API}/api/posts/${postId}/like?userId=${currentUser.id}`);
       setPosts(posts.map(p => p.id === postId ? { ...p, ...res.data } : p));
     } catch (error) {
       toast.error("Failed to like post");
