@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { API } from "../App";
 import { Heart, MessageCircle, Share, Volume2, VolumeX, Music, Bookmark, MoreHorizontal, AlertCircle } from "lucide-react";
@@ -14,8 +14,10 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
   const [bookmarked, setBookmarked] = useState({});
   const [videoErrors, setVideoErrors] = useState({});
   const [videoRetries, setVideoRetries] = useState({});
+  const [visibleReels, setVisibleReels] = useState(new Set([0])); // Track visible reels
   const videoRefs = useRef([]);
   const containerRef = useRef(null);
+  const observerRef = useRef(null);
 
   // Filter out reels with broken videos (after multiple retries)
   const validReels = reels.filter(reel => {
