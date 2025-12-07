@@ -185,6 +185,13 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
     return videoUrl;
   };
 
+  // Callback ref to attach observer to each reel container
+  const reelContainerRef = useCallback((element, idx) => {
+    if (element && observerRef.current) {
+      observerRef.current.observe(element);
+    }
+  }, []);
+
   return (
     <>
       <div
@@ -195,26 +202,37 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
         {validReels.map((reel, idx) => (
           <div
             key={reel.id}
+            ref={(el) => reelContainerRef(el, idx)}
+            data-reel-index={idx}
             data-testid="reel-viewer"
             className="h-screen snap-start relative flex items-center justify-center bg-black"
             onClick={handleDoubleTap}
           >
-            {/* Video */}
-            <video
-              ref={el => videoRefs.current[idx] = el}
-              data-reel-id={reel.id}
-              src={getVideoSource(reel)}
-              className="w-full h-full object-cover"
-              loop
-              autoPlay={idx === currentIndex}
-              muted={muted}
-              playsInline
-              poster={reel.thumb}
-              onError={(e) => handleVideoError(reel.id, e)}
-              onCanPlay={() => handleVideoCanPlay(reel.id)}
-              preload={idx === currentIndex ? "auto" : "metadata"}
-              crossOrigin="anonymous"
-            />
+            {/* Only render video if visible or near viewport */}
+            {visibleReels.has(idx) && (
+              <video
+                ref={el => videoRefs.current[idx] = el}
+                data-reel-id={reel.id}
+                src={getVideoSource(reel)}
+                className="w-full h-full object-cover"
+                loop
+                autoPlay={idx === currentIndex}
+                muted={muted}
+                playsInline
+                poster={reel.thumb}
+                onError={(e) => handleVideoError(reel.id, e)}
+                onCanPlay={() => handleVideoCanPlay(reel.id)}
+                preload="auto"
+                crossOrigin="anonymous"
+              />
+            )}
+            
+            {/* Show loading placeholder if video not loaded yet */}
+            {!visibleReels.has(idx) && (
+              <div className="w-full h-full bg-gray-900 flex items-center justify-center">
+                <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+              </div>
+            )}
 
             {/* Top Bar */}
             <div className="absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/60 to-transparent z-10">
