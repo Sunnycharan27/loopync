@@ -25,40 +25,53 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
     return errorCount < 3; // Allow up to 3 errors before filtering out
   });
 
+  // Setup Intersection Observer for efficient video loading
   useEffect(() => {
-    // Track view
+    const options = {
+      root: containerRef.current,
+      rootMargin: '100% 0px', // Load videos 1 screen ahead/behind
+      threshold: 0.5
+    };
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const reelIndex = parseInt(entry.target.dataset.reelIndex);
+        
+        if (entry.isIntersecting) {
+          // Video is visible or near viewport
+          setVisibleReels(prev => new Set([...prev, reelIndex]));
+          
+          // If this is the fully visible reel, play it
+          if (entry.intersectionRatio >= 0.5) {
+            setCurrentIndex(reelIndex);
+            const video = videoRefs.current[reelIndex];
+            if (video) {
+              video.play().catch(() => {});
+            }
+          }
+        } else {
+          // Video left viewport - pause it
+          const video = videoRefs.current[reelIndex];
+          if (video) {
+            video.pause();
+          }
+        }
+      });
+    }, options);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  // Track view for analytics
+  useEffect(() => {
     if (validReels[currentIndex]) {
       axios.post(`${API}/reels/${validReels[currentIndex].id}/view`).catch(() => {});
     }
   }, [currentIndex, validReels]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const scrollTop = containerRef.current.scrollTop;
-      const newIndex = Math.round(scrollTop / window.innerHeight);
-      if (newIndex !== currentIndex && newIndex >= 0 && newIndex < validReels.length) {
-        setCurrentIndex(newIndex);
-        
-        // Pause all videos except current
-        videoRefs.current.forEach((video, idx) => {
-          if (video) {
-            if (idx === newIndex) {
-              video.play().catch(() => {});
-            } else {
-              video.pause();
-            }
-          }
-        });
-      }
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, [currentIndex, validReels.length]);
 
   const handleVideoError = (reelId, event) => {
     const errorCount = (videoErrors[reelId] || 0) + 1;
