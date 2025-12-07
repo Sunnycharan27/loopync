@@ -347,6 +347,7 @@ const TribeDetail = () => {
                     post={post}
                     currentUser={currentUser}
                     onLike={handleLike}
+                    onDelete={handleDelete}
                   />
                 ))
               ) : (
