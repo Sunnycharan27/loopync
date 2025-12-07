@@ -488,6 +488,79 @@ const Discover = () => {
                   )}
                 </div>
               )}
+
+              {activeTab === "tribes" && (
+                <div>
+                  {loading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+                    </div>
+                  ) : tribes.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {tribes.map(tribe => (
+                        <div key={tribe.id} className="glass-card p-5 hover:bg-gray-800/50 transition-all">
+                          <div className="flex items-start gap-3">
+                            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+                              <UsersRound size={32} className="text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="font-bold text-white text-lg mb-1">{tribe.name}</h3>
+                              <p className="text-sm text-gray-400 mb-2 line-clamp-2">{tribe.description || 'Join this community'}</p>
+                              
+                              <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                                <span className="flex items-center gap-1">
+                                  <Users size={14} />
+                                  {tribe.members?.length || 0} members
+                                </span>
+                                {tribe.category && (
+                                  <span className="px-2 py-1 rounded-full bg-cyan-400/10 text-cyan-400">
+                                    {tribe.category}
+                                  </span>
+                                )}
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                {currentUser && !tribe.members?.includes(currentUser.id) && !tribe.isMember ? (
+                                  <button
+                                    onClick={() => joinTribe(tribe.id)}
+                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition-all text-sm"
+                                  >
+                                    <UserPlus size={16} />
+                                    Join Tribe
+                                  </button>
+                                ) : tribe.isMember || tribe.members?.includes(currentUser?.id) ? (
+                                  <span className="px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-semibold">
+                                    ✓ Joined
+                                  </span>
+                                ) : (
+                                  <button
+                                    onClick={() => navigate('/auth')}
+                                    className="px-4 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition-all text-sm"
+                                  >
+                                    Login to Join
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => navigate(`/tribes/${tribe.id}`)}
+                                  className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition text-sm"
+                                >
+                                  View
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="glass-card p-8 text-center">
+                      <UsersRound size={48} className="mx-auto text-gray-600 mb-3" />
+                      <p className="text-gray-400">No tribes yet</p>
+                      <p className="text-sm text-gray-500 mt-2">Be the first to create a community!</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </>
         )}
