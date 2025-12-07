@@ -185,7 +185,6 @@ const VoiceBotModal = ({ isOpen, onClose }) => {
               <Mic size={24} className="text-cyan-400" />
               AI Voice Assistant
             </h2>
-            <p className="text-sm text-gray-400">Powered by OpenAI GPT-4o</p>
           </div>
           <button 
             onClick={onClose}
