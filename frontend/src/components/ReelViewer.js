@@ -322,6 +322,16 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
                 <Music size={20} className="text-white" />
               </div>
             </div>
+
+            {/* Tap to Unmute Indicator - Like TikTok/Instagram */}
+            {muted && idx === currentIndex && (
+              <div className="absolute bottom-32 left-4 z-10 animate-bounce">
+                <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <VolumeX size={18} className="text-white" />
+                  <span className="text-white text-sm font-medium">Tap to unmute</span>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
