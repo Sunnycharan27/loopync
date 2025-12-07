@@ -19,6 +19,7 @@ const Discover = () => {
   const [posts, setPosts] = useState([]);
   const [reels, setReels] = useState([]);
   const [people, setPeople] = useState([]);
+  const [tribes, setTribes] = useState([]);
   
   // Search states
   const [searchQuery, setSearchQuery] = useState("");
