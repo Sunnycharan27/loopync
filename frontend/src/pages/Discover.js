@@ -48,7 +48,7 @@ const Discover = () => {
         });
         setPeople(filtered);
       } else if (activeTab === "tribes") {
-        const res = await axios.get(`${API}/tribes`);
+        const res = await axios.get(`${API}/api/tribes`);
         setTribes(res.data);
       }
     } catch (error) {
