@@ -876,6 +876,114 @@ backend:
           ✅ Users can now create accounts and send messages successfully
 
 frontend:
+  - task: "Tribes Feature - Create Posts in Tribes"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/TribeDetail.js, /app/frontend/src/pages/Discover.js"
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: |
+          COMPREHENSIVE TRIBES FEATURE TESTING COMPLETED - CRITICAL AUTHENTICATION ISSUE BLOCKING FUNCTIONALITY (4/8 TESTS PASSED - 50% SUCCESS)
+          
+          🎯 **TESTING SCOPE**: Complete Tribes feature testing as per review request
+          **APPLICATION URL**: https://indisocial-4.preview.emergentagent.com
+          **TEST CREDENTIALS**: demo@loopync.com / password123
+          **TEST DATE**: December 7, 2025
+          **VIEWPORT**: Desktop (1920x1080)
+          
+          ✅ **WORKING FEATURES (4/8 TESTS PASSED)**:
+          
+          **TEST 1: Discover Tribes Tab** ✅ WORKING
+          - Successfully navigated to Discover page
+          - Tribes tab accessible and functional
+          - Tab switching working correctly
+          
+          **TEST 2: Tribes List Display** ✅ WORKING
+          - Found 6 tribes in the list as expected
+          - Expected tribes present: "Tech Builders India", "Mumbai Foodies"
+          - Tribe cards displaying correctly with descriptions and member counts
+          - All tribes show proper information structure
+          
+          **TEST 3: Tribe Detail Page Navigation** ✅ WORKING
+          - "View" buttons functional on all tribe cards
+          - Successfully navigated to tribe detail page
+          - Tribe detail page loads correctly
+          
+          **TEST 4: Tribe Detail Page Elements** ✅ WORKING
+          - Tribe name displayed correctly: "Loopync"
+          - Tribe description shown: "India's Social Superapp..."
+          - Member count information visible
+          - Page layout and structure working properly
+          
+          ❌ **CRITICAL ISSUES IDENTIFIED (4/8 TESTS FAILED)**:
+          
+          **BUG 1: Authentication Barrier - Users Cannot Join Tribes** ❌ CRITICAL
+          - All tribes show "Login to Join" buttons instead of "Join Tribe" buttons
+          - Users appear to be in unauthenticated state even after login attempt
+          - Cannot access member-only features due to authentication failure
+          - Root Cause: Frontend authentication state management broken
+          - Impact: Complete blocking of tribe joining functionality
+          
+          **BUG 2: Post Creation Form Not Accessible** ❌ CRITICAL
+          - Post creation form not found on tribe detail pages
+          - Cannot test "Create Posts in Tribes" functionality
+          - Members-only features completely inaccessible
+          - Root Cause: Authentication barrier prevents access to member features
+          - Impact: Core tribe posting functionality unusable
+          
+          **BUG 3: Join/Leave Tribe Functionality Broken** ❌ CRITICAL
+          - No "Join Tribe" or "Leave Tribe" buttons found
+          - Cannot test tribe membership functionality
+          - Users stuck in visitor mode
+          - Root Cause: Authentication state not properly maintained
+          - Impact: Users cannot become tribe members
+          
+          **BUG 4: Media Upload Testing Blocked** ❌ CRITICAL
+          - Cannot access media upload functionality
+          - Image and video upload buttons not accessible
+          - Root Cause: Post creation form not available due to authentication issues
+          - Impact: Media sharing in tribes completely blocked
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ✅ Tribes backend API endpoints appear functional
+          - ✅ Tribe data loading correctly (names, descriptions, member counts)
+          - ✅ Navigation and routing working properly
+          - ❌ Frontend authentication state management broken
+          - ❌ JWT token handling not working correctly
+          - ❌ User session persistence failing
+          - ❌ Protected routes not properly authenticated
+          
+          📊 **SUCCESS RATE**: 50% (4/8 tests passed)
+          
+          🚨 **ROOT CAUSE ANALYSIS**:
+          **CRITICAL ISSUE**: Frontend authentication system is broken
+          - Users cannot properly authenticate even with correct credentials (demo@loopync.com / password123)
+          - Authentication state not maintained across page navigation
+          - JWT tokens not being stored or retrieved correctly
+          - All tribe functionality requires authentication, making it completely inaccessible
+          
+          **EXPECTED RESULTS NOT ACHIEVED**:
+          ❌ Cannot join tribes (authentication required)
+          ❌ Cannot create posts in tribes (member access required)
+          ❌ Cannot test media upload (post creation blocked)
+          ❌ Cannot test like/comment functionality (member access required)
+          ❌ Cannot verify real-time post addition (posting blocked)
+          
+          🎯 **IMMEDIATE FIXES REQUIRED**:
+          1. **HIGH PRIORITY**: Fix frontend authentication system - users must be able to login and maintain session
+          2. **HIGH PRIORITY**: Ensure JWT token storage and retrieval working correctly
+          3. **HIGH PRIORITY**: Fix protected route authentication for tribe detail pages
+          4. **MEDIUM PRIORITY**: Test tribe joining functionality after authentication fix
+          5. **MEDIUM PRIORITY**: Test post creation in tribes after authentication fix
+          
+          **TRIBES FEATURE IS 50% FUNCTIONAL - AUTHENTICATION SYSTEM MUST BE FIXED FOR FULL FUNCTIONALITY**
+          
+          **CRITICAL BLOCKER**: All core tribe functionality (joining, posting, media upload) is blocked by authentication issues. The frontend authentication system documented in test_result.md as having issues is preventing users from accessing any member-only features.
+
   - task: "MediaSelectorModal API Endpoint Fix"
     implemented: true
     working: true
