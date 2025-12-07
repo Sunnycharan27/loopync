@@ -101,7 +101,7 @@ const Home = () => {
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       <div className="max-w-2xl mx-auto">
-        <TopHeader title="Timeline" subtitle="What's happening now" />
+        <TopHeader title="Feed" subtitle="What's happening now" />
 
         {/* Vibe Capsules (Stories) */}
         <VibeCapsules currentUser={currentUser} />
