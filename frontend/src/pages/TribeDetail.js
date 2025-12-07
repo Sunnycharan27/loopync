@@ -63,7 +63,7 @@ const TribeDetail = () => {
 
   const leaveTribe = async () => {
     try {
-      await axios.post(`${API}/tribes/${tribeId}/leave?userId=${currentUser.id}`);
+      await axios.post(`${API}/api/tribes/${tribeId}/leave?userId=${currentUser.id}`);
       toast.success("Left tribe");
       setTribe({
         ...tribe,
