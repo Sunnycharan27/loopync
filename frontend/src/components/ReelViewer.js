@@ -300,14 +300,17 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
                 </div>
               </button>
 
-              {/* Mute */}
+              {/* Mute - Like TikTok/Instagram */}
               <button
                 data-testid="reel-mute-btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   setMuted(!muted);
+                  setHasInteracted(true);  // User has interacted, remember preference
                 }}
-                className="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center"
+                className={`w-14 h-14 rounded-full backdrop-blur flex items-center justify-center transition-all ${
+                  muted ? 'bg-white/20 animate-pulse' : 'bg-cyan-400'
+                }`}
               >
                 {muted ? <VolumeX size={28} className="text-white" /> : <Volume2 size={28} className="text-white" />}
               </button>
