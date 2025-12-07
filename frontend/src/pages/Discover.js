@@ -423,7 +423,22 @@ const Discover = () => {
                     </div>
                   ) : posts.length > 0 ? (
                     posts.map(post => (
-                      <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} />
+                      <PostCard 
+                        key={post.id} 
+                        post={post} 
+                        currentUser={currentUser} 
+                        onLike={handleLike}
+                        onDelete={async (postId) => {
+                          if (!window.confirm("Are you sure you want to delete this post?")) return;
+                          try {
+                            await axios.delete(`${API}/posts/${postId}`);
+                            setPosts(posts.filter(p => p.id !== postId));
+                            toast.success("Post deleted!");
+                          } catch (error) {
+                            toast.error("Failed to delete post");
+                          }
+                        }}
+                      />
                     ))
                   ) : (
                     <div className="glass-card p-8 text-center">
