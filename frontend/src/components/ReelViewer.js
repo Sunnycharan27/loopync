@@ -192,13 +192,6 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
     return videoUrl;
   };
 
-  // Callback ref to attach observer to each reel container
-  const reelContainerRef = useCallback((element, idx) => {
-    if (element && observerRef.current) {
-      observerRef.current.observe(element);
-    }
-  }, []);
-
   return (
     <>
       <div
