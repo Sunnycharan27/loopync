@@ -146,6 +146,21 @@ const TribeDetail = () => {
     }
   };
 
+  const handleDelete = async (postId) => {
+    if (!window.confirm("Are you sure you want to delete this post?")) {
+      return;
+    }
+
+    try {
+      await axios.delete(`${API}/posts/${postId}`);
+      setPosts(posts.filter(p => p.id !== postId));
+      toast.success("Post deleted!");
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+      toast.error("Failed to delete post");
+    }
+  };
+
   const isMember = tribe?.members?.includes(currentUser?.id);
 
   if (loading) {

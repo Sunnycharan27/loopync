@@ -164,3 +164,4 @@ database_export/media_files.json
 # Environment files
 *.env
 *.env.*
+frontend/node_modules/.cache/default-development/15.pack
