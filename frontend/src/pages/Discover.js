@@ -47,6 +47,9 @@ const Discover = () => {
           return u.id !== currentUser.id && !currentUser.friends?.includes(u.id);
         });
         setPeople(filtered);
+      } else if (activeTab === "tribes") {
+        const res = await axios.get(`${API}/tribes`);
+        setTribes(res.data);
       }
     } catch (error) {
       console.error("Failed to load content:", error);
