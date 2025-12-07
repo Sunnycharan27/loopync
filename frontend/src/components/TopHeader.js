@@ -35,7 +35,7 @@ const TopHeader = ({ title, subtitle, showIcons = true }) => {
             <h1 className="text-xl font-bold text-white flex items-center gap-2">
               {title}
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-r from-orange-500 to-green-500 text-white font-semibold">
-                🇮🇳 Made in India
+                🇮🇳 Made India
               </span>
             </h1>
             {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
