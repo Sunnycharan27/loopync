@@ -573,18 +573,7 @@ const MessengerNew = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <button 
-                onClick={() => initiateCall('audio')}
-                className="text-cyan-400 hover:text-cyan-300"
-              >
-                <Phone size={24} />
-              </button>
-              <button 
-                onClick={() => initiateCall('video')}
-                className="text-cyan-400 hover:text-cyan-300"
-              >
-                <Video size={24} />
-              </button>
+              {/* Call buttons removed */}
             </div>
           </div>
 
