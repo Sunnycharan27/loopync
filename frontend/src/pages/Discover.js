@@ -366,7 +366,7 @@ const Discover = () => {
              (!searchResults.users || searchResults.users.length === 0) &&
              (!searchResults.tribes || searchResults.tribes.length === 0) && (
               <div className="glass-card p-8 text-center">
-                <p className="text-gray-400">No results found for "{searchQuery}"</p>
+                <p className="text-gray-400">No results found for &quot;{searchQuery}&quot;</p>
                 <p className="text-sm text-gray-500 mt-2">Try searching with different keywords</p>
               </div>
             )}
