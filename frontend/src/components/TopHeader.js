@@ -28,7 +28,7 @@ const TopHeader = ({ title, subtitle, showIcons = true }) => {
           <img 
             src="/loopync-logo.jpg" 
             alt="Loopync" 
-            className="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform"
+            className="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform aspect-square object-cover flex-shrink-0"
             onClick={() => navigate('/')}
           />
           <div>
