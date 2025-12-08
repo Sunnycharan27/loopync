@@ -41,8 +41,16 @@ class ComprehensiveBackendTester:
         self.session = requests.Session()
         self.token = None
         self.user_id = None
-        self.friends = []
-        self.uploaded_media_id = None
+        self.test_user_1_id = None
+        self.test_user_2_id = None
+        self.test_user_1_token = None
+        self.test_user_2_token = None
+        self.test_results = []
+        self.created_post_id = None
+        self.created_reel_id = None
+        self.created_tribe_id = None
+        self.created_thread_id = None
+        self.created_room_id = None
         
     def log(self, message, level="INFO"):
         """Log messages with timestamp"""
