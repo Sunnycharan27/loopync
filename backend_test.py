@@ -56,6 +56,53 @@ class ComprehensiveBackendTester:
         """Log messages with timestamp"""
         timestamp = datetime.now().strftime("%H:%M:%S")
         print(f"[{timestamp}] {level}: {message}")
+    
+    def log_result(self, test_name, success, details="", error=""):
+        """Log test result"""
+        result = {
+            "test": test_name,
+            "success": success,
+            "details": details,
+            "error": error,
+            "timestamp": datetime.now().isoformat()
+        }
+        self.test_results.append(result)
+        status = "✅ PASS" if success else "❌ FAIL"
+        print(f"{status} {test_name}")
+        if details:
+            print(f"    Details: {details}")
+        if error:
+            print(f"    Error: {error}")
+        print()
+    
+    def make_request(self, method, endpoint, data=None, headers=None, files=None, params=None):
+        """Make HTTP request with error handling"""
+        url = f"{BASE_URL}{endpoint}"
+        
+        # Add auth header if token available
+        if self.token and headers is None:
+            headers = {"Authorization": f"Bearer {self.token}"}
+        elif self.token and headers:
+            headers["Authorization"] = f"Bearer {self.token}"
+        
+        try:
+            if method.upper() == "GET":
+                response = self.session.get(url, headers=headers, params=params, timeout=10)
+            elif method.upper() == "POST":
+                if files:
+                    response = self.session.post(url, data=data, files=files, headers=headers, params=params, timeout=10)
+                else:
+                    response = self.session.post(url, json=data, headers=headers, params=params, timeout=10)
+            elif method.upper() == "PUT":
+                response = self.session.put(url, json=data, headers=headers, params=params, timeout=10)
+            elif method.upper() == "DELETE":
+                response = self.session.delete(url, headers=headers, params=params, timeout=10)
+            else:
+                raise ValueError(f"Unsupported method: {method}")
+            
+            return response
+        except requests.exceptions.RequestException as e:
+            return None
         
     def login(self):
         """Test Priority 2: Authentication - Login with demo credentials"""
