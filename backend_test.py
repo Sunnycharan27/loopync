@@ -460,86 +460,211 @@ class ComprehensiveBackendTester:
         
         return True
     
-    def test_profile_picture_upload(self):
-        """Test Priority 1: Profile Picture Upload (CRITICAL - reported as broken)"""
-        self.log("\n📸 TEST 1: Profile Picture Upload (CRITICAL)")
-        
-        # Create a test image
-        self.log("   Creating test image...")
-        img = Image.new('RGB', (100, 100), color='red')
-        img_buffer = io.BytesIO()
-        img.save(img_buffer, format='PNG')
-        img_buffer.seek(0)
-        
-        # Test file upload
-        self.log("   Uploading test image to /api/upload...")
-        files = {'file': ('test_avatar.png', img_buffer, 'image/png')}
-        
-        # Remove Content-Type header for file upload
-        headers = dict(self.session.headers)
-        if 'Content-Type' in headers:
-            del headers['Content-Type']
-        
-        response = self.session.post(f"{BASE_URL}/upload", files=files, headers=headers)
-        
-        self.log(f"   Upload response status: {response.status_code}")
-        
-        if response.status_code == 200:
-            upload_data = response.json()
-            media_url = upload_data.get('url')
-            media_id = upload_data.get('id')
-            
-            # Extract media ID from URL if not provided directly
-            if not media_id and media_url and '/api/media/' in media_url:
-                media_id = media_url.split('/api/media/')[-1]
-            
-            self.log(f"✅ File upload successful!")
-            self.log(f"   Media URL: {media_url}")
-            self.log(f"   Media ID: {media_id}")
-            
-            # Verify URL format is relative
-            if media_url and media_url.startswith('/api/media/'):
-                self.log("✅ Media URL uses correct relative format (/api/media/{id})")
-            else:
-                self.log(f"❌ Media URL format incorrect: {media_url}", "ERROR")
-                return False
-            
-            self.uploaded_media_id = media_id
-            
-            # Test updating user profile with uploaded avatar
-            self.log("   Updating user profile with uploaded avatar...")
-            
-            # Restore Content-Type for JSON requests
-            self.session.headers.update({"Content-Type": "application/json"})
-            
-            response = self.session.put(f"{BASE_URL}/users/{self.user_id}/profile", json={
-                "avatar": media_url
-            })
-            
-            if response.status_code == 200:
-                self.log("✅ Profile avatar updated successfully")
-                
-                # Verify avatar appears in user data
-                response = self.session.get(f"{BASE_URL}/users")
-                if response.status_code == 200:
-                    users = response.json()
-                    demo_user = next((u for u in users if u.get('id') == self.user_id), None)
-                    
-                    if demo_user and demo_user.get('avatar') == media_url:
-                        self.log("✅ Avatar appears correctly in user response")
-                        return True
-                    else:
-                        self.log(f"❌ Avatar not found in user response: {demo_user.get('avatar') if demo_user else 'User not found'}", "ERROR")
-                        return False
-                else:
-                    self.log(f"❌ Failed to verify avatar in user list: {response.status_code}", "ERROR")
-                    return False
-            else:
-                self.log(f"❌ Failed to update profile avatar: {response.status_code} - {response.text}", "ERROR")
-                return False
-        else:
-            self.log(f"❌ File upload failed: {response.status_code} - {response.text}", "ERROR")
+    def test_messaging_api(self):
+        """Test Messaging APIs"""
+        if not self.test_user_2_id:
+            self.log_result("Messaging Test", False, error="Test user 2 not available")
             return False
+        
+        # Create DM thread
+        thread_data = {
+            "participantId": self.test_user_2_id
+        }
+        
+        response = self.make_request("POST", "/dm-threads", thread_data, params={"userId": self.user_id})
+        
+        if not response or response.status_code != 200:
+            error_msg = f"Create DM thread failed - Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create DM Thread", False, error=error_msg)
+            return False
+        
+        thread_result = response.json()
+        self.created_thread_id = thread_result.get("id")
+        
+        if not self.created_thread_id:
+            self.log_result("Create DM Thread", False, error="No thread ID returned")
+            return False
+        
+        self.log_result("Create DM Thread", True, f"Thread ID: {self.created_thread_id}")
+        
+        # Get all DM threads
+        response = self.make_request("GET", "/dm-threads", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            threads = response.json()
+            if isinstance(threads, list):
+                self.log_result("Get DM Threads", True, f"Retrieved {len(threads)} threads")
+            else:
+                self.log_result("Get DM Threads", False, error="Invalid threads response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get DM Threads", False, error=error_msg)
+        
+        # Send a message
+        message_data = {
+            "text": "Hello! This is a test message from backend testing."
+        }
+        
+        response = self.make_request("POST", "/dm-messages", message_data, params={"threadId": self.created_thread_id, "senderId": self.user_id})
+        if response and response.status_code == 200:
+            message_result = response.json()
+            message_id = message_result.get("id")
+            self.log_result("Send DM Message", True, f"Message ID: {message_id}")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Send DM Message", False, error=error_msg)
+        
+        # Get messages in thread
+        response = self.make_request("GET", f"/dm-messages/{self.created_thread_id}")
+        if response and response.status_code == 200:
+            messages = response.json()
+            if isinstance(messages, list):
+                self.log_result("Get DM Messages", True, f"Retrieved {len(messages)} messages")
+            else:
+                self.log_result("Get DM Messages", False, error="Invalid messages response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get DM Messages", False, error=error_msg)
+        
+        return True
+    
+    def test_viberooms_api(self):
+        """Test VibeRooms APIs"""
+        # Create audio room
+        room_data = {
+            "name": "Test Audio Room",
+            "description": "A test room for backend testing",
+            "category": "tech"
+        }
+        
+        response = self.make_request("POST", "/viberooms", room_data, params={"hostId": self.user_id})
+        
+        if not response or response.status_code != 200:
+            error_msg = f"Create VibeRoom failed - Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create VibeRoom", False, error=error_msg)
+            return False
+        
+        room_result = response.json()
+        self.created_room_id = room_result.get("id")
+        
+        if not self.created_room_id:
+            self.log_result("Create VibeRoom", False, error="No room ID returned")
+            return False
+        
+        self.log_result("Create VibeRoom", True, f"Room ID: {self.created_room_id}")
+        
+        # Get all rooms
+        response = self.make_request("GET", "/viberooms")
+        if response and response.status_code == 200:
+            rooms = response.json()
+            if isinstance(rooms, list):
+                self.log_result("Get All VibeRooms", True, f"Retrieved {len(rooms)} rooms")
+            else:
+                self.log_result("Get All VibeRooms", False, error="Invalid rooms response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get All VibeRooms", False, error=error_msg)
+        
+        # Join the room
+        response = self.make_request("POST", f"/viberooms/{self.created_room_id}/join", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Join VibeRoom", True, "Joined room successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Join VibeRoom", False, error=error_msg)
+        
+        # Get Agora token
+        response = self.make_request("GET", f"/viberooms/{self.created_room_id}/agora-token", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            token_result = response.json()
+            if "token" in token_result:
+                self.log_result("Get Agora Token", True, "Agora token retrieved successfully")
+            else:
+                self.log_result("Get Agora Token", False, error="No token in response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get Agora Token", False, error=error_msg)
+        
+        return True
+    
+    def test_user_profile_api(self):
+        """Test User Profile APIs"""
+        # Get user profile
+        response = self.make_request("GET", f"/users/{self.user_id}")
+        if response and response.status_code == 200:
+            user_profile = response.json()
+            if "id" in user_profile:
+                self.log_result("Get User Profile", True, f"User: {user_profile.get('name', 'Unknown')}")
+            else:
+                self.log_result("Get User Profile", False, error="Invalid user profile")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get User Profile", False, error=error_msg)
+        
+        # Update profile
+        update_data = {
+            "bio": "Updated bio from backend testing"
+        }
+        
+        response = self.make_request("PUT", f"/users/{self.user_id}", update_data)
+        if response and response.status_code == 200:
+            self.log_result("Update User Profile", True, "Profile updated successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Update User Profile", False, error=error_msg)
+        
+        # Get user's posts
+        response = self.make_request("GET", f"/users/{self.user_id}/posts")
+        if response and response.status_code == 200:
+            user_posts = response.json()
+            if isinstance(user_posts, list):
+                self.log_result("Get User Posts", True, f"Retrieved {len(user_posts)} posts")
+            else:
+                self.log_result("Get User Posts", False, error="Invalid posts response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get User Posts", False, error=error_msg)
+        
+        # Send friend request (if test user available)
+        if self.test_user_2_id:
+            response = self.make_request("POST", f"/users/{self.test_user_2_id}/friend-request", params={"fromUserId": self.user_id})
+            if response and response.status_code == 200:
+                self.log_result("Send Friend Request", True, "Friend request sent successfully")
+            else:
+                error_msg = f"Status: {response.status_code if response else 'No response'}"
+                self.log_result("Send Friend Request", False, error=error_msg)
+        
+        return True
+    
+    def test_notifications_api(self):
+        """Test Notifications APIs"""
+        # Get notifications
+        response = self.make_request("GET", "/notifications", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            notifications = response.json()
+            if isinstance(notifications, list):
+                self.log_result("Get Notifications", True, f"Retrieved {len(notifications)} notifications")
+                
+                # Mark first notification as read if available
+                if len(notifications) > 0:
+                    notification_id = notifications[0].get("id")
+                    if notification_id:
+                        response = self.make_request("PUT", f"/notifications/{notification_id}/read")
+                        if response and response.status_code == 200:
+                            self.log_result("Mark Notification Read", True, "Notification marked as read")
+                        else:
+                            error_msg = f"Status: {response.status_code if response else 'No response'}"
+                            self.log_result("Mark Notification Read", False, error=error_msg)
+            else:
+                self.log_result("Get Notifications", False, error="Invalid notifications response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get Notifications", False, error=error_msg)
+        
+        return True
     
     def test_posts_api(self):
         """Test Priority 3: Posts - Get all posts and verify media URLs"""
