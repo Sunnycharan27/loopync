@@ -103,36 +103,155 @@ class ComprehensiveBackendTester:
             return response
         except requests.exceptions.RequestException as e:
             return None
+    
+    def test_health_check(self):
+        """Test health check endpoint"""
+        response = self.make_request("GET", "/health")
         
-    def login(self):
-        """Test Priority 2: Authentication - Login with demo credentials"""
-        self.log("🔐 TEST 2: Authentication - Logging in with demo credentials...")
+        if response and response.status_code == 200:
+            self.log_result("Health Check", True, "Backend is healthy")
+            return True
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Health Check", False, error=error_msg)
+            return False
+    
+    def test_create_test_users(self):
+        """Create two test users for social features testing"""
+        # Create Test User 1
+        user1_data = {
+            "email": TEST_EMAIL_1,
+            "password": TEST_PASSWORD,
+            "name": "Test User One",
+            "handle": f"testuser1_{int(time.time())}"
+        }
         
-        response = self.session.post(f"{BASE_URL}/auth/login", json={
-            "email": TEST_EMAIL,
+        response = self.make_request("POST", "/auth/signup", user1_data)
+        if response and response.status_code == 200:
+            result = response.json()
+            if "token" in result and "user" in result:
+                self.test_user_1_token = result["token"]
+                self.test_user_1_id = result["user"]["id"]
+                self.log_result("Create Test User 1", True, f"User ID: {self.test_user_1_id}")
+            else:
+                self.log_result("Create Test User 1", False, error="Invalid signup response")
+                return False
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create Test User 1", False, error=error_msg)
+            return False
+        
+        # Create Test User 2
+        user2_data = {
+            "email": TEST_EMAIL_2,
+            "password": TEST_PASSWORD,
+            "name": "Test User Two",
+            "handle": f"testuser2_{int(time.time())}"
+        }
+        
+        response = self.make_request("POST", "/auth/signup", user2_data)
+        if response and response.status_code == 200:
+            result = response.json()
+            if "token" in result and "user" in result:
+                self.test_user_2_token = result["token"]
+                self.test_user_2_id = result["user"]["id"]
+                self.log_result("Create Test User 2", True, f"User ID: {self.test_user_2_id}")
+                
+                # Set token for main user (user 1)
+                self.token = self.test_user_1_token
+                self.user_id = self.test_user_1_id
+                return True
+            else:
+                self.log_result("Create Test User 2", False, error="Invalid signup response")
+                return False
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create Test User 2", False, error=error_msg)
+            return False
+    
+    def test_demo_user_login(self):
+        """Test demo user login (fallback if demo user exists)"""
+        response = self.make_request("POST", "/auth/login", {
+            "email": DEMO_EMAIL,
+            "password": DEMO_PASSWORD
+        })
+        
+        if response and response.status_code == 200:
+            result = response.json()
+            if "token" in result and "user" in result:
+                self.token = result["token"]
+                self.user_id = result["user"]["id"]
+                self.log_result("Demo User Login", True, f"User ID: {self.user_id}")
+                return True
+        
+        # Demo user doesn't exist or login failed, that's okay
+        self.log_result("Demo User Login", False, error="Demo user not available (expected in fresh database)")
+        return False
+    
+    def test_login_with_created_user(self):
+        """Test login with newly created user"""
+        if not self.test_user_1_id:
+            return False
+            
+        response = self.make_request("POST", "/auth/login", {
+            "email": TEST_EMAIL_1,
             "password": TEST_PASSWORD
         })
         
-        if response.status_code == 200:
-            data = response.json()
-            self.token = data.get("token")
-            user_data = data.get("user", {})
-            self.user_id = user_data.get("id")
-            
-            self.log(f"✅ Login successful!")
-            self.log(f"   User ID: {self.user_id}")
-            self.log(f"   User Name: {user_data.get('name')}")
-            self.log(f"   User Email: {user_data.get('email')}")
-            self.log(f"   JWT Token: {self.token[:50]}...")
-            
-            # Set authorization header for future requests
-            self.session.headers.update({
-                "Authorization": f"Bearer {self.token}"
-            })
-            return True
+        if response and response.status_code == 200:
+            result = response.json()
+            if "token" in result and "user" in result:
+                token = result["token"]
+                user_id = result["user"]["id"]
+                if user_id == self.test_user_1_id:
+                    self.log_result("Login with Created User", True, f"User ID: {user_id}")
+                    return True
+        
+        error_msg = f"Status: {response.status_code if response else 'No response'}"
+        self.log_result("Login with Created User", False, error=error_msg)
+        return False
+    
+    def test_get_current_user(self):
+        """Test GET /auth/me endpoint"""
+        response = self.make_request("GET", "/auth/me")
+        
+        if response and response.status_code == 200:
+            user_data = response.json()
+            if "id" in user_data and user_data["id"] == self.user_id:
+                self.log_result("Get Current User", True, f"Retrieved user: {user_data.get('name', 'Unknown')}")
+                return True
+        
+        error_msg = f"Status: {response.status_code if response else 'No response'}"
+        self.log_result("Get Current User", False, error=error_msg)
+        return False
+    
+    def test_jwt_token_validation(self):
+        """Test JWT token validation"""
+        # Test with valid token
+        response = self.make_request("GET", "/auth/me")
+        if response and response.status_code == 200:
+            self.log_result("JWT Token Valid", True, "Valid token accepted")
         else:
-            self.log(f"❌ Login failed: {response.status_code} - {response.text}", "ERROR")
+            self.log_result("JWT Token Valid", False, error="Valid token rejected")
             return False
+        
+        # Test with invalid token
+        old_token = self.token
+        self.token = "invalid_token"
+        response = self.make_request("GET", "/auth/me")
+        
+        if response and response.status_code == 401:
+            self.log_result("JWT Token Invalid Rejection", True, "Invalid token properly rejected")
+        else:
+            self.log_result("JWT Token Invalid Rejection", False, error="Invalid token not rejected")
+        
+        # Restore valid token
+        self.token = old_token
+        return True
     
     def test_protected_endpoints(self):
         """Test JWT token validation on protected endpoints"""
