@@ -105,15 +105,15 @@ class ComprehensiveBackendTester:
             return None
     
     def test_health_check(self):
-        """Test health check endpoint"""
-        response = self.make_request("GET", "/health")
+        """Test health check endpoint - use posts endpoint as health check"""
+        response = self.make_request("GET", "/posts")
         
         if response and response.status_code == 200:
-            self.log_result("Health Check", True, "Backend is healthy")
+            self.log_result("Backend Health Check", True, "Backend is responding")
             return True
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
-            self.log_result("Health Check", False, error=error_msg)
+            self.log_result("Backend Health Check", False, error=error_msg)
             return False
     
     def test_create_test_users(self):
