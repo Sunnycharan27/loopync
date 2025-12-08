@@ -988,67 +988,87 @@ class ComprehensiveBackendTester:
         return True
     
     def run_all_tests(self):
-        """Run comprehensive backend API tests"""
-        self.log("🚀 Starting COMPREHENSIVE BACKEND API TESTING")
-        self.log("=" * 80)
-        self.log("🎯 Testing all critical backend endpoints for production readiness")
-        self.log(f"📍 API Base URL: {BASE_URL}")
-        self.log(f"👤 Test Credentials: {TEST_EMAIL} / {TEST_PASSWORD}")
-        self.log("=" * 80)
+        """Run all backend tests"""
+        print("🚀 Starting Comprehensive Backend API Testing for Production Launch")
+        print("=" * 80)
+        print(f"📍 API Base URL: {BASE_URL}")
+        print("=" * 80)
         
-        # Login first (this is also Test 2: Authentication)
-        if not self.login():
-            return False
+        # Health check first
+        if not self.test_health_check():
+            print("❌ Backend health check failed. Stopping tests.")
+            return
         
-        # Test protected endpoints
-        if not self.test_protected_endpoints():
-            return False
+        # Try demo user login first, if fails create test users
+        demo_login_success = self.test_demo_user_login()
         
-        # Run all priority tests
-        tests = [
-            ("Profile Picture Upload (CRITICAL)", self.test_profile_picture_upload),
-            ("Posts API", self.test_posts_api),
-            ("Media Serving", self.test_media_serving),
-            ("WebSocket/Calling", self.test_webrtc_calling),
-            ("Reels API", self.test_reels_api),
-            ("Vibe Capsules API", self.test_vibe_capsules_api),
-            ("Response Times", self.test_response_times)
-        ]
+        if not demo_login_success:
+            # Create test users since demo user doesn't exist
+            if not self.test_create_test_users():
+                print("❌ Failed to create test users. Stopping tests.")
+                return
         
-        passed = 0
-        total = len(tests)
-        failed_tests = []
+        # Authentication tests
+        self.test_login_with_created_user()
+        self.test_get_current_user()
+        self.test_jwt_token_validation()
         
-        for test_name, test_func in tests:
-            try:
-                self.log(f"\n{'='*20} {test_name} {'='*20}")
-                if test_func():
-                    passed += 1
-                    self.log(f"✅ {test_name}: PASSED")
-                else:
-                    failed_tests.append(test_name)
-                    self.log(f"❌ {test_name}: FAILED", "ERROR")
-            except Exception as e:
-                failed_tests.append(test_name)
-                self.log(f"❌ {test_name}: EXCEPTION - {str(e)}", "ERROR")
+        # Core functionality tests
+        self.test_posts_crud()
+        self.test_reels_api()
+        self.test_tribes_api()
+        self.test_messaging_api()
+        self.test_viberooms_api()
+        self.test_user_profile_api()
+        self.test_notifications_api()
         
-        # Summary
-        self.log("\n" + "=" * 80)
-        self.log(f"🎯 COMPREHENSIVE BACKEND API TEST RESULTS")
-        self.log(f"   Tests Passed: {passed}/{total}")
-        self.log(f"   Success Rate: {(passed/total)*100:.1f}%")
+        # Print summary
+        self.print_summary()
+    
+    def print_summary(self):
+        """Print test summary"""
+        print("\n" + "=" * 80)
+        print("📊 BACKEND TESTING SUMMARY")
+        print("=" * 80)
         
-        if failed_tests:
-            self.log(f"\n❌ FAILED TESTS:")
-            for test in failed_tests:
-                self.log(f"   - {test}")
+        total_tests = len(self.test_results)
+        passed_tests = sum(1 for result in self.test_results if result["success"])
+        failed_tests = total_tests - passed_tests
         
-        if passed == total:
-            self.log("\n🎉 ALL TESTS PASSED - BACKEND IS PRODUCTION READY!")
-            return True
+        print(f"Total Tests: {total_tests}")
+        print(f"Passed: {passed_tests} ✅")
+        print(f"Failed: {failed_tests} ❌")
+        print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+        
+        if failed_tests > 0:
+            print("\n❌ FAILED TESTS:")
+            for result in self.test_results:
+                if not result["success"]:
+                    print(f"  • {result['test']}: {result['error']}")
+        
+        print("\n✅ PASSED TESTS:")
+        for result in self.test_results:
+            if result["success"]:
+                print(f"  • {result['test']}")
+        
+        print("\n" + "=" * 80)
+        
+        # Critical issues summary
+        critical_failures = [r for r in self.test_results if not r["success"] and any(word in r["test"].lower() for word in ["auth", "login", "signup", "health"])]
+        
+        if critical_failures:
+            print("🚨 CRITICAL ISSUES FOUND:")
+            for failure in critical_failures:
+                print(f"  • {failure['test']}: {failure['error']}")
+        
+        if passed_tests == total_tests:
+            print("\n🎉 ALL TESTS PASSED - BACKEND IS PRODUCTION READY!")
+        elif failed_tests <= 2:
+            print(f"\n⚠️ MINOR ISSUES FOUND - {failed_tests} tests failed")
         else:
-            self.log(f"\n⚠️  {len(failed_tests)} TESTS FAILED - BACKEND NEEDS FIXES")
-            return False
+            print(f"\n❌ MAJOR ISSUES FOUND - {failed_tests} tests failed")
+        
+        return passed_tests, failed_tests
 
 if __name__ == "__main__":
     tester = ComprehensiveBackendTester()
