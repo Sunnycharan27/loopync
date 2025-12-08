@@ -45,5 +45,28 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	
+	<!-- Camera and Photo Library Permissions -->
+	<key>NSCameraUsageDescription</key>
+	<string>Loopync needs camera access to take photos and videos for posts and reels</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Loopync needs photo library access to upload images and videos</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Loopync needs permission to save photos and videos</string>
+	
+	<!-- Microphone Permission for Audio/Video calls -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Loopync needs microphone access for audio calls and VibeRooms</string>
+	
+	<!-- Location Permission (optional) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Loopync uses your location to show nearby content and events</string>
+	
+	<!-- App Transport Security -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
