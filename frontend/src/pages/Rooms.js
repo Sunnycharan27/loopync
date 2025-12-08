@@ -105,7 +105,7 @@ const Rooms = () => {
               >
                 <div className="flex items-start gap-4">
                   {/* Room Icon */}
-                  <div className="w-14 h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+                  <div className="w-14 h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center aspect-square">
                     {getCategoryIcon(room.category)}
                   </div>
 
