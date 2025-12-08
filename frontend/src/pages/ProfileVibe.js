@@ -124,11 +124,11 @@ const ProfileVibe = () => {
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-8">
         <div className="relative">
           <div className="flex items-center gap-6">
-            <div className="relative group w-24 h-24 rounded-full border-4 border-cyan-400/30 overflow-hidden bg-gray-800 shadow-lg shadow-cyan-400/20">
+            <div className="relative group w-24 h-24 rounded-full border-4 border-cyan-400/30 overflow-hidden bg-gray-800 shadow-lg shadow-cyan-400/20 aspect-square flex-shrink-0">
               <img 
                 src={currentUser.avatar ? getMediaUrl(currentUser.avatar) : `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`} 
                 alt={currentUser.name} 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover preserve-aspect"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || currentUser.email}`;
