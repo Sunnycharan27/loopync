@@ -253,33 +253,211 @@ class ComprehensiveBackendTester:
         self.token = old_token
         return True
     
-    def test_protected_endpoints(self):
-        """Test JWT token validation on protected endpoints"""
-        self.log("🔒 Testing JWT token validation...")
+    def test_posts_crud(self):
+        """Test Posts CRUD operations"""
+        # Create a text post
+        post_data = {
+            "text": "This is a test post for backend testing 🚀",
+            "audience": "public",
+            "hashtags": ["test", "backend"]
+        }
         
-        # Test with valid token
-        response = self.session.get(f"{BASE_URL}/auth/me")
-        if response.status_code == 200:
-            user_data = response.json()
-            self.log(f"✅ Protected endpoint accessible with valid token")
-            self.log(f"   User: {user_data.get('name')} ({user_data.get('email')})")
-        else:
-            self.log(f"❌ Protected endpoint failed with valid token: {response.status_code}", "ERROR")
+        response = self.make_request("POST", "/posts", post_data, params={"authorId": self.user_id})
+        
+        if not response or response.status_code != 200:
+            error_msg = f"Create post failed - Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create Text Post", False, error=error_msg)
             return False
         
-        # Test with invalid token
-        old_auth = self.session.headers.get("Authorization")
-        self.session.headers["Authorization"] = "Bearer invalid_token"
+        post_result = response.json()
+        self.created_post_id = post_result.get("id")
         
-        response = self.session.get(f"{BASE_URL}/auth/me")
-        if response.status_code == 401:
-            self.log("✅ Invalid token properly rejected with 401")
-        else:
-            self.log(f"❌ Invalid token not rejected properly: {response.status_code}", "ERROR")
+        if not self.created_post_id:
+            self.log_result("Create Text Post", False, error="No post ID returned")
             return False
         
-        # Restore valid token
-        self.session.headers["Authorization"] = old_auth
+        self.log_result("Create Text Post", True, f"Post ID: {self.created_post_id}")
+        
+        # Get all posts
+        response = self.make_request("GET", "/posts")
+        if response and response.status_code == 200:
+            posts = response.json()
+            if isinstance(posts, list) and len(posts) > 0:
+                self.log_result("Get All Posts", True, f"Retrieved {len(posts)} posts")
+            else:
+                self.log_result("Get All Posts", False, error="No posts returned")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get All Posts", False, error=error_msg)
+        
+        # Like the post
+        response = self.make_request("POST", f"/posts/{self.created_post_id}/like", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Like Post", True, "Post liked successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Like Post", False, error=error_msg)
+        
+        # Unlike the post
+        response = self.make_request("POST", f"/posts/{self.created_post_id}/unlike", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Unlike Post", True, "Post unliked successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Unlike Post", False, error=error_msg)
+        
+        # Add comment to post
+        comment_data = {"text": "This is a test comment"}
+        response = self.make_request("POST", f"/posts/{self.created_post_id}/comment", comment_data, params={"authorId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Add Comment to Post", True, "Comment added successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Add Comment to Post", False, error=error_msg)
+        
+        # Delete the post
+        response = self.make_request("DELETE", f"/posts/{self.created_post_id}", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Delete Post", True, "Post deleted successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Delete Post", False, error=error_msg)
+        
+        return True
+    
+    def test_reels_api(self):
+        """Test Reels/VibeZone APIs"""
+        # Create a reel
+        reel_data = {
+            "videoUrl": "https://example.com/test-video.mp4",
+            "thumb": "https://example.com/test-thumb.jpg",
+            "caption": "Test reel for backend testing"
+        }
+        
+        response = self.make_request("POST", "/reels", reel_data, params={"authorId": self.user_id})
+        
+        if not response or response.status_code != 200:
+            error_msg = f"Create reel failed - Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create Reel", False, error=error_msg)
+            return False
+        
+        reel_result = response.json()
+        self.created_reel_id = reel_result.get("id")
+        
+        if not self.created_reel_id:
+            self.log_result("Create Reel", False, error="No reel ID returned")
+            return False
+        
+        self.log_result("Create Reel", True, f"Reel ID: {self.created_reel_id}")
+        
+        # Get all reels
+        response = self.make_request("GET", "/reels")
+        if response and response.status_code == 200:
+            reels = response.json()
+            if isinstance(reels, list):
+                self.log_result("Get All Reels", True, f"Retrieved {len(reels)} reels")
+            else:
+                self.log_result("Get All Reels", False, error="Invalid reels response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get All Reels", False, error=error_msg)
+        
+        # Like the reel
+        response = self.make_request("POST", f"/reels/{self.created_reel_id}/like", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Like Reel", True, "Reel liked successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Like Reel", False, error=error_msg)
+        
+        # Track view
+        response = self.make_request("POST", f"/reels/{self.created_reel_id}/view", params={"userId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Track Reel View", True, "Reel view tracked successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Track Reel View", False, error=error_msg)
+        
+        return True
+    
+    def test_tribes_api(self):
+        """Test Tribes APIs"""
+        # Create a tribe
+        tribe_data = {
+            "name": "Test Tribe Backend",
+            "description": "A test tribe for backend testing",
+            "type": "public",
+            "tags": ["testing", "backend"]
+        }
+        
+        response = self.make_request("POST", "/tribes", tribe_data, params={"ownerId": self.user_id})
+        
+        if not response or response.status_code != 200:
+            error_msg = f"Create tribe failed - Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
+            self.log_result("Create Tribe", False, error=error_msg)
+            return False
+        
+        tribe_result = response.json()
+        self.created_tribe_id = tribe_result.get("id")
+        
+        if not self.created_tribe_id:
+            self.log_result("Create Tribe", False, error="No tribe ID returned")
+            return False
+        
+        self.log_result("Create Tribe", True, f"Tribe ID: {self.created_tribe_id}")
+        
+        # Get all tribes
+        response = self.make_request("GET", "/tribes")
+        if response and response.status_code == 200:
+            tribes = response.json()
+            if isinstance(tribes, list):
+                self.log_result("Get All Tribes", True, f"Retrieved {len(tribes)} tribes")
+            else:
+                self.log_result("Get All Tribes", False, error="Invalid tribes response")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get All Tribes", False, error=error_msg)
+        
+        # Join the tribe (with test user 2)
+        if self.test_user_2_id:
+            response = self.make_request("POST", f"/tribes/{self.created_tribe_id}/join", params={"userId": self.test_user_2_id})
+            if response and response.status_code == 200:
+                self.log_result("Join Tribe", True, "User joined tribe successfully")
+            else:
+                error_msg = f"Status: {response.status_code if response else 'No response'}"
+                self.log_result("Join Tribe", False, error=error_msg)
+        
+        # Create post in tribe
+        tribe_post_data = {
+            "text": "This is a test post in the tribe",
+            "audience": "tribe"
+        }
+        
+        response = self.make_request("POST", f"/tribes/{self.created_tribe_id}/posts", tribe_post_data, params={"authorId": self.user_id})
+        if response and response.status_code == 200:
+            self.log_result("Create Tribe Post", True, "Tribe post created successfully")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Create Tribe Post", False, error=error_msg)
+        
+        # Get tribe details
+        response = self.make_request("GET", f"/tribes/{self.created_tribe_id}")
+        if response and response.status_code == 200:
+            tribe_details = response.json()
+            if "id" in tribe_details:
+                self.log_result("Get Tribe Details", True, f"Tribe: {tribe_details.get('name', 'Unknown')}")
+            else:
+                self.log_result("Get Tribe Details", False, error="Invalid tribe details")
+        else:
+            error_msg = f"Status: {response.status_code if response else 'No response'}"
+            self.log_result("Get Tribe Details", False, error=error_msg)
+        
         return True
     
     def test_profile_picture_upload(self):
