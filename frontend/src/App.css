@@ -201,6 +201,26 @@ input:focus, textarea:focus {
   animation: float 8s infinite ease-in-out;
 }
 
+/* Image aspect ratio fix */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+/* Prevent image stretching */
+.preserve-aspect {
+  object-fit: cover;
+  object-position: center;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .glass-card {
