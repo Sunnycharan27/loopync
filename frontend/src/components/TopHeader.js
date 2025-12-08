@@ -76,14 +76,14 @@ const TopHeader = ({ title, subtitle, showIcons = true }) => {
           {currentUser ? (
             <button
               onClick={() => navigate('/profile')}
-              className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-400 hover:border-cyan-300 transition-colors"
+              className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-400 hover:border-cyan-300 transition-colors aspect-square flex-shrink-0"
               data-testid="header-profile-btn"
             >
               {currentUser.avatar ? (
                 <img 
                   src={getMediaUrl(currentUser.avatar)} 
                   alt="Profile" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover preserve-aspect"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name || currentUser.email}`;
