@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 """
-COMPREHENSIVE BACKEND API TESTING - Production Readiness Verification
+Comprehensive Backend API Testing for Production Launch
 
-🎯 **TESTING SCOPE**: Complete backend API testing as per review request
+**Test Environment:**
+- Backend URL: https://vibely.preview.emergentagent.com/api
+- Fresh database (0 users, 0 posts)
 
-**PRIORITY TESTS**:
-1. Profile Picture Upload (CRITICAL - reported as broken)
-2. Authentication (login with demo credentials)
-3. Posts (get all posts, verify media URLs)
-4. Media Serving (test serving existing media files)
-5. WebSocket/Calling (test call initiation)
-6. Reels (get reels, verify video URLs)
-7. Vibe Capsules (get capsules, verify media URLs)
+**Test Scenarios:**
+1. Authentication APIs (signup, login, me)
+2. Posts APIs (After authentication)
+3. Reels/VibeZone APIs
+4. Tribes APIs
+5. Messaging APIs
+6. VibeRooms APIs
+7. User Profile APIs
+8. Notifications APIs
+9. Health Check
 
-**API BASE URL**: https://vibely.preview.emergentagent.com
-**TEST CREDENTIALS**: demo@loopync.com / password123
+Create at least 2 test users to test social features between users.
 """
 
 import requests
@@ -22,13 +25,16 @@ import json
 import sys
 import io
 import time
+import uuid
 from datetime import datetime
-from PIL import Image
 
 # Configuration
 BASE_URL = "https://vibely.preview.emergentagent.com/api"
-TEST_EMAIL = "demo@loopync.com"
-TEST_PASSWORD = "password123"
+TEST_EMAIL_1 = f"testuser1_{int(time.time())}@loopync.com"
+TEST_EMAIL_2 = f"testuser2_{int(time.time())}@loopync.com"
+TEST_PASSWORD = "testpassword123"
+DEMO_EMAIL = "demo@loopync.com"
+DEMO_PASSWORD = "password123"
 
 class ComprehensiveBackendTester:
     def __init__(self):
