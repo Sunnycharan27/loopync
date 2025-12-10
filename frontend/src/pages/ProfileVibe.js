@@ -292,6 +292,17 @@ const ProfileVibe = () => {
           onSelect={handleProfilePictureSelect}
         />
       )}
+
+      {/* Verification Request Modal */}
+      {showVerificationForm && (
+        <VerificationRequestForm 
+          onClose={() => setShowVerificationForm(false)}
+          onSuccess={() => {
+            setShowVerificationForm(false);
+            refreshUserData();
+          }}
+        />
+      )}
     </div>
   );
 };
