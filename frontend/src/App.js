@@ -424,6 +424,28 @@ function App() {
                 )
               }
             />
+            <Route
+              path="/admin/verification"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <AdminVerificationDashboard />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
+              path="/page/:pageId"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : (
+                  <PageView />
+                )
+              }
+            />
 
           </Routes>
         </BrowserRouter>
