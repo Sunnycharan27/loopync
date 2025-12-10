@@ -22,7 +22,7 @@ const AdminVerificationDashboard = () => {
 
   const fetchPendingRequests = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('loopync_token');
       const response = await axios.get(`${API}/admin/verification/requests?skip=0&limit=100`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
