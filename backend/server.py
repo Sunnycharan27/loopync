@@ -7619,7 +7619,7 @@ async def review_verification_request(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Approve or reject verification request (Admin only)"""
-    user_id = await verify_token(credentials.credentials)
+    user_id = verify_token(credentials.credentials)
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     
