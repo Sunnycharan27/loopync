@@ -347,4 +347,24 @@ const FriendListItem = ({ friendId, navigate }) => {
   );
 };
 
-export default ProfileVibe;
+// Add verification form modal
+const ProfileVibeWithModal = () => {
+  const [showVerificationForm, setShowVerificationForm] = useState(false);
+  
+  return (
+    <>
+      <ProfileVibe setShowVerificationForm={setShowVerificationForm} />
+      {showVerificationForm && (
+        <VerificationRequestForm 
+          onClose={() => setShowVerificationForm(false)}
+          onSuccess={() => {
+            setShowVerificationForm(false);
+            window.location.reload();
+          }}
+        />
+      )}
+    </>
+  );
+};
+
+export default ProfileVibeWithModal;
