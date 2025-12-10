@@ -3,10 +3,12 @@ import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
 import { 
-  Settings, Grid, Users, Edit3, X, Check, Phone, MessageCircle, Camera
+  Settings, Grid, Users, Edit3, X, Check, Phone, MessageCircle, Camera, Shield
 } from "lucide-react";
 import MediaSelectorModal from "../components/MediaSelectorModal";
 import PostCard from "../components/PostCard";
+import VerifiedBadge from "../components/VerifiedBadge";
+import VerificationRequestForm from "../components/VerificationRequestForm";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { getMediaUrl } from "../utils/mediaUtils";
