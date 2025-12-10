@@ -155,6 +155,7 @@ const ProfileVibe = () => {
               ) : (
                 <div className="flex items-center gap-2 mb-2">
                   <h2 className="text-2xl font-bold text-white">{currentUser.name}</h2>
+                  {currentUser.isVerified && <VerifiedBadge size={24} />}
                   <button onClick={() => { setEditedName(currentUser.name); setIsEditingName(true); }} className="p-1 hover:bg-cyan-400/10 rounded transition-all">
                     <Edit3 size={16} className="text-cyan-400" />
                   </button>
