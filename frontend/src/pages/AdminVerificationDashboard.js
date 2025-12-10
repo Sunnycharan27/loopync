@@ -54,7 +54,11 @@ const AdminVerificationDashboard = () => {
         }
       );
       
-      toast.success(reviewAction === 'approved' ? 'Verification approved!' : 'Verification rejected');
+      if (reviewAction === 'approved') {
+        toast.success('✅ Verification approved! User will see badge after re-login.', { duration: 5000 });
+      } else {
+        toast.success('Verification rejected');
+      }
       setReviewModal(false);
       setSelectedRequest(null);
       setRejectionReason('');
