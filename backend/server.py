@@ -27,6 +27,12 @@ from PIL import Image
 # Import the Google Sheets database module
 from messenger_service import MessengerService, SendMessageRequest, AIMessageRequest, UpdateReadStatusRequest
 from auth_service import AuthService
+from verification_models import (
+    VerificationRequest, VerificationRequestCreate, VerificationReview,
+    Page, PageCreate, PageUpdate, AccountType, VerificationStatus,
+    TwoFactorRequest, TwoFactorVerify, AdminAssignRole, UserRole
+)
+from verification_service import VerificationService, TwoFactorAuthService
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
