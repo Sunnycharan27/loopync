@@ -63,7 +63,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 # Configuration
-BASE_URL = "https://vibely.preview.emergentagent.com/api"
+BASE_URL = "https://verified-vibes.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 

@@ -19,7 +19,7 @@ from datetime import datetime
 import time
 
 # Configuration
-BACKEND_URL = "https://vibely.preview.emergentagent.com/api"
+BACKEND_URL = "https://verified-vibes.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 
