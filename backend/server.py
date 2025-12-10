@@ -7504,6 +7504,392 @@ async def get_livestreams(status: str = "live"):
         stream["channel"] = channel
     return streams
 
+# ===== VERIFICATION SYSTEM ENDPOINTS =====
+
+@api_router.post("/verification/request")
+async def submit_verification_request(
+    request_data: VerificationRequestCreate,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Submit a verification request"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Create full request object
+    verification_req = VerificationRequest(
+        userId=user_id,
+        **request_data.dict()
+    )
+    
+    result = await verification_service.submit_verification_request(
+        user_id, 
+        verification_req.dict()
+    )
+    
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result["message"])
+    
+    return result
+
+@api_router.post("/verification/upload-document")
+async def upload_verification_document(
+    file: UploadFile = File(...),
+    document_type: str = "aadhaar",  # aadhaar, selfie, business_registration
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Upload verification documents"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    try:
+        # Save file
+        file_extension = file.filename.split('.')[-1]
+        filename = f"verification_{user_id}_{document_type}_{uuid.uuid4().hex[:8]}.{file_extension}"
+        file_path = UPLOAD_DIR / filename
+        
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        file_url = f"/uploads/{filename}"
+        
+        # Update pending verification request with document URL
+        update_field = f"{document_type}Url" if document_type != "aadhaar" else "aadhaarCardUrl"
+        
+        await db.verification_requests.update_one(
+            {"userId": user_id, "status": "pending"},
+            {"$set": {update_field: file_url}}
+        )
+        
+        return {"success": True, "fileUrl": file_url}
+        
+    except Exception as e:
+        logger.error(f"Error uploading verification document: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/verification/status")
+async def get_verification_status(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Get current user's verification status"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    result = await verification_service.get_user_verification_status(user_id)
+    
+    if not result["success"]:
+        raise HTTPException(status_code=404, detail=result["message"])
+    
+    return result["data"]
+
+# ===== ADMIN VERIFICATION ENDPOINTS =====
+
+async def verify_admin(user_id: str) -> bool:
+    """Check if user is admin"""
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "role": 1})
+    return user and user.get("role") in ["admin", "super_admin"]
+
+@api_router.get("/admin/verification/requests")
+async def get_verification_requests(
+    skip: int = 0,
+    limit: int = 50,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Get all pending verification requests (Admin only)"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    if not await verify_admin(user_id):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    result = await verification_service.get_pending_requests(skip, limit)
+    
+    if not result["success"]:
+        raise HTTPException(status_code=500, detail=result["message"])
+    
+    return result
+
+@api_router.post("/admin/verification/{request_id}/review")
+async def review_verification_request(
+    request_id: str,
+    review: VerificationReview,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Approve or reject verification request (Admin only)"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    if not await verify_admin(user_id):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    result = await verification_service.review_verification(
+        request_id,
+        user_id,
+        review.dict()
+    )
+    
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result["message"])
+    
+    return result
+
+@api_router.post("/admin/users/{target_user_id}/assign-role")
+async def assign_user_role(
+    target_user_id: str,
+    role_data: AdminAssignRole,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Assign admin role to a user (Super Admin only)"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Check if requester is super admin
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "role": 1})
+    if not user or user.get("role") != "super_admin":
+        raise HTTPException(status_code=403, detail="Super Admin access required")
+    
+    # Update target user role
+    await db.users.update_one(
+        {"id": target_user_id},
+        {"$set": {"role": role_data.role}}
+    )
+    
+    return {"success": True, "message": f"User role updated to {role_data.role}"}
+
+@api_router.post("/admin/users/{target_user_id}/suspend-verification")
+async def suspend_user_verification(
+    target_user_id: str,
+    reason: str = Body(...),
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Suspend user's verification status (Admin only)"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    if not await verify_admin(user_id):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    result = await verification_service.suspend_verification(target_user_id, user_id, reason)
+    
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result["message"])
+    
+    return result
+
+# ===== PAGE ENDPOINTS =====
+
+@api_router.post("/pages/create")
+async def create_page(
+    page_data: PageCreate,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Create a page (for verified accounts)"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Check if user is verified
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user or not user.get("isVerified"):
+        raise HTTPException(status_code=403, detail="Only verified accounts can create pages")
+    
+    # Check if page already exists
+    existing_page = await db.pages.find_one({"userId": user_id})
+    if existing_page:
+        raise HTTPException(status_code=400, detail="Page already exists for this user")
+    
+    # Create page
+    page = Page(
+        userId=user_id,
+        avatar=user.get("avatar", "https://api.dicebear.com/7.x/avataaars/svg?seed=default"),
+        **page_data.dict()
+    )
+    
+    await db.pages.insert_one(page.dict())
+    
+    # Update user with pageId
+    await db.users.update_one(
+        {"id": user_id},
+        {"$set": {"pageId": page.id}}
+    )
+    
+    return {"success": True, "page": page.dict()}
+
+@api_router.get("/pages/{page_id}")
+async def get_page(page_id: str):
+    """Get page details"""
+    page = await db.pages.find_one({"id": page_id}, {"_id": 0})
+    
+    if not page:
+        raise HTTPException(status_code=404, detail="Page not found")
+    
+    # Get page posts
+    posts = await db.posts.find(
+        {"authorId": page["userId"]},
+        {"_id": 0}
+    ).sort("createdAt", -1).limit(20).to_list(20)
+    
+    page["recentPosts"] = posts
+    
+    return page
+
+@api_router.get("/pages/user/{user_id}")
+async def get_page_by_user(user_id: str):
+    """Get page by user ID"""
+    page = await db.pages.find_one({"userId": user_id}, {"_id": 0})
+    
+    if not page:
+        raise HTTPException(status_code=404, detail="Page not found")
+    
+    return page
+
+@api_router.put("/pages/{page_id}")
+async def update_page(
+    page_id: str,
+    page_update: PageUpdate,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Update page details"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Check ownership
+    page = await db.pages.find_one({"id": page_id})
+    if not page or page["userId"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized to update this page")
+    
+    # Update page
+    update_data = {k: v for k, v in page_update.dict().items() if v is not None}
+    update_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.pages.update_one(
+        {"id": page_id},
+        {"$set": update_data}
+    )
+    
+    return {"success": True, "message": "Page updated successfully"}
+
+@api_router.get("/pages/{page_id}/analytics")
+async def get_page_analytics(
+    page_id: str,
+    days: int = 30,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Get page analytics (Page owner only)"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Check ownership
+    page = await db.pages.find_one({"id": page_id})
+    if not page or page["userId"] != user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Get basic analytics
+    # In a real system, you'd have proper analytics collection
+    total_posts = await db.posts.count_documents({"authorId": user_id})
+    total_likes = 0
+    total_comments = 0
+    
+    # Count likes and comments on user's posts
+    posts = await db.posts.find({"authorId": user_id}, {"_id": 0, "likes": 1, "comments": 1}).to_list(1000)
+    for post in posts:
+        total_likes += len(post.get("likes", []))
+        total_comments += len(post.get("comments", []))
+    
+    # Get follower count (from friends list)
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "friends": 1})
+    follower_count = len(user.get("friends", []))
+    
+    return {
+        "pageId": page_id,
+        "summary": {
+            "totalPosts": total_posts,
+            "totalFollowers": follower_count,
+            "totalLikes": total_likes,
+            "totalComments": total_comments,
+            "engagementRate": round((total_likes + total_comments) / max(total_posts, 1), 2)
+        },
+        "period": f"Last {days} days"
+    }
+
+# ===== TWO-FACTOR AUTHENTICATION =====
+
+@api_router.post("/2fa/request-otp")
+async def request_two_factor_otp(
+    request: TwoFactorRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Request OTP for 2FA"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    result = await two_factor_service.request_otp(request.email)
+    
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result["message"])
+    
+    return result
+
+@api_router.post("/2fa/verify-otp")
+async def verify_two_factor_otp(
+    verify_req: TwoFactorVerify,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Verify OTP for 2FA"""
+    user_id = await verify_token(credentials.credentials)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    result = await two_factor_service.verify_otp(verify_req.email, verify_req.otpCode)
+    
+    if not result["success"]:
+        raise HTTPException(status_code=400, detail=result["message"])
+    
+    return result
+
+# ===== SEARCH WITH VERIFIED FILTER =====
+
+@api_router.get("/search/verified")
+async def search_verified_accounts(
+    q: str = "",
+    account_type: Optional[str] = None,
+    skip: int = 0,
+    limit: int = 20
+):
+    """Search verified accounts"""
+    query = {"isVerified": True}
+    
+    if q:
+        query["$or"] = [
+            {"name": {"$regex": q, "$options": "i"}},
+            {"handle": {"$regex": q, "$options": "i"}}
+        ]
+    
+    if account_type:
+        query["accountType"] = account_type
+    
+    users = await db.users.find(
+        query,
+        {"_id": 0, "password": 0}
+    ).sort("name", 1).skip(skip).limit(limit).to_list(limit)
+    
+    # Get pages for each user
+    for user in users:
+        if user.get("pageId"):
+            page = await db.pages.find_one({"id": user["pageId"]}, {"_id": 0})
+            user["page"] = page
+    
+    return {"results": users, "total": len(users)}
+
 # Include router
 app.include_router(api_router)
 
