@@ -172,6 +172,22 @@ const ProfileVibe = () => {
 
           {currentUser.bio && <p className="mt-4 text-gray-400 text-sm leading-relaxed">{currentUser.bio}</p>}
 
+          {!currentUser.isVerified && currentUser.verificationStatus !== 'pending' && (
+            <button 
+              onClick={() => setShowVerificationForm(true)}
+              className="w-full py-3 mt-4 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 font-semibold hover:bg-blue-500/20 transition-all flex items-center justify-center gap-2"
+            >
+              <Shield size={18} />
+              Request Verification
+            </button>
+          )}
+          
+          {currentUser.verificationStatus === 'pending' && (
+            <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-xl text-center">
+              <p className="text-yellow-400 text-sm font-semibold">⏳ Verification pending review</p>
+            </div>
+          )}
+
           <div className="flex items-center gap-2 mt-6">
             <button onClick={() => navigate("/messenger")} className="flex-1 py-2.5 rounded-xl bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 font-semibold hover:bg-cyan-400/20 transition-all flex items-center justify-center gap-2">
               <MessageCircle size={18} />Message
