@@ -354,15 +354,6 @@ const FriendListItem = ({ friendId, navigate }) => {
       >
         Message
       </button>
-      {showVerificationForm && (
-        <VerificationRequestForm 
-          onClose={() => setShowVerificationForm(false)}
-          onSuccess={() => {
-            setShowVerificationForm(false);
-            refreshUserData();
-          }}
-        />
-      )}
     </div>
   );
 };
