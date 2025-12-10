@@ -118,9 +118,23 @@ const ProfileVibe = () => {
       <div className="sticky top-0 z-10 glass-surface backdrop-blur-xl">
         <div className="max-w-2xl mx-auto px-6 py-4 flex items-center justify-between">
           <h1 className="text-xl font-bold text-white">Profile</h1>
-          <button onClick={() => navigate("/settings")} className="p-2 rounded-xl hover:bg-white/10 transition-all">
-            <Settings size={20} />
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => {
+                refreshUserData();
+                toast.success('Profile refreshed!');
+              }} 
+              className="p-2 rounded-xl hover:bg-white/10 transition-all"
+              title="Refresh Profile Data"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+              </svg>
+            </button>
+            <button onClick={() => navigate("/settings")} className="p-2 rounded-xl hover:bg-white/10 transition-all">
+              <Settings size={20} />
+            </button>
+          </div>
         </div>
       </div>
 
