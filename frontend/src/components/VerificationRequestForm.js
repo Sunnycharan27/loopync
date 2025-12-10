@@ -48,7 +48,7 @@ const VerificationRequestForm = ({ onClose, onSuccess }) => {
       formData.append('file', file);
       formData.append('document_type', type);
       
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('loopync_token');
       const response = await axios.post(
         `${API}/verification/upload-document?document_type=${type}`,
         formData,
