@@ -197,6 +197,17 @@ const ProfileVibe = () => {
             </button>
           </div>
 
+          {/* Admin Dashboard Button - Only show for admin users */}
+          {currentUser.role === 'admin' && (
+            <button 
+              onClick={() => navigate("/admin/verification")} 
+              className="w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold hover:from-orange-600 hover:to-red-600 transition-all flex items-center justify-center gap-2 shadow-lg"
+            >
+              <Shield size={20} />
+              Admin Dashboard
+            </button>
+          )}
+
         </div>
 
         <div className="flex gap-2 border-b border-gray-800 overflow-x-auto">
