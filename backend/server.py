@@ -7668,7 +7668,7 @@ async def suspend_user_verification(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Suspend user's verification status (Admin only)"""
-    user_id = await verify_token(credentials.credentials)
+    user_id = verify_token(credentials.credentials)
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     
