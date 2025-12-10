@@ -7598,7 +7598,7 @@ async def get_verification_requests(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Get all pending verification requests (Admin only)"""
-    user_id = await verify_token(credentials.credentials)
+    user_id = verify_token(credentials.credentials)
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     
