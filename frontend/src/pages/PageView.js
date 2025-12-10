@@ -25,13 +25,13 @@ const PageView = () => {
 
   const fetchCurrentUser = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('loopync_token');
       if (!token) return;
       
       const response = await axios.get(`${API}/auth/me`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      setCurrentUser(response.data.user);
+      setCurrentUser(response.data);
     } catch (error) {
       console.error('Error fetching current user:', error);
     }
