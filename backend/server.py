@@ -105,7 +105,16 @@ class User(BaseModel):
     bio: str = ""
     kycTier: int = 1
     walletBalance: float = 0.0
+    
+    # Verification & Account Type
     isVerified: bool = False
+    accountType: str = "personal"  # personal, creator, public_figure, business
+    verificationStatus: str = "none"  # none, pending, approved, rejected, suspended
+    pageId: Optional[str] = None  # Link to Page if account is verified
+    
+    # Admin & Roles
+    role: str = "user"  # user, admin, super_admin
+    
     verificationCode: Optional[str] = None
     resetPasswordToken: Optional[str] = None
     resetPasswordExpires: Optional[str] = None
