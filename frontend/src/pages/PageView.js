@@ -44,12 +44,12 @@ const PageView = () => {
       setPosts(response.data.recentPosts || []);
       
       // Check if current user owns this page
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('loopync_token');
       if (token) {
         const userResponse = await axios.get(`${API}/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        setIsOwner(userResponse.data.user.id === response.data.userId);
+        setIsOwner(userResponse.data.id === response.data.userId);
       }
       
       setLoading(false);
