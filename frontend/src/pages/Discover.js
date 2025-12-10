@@ -501,13 +501,33 @@ const Discover = () => {
 
               {activeTab === "people" && (
                 <div>
+                  {/* Verified Filter */}
+                  <div className="mb-4 flex items-center gap-3 p-3 glass-card rounded-xl">
+                    <button
+                      onClick={() => setShowVerifiedOnly(!showVerifiedOnly)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
+                        showVerifiedOnly 
+                          ? 'bg-blue-500 text-white' 
+                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      }`}
+                    >
+                      <Shield size={16} />
+                      Verified Only
+                    </button>
+                    {showVerifiedOnly && (
+                      <span className="text-sm text-gray-400">
+                        Showing {people.filter(u => u.isVerified).length} verified accounts
+                      </span>
+                    )}
+                  </div>
+                  
                   {loading ? (
                     <div className="flex items-center justify-center py-12">
                       <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
                     </div>
-                  ) : people.length > 0 ? (
+                  ) : people.filter(u => !showVerifiedOnly || u.isVerified).length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {people.map(user => (
+                      {people.filter(u => !showVerifiedOnly || u.isVerified).map(user => (
                         <div key={user.id} className="glass-card p-4 hover:bg-gray-800/50 transition-all">
                           <div className="flex items-start gap-3">
                             <img
