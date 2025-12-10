@@ -95,7 +95,7 @@ class VerificationService:
                 return {"success": False, "message": "Invalid status"}
             
             # Get the verification request
-            request = await self.db.verification_requests.find_one({"id": request_id})
+            request = await self.db.verification_requests.find_one({"id": request_id}, {"_id": 0})
             if not request:
                 return {"success": False, "message": "Verification request not found"}
             
