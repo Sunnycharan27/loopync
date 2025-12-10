@@ -55,7 +55,8 @@ class VerificationService:
         """Get all pending verification requests for admin"""
         try:
             cursor = self.db.verification_requests.find(
-                {"status": "pending"}
+                {"status": "pending"},
+                {"_id": 0}
             ).sort("submittedAt", -1).skip(skip).limit(limit)
             
             requests = await cursor.to_list(length=limit)
