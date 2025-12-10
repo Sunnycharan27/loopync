@@ -89,7 +89,7 @@ const VerificationRequestForm = ({ onClose, onSuccess }) => {
       }
       
       // Submit verification request
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('loopync_token');
       const response = await axios.post(
         `${API}/verification/request`,
         formData,
