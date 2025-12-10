@@ -41,7 +41,7 @@ const AdminVerificationDashboard = () => {
     
     setSubmitting(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('loopync_token');
       await axios.post(
         `${API}/admin/verification/${selectedRequest.id}/review`,
         {
