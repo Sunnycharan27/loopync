@@ -25,6 +25,7 @@ const Discover = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [searching, setSearching] = useState(false);
+  const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
 
   useEffect(() => {
     fetchContent();
