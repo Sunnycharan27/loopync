@@ -22,6 +22,8 @@ import Profile from "./pages/ProfileVibe";
 import UserProfile from "./pages/UserProfile";
 import People from "./pages/People";
 import Settings from "./pages/Settings";
+import AdminVerificationDashboard from "./pages/AdminVerificationDashboard";
+import PageView from "./pages/PageView";
 import Rooms from "./pages/Rooms";
 import RoomDetailClubhouse from "./pages/RoomDetailClubhouse";
 import Analytics from "./pages/Analytics";
