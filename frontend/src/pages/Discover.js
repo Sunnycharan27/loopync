@@ -537,12 +537,15 @@ const Discover = () => {
                               onClick={() => navigate(`/profile/${user.id}`)}
                             />
                             <div className="flex-1">
-                              <h3 
-                                className="font-semibold text-white cursor-pointer hover:underline"
-                                onClick={() => navigate(`/profile/${user.id}`)}
-                              >
-                                {user.name}
-                              </h3>
+                              <div className="flex items-center gap-2">
+                                <h3 
+                                  className="font-semibold text-white cursor-pointer hover:underline"
+                                  onClick={() => navigate(`/profile/${user.id}`)}
+                                >
+                                  {user.name}
+                                </h3>
+                                {user.isVerified && <VerifiedBadge size={16} />}
+                              </div>
                               <p className="text-sm text-gray-400">@{user.handle}</p>
                               {user.bio && <p className="text-sm text-gray-300 mt-1 line-clamp-2">{user.bio}</p>}
                               
