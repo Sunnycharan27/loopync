@@ -115,7 +115,10 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
               className="cursor-pointer hover:opacity-80 transition-opacity"
               onClick={() => navigate(`/profile/${post.authorId}`)}
             >
-              <h3 className="font-semibold text-white">{post.author?.name || 'User'}</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold text-white">{post.author?.name || 'User'}</h3>
+                {post.author?.isVerified && <VerifiedBadge size={16} />}
+              </div>
               <p className="text-sm text-gray-400">@{post.author?.handle || post.authorId?.substring(0, 8)}</p>
             </div>
             <div className="relative">
