@@ -7644,7 +7644,7 @@ async def assign_user_role(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Assign admin role to a user (Super Admin only)"""
-    user_id = await verify_token(credentials.credentials)
+    user_id = verify_token(credentials.credentials)
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     
