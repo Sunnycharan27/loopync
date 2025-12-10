@@ -7539,7 +7539,7 @@ async def upload_verification_document(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Upload verification documents"""
-    user_id = await verify_token(credentials.credentials)
+    user_id = verify_token(credentials.credentials)
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     
