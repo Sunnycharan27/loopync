@@ -262,7 +262,7 @@ const AdminDashboard = ({ data }) => (
       <StatCard icon={<Users />} label="Total Users" value={data.totalUsers || 0} color="cyan" />
       <StatCard icon={<Activity />} label="Active Users" value={data.activeUsers || 0} color="green" />
       <StatCard icon={<MessageCircle />} label="Total Posts" value={data.totalPosts || 0} color="purple" />
-      <StatCard icon={<Eye />} label="Total Reels" value={data.totalReels || 0} color="orange" />
+      <StatCard icon={<Eye />} label="Total VibeZone" value={data.totalReels || 0} color="orange" />
     </div>
 
     {/* Engagement Overview */}
