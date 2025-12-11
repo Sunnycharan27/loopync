@@ -413,8 +413,8 @@ const InstagramProfile = () => {
                     <Edit3 size={16} />
                     Edit Profile
                   </button>
-                  {/* Admin Dashboard Button */}
-                  {(profileUser.isAdmin || profileUser.role === 'super_admin' || profileUser.role === 'admin') && (
+                  {/* Admin Dashboard Button - Only for loopyncpvt@gmail.com */}
+                  {currentUser?.email === 'loopyncpvt@gmail.com' && (
                     <button
                       onClick={() => navigate('/admin/verification')}
                       className="py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-500/20"
@@ -423,7 +423,7 @@ const InstagramProfile = () => {
                       Admin Dashboard
                     </button>
                   )}
-                  {!profileUser.isVerified && !profileUser.isAdmin ? (
+                  {!profileUser.isVerified && currentUser?.email !== 'loopyncpvt@gmail.com' ? (
                     <button
                       onClick={() => navigate('/verification')}
                       className="py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
