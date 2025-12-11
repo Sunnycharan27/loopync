@@ -92,31 +92,59 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
 
     setSending(true);
     try {
-      const message = getShareMessage();
-      const link = getShareLink();
+      const token = localStorage.getItem('loopync_token');
       
-      // Send to each selected friend
-      const sendPromises = selectedFriends.map(friendId =>
-        axios.post(`${API}/share`, {
-          fromUserId: currentUser.id,
-          toUserId: friendId,
-          contentType: type,
+      // Map type to contentType for API
+      const contentType = type === 'video' ? 'reel' : type;
+      const endpoint = `${API}/share/${contentType}/${item.id}`;
+      
+      // Use the new comprehensive share API
+      const res = await axios.post(
+        endpoint,
+        {
+          contentType,
           contentId: item.id,
-          message: message,
-          link: link
-        }).catch(error => {
-          console.error(`Failed to share with ${friendId}:`, error);
-          return null; // Don't fail entire operation if one fails
-        })
+          shareType: 'dm',
+          toUserIds: selectedFriends,
+          message: getShareMessage()
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      await Promise.all(sendPromises);
-      
-      toast.success(`Shared with ${selectedFriends.length} friend${selectedFriends.length > 1 ? 's' : ''}!`);
-      onClose();
+      if (res.data.success) {
+        const count = res.data.sharedToCount || res.data.invitedCount || selectedFriends.length;
+        const label = (type === 'tribe' || type === 'room') ? 'Invited' : 'Shared with';
+        toast.success(`${label} ${count} friend${count > 1 ? 's' : ''}!`);
+        onClose();
+      }
     } catch (error) {
       console.error("Failed to share:", error);
-      toast.error("Failed to share with friends");
+      // Fallback to legacy API if new API fails
+      try {
+        const message = getShareMessage();
+        const link = getShareLink();
+        
+        const sendPromises = selectedFriends.map(friendId =>
+          axios.post(`${API}/share`, {
+            fromUserId: currentUser.id,
+            toUserId: friendId,
+            contentType: type,
+            contentId: item.id,
+            message: message,
+            link: link
+          }).catch(err => {
+            console.error(`Failed to share with ${friendId}:`, err);
+            return null;
+          })
+        );
+
+        await Promise.all(sendPromises);
+        toast.success(`Shared with ${selectedFriends.length} friend${selectedFriends.length > 1 ? 's' : ''}!`);
+        onClose();
+      } catch (fallbackError) {
+        console.error("Fallback share failed:", fallbackError);
+        toast.error("Failed to share with friends");
+      }
     } finally {
       setSending(false);
     }
