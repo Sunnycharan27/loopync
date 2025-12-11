@@ -263,6 +263,8 @@ class Tribe(BaseModel):
     ownerId: str
     members: List[str] = Field(default_factory=list)
     memberCount: int = 0
+    invitedBy: List[dict] = Field(default_factory=list)  # [{userId, invitedUserId, createdAt}]
+    shareCount: int = 0  # Number of times tribe has been shared
     createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 class TribeCreate(BaseModel):
