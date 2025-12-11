@@ -2200,6 +2200,7 @@ async def follow_user(userId: str, request: FollowRequest):
         action = "followed"
         
         # Create notification
+        follower_info = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "id": 1})
         notification = Notification(
             userId=targetUserId,
             type="follow",
@@ -2207,6 +2208,11 @@ async def follow_user(userId: str, request: FollowRequest):
             link=f"/profile/{userId}"
         )
         await db.notifications.insert_one(notification.model_dump())
+        
+        # Emit real-time notification
+        await sio.emit('new_follower', {
+            'follower': follower_info
+        }, room=f"user:{targetUserId}")
     
     await db.users.update_one({"id": userId}, {"$set": {"following": following}})
     await db.users.update_one({"id": targetUserId}, {"$set": {"followers": followers}})
