@@ -59,26 +59,14 @@
 ## agent_communication:
     - agent: "main"
       message: |
-        TESTING REQUEST: Test the enhanced Discover/People section with messaging feature:
+        TESTING REQUEST: Test profile picture upload and messaging features
         
-        FEATURES ADDED:
-        1. Message button on user cards (shows for friends only)
-        2. Verified badge visible in search results
-        3. Start conversation functionality from Discover page
-        
-        TEST STEPS:
         1. Login as sunnycharan181@gmail.com / Ramcharan
-        2. Go to /discover and click People tab
-        3. Verify Message button appears for friends
-        4. Click Message button - should navigate to /messenger
-        5. Search for "ramcharan" - verify verified badge shows
-        6. Test Follow, Add Friend buttons still work
-        7. Test View Profile navigation
-        
-        EXPECTED:
-        - Message button navigates to messenger
-        - Verified badge visible in search and people list
-        - All previous functionality still works
+        2. Go to /profile and click on profile picture to upload/crop
+        3. Verify the image crop modal appears
+        4. Go to /messenger and test sending an image
+        5. Test voice recording button
+        6. Test message reactions (double-click on message)
     - agent: "testing"
       message: |
         COMPREHENSIVE DISCOVER/PEOPLE SECTION TESTING COMPLETED - EXCELLENT SUCCESS RATE (85.7%)
