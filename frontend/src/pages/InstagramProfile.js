@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import {
   Camera, Edit3, Settings, Grid, Film, BarChart3,
   Mail, Phone, MessageCircle, Globe, MapPin,
-  MoreHorizontal, UserPlus, UserCheck, UserMinus, Share2
+  MoreHorizontal, UserPlus, UserCheck, UserMinus, Share2, BadgeCheck, Shield
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import ImageCropModal from '../components/ImageCropModal';
