@@ -247,7 +247,7 @@ class MessengerService:
         # Add new reaction
         reactions.append({
             "userId": user_id,
-            "reaction": reaction,
+            "emoji": reaction,
             "createdAt": datetime.now(timezone.utc).isoformat()
         })
         
@@ -260,8 +260,24 @@ class MessengerService:
         await self.emit_to_user(message["senderId"], 'message_reaction', {
             "messageId": message_id,
             "userId": user_id,
-            "reaction": reaction
+            "emoji": reaction
         })
+        
+        return {"success": True, "reactions": reactions}
+
+    async def remove_reaction(self, message_id: str, user_id: str) -> dict:
+        """Remove user's reaction from a message"""
+        message = await self.db.messages.find_one({"id": message_id}, {"_id": 0})
+        if not message:
+            raise HTTPException(status_code=404, detail="Message not found")
+        
+        # Remove reaction from this user
+        reactions = [r for r in message.get("reactions", []) if r["userId"] != user_id]
+        
+        await self.db.messages.update_one(
+            {"id": message_id},
+            {"$set": {"reactions": reactions}}
+        )
         
         return {"success": True, "reactions": reactions}
     
