@@ -306,8 +306,8 @@ class DiscoverPeopleBackendTester:
             self.log_result("Send Friend Request", False, error=error_msg)
             return False
         
-        # Get User B's friend requests
-        response = self.make_request("GET", f"/users/{self.user_b_id}/friend-requests", token=self.user_b_token)
+        # Get User B's friend requests using the correct endpoint
+        response = self.make_request("GET", "/friend-requests", params={"userId": self.user_b_id}, token=self.user_b_token)
         
         if response and response.status_code == 200:
             requests_data = response.json()
