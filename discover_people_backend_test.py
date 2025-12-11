@@ -164,20 +164,19 @@ class DiscoverPeopleBackendTester:
         
         if response and response.status_code == 200:
             result = response.json()
-            if result.get("success"):
-                action = result.get("action", "unknown")
-                following_count = result.get("followingCount", 0)
-                followers_count = result.get("followersCount", 0)
-                
-                if action == "followed":
-                    self.log_result("User A Follows User B", True, 
-                                  f"Action: {action}, Following: {following_count}, Followers: {followers_count}")
-                else:
-                    self.log_result("User A Follows User B", False, 
-                                  error=f"Unexpected action: {action}")
-                    return False
+            self.log(f"Follow response: {result}")
+            
+            # The follow endpoint doesn't return a "success" field, it returns action directly
+            action = result.get("action", "unknown")
+            following_count = result.get("followingCount", 0)
+            followers_count = result.get("followersCount", 0)
+            
+            if action == "followed":
+                self.log_result("User A Follows User B", True, 
+                              f"Action: {action}, Following: {following_count}, Followers: {followers_count}")
             else:
-                self.log_result("User A Follows User B", False, error="Success flag is false")
+                self.log_result("User A Follows User B", False, 
+                              error=f"Unexpected action: {action}")
                 return False
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
