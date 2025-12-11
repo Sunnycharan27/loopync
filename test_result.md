@@ -1453,11 +1453,11 @@ backend:
 frontend:
   - task: "Profile Picture Upload and Enhanced Messaging Features"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/pages/InstagramProfile.js, /app/frontend/src/pages/MessengerNew.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -1477,6 +1477,85 @@ frontend:
           ✅ Message Reactions: Emoji picker with 6 reactions (❤️👍😂😮😢🔥) implemented
           
           NEEDS COMPREHENSIVE TESTING with credentials: sunnycharan181@gmail.com / Ramcharan
+      - working: false
+        agent: "testing"
+        comment: |
+          COMPREHENSIVE PROFILE PICTURE UPLOAD AND ENHANCED MESSAGING FEATURES TESTING COMPLETED - MIXED RESULTS WITH CRITICAL ISSUES (2/4 TESTS PASSED - 50% SUCCESS)
+          
+          🎯 **TESTING SCOPE**: Complete Profile Picture Upload and Enhanced Messaging Features testing as per review request
+          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan
+          **TEST DATE**: December 11, 2025
+          **VIEWPORT**: Desktop (1920x1080)
+          **TEST METHODOLOGY**: End-to-end UI testing with Playwright automation
+          
+          ✅ **WORKING FEATURES (2/4 TESTS PASSED)**:
+          
+          **TEST 1: Authentication & Login** ✅ WORKING
+          - Successfully logged in with provided credentials (sunnycharan181@gmail.com / Ramcharan)
+          - User authentication working correctly
+          - Redirected to home/feed page after login
+          - User session maintained properly
+          
+          **TEST 2: Navigation & Page Access** ✅ WORKING
+          - Successfully navigated to /profile page
+          - Successfully navigated to /messenger page
+          - Page routing and navigation working correctly
+          - User interface loading properly
+          
+          ❌ **CRITICAL ISSUES IDENTIFIED (2/4 TESTS FAILED)**:
+          
+          **BUG 1: Profile Picture Upload Functionality Not Working** ❌ CRITICAL
+          - **Navigation**: ✅ Working (/profile page loads correctly)
+          - **Profile Picture Detection**: ✅ Working (profile picture found and clickable)
+          - **Click Interaction**: ✅ Working (profile picture responds to clicks)
+          - **Root Cause**: ImageCropModal or file picker not appearing after profile picture click
+          - **Expected**: Crop modal with "Crop Photo" header, canvas, zoom/rotation controls, "Done" button
+          - **Actual**: No crop modal or file picker appears after clicking profile picture
+          - **Impact**: Users cannot upload or change their profile pictures
+          - **Implementation Status**: ImageCropModal component exists but not triggering properly
+          
+          **BUG 2: Messenger Enhanced Features Not Accessible** ❌ CRITICAL
+          - **Navigation**: ✅ Working (/messenger page loads correctly)
+          - **Conversation Access**: ✅ Working (conversations can be opened)
+          - **Message Input**: ❌ FAILED (message input field not found or not accessible)
+          - **Root Cause**: Message input field not rendering or not accessible in conversation view
+          - **Impact**: Cannot test image upload, voice recording, or message reactions
+          - **Sub-features affected**:
+            * Image Upload: Cannot test due to missing message input area
+            * Voice Recording: Cannot test due to missing message input area  
+            * Message Reactions: Cannot test due to inability to send messages
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ✅ Authentication system working correctly
+          - ✅ Page routing and navigation functional
+          - ✅ Profile picture element detection working
+          - ✅ Conversation selection working in messenger
+          - ❌ ImageCropModal not triggering on profile picture click
+          - ❌ Message input field not accessible in messenger conversations
+          - ❌ Enhanced messaging features (image, voice, reactions) not testable
+          
+          📊 **SUCCESS RATE**: 50% (2/4 major tests passed)
+          
+          🎉 **VERIFICATION RESULTS**:
+          ✅ **Authentication**: Login with provided credentials working correctly
+          ✅ **Navigation**: All page routing working (/profile, /messenger)
+          ❌ **Profile Picture Upload**: Crop modal not appearing after click
+          ❌ **Messenger Enhanced Features**: Message input not accessible, preventing feature testing
+          
+          **EXPECTED RESULTS vs ACTUAL**:
+          ❌ Profile picture click → crop modal appears: FAILED (no modal appears)
+          ❌ Messenger image upload → file picker appears: NOT TESTABLE (no message input)
+          ❌ Voice recording → recording UI appears: NOT TESTABLE (no message input)
+          ❌ Message reactions → emoji picker appears: NOT TESTABLE (no message input)
+          
+          **PROFILE PICTURE UPLOAD AND ENHANCED MESSAGING FEATURES ARE 50% FUNCTIONAL WITH CRITICAL UI ISSUES**
+          
+          **IMMEDIATE FIXES REQUIRED**:
+          1. **HIGH PRIORITY**: Fix profile picture click handler to trigger ImageCropModal
+          2. **HIGH PRIORITY**: Fix messenger conversation view to show message input field
+          3. **MEDIUM PRIORITY**: Verify enhanced messaging features after message input is fixed
+          4. **LOW PRIORITY**: Test complete flow after core issues are resolved
 
   - task: "Tribes Feature - Create Posts in Tribes"
     implemented: true
