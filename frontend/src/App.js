@@ -52,6 +52,20 @@ export const API = `${BACKEND_URL}/api`;
 
 export const AuthContext = React.createContext();
 
+// Helper component to handle @username routes
+const UsernameRouter = () => {
+  const { username } = useParams();
+  
+  // If the username starts with @, strip it and render InstagramProfile
+  if (username && username.startsWith('@')) {
+    return <InstagramProfile />;
+  }
+  
+  // Otherwise, just render InstagramProfile with the username as-is
+  // This handles cases where users navigate to /@handle or /handle
+  return <InstagramProfile />;
+};
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
