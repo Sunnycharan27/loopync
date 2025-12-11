@@ -290,9 +290,9 @@ const InstagramProfile = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black pb-20">
+    <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-gray-900/95 backdrop-blur-lg border-b border-gray-800">
+      <div className="sticky top-0 z-10 backdrop-blur-lg border-b border-purple-800/30" style={{ background: 'rgba(15, 2, 30, 0.95)' }}>
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1 className="text-xl font-semibold text-white flex items-center gap-2">
             @{profileUser.handle}
