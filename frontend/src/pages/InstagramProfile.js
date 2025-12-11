@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../App';
+import { AuthContext, API } from '../App';
 import axios from 'axios';
 import { toast } from 'sonner';
 import {
@@ -14,8 +14,6 @@ import VerifiedBadge from '../components/VerifiedBadge';
 import PostCard from '../components/PostCard';
 import FollowersModal from '../components/FollowersModal';
 import { getMediaUrl } from '../utils/mediaUtils';
-
-const API = process.env.REACT_APP_BACKEND_URL || '';
 
 const InstagramProfile = () => {
   const navigate = useNavigate();
