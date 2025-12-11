@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../App';
 import { CheckCircle, X, Eye, FileText, User, Mail, Phone, Globe, AlertCircle, Clock, Shield } from 'lucide-react';
@@ -6,7 +7,10 @@ import { toast } from 'sonner';
 import TopHeader from '../components/TopHeader';
 import BottomNav from '../components/BottomNav';
 
+const ADMIN_EMAIL = 'loopyncpvt@gmail.com';
+
 const AdminVerificationDashboard = () => {
+  const navigate = useNavigate();
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -17,8 +21,15 @@ const AdminVerificationDashboard = () => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
+    // Check if user is the admin
+    const user = JSON.parse(localStorage.getItem('loopync_user') || '{}');
+    if (user.email !== ADMIN_EMAIL) {
+      toast.error('Access denied. Admin only.');
+      navigate('/profile');
+      return;
+    }
     fetchPendingRequests();
-  }, []);
+  }, [navigate]);
 
   const fetchPendingRequests = async () => {
     try {
