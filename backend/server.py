@@ -1959,7 +1959,7 @@ async def toggle_like_post(postId: str, userId: str):
         
         # Create notification for post author
         if post["authorId"] != userId:
-            liker = await db.users.find_one({"id": userId}, {"_id": 0})
+            liker = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1})
             notification = Notification(
                 userId=post["authorId"],
                 type="like",
@@ -1967,6 +1967,13 @@ async def toggle_like_post(postId: str, userId: str):
                 link=f"/posts/{postId}"
             )
             await db.notifications.insert_one(notification.model_dump())
+            
+            # Emit real-time notification
+            await sio.emit('post_liked', {
+                'user': liker,
+                'postId': postId,
+                'type': 'post'
+            }, room=f"user:{post['authorId']}")
     
     await db.posts.update_one({"id": postId}, {"$set": {"likedBy": liked_by, "stats": stats}})
     return {"action": action, "likes": stats["likes"]}
