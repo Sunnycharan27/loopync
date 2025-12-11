@@ -4327,9 +4327,697 @@ async def mark_notification_read(notificationId: str):
     await db.notifications.update_one({"id": notificationId}, {"$set": {"read": True}})
     return {"success": True}
 
+# ===== COMPREHENSIVE SHARING ROUTES =====
+
+@api_router.post("/share/post/{postId}")
+async def share_post(postId: str, request: ShareRequest, current_user: dict = Depends(get_current_user)):
+    """Share a post - to feed (reshare), via DM, or get link"""
+    try:
+        # Get the original post
+        original_post = await db.posts.find_one({"id": postId}, {"_id": 0})
+        if not original_post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        
+        from_user = current_user
+        frontend_url = os.environ.get('REACT_APP_FRONTEND_URL', os.environ.get('REACT_APP_BACKEND_URL', '').replace('/api', ''))
+        share_link = f"{frontend_url}/post/{postId}"
+        
+        if request.shareType == "feed":
+            # Create a reshare post
+            reshare_post = Post(
+                authorId=from_user["id"],
+                text=request.message or "",
+                isSharedPost=True,
+                originalPostId=postId,
+                originalPost=original_post,
+                shareMessage=request.message
+            )
+            await db.posts.insert_one(reshare_post.model_dump())
+            
+            # Update original post stats and sharedBy
+            await db.posts.update_one(
+                {"id": postId},
+                {
+                    "$inc": {"stats.shares": 1},
+                    "$addToSet": {"sharedBy": from_user["id"]}
+                }
+            )
+            
+            # Notify original author
+            if original_post["authorId"] != from_user["id"]:
+                notification = Notification(
+                    userId=original_post["authorId"],
+                    type="share",
+                    message=f"{from_user.get('name', 'Someone')} shared your post",
+                    link=f"/post/{reshare_post.id}",
+                    fromUserId=from_user["id"],
+                    fromUserName=from_user.get("name", "Someone"),
+                    fromUserAvatar=from_user.get("avatar", ""),
+                    contentType="post",
+                    contentId=postId
+                )
+                await db.notifications.insert_one(notification.model_dump())
+                await emit_to_user(original_post["authorId"], 'share_notification', {
+                    'type': 'post_shared',
+                    'postId': postId,
+                    'sharedBy': from_user.get("name", "Someone")
+                })
+            
+            # Record share
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="post",
+                contentId=postId,
+                shareType="feed",
+                message=request.message
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "feed",
+                "resharePostId": reshare_post.id,
+                "message": "Post shared to your feed"
+            }
+            
+        elif request.shareType == "dm":
+            # Share via direct message to selected friends
+            if not request.toUserIds:
+                raise HTTPException(status_code=400, detail="No recipients selected")
+            
+            shared_count = 0
+            for to_user_id in request.toUserIds:
+                to_user = await db.users.find_one({"id": to_user_id}, {"_id": 0})
+                if not to_user:
+                    continue
+                
+                # Find or create DM thread
+                thread = await db.dm_threads.find_one({
+                    "$or": [
+                        {"user1Id": from_user["id"], "user2Id": to_user_id},
+                        {"user1Id": to_user_id, "user2Id": from_user["id"]}
+                    ]
+                }, {"_id": 0})
+                
+                if not thread:
+                    thread = DMThread(user1Id=from_user["id"], user2Id=to_user_id)
+                    await db.dm_threads.insert_one(thread.model_dump())
+                    thread = thread.model_dump()
+                
+                # Create message with shared post
+                share_message = DMMessage(
+                    threadId=thread["id"],
+                    senderId=from_user["id"],
+                    text=request.message or "Shared a post with you",
+                    mediaUrl=share_link,
+                    mediaType="shared_post"
+                )
+                await db.dm_messages.insert_one(share_message.model_dump())
+                
+                # Update thread last message
+                await db.dm_threads.update_one(
+                    {"id": thread["id"]},
+                    {"$set": {"lastMessageAt": datetime.now(timezone.utc).isoformat()}}
+                )
+                
+                # Emit real-time notification
+                await emit_to_user(to_user_id, 'new_message', {
+                    'threadId': thread["id"],
+                    'message': share_message.model_dump()
+                })
+                
+                shared_count += 1
+            
+            # Update post share stats
+            await db.posts.update_one(
+                {"id": postId},
+                {
+                    "$inc": {"stats.shares": shared_count},
+                    "$addToSet": {"sharedBy": from_user["id"]}
+                }
+            )
+            
+            # Record share
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="post",
+                contentId=postId,
+                shareType="dm",
+                toUserIds=request.toUserIds,
+                message=request.message
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "dm",
+                "sharedToCount": shared_count,
+                "message": f"Post shared with {shared_count} friend(s)"
+            }
+            
+        elif request.shareType == "link":
+            # Just return the shareable link
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="post",
+                contentId=postId,
+                shareType="link"
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "link",
+                "shareLink": share_link,
+                "message": "Link copied"
+            }
+        else:
+            raise HTTPException(status_code=400, detail="Invalid share type")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Share post error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to share post: {str(e)}")
+
+@api_router.post("/share/reel/{reelId}")
+async def share_reel(reelId: str, request: ShareRequest, current_user: dict = Depends(get_current_user)):
+    """Share a reel - via DM or get link"""
+    try:
+        # Get the reel
+        reel = await db.reels.find_one({"id": reelId}, {"_id": 0})
+        if not reel:
+            raise HTTPException(status_code=404, detail="Reel not found")
+        
+        from_user = current_user
+        frontend_url = os.environ.get('REACT_APP_FRONTEND_URL', os.environ.get('REACT_APP_BACKEND_URL', '').replace('/api', ''))
+        share_link = f"{frontend_url}/reel/{reelId}"
+        
+        if request.shareType == "dm":
+            if not request.toUserIds:
+                raise HTTPException(status_code=400, detail="No recipients selected")
+            
+            shared_count = 0
+            for to_user_id in request.toUserIds:
+                to_user = await db.users.find_one({"id": to_user_id}, {"_id": 0})
+                if not to_user:
+                    continue
+                
+                # Find or create DM thread
+                thread = await db.dm_threads.find_one({
+                    "$or": [
+                        {"user1Id": from_user["id"], "user2Id": to_user_id},
+                        {"user1Id": to_user_id, "user2Id": from_user["id"]}
+                    ]
+                }, {"_id": 0})
+                
+                if not thread:
+                    thread = DMThread(user1Id=from_user["id"], user2Id=to_user_id)
+                    await db.dm_threads.insert_one(thread.model_dump())
+                    thread = thread.model_dump()
+                
+                # Create message with shared reel
+                share_message = DMMessage(
+                    threadId=thread["id"],
+                    senderId=from_user["id"],
+                    text=request.message or "Shared a reel with you",
+                    mediaUrl=share_link,
+                    mediaType="shared_reel"
+                )
+                await db.dm_messages.insert_one(share_message.model_dump())
+                
+                # Update thread last message
+                await db.dm_threads.update_one(
+                    {"id": thread["id"]},
+                    {"$set": {"lastMessageAt": datetime.now(timezone.utc).isoformat()}}
+                )
+                
+                await emit_to_user(to_user_id, 'new_message', {
+                    'threadId': thread["id"],
+                    'message': share_message.model_dump()
+                })
+                
+                shared_count += 1
+            
+            # Update reel share stats
+            await db.reels.update_one(
+                {"id": reelId},
+                {
+                    "$inc": {"stats.shares": shared_count},
+                    "$addToSet": {"sharedBy": from_user["id"]}
+                }
+            )
+            
+            # Notify reel author
+            if reel["authorId"] != from_user["id"]:
+                notification = Notification(
+                    userId=reel["authorId"],
+                    type="share",
+                    message=f"{from_user.get('name', 'Someone')} shared your reel",
+                    link=f"/reel/{reelId}",
+                    fromUserId=from_user["id"],
+                    fromUserName=from_user.get("name", "Someone"),
+                    fromUserAvatar=from_user.get("avatar", ""),
+                    contentType="reel",
+                    contentId=reelId
+                )
+                await db.notifications.insert_one(notification.model_dump())
+            
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="reel",
+                contentId=reelId,
+                shareType="dm",
+                toUserIds=request.toUserIds,
+                message=request.message
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "dm",
+                "sharedToCount": shared_count,
+                "message": f"Reel shared with {shared_count} friend(s)"
+            }
+            
+        elif request.shareType == "link":
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="reel",
+                contentId=reelId,
+                shareType="link"
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "link",
+                "shareLink": share_link,
+                "message": "Link copied"
+            }
+        else:
+            raise HTTPException(status_code=400, detail="Invalid share type. Use 'dm' or 'link'")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Share reel error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to share reel: {str(e)}")
+
+@api_router.post("/share/tribe/{tribeId}")
+async def share_tribe(tribeId: str, request: ShareRequest, current_user: dict = Depends(get_current_user)):
+    """Share/Invite friends to a tribe"""
+    try:
+        tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+        if not tribe:
+            raise HTTPException(status_code=404, detail="Tribe not found")
+        
+        from_user = current_user
+        frontend_url = os.environ.get('REACT_APP_FRONTEND_URL', os.environ.get('REACT_APP_BACKEND_URL', '').replace('/api', ''))
+        share_link = f"{frontend_url}/tribes/{tribeId}"
+        
+        if request.shareType == "dm":
+            if not request.toUserIds:
+                raise HTTPException(status_code=400, detail="No recipients selected")
+            
+            invited_count = 0
+            for to_user_id in request.toUserIds:
+                to_user = await db.users.find_one({"id": to_user_id}, {"_id": 0})
+                if not to_user:
+                    continue
+                
+                # Check if already a member
+                if to_user_id in tribe.get("members", []):
+                    continue
+                
+                # Create tribe invite
+                invite = TribeInvite(
+                    tribeId=tribeId,
+                    fromUserId=from_user["id"],
+                    toUserId=to_user_id,
+                    message=request.message
+                )
+                await db.tribe_invites.insert_one(invite.model_dump())
+                
+                # Find or create DM thread
+                thread = await db.dm_threads.find_one({
+                    "$or": [
+                        {"user1Id": from_user["id"], "user2Id": to_user_id},
+                        {"user1Id": to_user_id, "user2Id": from_user["id"]}
+                    ]
+                }, {"_id": 0})
+                
+                if not thread:
+                    thread = DMThread(user1Id=from_user["id"], user2Id=to_user_id)
+                    await db.dm_threads.insert_one(thread.model_dump())
+                    thread = thread.model_dump()
+                
+                # Create message with tribe invite
+                invite_text = request.message or f"Join me in {tribe['name']}!"
+                share_message = DMMessage(
+                    threadId=thread["id"],
+                    senderId=from_user["id"],
+                    text=invite_text,
+                    mediaUrl=share_link,
+                    mediaType="tribe_invite"
+                )
+                await db.dm_messages.insert_one(share_message.model_dump())
+                
+                await db.dm_threads.update_one(
+                    {"id": thread["id"]},
+                    {"$set": {"lastMessageAt": datetime.now(timezone.utc).isoformat()}}
+                )
+                
+                # Create notification
+                notification = Notification(
+                    userId=to_user_id,
+                    type="tribe_invite",
+                    message=f"{from_user.get('name', 'Someone')} invited you to join {tribe['name']}",
+                    link=f"/tribes/{tribeId}",
+                    fromUserId=from_user["id"],
+                    fromUserName=from_user.get("name", "Someone"),
+                    fromUserAvatar=from_user.get("avatar", ""),
+                    contentType="tribe",
+                    contentId=tribeId
+                )
+                await db.notifications.insert_one(notification.model_dump())
+                
+                await emit_to_user(to_user_id, 'tribe_invite', {
+                    'inviteId': invite.id,
+                    'tribeId': tribeId,
+                    'tribeName': tribe['name'],
+                    'invitedBy': from_user.get("name", "Someone")
+                })
+                
+                invited_count += 1
+            
+            # Update tribe share count
+            await db.tribes.update_one(
+                {"id": tribeId},
+                {"$inc": {"shareCount": invited_count}}
+            )
+            
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="tribe",
+                contentId=tribeId,
+                shareType="dm",
+                toUserIds=request.toUserIds,
+                message=request.message
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "dm",
+                "invitedCount": invited_count,
+                "message": f"Invited {invited_count} friend(s) to {tribe['name']}"
+            }
+            
+        elif request.shareType == "link":
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="tribe",
+                contentId=tribeId,
+                shareType="link"
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "link",
+                "shareLink": share_link,
+                "message": "Link copied"
+            }
+        else:
+            raise HTTPException(status_code=400, detail="Invalid share type")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Share tribe error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to share tribe: {str(e)}")
+
+@api_router.post("/share/room/{roomId}")
+async def share_room(roomId: str, request: ShareRequest, current_user: dict = Depends(get_current_user)):
+    """Share a VibeRoom invite"""
+    try:
+        room = await db.vibe_rooms.find_one({"id": roomId}, {"_id": 0})
+        if not room:
+            raise HTTPException(status_code=404, detail="Room not found")
+        
+        if room.get("status") == "ended":
+            raise HTTPException(status_code=400, detail="Room has ended")
+        
+        from_user = current_user
+        frontend_url = os.environ.get('REACT_APP_FRONTEND_URL', os.environ.get('REACT_APP_BACKEND_URL', '').replace('/api', ''))
+        share_link = f"{frontend_url}/rooms/{roomId}"
+        
+        if request.shareType == "dm":
+            if not request.toUserIds:
+                raise HTTPException(status_code=400, detail="No recipients selected")
+            
+            invited_count = 0
+            for to_user_id in request.toUserIds:
+                to_user = await db.users.find_one({"id": to_user_id}, {"_id": 0})
+                if not to_user:
+                    continue
+                
+                # Create room invite
+                room_invite = RoomInvite(
+                    roomId=roomId,
+                    fromUserId=from_user["id"],
+                    toUserId=to_user_id
+                )
+                await db.room_invites.insert_one(room_invite.model_dump())
+                
+                # Find or create DM thread
+                thread = await db.dm_threads.find_one({
+                    "$or": [
+                        {"user1Id": from_user["id"], "user2Id": to_user_id},
+                        {"user1Id": to_user_id, "user2Id": from_user["id"]}
+                    ]
+                }, {"_id": 0})
+                
+                if not thread:
+                    thread = DMThread(user1Id=from_user["id"], user2Id=to_user_id)
+                    await db.dm_threads.insert_one(thread.model_dump())
+                    thread = thread.model_dump()
+                
+                # Create message with room invite
+                invite_text = request.message or f"Join my VibeRoom: {room['name']}!"
+                share_message = DMMessage(
+                    threadId=thread["id"],
+                    senderId=from_user["id"],
+                    text=invite_text,
+                    mediaUrl=share_link,
+                    mediaType="room_invite"
+                )
+                await db.dm_messages.insert_one(share_message.model_dump())
+                
+                await db.dm_threads.update_one(
+                    {"id": thread["id"]},
+                    {"$set": {"lastMessageAt": datetime.now(timezone.utc).isoformat()}}
+                )
+                
+                # Create notification
+                notification = Notification(
+                    userId=to_user_id,
+                    type="room_invite",
+                    message=f"{from_user.get('name', 'Someone')} invited you to VibeRoom: {room['name']}",
+                    link=f"/rooms/{roomId}",
+                    fromUserId=from_user["id"],
+                    fromUserName=from_user.get("name", "Someone"),
+                    fromUserAvatar=from_user.get("avatar", ""),
+                    contentType="room",
+                    contentId=roomId
+                )
+                await db.notifications.insert_one(notification.model_dump())
+                
+                await emit_to_user(to_user_id, 'room_invite', {
+                    'inviteId': room_invite.id,
+                    'roomId': roomId,
+                    'roomName': room['name'],
+                    'invitedBy': from_user.get("name", "Someone")
+                })
+                
+                invited_count += 1
+            
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="room",
+                contentId=roomId,
+                shareType="dm",
+                toUserIds=request.toUserIds,
+                message=request.message
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "dm",
+                "invitedCount": invited_count,
+                "message": f"Invited {invited_count} friend(s) to {room['name']}"
+            }
+            
+        elif request.shareType == "link":
+            share = Share(
+                fromUserId=from_user["id"],
+                contentType="room",
+                contentId=roomId,
+                shareType="link"
+            )
+            await db.shares.insert_one(share.model_dump())
+            
+            return {
+                "success": True,
+                "shareType": "link",
+                "shareLink": share_link,
+                "message": "Link copied"
+            }
+        else:
+            raise HTTPException(status_code=400, detail="Invalid share type")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Share room error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to share room: {str(e)}")
+
+@api_router.get("/share/link/{contentType}/{contentId}")
+async def get_share_link(contentType: str, contentId: str):
+    """Get shareable link for any content type"""
+    frontend_url = os.environ.get('REACT_APP_FRONTEND_URL', os.environ.get('REACT_APP_BACKEND_URL', '').replace('/api', ''))
+    
+    if contentType == "post":
+        post = await db.posts.find_one({"id": contentId}, {"_id": 0})
+        if not post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        return {"shareLink": f"{frontend_url}/post/{contentId}", "contentType": "post"}
+    elif contentType == "reel":
+        reel = await db.reels.find_one({"id": contentId}, {"_id": 0})
+        if not reel:
+            raise HTTPException(status_code=404, detail="Reel not found")
+        return {"shareLink": f"{frontend_url}/reel/{contentId}", "contentType": "reel"}
+    elif contentType == "tribe":
+        tribe = await db.tribes.find_one({"id": contentId}, {"_id": 0})
+        if not tribe:
+            raise HTTPException(status_code=404, detail="Tribe not found")
+        return {"shareLink": f"{frontend_url}/tribes/{contentId}", "contentType": "tribe"}
+    elif contentType == "room":
+        room = await db.vibe_rooms.find_one({"id": contentId}, {"_id": 0})
+        if not room:
+            raise HTTPException(status_code=404, detail="Room not found")
+        return {"shareLink": f"{frontend_url}/rooms/{contentId}", "contentType": "room"}
+    else:
+        raise HTTPException(status_code=400, detail="Invalid content type")
+
+@api_router.get("/users/{userId}/shared")
+async def get_user_shares(userId: str, limit: int = 50):
+    """Get content shared by a user"""
+    shares = await db.shares.find(
+        {"fromUserId": userId},
+        {"_id": 0}
+    ).sort("createdAt", -1).to_list(limit)
+    
+    # Enrich with content details
+    for share in shares:
+        if share["contentType"] == "post":
+            post = await db.posts.find_one({"id": share["contentId"]}, {"_id": 0})
+            share["content"] = post
+        elif share["contentType"] == "reel":
+            reel = await db.reels.find_one({"id": share["contentId"]}, {"_id": 0})
+            share["content"] = reel
+        elif share["contentType"] == "tribe":
+            tribe = await db.tribes.find_one({"id": share["contentId"]}, {"_id": 0})
+            share["content"] = tribe
+        elif share["contentType"] == "room":
+            room = await db.vibe_rooms.find_one({"id": share["contentId"]}, {"_id": 0})
+            share["content"] = room
+    
+    return shares
+
+@api_router.get("/tribe-invites")
+async def get_tribe_invites(userId: str):
+    """Get pending tribe invites for a user"""
+    invites = await db.tribe_invites.find(
+        {"toUserId": userId, "status": "pending"},
+        {"_id": 0}
+    ).sort("createdAt", -1).to_list(50)
+    
+    # Enrich with tribe and sender details
+    for invite in invites:
+        tribe = await db.tribes.find_one({"id": invite["tribeId"]}, {"_id": 0})
+        invite["tribe"] = tribe
+        from_user = await db.users.find_one({"id": invite["fromUserId"]}, {"_id": 0, "password_hash": 0})
+        invite["fromUser"] = from_user
+    
+    return invites
+
+@api_router.post("/tribe-invites/{inviteId}/accept")
+async def accept_tribe_invite(inviteId: str, current_user: dict = Depends(get_current_user)):
+    """Accept a tribe invitation"""
+    invite = await db.tribe_invites.find_one({"id": inviteId}, {"_id": 0})
+    if not invite:
+        raise HTTPException(status_code=404, detail="Invite not found")
+    
+    if invite["toUserId"] != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    if invite["status"] != "pending":
+        raise HTTPException(status_code=400, detail="Invite already processed")
+    
+    # Update invite status
+    await db.tribe_invites.update_one(
+        {"id": inviteId},
+        {"$set": {"status": "accepted"}}
+    )
+    
+    # Add user to tribe
+    await db.tribes.update_one(
+        {"id": invite["tribeId"]},
+        {
+            "$addToSet": {"members": current_user["id"]},
+            "$inc": {"memberCount": 1}
+        }
+    )
+    
+    # Notify inviter
+    notification = Notification(
+        userId=invite["fromUserId"],
+        type="tribe_join",
+        message=f"{current_user.get('name', 'Someone')} joined your tribe",
+        link=f"/tribes/{invite['tribeId']}",
+        fromUserId=current_user["id"],
+        fromUserName=current_user.get("name", "Someone"),
+        fromUserAvatar=current_user.get("avatar", ""),
+        contentType="tribe",
+        contentId=invite["tribeId"]
+    )
+    await db.notifications.insert_one(notification.model_dump())
+    
+    return {"success": True, "message": "Joined tribe successfully"}
+
+@api_router.post("/tribe-invites/{inviteId}/decline")
+async def decline_tribe_invite(inviteId: str, current_user: dict = Depends(get_current_user)):
+    """Decline a tribe invitation"""
+    invite = await db.tribe_invites.find_one({"id": inviteId}, {"_id": 0})
+    if not invite:
+        raise HTTPException(status_code=404, detail="Invite not found")
+    
+    if invite["toUserId"] != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    await db.tribe_invites.update_one(
+        {"id": inviteId},
+        {"$set": {"status": "declined"}}
+    )
+    
+    return {"success": True, "message": "Invite declined"}
+
 @api_router.post("/share")
 async def share_content(fromUserId: str, toUserId: str, contentType: str, contentId: str, message: str, link: str):
-    """Share content with a friend - creates a notification"""
+    """Legacy share content endpoint - creates a notification"""
     try:
         from_user = await db.users.find_one({"id": fromUserId}, {"_id": 0})
         if not from_user:
