@@ -13302,6 +13302,34 @@ test_plan:
   test_priority: "high_first"
 
 agent_communication:
+    -agent: "main"
+    message: |
+      TESTING REQUEST: Profile Picture Upload and Enhanced Messaging Features
+      
+      Please test the following features with credentials sunnycharan181@gmail.com / Ramcharan:
+      
+      1. **Profile Picture Upload** (/profile):
+         - Click on the profile picture (Spider-Man avatar)
+         - Verify the image crop modal appears
+         - If file picker appears, select an image and verify crop modal shows
+      
+      2. **Messenger Image Upload** (/messenger):
+         - Click on a conversation
+         - Click the image/gallery icon (left side of input)
+         - Verify file picker appears for selecting image/video
+         - Check if image preview appears
+      
+      3. **Voice Recording** (in messenger):
+         - When no text is typed, click the microphone button on the right
+         - Verify recording UI appears (red recording indicator, time counter)
+         - Test cancel (X button) and stop recording
+      
+      4. **Message Reactions**:
+         - Find an existing message
+         - Hover over a message - verify smile icon appears
+         - Click the smile icon or double-click message
+         - Verify reaction emoji picker appears (❤️👍😂😮😢🔥)
+         - Click a reaction and verify it appears on the message
     -agent: "testing"
     message: |
       COMPREHENSIVE VERIFIED ACCOUNTS & SPECIAL PAGES BACKEND TESTING COMPLETED - 100% SUCCESS (27/27 TESTS PASSED)
