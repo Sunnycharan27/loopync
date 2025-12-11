@@ -772,6 +772,19 @@ const Discover = () => {
 
               {activeTab === "tribes" && (
                 <div>
+                  {/* Create Tribe Button */}
+                  {currentUser && (
+                    <div className="mb-4">
+                      <button
+                        onClick={() => navigate('/tribes/create')}
+                        className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-bold hover:from-cyan-300 hover:to-purple-400 transition-all shadow-lg shadow-cyan-500/20"
+                      >
+                        <Plus size={20} />
+                        Create New Tribe
+                      </button>
+                    </div>
+                  )}
+                  
                   {loading ? (
                     <div className="flex items-center justify-center py-12">
                       <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
