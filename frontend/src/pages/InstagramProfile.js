@@ -59,6 +59,10 @@ const InstagramProfile = () => {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const fileInputRef = useRef(null);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  
+  // Followers/Following modal
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
+  const [followModalType, setFollowModalType] = useState('followers');
 
   useEffect(() => {
     if (username) {
