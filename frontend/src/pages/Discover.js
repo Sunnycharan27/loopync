@@ -130,14 +130,22 @@ const Discover = () => {
       await axios.post(`${API}/friend-requests?fromUserId=${currentUser.id}&toUserId=${toUserId}`);
       toast.success("Friend request sent!");
       
-      // Update people list
-      setPeople(people.map(p => p.id === toUserId ? { ...p, requestSent: true } : p));
+      // Update people list using functional update to avoid stale closure
+      setPeople(prevPeople => prevPeople.map(p => 
+        p.id === toUserId ? { ...p, requestSent: true } : p
+      ));
       
       // Update search results if active
       if (searchResults?.users) {
-        setSearchResults({
-          ...searchResults,
-          users: searchResults.users.map(u => u.id === toUserId ? { ...u, requestSent: true } : u)
+        setSearchResults(prevResults => ({
+          ...prevResults,
+          users: prevResults.users.map(u => u.id === toUserId ? { ...u, requestSent: true } : u)
+        }));
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to send request");
+    }
+  };
         });
       }
     } catch (error) {
