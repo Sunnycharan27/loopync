@@ -755,12 +755,14 @@ class DiscoverPeopleBackendTester:
         response = self.make_request("GET", "/friend-requests", params={"userId": self.user_a_id}, token=self.user_a_token)
         
         if response and response.status_code == 200:
-            requests_data = response.json()
-            received = requests_data.get("received", [])
-            sent = requests_data.get("sent", [])
+            requests_list = response.json()
+            
+            # Count requests by type
+            received_count = len([r for r in requests_list if r.get("toUserId") == self.user_a_id])
+            sent_count = len([r for r in requests_list if r.get("fromUserId") == self.user_a_id])
             
             self.log_result("Verify Friend Requests Collection", True, 
-                          f"User A - Received: {len(received)}, Sent: {len(sent)}")
+                          f"User A - Received: {received_count}, Sent: {sent_count}, Total: {len(requests_list)}")
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
             self.log_result("Verify Friend Requests Collection", False, error=error_msg)
