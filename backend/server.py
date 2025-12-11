@@ -5403,8 +5403,8 @@ async def get_tribe_analytics(tribeId: str):
     
     members = tribe.get("members", [])
     
-    # Get tribe posts
-    tribe_posts = await db.posts.find({"authorId": {"$in": members}}, {"_id": 0}).to_list(None)
+    # Get tribe posts (limited for performance)
+    tribe_posts = await db.posts.find({"authorId": {"$in": members}}, {"_id": 0}).sort("createdAt", -1).limit(500).to_list(500)
     
     # Most active members
     member_activity = {}
@@ -6924,8 +6924,8 @@ async def find_parallels(userId: str):
         if not current_user:
             raise HTTPException(status_code=404, detail="User not found")
         
-        # Get all other users
-        all_users = await db.users.find({"id": {"$ne": userId}}, {"_id": 0}).to_list(None)
+        # Get all other users (limited for performance)
+        all_users = await db.users.find({"id": {"$ne": userId}}, {"_id": 0}).limit(100).to_list(100)
         
         # Get taste DNA for all users
         parallels = []
