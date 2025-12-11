@@ -88,9 +88,10 @@ const InstagramProfile = () => {
     try {
       const cleanUsername = username.replace('@', '');
       const response = await axios.get(`${API}/api/users/handle/${cleanUsername}`);
-      setProfileUser(response.data);
-      setIsOwnProfile(currentUser && currentUser.id === response.data.id);
-      fetchUserContent(response.data.id);
+      const userData = response.data;
+      setProfileUser(userData);
+      setIsOwnProfile(currentUser && currentUser.id === userData.id);
+      fetchUserContent(userData.id, userData);
     } catch (error) {
       console.error('Error fetching user:', error);
       toast.error('User not found');
