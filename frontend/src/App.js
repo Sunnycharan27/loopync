@@ -329,12 +329,22 @@ function App() {
               }
             />
             <Route
-              path="/@:username"
+              path="/u/:username"
               element={
                 !authLoaded ? (
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
                 ) : (
                   <InstagramProfile />
+                )
+              }
+            />
+            <Route
+              path="/:username"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : (
+                  <UsernameRouter />
                 )
               }
             />
