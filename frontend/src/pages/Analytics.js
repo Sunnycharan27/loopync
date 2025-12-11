@@ -168,7 +168,7 @@ const CreatorDashboard = ({ data }) => (
           <span className="text-white font-bold">{data.contentBreakdown?.posts || 0}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Reels</span>
+          <span className="text-gray-400">VibeZone</span>
           <span className="text-white font-bold">{data.contentBreakdown?.reels || 0}</span>
         </div>
         <div className="flex items-center justify-between">
