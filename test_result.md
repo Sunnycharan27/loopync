@@ -57,6 +57,22 @@
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
 ## agent_communication:
+    - agent: "main"
+      message: |
+        TESTING REQUEST: Please test the Discover/People section with the following steps:
+        1. Login first using admin credentials: sunnycharan181@gmail.com / Ramcharan
+        2. Navigate to /discover and click "People" tab
+        3. Test the "Follow" button - it should change from "Follow" to "Following"
+        4. Test the "Add Friend" button - it should change from "Add Friend" to "Friend Request Sent"
+        5. Test "View Profile" button - should navigate to /@{handle}
+        6. Check for toast notifications after actions
+        7. Test search functionality to find users
+        
+        Expected functionality:
+        - Follow/unfollow toggle working
+        - Friend request sending with UI feedback
+        - Profile navigation working
+        - Toast notifications appearing
 ##     -agent: "main"  # or "testing" or "user"
 ##     -message: "Communication message between agents"
 
