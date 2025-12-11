@@ -683,13 +683,13 @@ const Discover = () => {
                               src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.handle}`}
                               alt={user.name}
                               className="w-16 h-16 rounded-full cursor-pointer"
-                              onClick={() => navigate(`/profile/${user.id}`)}
+                              onClick={() => navigate(`/u/${user.handle}`)}
                             />
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
                                 <h3 
                                   className="font-semibold text-white cursor-pointer hover:underline"
-                                  onClick={() => navigate(`/profile/${user.id}`)}
+                                  onClick={() => navigate(`/u/${user.handle}`)}
                                 >
                                   {user.name}
                                 </h3>
@@ -698,9 +698,10 @@ const Discover = () => {
                               <p className="text-sm text-gray-400">@{user.handle}</p>
                               {user.bio && <p className="text-sm text-gray-300 mt-1 line-clamp-2">{user.bio}</p>}
                               
-                              <div className="flex items-center gap-2 mt-3">
+                              <div className="flex flex-wrap items-center gap-2 mt-3">
                                 {currentUser && user.id !== currentUser.id && (
                                   <>
+                                    {/* Follow Button */}
                                     <button
                                       onClick={() => handleFollowUser(user.id)}
                                       className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all text-sm ${
@@ -712,7 +713,20 @@ const Discover = () => {
                                       <UserPlus size={16} />
                                       {user.isFollowing || currentUser.following?.includes(user.id) ? 'Following' : 'Follow'}
                                     </button>
-                                    {!user.requestSent && (
+                                    
+                                    {/* Message Button - Show if friends */}
+                                    {(user.isFriend || currentUser.friends?.includes(user.id)) && (
+                                      <button
+                                        onClick={() => startConversation(user)}
+                                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-all text-sm"
+                                      >
+                                        <MessageCircle size={16} />
+                                        Message
+                                      </button>
+                                    )}
+                                    
+                                    {/* Add Friend Button - Show if not friends */}
+                                    {!user.isFriend && !currentUser.friends?.includes(user.id) && !user.requestSent && (
                                       <button
                                         onClick={() => sendFriendRequest(user.id)}
                                         className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all text-sm"
