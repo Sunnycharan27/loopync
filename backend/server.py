@@ -116,6 +116,19 @@ class User(BaseModel):
     kycTier: int = 1
     walletBalance: float = 0.0
     
+    # New Instagram-style profile fields
+    pronouns: str = ""  # e.g., "he/him", "she/her", "they/them"
+    websiteUrl: str = ""
+    category: str = ""  # For business/public figure pages
+    contactEmail: str = ""  # Public contact email (different from login email)
+    businessHours: str = ""  # For business pages
+    location: str = ""  # Physical location for business
+    
+    # Profile customization
+    showPostsInGrid: bool = True
+    allowTagging: bool = True
+    privateAccount: bool = False
+    
     # Verification & Account Type
     isVerified: bool = False
     accountType: str = "personal"  # personal, creator, public_figure, business
