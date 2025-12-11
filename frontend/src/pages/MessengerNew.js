@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Search, Send, Image, Smile, MoreVertical,
-  ArrowLeft, Check, CheckCheck, Circle, Mic, X, Sparkles
+  ArrowLeft, Check, CheckCheck, Circle, Mic, X, Sparkles,
+  Play, Pause, Heart, ThumbsUp, Laugh, AlertCircle, Trash2
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -10,6 +11,16 @@ import { useWebSocket } from '../context/WebSocketContext';
 import CallManager from '../components/CallManager';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
+
+// Emoji reactions available
+const REACTIONS = [
+  { emoji: '❤️', name: 'heart' },
+  { emoji: '👍', name: 'like' },
+  { emoji: '😂', name: 'laugh' },
+  { emoji: '😮', name: 'wow' },
+  { emoji: '😢', name: 'sad' },
+  { emoji: '🔥', name: 'fire' }
+];
 
 const MessengerNew = () => {
   const navigate = useNavigate();
@@ -29,9 +40,21 @@ const MessengerNew = () => {
   const [showAI, setShowAI] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   
+  // New states for enhanced features
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(null); // messageId for reaction picker
+  const [uploadingMedia, setUploadingMedia] = useState(false);
+  const [playingAudio, setPlayingAudio] = useState(null);
+  
   const messagesEndRef = useRef(null);
   const typingTimeoutRef = useRef(null);
   const fileInputRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const recordingIntervalRef = useRef(null);
+  const audioPlayerRef = useRef(null);
 
   // Get current user
   useEffect(() => {
