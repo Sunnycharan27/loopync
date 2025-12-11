@@ -596,20 +596,35 @@ const Discover = () => {
                               {user.bio && <p className="text-sm text-gray-300 mt-1 line-clamp-2">{user.bio}</p>}
                               
                               <div className="flex items-center gap-2 mt-3">
-                                {currentUser && user.id !== currentUser.id && !user.requestSent && (
-                                  <button
-                                    onClick={() => sendFriendRequest(user.id)}
-                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition-all text-sm"
-                                  >
-                                    <UserPlus size={16} />
-                                    Add Friend
-                                  </button>
-                                )}
-                                {user.requestSent && (
-                                  <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-400 text-sm">Requested</span>
+                                {currentUser && user.id !== currentUser.id && (
+                                  <>
+                                    <button
+                                      onClick={() => handleFollowUser(user.id)}
+                                      className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all text-sm ${
+                                        user.isFollowing || currentUser.following?.includes(user.id)
+                                          ? 'bg-gray-700 text-white hover:bg-gray-600'
+                                          : 'bg-cyan-400 text-black hover:bg-cyan-300'
+                                      }`}
+                                    >
+                                      <UserPlus size={16} />
+                                      {user.isFollowing || currentUser.following?.includes(user.id) ? 'Following' : 'Follow'}
+                                    </button>
+                                    {!user.requestSent && (
+                                      <button
+                                        onClick={() => sendFriendRequest(user.id)}
+                                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all text-sm"
+                                      >
+                                        <UserPlus size={16} />
+                                        Add Friend
+                                      </button>
+                                    )}
+                                    {user.requestSent && (
+                                      <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-400 text-sm">Friend Request Sent</span>
+                                    )}
+                                  </>
                                 )}
                                 <button
-                                  onClick={() => navigate(`/profile/${user.id}`)}
+                                  onClick={() => navigate(`/@${user.handle}`)}
                                   className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition text-sm"
                                 >
                                   View Profile
