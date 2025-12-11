@@ -295,7 +295,15 @@ const InstagramProfile = () => {
   if (!profileUser) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
-        <p className="text-white">User not found</p>
+        <div className="text-center">
+          <p className="text-white text-lg mb-2">User not found</p>
+          <button
+            onClick={() => navigate('/')}
+            className="px-4 py-2 bg-cyan-400 text-black rounded-lg hover:bg-cyan-500 transition-colors"
+          >
+            Go Home
+          </button>
+        </div>
       </div>
     );
   }
@@ -311,8 +319,8 @@ const InstagramProfile = () => {
       <div className="sticky top-0 z-10 backdrop-blur-lg border-b border-purple-800/30" style={{ background: 'rgba(15, 2, 30, 0.95)' }}>
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1 className="text-xl font-semibold text-white flex items-center gap-2">
-            @{profileUser.handle}
-            {profileUser.isVerified && <VerifiedBadge size={20} />}
+            @{profileUser?.handle || 'user'}
+            {profileUser?.isVerified && <VerifiedBadge size={20} />}
           </h1>
           {isOwnProfile && (
             <button
