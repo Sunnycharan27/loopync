@@ -13296,7 +13296,7 @@ frontend:
 
 test_plan:
   current_focus:
-    - "Verified Accounts & Special Pages Frontend Implementation"
+    - "Profile Picture Upload and Enhanced Messaging Features"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
