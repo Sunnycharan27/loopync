@@ -220,7 +220,7 @@ const InstagramProfile = () => {
 
       const token = localStorage.getItem('loopync_token');
       const response = await axios.post(
-        `${API}/api/upload`,
+        `${API}/upload`,
         formData,
         {
           headers: {
@@ -233,7 +233,7 @@ const InstagramProfile = () => {
       const imageUrl = response.data.url;
       
       await axios.put(
-        `${API}/api/users/${currentUser.id}`,
+        `${API}/users/${currentUser.id}`,
         { avatar: imageUrl },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
