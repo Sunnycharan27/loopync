@@ -819,7 +819,7 @@ const Discover = () => {
                   ) : tribes.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {tribes.map(tribe => (
-                        <div key={tribe.id} className="glass-card p-5 hover:bg-gray-800/50 transition-all">
+                        <div key={tribe.id} className="glass-card p-5 hover:bg-gray-800/50 transition-all relative group">
                           <div className="flex items-start gap-3">
                             <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center flex-shrink-0">
                               <UsersRound size={32} className="text-white" />
@@ -833,6 +833,12 @@ const Discover = () => {
                                   <Users size={14} />
                                   {tribe.members?.length || 0} members
                                 </span>
+                                {tribe.shareCount > 0 && (
+                                  <span className="flex items-center gap-1">
+                                    <Share2 size={14} />
+                                    {tribe.shareCount} invites
+                                  </span>
+                                )}
                                 {tribe.category && (
                                   <span className="px-2 py-1 rounded-full bg-cyan-400/10 text-cyan-400">
                                     {tribe.category}
@@ -866,6 +872,15 @@ const Discover = () => {
                                   className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition text-sm"
                                 >
                                   View
+                                </button>
+                                {/* Invite/Share Button */}
+                                <button
+                                  onClick={() => handleShare(tribe, 'tribe')}
+                                  className="flex items-center gap-1 px-3 py-2 rounded-full bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-all text-sm"
+                                  title="Invite friends"
+                                >
+                                  <Share2 size={14} />
+                                  Invite
                                 </button>
                               </div>
                             </div>
