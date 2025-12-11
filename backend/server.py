@@ -1279,6 +1279,14 @@ async def list_users(limit: int = 100, skip: int = 0):
     users = await db.users.find({}, {"_id": 0, "password": 0}).skip(skip).limit(limit).to_list(limit)
     return users
 
+@api_router.get("/users/handle/{handle}", response_model=User)
+async def get_user_by_handle(handle: str):
+    """Get user by their handle/username"""
+    user = await db.users.find_one({"handle": handle}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
 @api_router.get("/users/{userId}", response_model=User)
 async def get_user(userId: str):
     user = await db.users.find_one({"id": userId}, {"_id": 0})
