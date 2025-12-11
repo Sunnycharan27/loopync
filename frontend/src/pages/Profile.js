@@ -404,11 +404,11 @@ const Profile = () => {
           </div>
         )}
 
-        {/* Reels Tab */}
+        {/* VibeZone Tab */}
         {activeTab === "reels" && (
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white">My Reels ({userContent.reels?.length || 0})</h3>
+              <h3 className="text-lg font-bold text-white">My VibeZone ({userContent.reels?.length || 0})</h3>
             </div>
             {userContent.reels && userContent.reels.length > 0 ? (
               <div className="grid grid-cols-2 gap-4">
