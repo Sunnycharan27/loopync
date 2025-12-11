@@ -49,8 +49,17 @@ const Discover = () => {
           return u.id !== currentUser.id && !currentUser.friends?.includes(u.id);
         });
         
-        // If logged in, check for pending friend requests to mark them
+        // If logged in, check for pending friend requests and following status
         if (currentUser) {
+          const following = currentUser.following || [];
+          
+          // Mark following status
+          filtered = filtered.map(u => ({
+            ...u,
+            isFollowing: following.includes(u.id)
+          }));
+          
+          // Also check for pending friend requests
           try {
             const token = localStorage.getItem('loopync_token');
             const frRes = await axios.get(`${API}/friend-requests?userId=${currentUser.id}`, {
