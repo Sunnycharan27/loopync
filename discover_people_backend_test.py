@@ -310,14 +310,13 @@ class DiscoverPeopleBackendTester:
         response = self.make_request("GET", "/friend-requests", params={"userId": self.user_b_id}, token=self.user_b_token)
         
         if response and response.status_code == 200:
-            requests_data = response.json()
-            received = requests_data.get("received", [])
-            sent = requests_data.get("sent", [])
+            requests_list = response.json()
+            self.log(f"Friend requests response: {requests_list}")
             
-            # Check if there's a pending request from User A
+            # Check if there's a pending request from User A to User B
             pending_request = None
-            for req in received:
-                if req.get("fromUserId") == self.user_a_id:
+            for req in requests_list:
+                if req.get("fromUserId") == self.user_a_id and req.get("toUserId") == self.user_b_id and req.get("status") == "pending":
                     pending_request = req
                     break
             
