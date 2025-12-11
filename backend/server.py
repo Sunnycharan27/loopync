@@ -3850,8 +3850,9 @@ async def get_room_share_link(roomId: str):
     if not room:
         raise HTTPException(status_code=404, detail="Room not found")
     
-    # In production, use actual domain
-    share_link = f"https://loopync.app/rooms/{roomId}"
+    # Use environment variable for frontend URL
+    frontend_url = os.environ.get('FRONTEND_URL', os.environ.get('REACT_APP_BACKEND_URL', '').replace('/api', ''))
+    share_link = f"{frontend_url}/rooms/{roomId}"
     
     return {
         "shareLink": share_link,
