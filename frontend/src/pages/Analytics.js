@@ -135,7 +135,7 @@ const UserAnalytics = ({ data }) => (
           <p className="text-2xl font-bold text-cyan-400">{data.weeklyEngagement?.posts || 0}</p>
         </div>
         <div className="p-4 rounded-xl bg-purple-400/10 border border-purple-400/30">
-          <p className="text-gray-400 text-sm mb-1">Reels This Week</p>
+          <p className="text-gray-400 text-sm mb-1">VibeZone This Week</p>
           <p className="text-2xl font-bold text-purple-400">{data.weeklyEngagement?.reels || 0}</p>
         </div>
         <div className="p-4 rounded-xl bg-green-400/10 border border-green-400/30">
