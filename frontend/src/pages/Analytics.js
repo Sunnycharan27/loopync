@@ -99,7 +99,7 @@ const UserAnalytics = ({ data }) => (
     {/* Overview Stats */}
     <div className="grid grid-cols-2 gap-4">
       <StatCard icon={<Activity />} label="Total Posts" value={data.totalPosts || 0} color="cyan" />
-      <StatCard icon={<Eye />} label="Total Reels" value={data.totalReels || 0} color="purple" />
+      <StatCard icon={<Eye />} label="Total VibeZone" value={data.totalReels || 0} color="purple" />
       <StatCard icon={<Heart />} label="Total Likes" value={data.totalLikes || 0} color="red" />
       <StatCard icon={<MessageCircle />} label="Total Comments" value={data.totalComments || 0} color="blue" />
     </div>
