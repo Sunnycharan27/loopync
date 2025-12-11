@@ -471,6 +471,18 @@ function App() {
                 )
               }
             />
+            
+            {/* Catch-all route for @username - MUST be last! */}
+            <Route
+              path="/:username"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : (
+                  <UsernameRouter />
+                )
+              }
+            />
 
           </Routes>
         </BrowserRouter>
