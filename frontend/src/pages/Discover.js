@@ -28,6 +28,22 @@ const Discover = () => {
   const [searchResults, setSearchResults] = useState(null);
   const [searching, setSearching] = useState(false);
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
+  
+  // Share modal state
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [shareItem, setShareItem] = useState(null);
+  const [shareType, setShareType] = useState('post');
+
+  const handleShare = (item, type) => {
+    if (!currentUser) {
+      toast.error("Please login to share");
+      navigate('/auth');
+      return;
+    }
+    setShareItem(item);
+    setShareType(type);
+    setShareModalOpen(true);
+  };
 
   useEffect(() => {
     fetchContent();
