@@ -4,8 +4,9 @@ import { API, AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import BottomNav from "../components/BottomNav";
 import TopHeader from "../components/TopHeader";
-import { Plus, Users, Radio, Lock, Mic, Music, Gamepad2, Code, Briefcase, Heart, Sparkles } from "lucide-react";
+import { Plus, Users, Radio, Lock, Mic, Music, Gamepad2, Code, Briefcase, Heart, Sparkles, Share2 } from "lucide-react";
 import { toast } from "sonner";
+import ShareModal from "../components/ShareModal";
 
 const Rooms = () => {
   const { currentUser } = useContext(AuthContext);
