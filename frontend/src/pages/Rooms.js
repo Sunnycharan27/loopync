@@ -15,6 +15,19 @@ const Rooms = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [shareRoom, setShareRoom] = useState(null);
+
+  const handleShareRoom = (room, e) => {
+    e.stopPropagation();
+    if (!currentUser) {
+      toast.error("Please login to share");
+      navigate('/auth');
+      return;
+    }
+    setShareRoom(room);
+    setShareModalOpen(true);
+  };
 
   const categories = [
     { id: "all", name: "All VibeRooms", icon: <Radio size={16} /> },
