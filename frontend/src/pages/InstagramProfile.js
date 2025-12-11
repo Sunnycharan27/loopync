@@ -12,6 +12,7 @@ import BottomNav from '../components/BottomNav';
 import ImageCropModal from '../components/ImageCropModal';
 import VerifiedBadge from '../components/VerifiedBadge';
 import PostCard from '../components/PostCard';
+import FollowersModal from '../components/FollowersModal';
 import { getMediaUrl } from '../utils/mediaUtils';
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
