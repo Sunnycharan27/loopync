@@ -418,12 +418,11 @@ class DiscoverPeopleBackendTester:
                 # Get the friend request ID
                 response = self.make_request("GET", "/friend-requests", params={"userId": self.user_a_id}, token=self.user_a_token)
                 if response and response.status_code == 200:
-                    requests_data = response.json()
-                    received = requests_data.get("received", [])
+                    requests_list = response.json()
                     
                     request_to_reject = None
-                    for req in received:
-                        if req.get("fromUserId") == user_c_id:
+                    for req in requests_list:
+                        if req.get("fromUserId") == user_c_id and req.get("toUserId") == self.user_a_id and req.get("status") == "pending":
                             request_to_reject = req
                             break
                     
