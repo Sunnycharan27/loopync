@@ -300,6 +300,191 @@ const MessengerNew = () => {
     }
   };
 
+  // ===== VOICE RECORDING =====
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunksRef.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        audioChunksRef.current.push(e.data);
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setAudioBlob(audioBlob);
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+      setRecordingTime(0);
+      
+      // Update recording time every second
+      recordingIntervalRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Error starting recording:', error);
+      toast.error('Could not access microphone');
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+      clearInterval(recordingIntervalRef.current);
+    }
+  };
+
+  const cancelRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+    }
+    setIsRecording(false);
+    setAudioBlob(null);
+    setRecordingTime(0);
+    clearInterval(recordingIntervalRef.current);
+  };
+
+  const sendVoiceMessage = async () => {
+    if (!audioBlob || !selectedThread) return;
+
+    setUploadingMedia(true);
+    try {
+      // Upload audio file
+      const formData = new FormData();
+      formData.append('file', audioBlob, 'voice_message.webm');
+      
+      const uploadRes = await axios.post(`${API}/upload`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      // Send message with audio URL
+      await axios.post(`${API}/messenger/send`, {
+        senderId: currentUser.id,
+        recipientId: selectedThread.otherUser.id,
+        text: '🎤 Voice message',
+        mediaUrl: uploadRes.data.url,
+        mediaType: 'voice'
+      });
+
+      setAudioBlob(null);
+      setRecordingTime(0);
+      toast.success('Voice message sent!');
+    } catch (error) {
+      console.error('Error sending voice message:', error);
+      toast.error('Failed to send voice message');
+    } finally {
+      setUploadingMedia(false);
+    }
+  };
+
+  // ===== MEDIA UPLOAD =====
+  const handleMediaSelect = async (e) => {
+    const file = e.target.files[0];
+    if (!file || !selectedThread) return;
+
+    // Check file size (10MB max)
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('File size should be less than 10MB');
+      return;
+    }
+
+    setUploadingMedia(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const uploadRes = await axios.post(`${API}/upload`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      const mediaType = file.type.startsWith('video/') ? 'video' : 'image';
+
+      // Send message with media
+      await axios.post(`${API}/messenger/send`, {
+        senderId: currentUser.id,
+        recipientId: selectedThread.otherUser.id,
+        text: mediaType === 'video' ? '🎬 Video' : '📷 Photo',
+        mediaUrl: uploadRes.data.url,
+        mediaType
+      });
+
+      toast.success(`${mediaType === 'video' ? 'Video' : 'Photo'} sent!`);
+    } catch (error) {
+      console.error('Error sending media:', error);
+      toast.error('Failed to send media');
+    } finally {
+      setUploadingMedia(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  // ===== MESSAGE REACTIONS =====
+  const addReaction = async (messageId, reaction) => {
+    try {
+      await axios.post(`${API}/messenger/messages/${messageId}/react`, {
+        userId: currentUser.id,
+        reaction: reaction.emoji
+      });
+
+      // Update local state
+      setMessages(prev => prev.map(m => 
+        m.id === messageId 
+          ? { ...m, reactions: [...(m.reactions || []), { userId: currentUser.id, emoji: reaction.emoji }] }
+          : m
+      ));
+
+      setShowEmojiPicker(null);
+    } catch (error) {
+      console.error('Error adding reaction:', error);
+      toast.error('Failed to add reaction');
+    }
+  };
+
+  const removeReaction = async (messageId) => {
+    try {
+      await axios.delete(`${API}/messenger/messages/${messageId}/react?userId=${currentUser.id}`);
+
+      // Update local state
+      setMessages(prev => prev.map(m => 
+        m.id === messageId 
+          ? { ...m, reactions: (m.reactions || []).filter(r => r.userId !== currentUser.id) }
+          : m
+      ));
+    } catch (error) {
+      console.error('Error removing reaction:', error);
+    }
+  };
+
+  // ===== AUDIO PLAYBACK =====
+  const playAudio = (messageId, audioUrl) => {
+    if (playingAudio === messageId) {
+      audioPlayerRef.current?.pause();
+      setPlayingAudio(null);
+    } else {
+      if (audioPlayerRef.current) {
+        audioPlayerRef.current.pause();
+      }
+      audioPlayerRef.current = new Audio(audioUrl);
+      audioPlayerRef.current.play();
+      audioPlayerRef.current.onended = () => setPlayingAudio(null);
+      setPlayingAudio(messageId);
+    }
+  };
+
+  const formatRecordingTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   const getAISuggestion = async () => {
     if (!messageText.trim()) {
       toast.error('Type a message first');
