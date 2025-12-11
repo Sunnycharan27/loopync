@@ -229,7 +229,7 @@ class DiscoverPeopleBackendTester:
             return False
         
         # Test unfollow (calling follow again should unfollow)
-        response = self.make_request("POST", f"/users/{self.user_b_id}/follow", follow_data, token=self.user_a_token)
+        response = self.make_request("POST", f"/users/{self.user_a_id}/follow", follow_data, token=self.user_a_token)
         
         if response and response.status_code == 200:
             result = response.json()
