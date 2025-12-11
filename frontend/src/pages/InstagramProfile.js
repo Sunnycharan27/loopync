@@ -115,7 +115,7 @@ const InstagramProfile = () => {
     }
   };
 
-  const fetchUserContent = async (userId) => {
+  const fetchUserContent = async (userId, userData = null) => {
     try {
       const postsRes = await axios.get(`${API}/api/posts`);
       const userPosts = postsRes.data.filter(post => post.authorId === userId);
@@ -125,8 +125,10 @@ const InstagramProfile = () => {
       const userReels = reelsRes.data.filter(reel => reel.authorId === userId);
       setReels(userReels);
       
-      const followers = Array.isArray(profileUser?.followers) ? profileUser.followers.length : 0;
-      const following = Array.isArray(profileUser?.following) ? profileUser.following.length : 0;
+      // Use passed userData or current profileUser
+      const user = userData || profileUser;
+      const followers = Array.isArray(user?.followers) ? user.followers.length : 0;
+      const following = Array.isArray(user?.following) ? user.following.length : 0;
       
       setStats({
         posts: userPosts.length,
