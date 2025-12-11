@@ -148,6 +148,7 @@ const VerificationRequest = () => {
 
     setLoading(true);
     try {
+      const token = localStorage.getItem('loopync_token');
       const requestData = {
         userId: currentUser.id,
         accountType,
@@ -165,7 +166,9 @@ const VerificationRequest = () => {
         aboutText: formData.aboutText
       };
 
-      await axios.post(`${API}/verification/request`, requestData);
+      await axios.post(`${API}/verification/request`, requestData, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       
       toast.success('Verification request submitted successfully!');
       setStep(4); // Success step
