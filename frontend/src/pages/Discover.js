@@ -124,18 +124,18 @@ const Discover = () => {
     
     try {
       const token = localStorage.getItem('loopync_token');
-      await axios.post(
-        `${API}/api/users/${currentUser.id}/follow`,
-        { targetUserId },
+      const response = await axios.post(
+        `${API}/users/${targetUserId}/follow`,
+        {},
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
       
-      // Check if already following
-      const isCurrentlyFollowing = currentUser.following?.includes(targetUserId);
-      toast.success(isCurrentlyFollowing ? 'Unfollowed' : 'Following!');
+      // Get the action from response
+      const action = response.data.action;
+      toast.success(action === 'followed' ? 'Following!' : 'Unfollowed');
       
       // Refresh current user data
-      const userRes = await axios.get(`${API}/api/auth/me`, {
+      const userRes = await axios.get(`${API}/auth/me`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
