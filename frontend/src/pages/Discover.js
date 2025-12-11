@@ -637,10 +637,9 @@ const Discover = () => {
                       {reels.map(reel => (
                         <div
                           key={reel.id}
-                          onClick={() => navigate('/vibezone')}
-                          className="glass-card overflow-hidden cursor-pointer hover:scale-105 transition-transform aspect-[9/16]"
+                          className="glass-card overflow-hidden cursor-pointer hover:scale-105 transition-transform aspect-[9/16] relative group"
                         >
-                          <div className="relative h-full">
+                          <div className="relative h-full" onClick={() => navigate('/vibezone')}>
                             <video
                               src={reel.videoUrl}
                               poster={reel.thumb}
@@ -651,9 +650,20 @@ const Discover = () => {
                               <div className="flex items-center gap-3 mt-1 text-xs text-gray-300">
                                 <span>👁️ {reel.stats?.views || 0}</span>
                                 <span>❤️ {reel.stats?.likes || 0}</span>
+                                <span>📤 {reel.stats?.shares || 0}</span>
                               </div>
                             </div>
                           </div>
+                          {/* Share Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleShare(reel, 'reel');
+                            }}
+                            className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-purple-500 transition-all opacity-0 group-hover:opacity-100"
+                          >
+                            <Share2 size={16} />
+                          </button>
                         </div>
                       ))}
                     </div>
