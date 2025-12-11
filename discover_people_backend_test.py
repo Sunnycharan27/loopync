@@ -752,7 +752,7 @@ class DiscoverPeopleBackendTester:
             return False
         
         # Verify friend requests collection
-        response = self.make_request("GET", f"/users/{self.user_a_id}/friend-requests", token=self.user_a_token)
+        response = self.make_request("GET", "/friend-requests", params={"userId": self.user_a_id}, token=self.user_a_token)
         
         if response and response.status_code == 200:
             requests_data = response.json()
