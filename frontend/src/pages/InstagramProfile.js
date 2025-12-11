@@ -757,6 +757,16 @@ const InstagramProfile = () => {
         />
       )}
 
+      {/* Followers/Following Modal */}
+      {showFollowersModal && (
+        <FollowersModal
+          userId={profileUser.id}
+          type={followModalType}
+          onClose={() => setShowFollowersModal(false)}
+          currentUser={currentUser}
+        />
+      )}
+
       <BottomNav active="profile" />
     </div>
   );
