@@ -911,6 +911,19 @@ const Discover = () => {
           onClose={() => setShowParallels(false)}
         />
       )}
+      
+      {/* Share Modal */}
+      {shareModalOpen && shareItem && (
+        <ShareModal
+          isOpen={shareModalOpen}
+          onClose={() => {
+            setShareModalOpen(false);
+            setShareItem(null);
+          }}
+          item={shareItem}
+          type={shareType}
+        />
+      )}
     </div>
   );
 };
