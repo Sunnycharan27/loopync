@@ -123,11 +123,11 @@ const InstagramProfile = () => {
 
   const fetchUserContent = async (userId, userData = null) => {
     try {
-      const postsRes = await axios.get(`${API}/api/posts`);
+      const postsRes = await axios.get(`${API}/posts`);
       const userPosts = postsRes.data.filter(post => post.authorId === userId);
       setPosts(userPosts);
       
-      const reelsRes = await axios.get(`${API}/api/reels`);
+      const reelsRes = await axios.get(`${API}/reels`);
       const userReels = reelsRes.data.filter(reel => reel.authorId === userId);
       setReels(userReels);
       
@@ -150,7 +150,7 @@ const InstagramProfile = () => {
     try {
       const token = localStorage.getItem('loopync_token');
       await axios.post(
-        `${API}/api/users/${currentUser.id}/follow`,
+        `${API}/users/${currentUser.id}/follow`,
         { targetUserId: profileUser.id },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
@@ -173,7 +173,7 @@ const InstagramProfile = () => {
     try {
       const token = localStorage.getItem('loopync_token');
       await axios.post(
-        `${API}/api/users/${currentUser.id}/friend-request`,
+        `${API}/users/${currentUser.id}/friend-request`,
         { targetUserId: profileUser.id },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
