@@ -220,8 +220,9 @@ class Reel(BaseModel):
     videoUrl: str
     thumb: str
     caption: str = ""
-    stats: dict = Field(default_factory=lambda: {"views": 0, "likes": 0, "comments": 0})
+    stats: dict = Field(default_factory=lambda: {"views": 0, "likes": 0, "comments": 0, "shares": 0})
     likedBy: List[str] = Field(default_factory=list)
+    sharedBy: List[str] = Field(default_factory=list)  # Users who shared this reel
     createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 class ReelCreate(BaseModel):
