@@ -59,20 +59,28 @@
 ## agent_communication:
     - agent: "main"
       message: |
-        TESTING REQUEST: Please test the Discover/People section with the following steps:
-        1. Login first using admin credentials: sunnycharan181@gmail.com / Ramcharan
-        2. Navigate to /discover and click "People" tab
-        3. Test the "Follow" button - it should change from "Follow" to "Following"
-        4. Test the "Add Friend" button - it should change from "Add Friend" to "Friend Request Sent"
-        5. Test "View Profile" button - should navigate to /@{handle}
-        6. Check for toast notifications after actions
-        7. Test search functionality to find users
+        TESTING REQUEST: Please re-test the Discover/People section after the following fixes:
         
-        Expected functionality:
-        - Follow/unfollow toggle working
-        - Friend request sending with UI feedback
-        - Profile navigation working
-        - Toast notifications appearing
+        FIXES APPLIED:
+        1. Fixed profile page routing - Changed from /@:username to /u/:username and /:username patterns
+        2. Fixed double /api issue in InstagramProfile.js - Now uses imported API constant from App.js
+        3. Enhanced friend request state loading - Now fetches pending friend requests on page load
+        4. Enhanced following status loading - Now marks isFollowing for already-followed users
+        5. Updated View Profile button to use new /u/:handle route
+        
+        PLEASE TEST:
+        1. Login as sunnycharan181@gmail.com / Ramcharan
+        2. Navigate to /discover and click "People" tab
+        3. Verify "Friend Request Sent" labels show for previously requested users
+        4. Test Follow button - should toggle and update
+        5. Test Add Friend button - should change to "Friend Request Sent" after click
+        6. Test View Profile button - should navigate to /u/:handle and show profile
+        7. Verify toast notifications appear
+        
+        EXPECTED:
+        - All buttons should work and update state correctly
+        - Profile pages should load properly via /u/:handle route
+        - Friend request state should persist across page reloads
     - agent: "testing"
       message: |
         COMPREHENSIVE DISCOVER/PEOPLE SECTION TESTING COMPLETED - EXCELLENT SUCCESS RATE (85.7%)
