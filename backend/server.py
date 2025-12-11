@@ -598,8 +598,10 @@ class DMMessage(BaseModel):
     senderId: str
     text: Optional[str] = None
     mediaUrl: Optional[str] = None
+    mediaType: Optional[str] = None  # 'image', 'video', 'voice'
     mimeType: Optional[str] = None
     readBy: List[str] = Field(default_factory=list)  # User IDs who read this message
+    reactions: List[dict] = Field(default_factory=list)  # [{userId: str, emoji: str}]
     createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     editedAt: Optional[str] = None
     deletedAt: Optional[str] = None
