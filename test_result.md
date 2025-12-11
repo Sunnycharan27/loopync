@@ -59,28 +59,26 @@
 ## agent_communication:
     - agent: "main"
       message: |
-        TESTING REQUEST: Please re-test the Discover/People section after the following fixes:
+        TESTING REQUEST: Test the enhanced Discover/People section with messaging feature:
         
-        FIXES APPLIED:
-        1. Fixed profile page routing - Changed from /@:username to /u/:username and /:username patterns
-        2. Fixed double /api issue in InstagramProfile.js - Now uses imported API constant from App.js
-        3. Enhanced friend request state loading - Now fetches pending friend requests on page load
-        4. Enhanced following status loading - Now marks isFollowing for already-followed users
-        5. Updated View Profile button to use new /u/:handle route
+        FEATURES ADDED:
+        1. Message button on user cards (shows for friends only)
+        2. Verified badge visible in search results
+        3. Start conversation functionality from Discover page
         
-        PLEASE TEST:
+        TEST STEPS:
         1. Login as sunnycharan181@gmail.com / Ramcharan
-        2. Navigate to /discover and click "People" tab
-        3. Verify "Friend Request Sent" labels show for previously requested users
-        4. Test Follow button - should toggle and update
-        5. Test Add Friend button - should change to "Friend Request Sent" after click
-        6. Test View Profile button - should navigate to /u/:handle and show profile
-        7. Verify toast notifications appear
+        2. Go to /discover and click People tab
+        3. Verify Message button appears for friends
+        4. Click Message button - should navigate to /messenger
+        5. Search for "ramcharan" - verify verified badge shows
+        6. Test Follow, Add Friend buttons still work
+        7. Test View Profile navigation
         
         EXPECTED:
-        - All buttons should work and update state correctly
-        - Profile pages should load properly via /u/:handle route
-        - Friend request state should persist across page reloads
+        - Message button navigates to messenger
+        - Verified badge visible in search and people list
+        - All previous functionality still works
     - agent: "testing"
       message: |
         COMPREHENSIVE DISCOVER/PEOPLE SECTION TESTING COMPLETED - EXCELLENT SUCCESS RATE (85.7%)
