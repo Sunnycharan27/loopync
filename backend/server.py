@@ -192,14 +192,20 @@ class Post(BaseModel):
     media: Optional[str] = None
     audience: str = "public"
     hashtags: List[str] = Field(default_factory=list)
-    stats: dict = Field(default_factory=lambda: {"likes": 0, "quotes": 0, "reposts": 0, "replies": 0})
+    stats: dict = Field(default_factory=lambda: {"likes": 0, "quotes": 0, "reposts": 0, "replies": 0, "shares": 0})
     likedBy: List[str] = Field(default_factory=list)
     repostedBy: List[str] = Field(default_factory=list)
+    sharedBy: List[str] = Field(default_factory=list)  # Users who shared this post
     createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     # Twitter-style features
     quotedPostId: Optional[str] = None
     quotedPost: Optional[dict] = None
     replyToPostId: Optional[str] = None
+    # Sharing features
+    isSharedPost: bool = False  # True if this is a reshare
+    originalPostId: Optional[str] = None  # ID of original post if shared
+    originalPost: Optional[dict] = None  # Original post data if shared
+    shareMessage: Optional[str] = None  # Optional message when resharing
 
 class PostCreate(BaseModel):
     text: str
