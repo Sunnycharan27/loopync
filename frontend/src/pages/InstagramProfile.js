@@ -267,7 +267,7 @@ const InstagramProfile = () => {
     try {
       const token = localStorage.getItem('loopync_token');
       await axios.put(
-        `${API}/api/users/${currentUser.id}`,
+        `${API}/users/${currentUser.id}`,
         editForm,
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
