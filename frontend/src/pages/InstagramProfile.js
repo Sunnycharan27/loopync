@@ -592,7 +592,7 @@ const InstagramProfile = () => {
       {/* Edit Profile Modal */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-900 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-gray-800">
+          <div className="rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-purple-800/30" style={{ background: '#0f021e' }}>
             <div className="p-6 border-b border-gray-800 flex items-center justify-between">
               <h2 className="text-xl font-bold text-white">Edit Profile</h2>
               <button
