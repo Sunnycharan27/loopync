@@ -363,11 +363,23 @@ const InstagramProfile = () => {
                 <div className="text-xl font-bold text-white">{stats.posts}</div>
                 <div className="text-sm text-gray-400">posts</div>
               </div>
-              <button className="text-center hover:opacity-80 transition-opacity">
+              <button 
+                onClick={() => {
+                  setFollowModalType('followers');
+                  setShowFollowersModal(true);
+                }}
+                className="text-center hover:opacity-80 transition-opacity"
+              >
                 <div className="text-xl font-bold text-white">{stats.followers}</div>
                 <div className="text-sm text-gray-400">followers</div>
               </button>
-              <button className="text-center hover:opacity-80 transition-opacity">
+              <button 
+                onClick={() => {
+                  setFollowModalType('following');
+                  setShowFollowersModal(true);
+                }}
+                className="text-center hover:opacity-80 transition-opacity"
+              >
                 <div className="text-xl font-bold text-white">{stats.following}</div>
                 <div className="text-sm text-gray-400">following</div>
               </button>
