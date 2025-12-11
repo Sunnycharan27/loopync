@@ -451,6 +451,18 @@ function App() {
               }
             />
             <Route
+              path="/verification"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <VerificationRequest />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
               path="/admin/verification"
               element={
                 !authLoaded ? (
