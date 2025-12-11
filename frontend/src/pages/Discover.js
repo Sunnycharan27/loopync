@@ -203,6 +203,12 @@ const Discover = () => {
       return;
     }
     
+    // Don't allow messaging yourself
+    if (user.id === currentUser.id) {
+      toast.error("You can't message yourself");
+      return;
+    }
+    
     try {
       // Check if they are friends first (required for messaging)
       const isFriend = currentUser.friends?.includes(user.id);
@@ -219,7 +225,7 @@ const Discover = () => {
       
       if (res.data.success) {
         // Navigate to messenger with the thread
-        navigate('/messages', { 
+        navigate('/messenger', { 
           state: { 
             selectedThread: res.data.thread 
           } 
