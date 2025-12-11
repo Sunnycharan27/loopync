@@ -116,9 +116,9 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
       <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black p-8 text-center">
         <div className="glass-card p-8 max-w-md">
           <AlertCircle size={64} className="text-cyan-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-3">No Reels Available</h2>
+          <h2 className="text-2xl font-bold text-white mb-3">No VibeZone Available</h2>
           <p className="text-gray-400 mb-6">
-            Be the first to create amazing content! Click the + button below to start creating your first reel.
+            Be the first to create amazing content! Click the + button below to start creating your first vibe.
           </p>
           <div className="text-sm text-gray-500">
             {videoErrors && Object.keys(videoErrors).length > 0 && (
