@@ -108,7 +108,7 @@ const PageView = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white pb-20">
+    <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       <TopHeader />
       
       <div className="pt-16">
