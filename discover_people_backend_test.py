@@ -623,16 +623,18 @@ class DiscoverPeopleBackendTester:
             self.log_result("Get Profile by ID", False, error=error_msg)
             return False
         
-        # Test getting user's posts
-        response = self.make_request("GET", f"/users/{self.user_b_id}/posts", token=self.user_a_token)
+        # Test getting user's posts via profile endpoint
+        response = self.make_request("GET", f"/users/{self.user_b_id}/profile", 
+                                   params={"currentUserId": self.user_a_id}, token=self.user_a_token)
         
         if response and response.status_code == 200:
-            posts = response.json()
+            profile_data = response.json()
+            posts = profile_data.get("posts", [])
             if isinstance(posts, list):
                 self.log_result("Get User Posts", True, 
-                              f"Retrieved {len(posts)} posts for user")
+                              f"Retrieved {len(posts)} posts for user via profile")
             else:
-                self.log_result("Get User Posts", False, error="Invalid posts response")
+                self.log_result("Get User Posts", False, error="Invalid posts response in profile")
                 return False
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
