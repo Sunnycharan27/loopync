@@ -7,7 +7,7 @@ const BottomNav = ({ active }) => {
 
   const navItems = [
     { id: "home", label: "Home", icon: Home, path: "/" },
-    { id: "vibezone", label: "Reels", icon: Video, path: "/vibezone" },
+    { id: "vibezone", label: "VibeZone", icon: Video, path: "/vibezone" },
     { id: "viberooms", label: "Rooms", icon: Radio, path: "/viberooms" },
     { id: "discover", label: "Discover", icon: Compass, path: "/discover" },
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
