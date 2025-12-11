@@ -125,8 +125,8 @@ const Discover = () => {
     try {
       const token = localStorage.getItem('loopync_token');
       const response = await axios.post(
-        `${API}/users/${targetUserId}/follow`,
-        {},
+        `${API}/users/${currentUser.id}/follow`,
+        { targetUserId },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
       
