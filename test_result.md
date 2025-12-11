@@ -1451,6 +1451,33 @@ backend:
           - Overall backend performance is good for production launch
 
 frontend:
+  - task: "Profile Picture Upload and Enhanced Messaging Features"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/InstagramProfile.js, /app/frontend/src/pages/MessengerNew.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: |
+          TESTING REQUEST: Profile Picture Upload and Enhanced Messaging Features
+          
+          FEATURES TO TEST:
+          1. Profile Picture Upload (/profile) - Click profile picture, verify crop modal appears
+          2. Messenger Image Upload (/messenger) - Click image/gallery icon, verify file picker appears  
+          3. Voice Recording - Click microphone button, verify recording UI appears
+          4. Message Reactions - Hover over messages, click smile icon, verify reaction picker appears
+          
+          IMPLEMENTATION STATUS:
+          ✅ Profile Picture Upload: ImageCropModal component implemented with react-easy-crop
+          ✅ Messenger Image Upload: File input with Image icon button implemented
+          ✅ Voice Recording: MediaRecorder API with recording UI implemented
+          ✅ Message Reactions: Emoji picker with 6 reactions (❤️👍😂😮😢🔥) implemented
+          
+          NEEDS COMPREHENSIVE TESTING with credentials: sunnycharan181@gmail.com / Ramcharan
+
   - task: "Tribes Feature - Create Posts in Tribes"
     implemented: true
     working: false
