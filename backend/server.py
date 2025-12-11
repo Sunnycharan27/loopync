@@ -1429,7 +1429,7 @@ async def update_user_settings(userId: str, settings: dict):
 @api_router.get("/users/{userId}/blocked")
 async def get_blocked_users(userId: str):
     """Get list of blocked users"""
-    blocks = await db.user_blocks.find({"blockerId": userId}, {"_id": 0}).to_list(None)
+    blocks = await db.user_blocks.find({"blockerId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     
     blocked_users = []
     for block in blocks:
@@ -2704,7 +2704,7 @@ async def get_activity_feed(userId: str, limit: int = 50):
     activities = []
     
     # Recent likes on user's posts
-    user_posts = await db.posts.find({"authorId": userId}, {"_id": 0, "id": 1}).to_list(None)
+    user_posts = await db.posts.find({"authorId": userId}, {"_id": 0, "id": 1}).limit(1000).to_list(1000)
     post_ids = [p["id"] for p in user_posts]
     
     # This would need a more sophisticated tracking system
@@ -3787,7 +3787,7 @@ async def get_room_invites(userId: str):
     invites = await db.room_invites.find(
         {"toUserId": userId, "status": "pending"},
         {"_id": 0}
-    ).to_list(None)
+    ).limit(1000).to_list(1000)
     
     # Enrich with room and user info
     enriched = []
@@ -5318,8 +5318,8 @@ async def get_user_analytics(userId: str):
         raise HTTPException(status_code=404, detail="User not found")
     
     # Get all user posts
-    posts = await db.posts.find({"authorId": userId}, {"_id": 0}).to_list(None)
-    reels = await db.reels.find({"authorId": userId}, {"_id": 0}).to_list(None)
+    posts = await db.posts.find({"authorId": userId}, {"_id": 0}).limit(1000).to_list(1000)
+    reels = await db.reels.find({"authorId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     
     # Calculate engagement
     total_likes = sum(len(p.get("likes", [])) for p in posts) + sum(len(r.get("likes", [])) for r in reels)
@@ -5366,8 +5366,8 @@ async def get_creator_dashboard(userId: str):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    posts = await db.posts.find({"authorId": userId}, {"_id": 0}).to_list(None)
-    reels = await db.reels.find({"authorId": userId}, {"_id": 0}).to_list(None)
+    posts = await db.posts.find({"authorId": userId}, {"_id": 0}).limit(1000).to_list(1000)
+    reels = await db.reels.find({"authorId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     
     # Calculate total reach (views)
     total_views = sum(p.get("views", 0) for p in posts) + sum(r.get("views", 0) for r in reels)
@@ -5436,14 +5436,14 @@ async def get_wallet_analytics(userId: str):
         raise HTTPException(status_code=404, detail="User not found")
     
     # Get transactions
-    transactions = await db.wallet_transactions.find({"userId": userId}, {"_id": 0}).to_list(None)
+    transactions = await db.wallet_transactions.find({"userId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     
     # Calculate spending
     total_spent = sum(t.get("amount", 0) for t in transactions if t.get("type") == "payment")
     total_added = sum(t.get("amount", 0) for t in transactions if t.get("type") == "topup")
     
     # Get credits earned
-    credits = await db.loop_credits.find({"userId": userId}, {"_id": 0}).to_list(None)
+    credits = await db.loop_credits.find({"userId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     total_credits_earned = sum(c.get("amount", 0) for c in credits if c.get("type") == "earn")
     
     # Spending by category (mock)
@@ -5498,7 +5498,7 @@ async def get_admin_dashboard(adminUserId: str):
     active_users = await db.posts.distinct("authorId", {"createdAt": {"$gte": week_ago}})
     
     # Platform engagement
-    all_posts = await db.posts.find({}, {"_id": 0, "likes": 1, "comments": 1}).to_list(None)
+    all_posts = await db.posts.find({}, {"_id": 0, "likes": 1, "comments": 1}).limit(1000).to_list(1000)
     total_likes = sum(len(p.get("likes", [])) for p in all_posts)
     total_comments = sum(len(p.get("comments", [])) for p in all_posts)
     
@@ -5545,15 +5545,15 @@ async def get_user_content(userId: str, category: str = "all"):
     result = {}
     
     if category in ["all", "posts"]:
-        posts = await db.posts.find({"authorId": userId}, {"_id": 0}).sort("createdAt", -1).to_list(None)
+        posts = await db.posts.find({"authorId": userId}, {"_id": 0}).sort("createdAt", -1).limit(1000).to_list(1000)
         result["posts"] = posts
     
     if category in ["all", "reels"]:
-        reels = await db.reels.find({"authorId": userId}, {"_id": 0}).sort("createdAt", -1).to_list(None)
+        reels = await db.reels.find({"authorId": userId}, {"_id": 0}).sort("createdAt", -1).limit(1000).to_list(1000)
         result["reels"] = reels
     
     if category in ["all", "products"]:
-        products = await db.marketplace.find({"sellerId": userId}, {"_id": 0}).sort("createdAt", -1).to_list(None)
+        products = await db.marketplace.find({"sellerId": userId}, {"_id": 0}).sort("createdAt", -1).limit(1000).to_list(1000)
         result["products"] = products if products else []
     
     return result
