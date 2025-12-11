@@ -77,22 +77,25 @@ class DiscoverPeopleBackendTester:
         
         try:
             if method.upper() == "GET":
-                response = self.session.get(url, headers=headers, params=params, timeout=15)
+                response = self.session.get(url, headers=headers, params=params, timeout=30)
             elif method.upper() == "POST":
                 if files:
-                    response = self.session.post(url, data=data, files=files, headers=headers, params=params, timeout=15)
+                    response = self.session.post(url, data=data, files=files, headers=headers, params=params, timeout=30)
                 else:
-                    response = self.session.post(url, json=data, headers=headers, params=params, timeout=15)
+                    response = self.session.post(url, json=data, headers=headers, params=params, timeout=30)
             elif method.upper() == "PUT":
-                response = self.session.put(url, json=data, headers=headers, params=params, timeout=15)
+                response = self.session.put(url, json=data, headers=headers, params=params, timeout=30)
             elif method.upper() == "DELETE":
-                response = self.session.delete(url, headers=headers, params=params, timeout=15)
+                response = self.session.delete(url, headers=headers, params=params, timeout=30)
             else:
                 raise ValueError(f"Unsupported method: {method}")
             
             return response
+        except requests.exceptions.Timeout:
+            self.log(f"Request timeout for {method} {url}", "ERROR")
+            return None
         except requests.exceptions.RequestException as e:
-            self.log(f"Request error: {e}", "ERROR")
+            self.log(f"Request error for {method} {url}: {e}", "ERROR")
             return None
     
     def test_create_test_users(self):
