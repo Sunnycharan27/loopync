@@ -2144,9 +2144,6 @@ async def get_saved_posts(userId: str, limit: int = 50):
     
     return posts
 
-class FollowRequest(BaseModel):
-    targetUserId: str
-
 @api_router.post("/users/{userId}/follow")
 async def follow_user(userId: str, request: FollowRequest):
     """Follow/unfollow a user (Instagram-style)"""
