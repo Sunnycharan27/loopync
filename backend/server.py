@@ -640,6 +640,39 @@ class TrustCircleCreate(BaseModel):
     color: str = "from-blue-400 to-purple-500"
     members: List[str] = []
 
+# ===== SHARING MODELS =====
+
+class Share(BaseModel):
+    """Track all sharing activities"""
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    fromUserId: str  # User who shared
+    contentType: str  # post, reel, tribe, room
+    contentId: str  # ID of the shared content
+    shareType: str  # feed (reshare), dm (direct message), link (copy link)
+    toUserIds: List[str] = Field(default_factory=list)  # Recipients for DM shares
+    message: Optional[str] = None  # Optional message with share
+    createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class ShareRequest(BaseModel):
+    """Request model for sharing content"""
+    contentType: str  # post, reel, tribe, room
+    contentId: str
+    shareType: str  # feed, dm, link
+    toUserIds: List[str] = []  # For DM shares
+    message: Optional[str] = None
+
+class TribeInvite(BaseModel):
+    """Invite model for tribe invitations"""
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    tribeId: str
+    fromUserId: str
+    toUserId: str
+    status: str = "pending"  # pending, accepted, declined
+    message: Optional[str] = None
+    createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
 razorpay_client = razorpay.Client(auth=(razorpay_key, razorpay_secret))
 
 # ===== JWT TOKEN UTILITIES =====
