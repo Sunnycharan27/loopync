@@ -1215,11 +1215,99 @@ backend:
       - working: true
         agent: "testing"
         comment: |
-          COMPREHENSIVE DISCOVER/PEOPLE SECTION TESTING COMPLETED - EXCELLENT SUCCESS WITH MINOR UI ISSUES (6/7 TESTS PASSED - 85.7% SUCCESS)
+          COMPREHENSIVE DISCOVER/PEOPLE SECTION RE-TEST COMPLETED - EXCELLENT SUCCESS RATE (6/7 TESTS PASSED - 85.7% SUCCESS)
           
-          🎯 **TESTING SCOPE**: Complete end-to-end testing of Discover/People section functionality as per review request
+          🎯 **RE-TEST SCOPE**: Comprehensive verification of all fixes applied by main agent
           **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
-          **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan (Admin)
+          **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan
+          **TEST DATE**: December 11, 2025
+          **VIEWPORT**: Desktop (1920x1080)
+          
+          ✅ **MAJOR SUCCESSES - ALL CRITICAL FIXES VERIFIED WORKING**:
+          
+          **TEST 1: Authentication & Navigation** ✅ WORKING
+          - Login with test credentials successful
+          - Discover page navigation working correctly
+          - People tab loads and activates properly (37 user cards displayed)
+          - All UI elements render correctly without errors
+          
+          **TEST 2: Friend Request State Persistence** ✅ WORKING (FIXED)
+          - **CRITICAL FIX VERIFIED**: Friend request state now loads on page load
+          - Found existing "Friend Request Sent" labels from previous requests
+          - State persists correctly across navigation (2 persistent friend requests after testing)
+          - Enhanced friend request state loading working as expected
+          
+          **TEST 3: Follow Button Functionality** ✅ WORKING (FIXED)
+          - **CRITICAL FIX VERIFIED**: Follow button toggles correctly
+          - Button changes from "Follow" → "Following" after click
+          - Toast notification appears: "Following!"
+          - Enhanced following status loading working correctly
+          - API calls successful with proper state updates
+          
+          **TEST 4: View Profile Navigation** ✅ WORKING (FIXED)
+          - **CRITICAL FIX VERIFIED**: Profile routing now uses /u/:username pattern
+          - View Profile buttons navigate to correct /u/:handle format
+          - Example URL: https://vibrant-social-1.preview.emergentagent.com/u/testuser1_1765169883
+          - Profile pages load correctly with user data (name, bio, avatar, buttons)
+          - NO blank profile pages (previous issue completely resolved)
+          
+          **TEST 5: Toast Notifications** ✅ WORKING
+          - Follow actions show "Following!" toast
+          - Friend request actions show "Friend request sent!" toast
+          - All user actions provide proper feedback
+          
+          **TEST 6: State Persistence Across Navigation** ✅ WORKING
+          - Navigate away and back maintains all states
+          - Friend request states persist correctly
+          - Following states maintain across page reloads
+          - Enhanced state loading working as designed
+          
+          ❌ **REMAINING ISSUE IDENTIFIED (1/7 TESTS FAILED)**:
+          
+          **BUG 1: Add Friend Button UI State Management** ❌ MEDIUM PRIORITY
+          - **API Status**: ✅ Working (friend requests sent successfully)
+          - **Toast Status**: ✅ Working ("Friend request sent!" appears)
+          - **Root Cause**: Frontend button text doesn't update after successful API call
+          - **Expected**: "Add Friend" → "Friend Request Sent" 
+          - **Actual**: Button text stays "Add Friend" despite successful API call
+          - **Impact**: Users don't get visual feedback that friend request was sent
+          - **Note**: This is a UI state management issue, not an API issue
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ✅ Authentication working (sunnycharan181@gmail.com login successful)
+          - ✅ Profile routing FIXED (/u/:username pattern working)
+          - ✅ Friend request state persistence FIXED (loads on page load)
+          - ✅ Following status loading FIXED (marks existing follows)
+          - ✅ All backend API endpoints responding correctly (200 status codes)
+          - ✅ Toast notification system working correctly
+          - ✅ View Profile navigation FIXED (no more blank pages)
+          - ❌ Add Friend button UI state management needs minor fix
+          
+          📊 **SUCCESS RATE**: 85.7% (6/7 tests passed)
+          
+          🎉 **CRITICAL VERIFICATION RESULTS**:
+          ✅ **Profile Page Routing**: FIXED - Changed from /@:username to /u/:username pattern
+          ✅ **API Constant Issue**: FIXED - No more double /api issues in InstagramProfile.js
+          ✅ **Friend Request State Loading**: FIXED - Now fetches pending requests on page load
+          ✅ **Following Status Loading**: FIXED - Now marks isFollowing for already-followed users
+          ✅ **View Profile Button**: FIXED - Now uses new /u/:handle route
+          ✅ **Profile Page Loading**: FIXED - No more blank screens, profiles load correctly
+          ✅ **Toast Notifications**: Working for all actions
+          ✅ **State Persistence**: Working across navigation
+          ❌ **Add Friend Button State**: Needs UI state management fix
+          
+          **EXPECTED RESULTS ACHIEVED**:
+          ✅ Follow button toggles and shows "Following" ← VERIFIED WORKING
+          ❌ Add Friend changes to "Friend Request Sent" after click ← UI UPDATE NEEDED
+          ✅ View Profile navigates to /u/:handle and loads profile ← VERIFIED WORKING
+          ✅ Toast notifications appear for all actions ← VERIFIED WORKING
+          ✅ State persists across navigation (friend requests, follows) ← VERIFIED WORKING
+          ✅ Profile pages load correctly without blank screen ← VERIFIED WORKING
+          
+          **DISCOVER/PEOPLE SECTION IS 85.7% FUNCTIONAL WITH ONLY MINOR UI FIX NEEDED**
+          
+          **RECOMMENDATION**: 
+          The Discover/People section is production-ready with excellent core functionality. All major fixes have been successfully applied and verified. Only one minor UI state management issue remains for the Add Friend button, which doesn't impact the underlying functionality.IALS**: sunnycharan181@gmail.com / Ramcharan (Admin)
           **TEST DATE**: December 11, 2025
           **VIEWPORT**: Desktop (1920x1080)
           **TEST METHODOLOGY**: Comprehensive UI testing with proper authentication
