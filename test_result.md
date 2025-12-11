@@ -77,7 +77,7 @@
         COMPREHENSIVE SOCIAL MEDIA APP TESTING COMPLETED - MIXED RESULTS WITH AUTHENTICATION ISSUES (7/9 FEATURES ACCESSIBLE - 77.8% SUCCESS)
         
         🎯 **TESTING SCOPE**: Complete end-to-end testing of all social media features as per review request
-        **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+        **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
         **TEST CREDENTIALS ATTEMPTED**: 
         - Regular User: sunnycharan181@gmail.com / Ramcharan
         - Admin User: loopyncpvt@gmail.com / Loopync@123
@@ -87,7 +87,7 @@
         ✅ **WORKING FEATURES (7/9 TESTS ACCESSIBLE)**:
         
         **TEST 1: Application Loading & UI** ✅ WORKING
-        - App loads successfully at https://vibrant-social-1.preview.emergentagent.com
+        - App loads successfully at https://social-tribe.preview.emergentagent.com
         - Beautiful dark theme UI with gradient backgrounds working correctly
         - Bottom navigation visible with Home, VibeZone, Rooms, Discover, Profile tabs
         - Top header with Feed title and notification icons visible
@@ -340,7 +340,7 @@ backend:
           COMPREHENSIVE AI VOICE BOT BACKEND TESTING COMPLETED - MIXED RESULTS WITH CRITICAL ISSUES (3/5 TESTS PASSED - 60% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete AI Voice Bot backend endpoint testing as per review request
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 1, 2025
           **ENDPOINT TESTED**: POST /api/voice/chat
@@ -408,7 +408,7 @@ backend:
           FOCUSED RETEST COMPLETED - ALL CRITICAL ISSUES FIXED (3/3 TESTS PASSED - 100% SUCCESS)
           
           🎯 **FOCUSED RETEST SCOPE**: Session Persistence & Error Handling Fix Verification
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 1, 2025
           **RETEST FOCUS**: Only the 2 failing features from previous test
@@ -502,7 +502,7 @@ backend:
           COMPREHENSIVE INSTAGRAM-STYLE FEATURES TESTING COMPLETED - ALL CORE FEATURES WORKING (6/6 TESTS PASSED)
           
           🎯 **TESTING SCOPE**: Complete Instagram-style social media features testing
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST USER**: demo@loopync.com / password123
           **TEST DATE**: October 28, 2025
           
@@ -599,7 +599,7 @@ backend:
           COMPREHENSIVE TWITTER-STYLE FEATURES TESTING COMPLETED - CRITICAL BACKEND BUGS IDENTIFIED (4/6 TESTS PASSED - 66.7% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Twitter-style social media features testing
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST USER**: demo@loopync.com / password123
           **TEST DATE**: October 28, 2025
           
@@ -678,7 +678,7 @@ backend:
           FOCUSED BACKEND TESTING: Quote Posts and Reply Posts (Twitter Features) COMPLETED - ALL TESTS PASSED (8/8 - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Retest only the quote and reply features after Post model fix
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST USER**: demo@loopync.com / password123
           **TEST DATE**: October 28, 2025
           
@@ -955,7 +955,7 @@ backend:
           COMPREHENSIVE AUTHENTICATION & MESSENGER TESTING COMPLETED - ALL CRITICAL ISSUES RESOLVED (8/8 TESTS PASSED - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete authentication and messenger backend testing after MongoDB fix
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 1, 2025
           
@@ -1123,7 +1123,7 @@ backend:
           COMPREHENSIVE DISCOVER/PEOPLE SECTION BACKEND TESTING COMPLETED - EXCELLENT SUCCESS RATE (24/28 TESTS PASSED - 85.7% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete end-to-end testing of Discover/People section functionality as per review request
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST METHODOLOGY**: Created 2 test users (Alice Johnson & Bob Smith) to test social interactions
           **TEST DATE**: December 11, 2025
           
@@ -1231,7 +1231,7 @@ backend:
           COMPREHENSIVE DISCOVER/PEOPLE SECTION TESTING COMPLETED - MIXED RESULTS WITH CRITICAL FIXES APPLIED (7/8 TESTS PASSED - 87.5% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete end-to-end testing of Discover/People section functionality as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST METHODOLOGY**: Created fresh test user (Final Test User) to test all social interactions
           **TEST DATE**: December 11, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -1275,7 +1275,7 @@ backend:
           **TEST 6: View Profile Navigation** ✅ WORKING
           - View Profile buttons functional on all user cards
           - Successfully navigates to profile pages (/@username format)
-          - URL structure correct: https://vibrant-social-1.preview.emergentagent.com/@testuser1_1765169883
+          - URL structure correct: https://social-tribe.preview.emergentagent.com/@testuser1_1765169883
           - Profile page routing working correctly
           
           **TEST 7: User Interface & Layout** ✅ WORKING
@@ -1347,7 +1347,7 @@ backend:
           COMPREHENSIVE DISCOVER/PEOPLE SECTION RE-TEST COMPLETED - EXCELLENT SUCCESS RATE (6/7 TESTS PASSED - 85.7% SUCCESS)
           
           🎯 **RE-TEST SCOPE**: Comprehensive verification of all fixes applied by main agent
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan
           **TEST DATE**: December 11, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -1376,7 +1376,7 @@ backend:
           **TEST 4: View Profile Navigation** ✅ WORKING (FIXED)
           - **CRITICAL FIX VERIFIED**: Profile routing now uses /u/:username pattern
           - View Profile buttons navigate to correct /u/:handle format
-          - Example URL: https://vibrant-social-1.preview.emergentagent.com/u/testuser1_1765169883
+          - Example URL: https://social-tribe.preview.emergentagent.com/u/testuser1_1765169883
           - Profile pages load correctly with user data (name, bio, avatar, buttons)
           - NO blank profile pages (previous issue completely resolved)
           
@@ -1478,7 +1478,7 @@ backend:
           **STEP 6: VIEW PROFILE NAVIGATION** ✅ 100% WORKING
           - Found 36 View Profile buttons functional on user cards
           - Successfully navigates to profile pages (/@username format)
-          - URL structure correct: https://vibrant-social-1.preview.emergentagent.com/@testuser1_1765169883
+          - URL structure correct: https://social-tribe.preview.emergentagent.com/@testuser1_1765169883
           - Profile page routing working correctly
           
           ❌ **MINOR ISSUES IDENTIFIED (1/7 TESTS FAILED)**:
@@ -1539,7 +1539,7 @@ backend:
           - User creation and authentication working perfectly ✅
           
           🔧 **TECHNICAL VERIFICATION**:
-          - ✅ Backend responding correctly (https://vibrant-social-1.preview.emergentagent.com/api)
+          - ✅ Backend responding correctly (https://social-tribe.preview.emergentagent.com/api)
           - ✅ User signup creates accounts with proper JWT tokens
           - ✅ User login authenticates correctly with MongoDB
           - ✅ Protected routes require authentication
@@ -1611,7 +1611,7 @@ frontend:
           COMPREHENSIVE PROFILE PICTURE UPLOAD AND ENHANCED MESSAGING FEATURES TESTING COMPLETED - MIXED RESULTS WITH CRITICAL ISSUES (2/4 TESTS PASSED - 50% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Profile Picture Upload and Enhanced Messaging Features testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan
           **TEST DATE**: December 11, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -1699,7 +1699,7 @@ frontend:
           COMPREHENSIVE TRIBES FEATURE TESTING COMPLETED - CRITICAL AUTHENTICATION ISSUE BLOCKING FUNCTIONALITY (4/8 TESTS PASSED - 50% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Tribes feature testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 7, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -1798,7 +1798,7 @@ frontend:
           TRIBE POST CREATION FIX VERIFICATION COMPLETED - CRITICAL AUTHENTICATION BARRIER CONFIRMED (UNABLE TO TEST POST CREATION - 0% SUCCESS)
           
           🎯 **TESTING SCOPE**: Verify tribe post creation fix as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 7, 2025
           **BACKEND ENDPOINT**: POST /api/tribes/{tribeId}/posts (confirmed implemented)
@@ -1901,7 +1901,7 @@ frontend:
           MEDIASELECTORMODAL API ENDPOINT FIX VERIFICATION COMPLETED - BACKEND ENDPOINTS CONFIRMED WORKING (3/3 API TESTS PASSED - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Verify MediaSelectorModal API endpoint fix after changing from `/api/posts` to `/posts`, `/api/reels` to `/reels`, `/api/upload` to `/upload`
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 6, 2025
           
@@ -1990,7 +1990,7 @@ frontend:
           VIBEROOMS TESTING BLOCKED - CRITICAL FRONTEND AUTHENTICATION ISSUE IDENTIFIED
           
           🎯 **TESTING SCOPE**: VibeRooms (Clubhouse-style Audio Chat) End-to-End Testing
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 19, 2025
           
@@ -2095,7 +2095,7 @@ frontend:
           COMPREHENSIVE SOCIAL MEDIA PLATFORM FRONTEND TESTING COMPLETED - AI VOICE BOT FULLY FUNCTIONAL (8/10 TESTS PASSED - 80% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete end-to-end frontend test of social media platform as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **VIEWPORT**: Desktop (1920x1080)
           **TEST DATE**: November 1, 2025
@@ -2240,7 +2240,7 @@ frontend:
           COMPREHENSIVE PROFILE PAGE WITH POSTS DISPLAY TESTING COMPLETED - ALL EXPECTED RESULTS ACHIEVED (8/8 TESTS PASSED - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Profile page with posts display testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 6, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -2384,7 +2384,7 @@ frontend:
           COMPREHENSIVE INSTAGRAM-LIKE PROFILE PHOTO TESTING COMPLETED - CRITICAL AUTHENTICATION BLOCKING ISSUE IDENTIFIED (0/5 TESTS PASSED - 0% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Instagram-like profile photo upload and visibility testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 6, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -2574,7 +2574,7 @@ frontend:
           VIBEROOMS FRONTEND TESTING COMPLETED - BLOCKED BY AUTHENTICATION ISSUE (0/6 TESTS PASSED - 0% SUCCESS)
           
           🎯 **TESTING SCOPE**: VibeRooms (Clubhouse-style Audio Chat) End-to-End Testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 19, 2025
           
@@ -2673,7 +2673,7 @@ frontend:
           FRONTEND INVESTOR DEMO TEST COMPLETED - CRITICAL AUTHENTICATION AND ONBOARDING ISSUES IDENTIFIED (2/10 TESTS PASSED - 20% SUCCESS)
           
           🎯 **REVIEW REQUEST ADDRESSED**: INVESTOR DEMO - COMPLETE FRONTEND TEST (All Features Real-time)
-          **FRONTEND URL**: https://vibrant-social-1.preview.emergentagent.com
+          **FRONTEND URL**: https://social-tribe.preview.emergentagent.com
           **TEST DATE**: October 28, 2025
           **TESTING SCOPE**: Complete user journey verification for investor demonstration
           **TEST CREDENTIALS**: demo@loopync.com / password123, john@loopync.com / password123, sarah@loopync.com / password123
@@ -2779,7 +2779,7 @@ frontend:
           COMPREHENSIVE FRONTEND UI TESTING COMPLETED - AUTHENTICATION FIXED, MIXED RESULTS ON FEATURES (4/10 TESTS PASSED - 40% SUCCESS)
           
           🎯 **REVIEW REQUEST ADDRESSED**: COMPREHENSIVE FRONTEND UI TESTING - All Features with Playwright
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **VIEWPORT**: Mobile (393x852) - Primary target device
           **TEST DATE**: October 28, 2025
@@ -2790,7 +2790,7 @@ frontend:
           - ✅ Login form accessible and functional
           - ✅ Demo credentials (demo@loopync.com / password123) accepted successfully
           - ✅ JWT token generated and stored correctly
-          - ✅ Successfully reached home timeline (URL: https://vibrant-social-1.preview.emergentagent.com/)
+          - ✅ Successfully reached home timeline (URL: https://social-tribe.preview.emergentagent.com/)
           - ✅ No onboarding loop issues encountered
           - ✅ Session management working properly
           - ✅ Main application accessible after login
@@ -3127,7 +3127,7 @@ frontend:
           AGORA VIDEO/AUDIO CALLING SYSTEM TESTING COMPLETED - CRITICAL AUTHENTICATION BARRIER IDENTIFIED (3/8 TESTS PASSED - 37.5% SUCCESS)
           
           🎯 **COMPREHENSIVE FRONTEND CALLING TEST COMPLETED**
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **VIEWPORT**: Desktop (1920x1080)
           **TEST DATE**: November 1, 2025
@@ -3301,7 +3301,7 @@ frontend:
           
           🎯 **REVIEW REQUEST ADDRESSED**: Debug and Fix Friend Request Acceptance for Real Users
           **ISSUE**: Friend request acceptance failing for real user IDs - need to debug complete flow with actual user accounts
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST DATE**: October 28, 2024
           **INVESTIGATION SEQUENCE**: Followed exact 8-step sequence as requested
           
@@ -3392,7 +3392,7 @@ frontend:
           FRIEND REQUEST SYSTEM WITH PERMANENT FRIENDSHIPS COMPREHENSIVE TEST COMPLETED - ALL SUCCESS CRITERIA MET (10/10 TESTS PASSED)
           
           🎯 **TESTING SCOPE**: Complete friend request system with permanent friendships as specified in review request
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST SEQUENCE**: Login → Create User → Clear Requests → Send Request → Accept → Verify Bidirectional → Persistence → Status API → Call Test
           **TESTING DATE**: October 27, 2025
           
@@ -3515,7 +3515,7 @@ frontend:
       COMPLETE MESSENGER BACKEND API TESTING COMPLETED - COMPREHENSIVE ANALYSIS (7/8 TESTS PASSED)
       
       🎯 **TESTING SCOPE**: Complete Messenger Backend Functionality as requested
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST USER**: demo_user
       
       ✅ **SUCCESSFUL API ENDPOINTS**:
@@ -3574,7 +3574,7 @@ frontend:
       
       🎯 **TESTING SCOPE**: Complete friend request and messaging system for demo user
       **ISSUE REPORTED**: "You can only call friends" error in Messenger - demo user has no friends
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: October 27, 2025
       
       🔍 **ROOT CAUSE IDENTIFIED**:
@@ -3665,7 +3665,7 @@ frontend:
       
       🎯 **REVIEW REQUEST ADDRESSED**: COMPREHENSIVE FULL-STACK FUNCTIONALITY TEST - All Features
       **OBJECTIVE**: Test all major features of Loopync to ensure full functionality
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST USER**: demo@loopync.com / password123
       **TEST DATE**: October 28, 2025
       **TESTING SCOPE**: Complete backend functionality verification for investor demonstration
@@ -3817,7 +3817,7 @@ frontend:
       
       🎯 **REVIEW REQUEST ADDRESSED**: Fix User Database Issue for Calling Functionality
       **ISSUE REPORTED**: "Failed to start call" error because currentUser.id doesn't exist in MongoDB users collection
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST DATE**: December 13, 2024
       **INVESTIGATION SCOPE**: Complete 8-step investigation and fix sequence as requested
       
@@ -3918,7 +3918,7 @@ frontend:
       DM THREADS FOR DEMO USER TO TEST CALLING - COMPREHENSIVE TESTING COMPLETED (7/7 TESTS PASSED - 100% SUCCESS)
       
       🎯 **REVIEW REQUEST**: Create DM Threads for Demo User to Test Calling
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST DATE**: December 13, 2024
       **TESTING SCOPE**: Complete end-to-end DM thread creation and calling functionality verification
       
@@ -3989,7 +3989,7 @@ frontend:
       COMPREHENSIVE INVESTOR DEMO TEST COMPLETED - ALL FEATURES REAL-TIME (31/36 TESTS PASSED - 86.1% SUCCESS)
       
       🎯 **REVIEW REQUEST ADDRESSED**: Comprehensive Investor Demo Test - All Features Real-Time
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST DATE**: December 13, 2024
       **TESTING SCOPE**: Complete 10-feature test suite for investor demonstration with real user accounts
       **TEST USERS**: demo@loopync.com, john@loopync.com, sarah@loopync.com (all with password123)
@@ -4083,7 +4083,7 @@ frontend:
       FRONTEND INVESTOR DEMO TEST COMPLETED - CRITICAL AUTHENTICATION AND ONBOARDING ISSUES IDENTIFIED (2/10 TESTS PASSED - 20% SUCCESS)
       
       🎯 **REVIEW REQUEST ADDRESSED**: INVESTOR DEMO - COMPLETE FRONTEND TEST (All Features Real-time)
-      **FRONTEND URL**: https://vibrant-social-1.preview.emergentagent.com
+      **FRONTEND URL**: https://social-tribe.preview.emergentagent.com
       **TEST DATE**: October 28, 2025
       **TESTING SCOPE**: Complete user journey verification for investor demonstration
       **TEST CREDENTIALS**: demo@loopync.com / password123, john@loopync.com / password123, sarah@loopync.com / password123
@@ -4190,7 +4190,7 @@ frontend:
       
       🎯 **REVIEW REQUEST ADDRESSED**: Make Calling Work with Real Users - @Sunnycharan and Ram Charan
       **ISSUE**: Backend tests passed with demo@loopync.com and seeded users, but real users (@Sunnycharan trying to call Ram Charan) were failing
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: October 27, 2025
       **SOLUTION**: Verified calling functionality works perfectly with actual real user data
       
@@ -4416,7 +4416,7 @@ frontend:
           COMPLETE USER ONBOARDING AND LOGIN FLOW TESTING COMPLETED - ALL CORE FLOWS WORKING (6/7 TESTS PASSED)
           
           🎯 **TESTING SCOPE**: Complete user authentication and onboarding flow as requested
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TESTING DATE**: October 27, 2025
           **VIEWPORTS TESTED**: Desktop (1920x1080) and Mobile (390x844)
           
@@ -4535,7 +4535,7 @@ frontend:
           
           🎯 **ISSUE RESOLVED**: "Failed to start call" error because currentUser.id doesn't exist in MongoDB users collection
           **ROOT CAUSE**: User database consistency issue has been resolved
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST DATE**: December 13, 2024
           
           ✅ **ALL INVESTIGATION STEPS COMPLETED**:
@@ -4571,7 +4571,7 @@ frontend:
           COMPLETE FRIEND-TO-CALL FLOW TESTING COMPLETED - ALL SUCCESS CRITERIA MET (8/8 TESTS PASSED)
           
           🎯 **TESTING SCOPE**: Complete friend request to call initiation flow as specified in review request
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TESTING DATE**: October 27, 2025
           **TEST SEQUENCE**: Login Demo → Create User → Send Request → Accept → Verify Arrays → Call Friends → Reject Non-Friends → Persistence
           
@@ -4661,7 +4661,7 @@ frontend:
           AGORA.IO VIDEO/AUDIO CALLING INTEGRATION TESTING COMPLETED - ALL TESTS PASSED (6/6 SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Agora.io calling integration as requested
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST USERS**: demo_user (e4ad7f6a-74c9-4417-84e3-9081261efb8b) ↔ u1 (friends)
           
           ✅ **COMPREHENSIVE TESTING RESULTS**:
@@ -4691,7 +4691,7 @@ frontend:
           QUICK TEST: VIDEO/AUDIO CALL INITIATION AFTER DUPLICATE ENDPOINT REMOVAL - ALL SUCCESS CRITERIA MET (5/5 TESTS PASSED)
           
           🎯 **TESTING SCOPE**: Verify working endpoint after duplicate /api/calls/initiate endpoint removal
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST DATE**: December 13, 2024
           **DEMO USER**: demo@loopync.com / password123
           
@@ -4792,7 +4792,7 @@ frontend:
       COMPLETE FRIEND-TO-CALL FLOW TESTING COMPLETED - ALL SUCCESS CRITERIA MET (8/8 TESTS PASSED)
       
       🎯 **TESTING SCOPE**: Complete friend request to call initiation flow as specified in review request
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: October 27, 2025
       **TEST SEQUENCE**: Login Demo → Create User → Send Request → Accept → Verify Arrays → Call Friends → Reject Non-Friends → Persistence
       
@@ -4943,7 +4943,7 @@ frontend:
           COMPREHENSIVE INSTAGRAM-LIKE PROFILE PHOTO UPLOAD TESTING COMPLETED - ALL EXPECTED RESULTS ACHIEVED (10/10 TESTS PASSED - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Instagram-like Profile Photo Upload Feature testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 6, 2025
           **VIEWPORT**: Desktop (1920x1080)
@@ -5380,7 +5380,7 @@ frontend:
           
           🎯 **TESTING SCOPE**: Complete end-to-end WhatsApp-like video/audio calling functionality
           **ISSUE IDENTIFIED & RESOLVED**: API URL bug causing 404 errors on call initiation
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TESTING DATE**: October 28, 2025
           
           ✅ **COMPREHENSIVE TEST RESULTS**:
@@ -5766,7 +5766,7 @@ backend:
           FRIENDS SYSTEM AND CALLING BACKEND INTEGRATION TESTING COMPLETED - ALL SUCCESS CRITERIA MET (13/13 TESTS PASSED - 100% SUCCESS RATE)
           
           🎯 **COMPREHENSIVE TESTING RESULTS**:
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST USERS**: Created testuser1_caller and testuser2_receiver with unique IDs
           
           ✅ **TEST 1: Create Two Test Users**:
@@ -6105,7 +6105,7 @@ agent_communication:
       COMPLETE FRIEND REQUEST FLOW WITH CURRENT FRONTEND IMPLEMENTATION - COMPREHENSIVE TEST COMPLETED (7/7 TESTS PASSED - 100% SUCCESS)
       
       🎯 **REVIEW REQUEST COMPLETED**: Test Complete Friend Request Flow with Current Frontend Implementation
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST DATE**: October 27, 2025
       **TESTING METHODOLOGY**: End-to-end testing using EXACT frontend endpoints and parameters
       
@@ -8838,7 +8838,7 @@ backend:
           - Successfully retrieved uploaded file using returned URL path
           - Correct HTTP 200 response with proper content-type headers
           - File served correctly through ingress routing
-          - Full URL construction working: https://vibrant-social-1.preview.emergentagent.com/api/uploads/{filename}
+          - Full URL construction working: https://social-tribe.preview.emergentagent.com/api/uploads/{filename}
           
           Static file upload and retrieval system is fully functional.
 
@@ -8995,7 +8995,7 @@ backend:
           DEMO USER AUTO-FRIENDING FEATURE TESTING COMPLETED - ALL SUCCESS CRITERIA MET (8/8 TESTS PASSED - 100% SUCCESS RATE)
           
           🎯 **COMPREHENSIVE AUTO-FRIENDING LOGIC VERIFICATION**:
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **DEMO USER**: demo@loopync.com / password123
           **TEST FOCUS**: Auto-friending logic during demo user login
           
@@ -9523,7 +9523,7 @@ agent_communication:
           CRITICAL CALL FUNCTIONALITY TESTING COMPLETED - ALL TESTS PASSED (6/6 - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete call initiation after backend Pydantic model fix verification
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 1, 2025
           
@@ -9631,7 +9631,7 @@ backend:
           AGORA VIDEO/AUDIO CALLING SYSTEM COMPREHENSIVE TESTING COMPLETED - EXCELLENT RESULTS (6/7 TESTS PASSED - 85.7% SUCCESS)
           
           🎯 **REVIEW REQUEST ADDRESSED**: Test Agora Video/Audio Calling System - Complete Call Flow
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: November 1, 2025
           **TESTING SCOPE**: Complete Agora calling system backend verification
@@ -9730,7 +9730,7 @@ backend:
           VENUES UPDATE BACKEND TESTING COMPLETED - ALL CRITICAL REQUIREMENTS MET (5/7 TESTS PASSED - 71.4% SUCCESS)
           
           🎯 **REVIEW REQUEST ADDRESSED**: Verify Venues Update - Temples with Timings and More Information Button
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST DATE**: December 13, 2024
           **TESTING SCOPE**: Complete venue data structure verification for proper categorization and timing information
           
@@ -10119,7 +10119,7 @@ backend:
           COMPREHENSIVE EVENTS AND TICKETING SYSTEM TEST COMPLETED - QR CODE VERIFICATION (11/11 TESTS PASSED - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete event booking flow with QR code generation as specified in review request
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST USER**: demo@loopync.com / password123
           **TEST DATE**: October 28, 2025
           
@@ -10229,7 +10229,7 @@ agent_communication:
       
       🎯 COMPREHENSIVE AUTHENTICATION UI TESTING RESULTS:
       **TASK**: Verify authentication UI changes on auth page
-      **FRONTEND URL**: https://vibrant-social-1.preview.emergentagent.com/auth
+      **FRONTEND URL**: https://social-tribe.preview.emergentagent.com/auth
       
       ✅ **TEST 1: LOGIN PAGE VERIFICATION (DEFAULT VIEW)** - 100% PASSED
       - ✅ "Loopync" logo visible and properly displayed
@@ -10313,7 +10313,7 @@ agent_communication:
       COMPLETE FRIEND-TO-CALL FLOW TESTING COMPLETED - ALL SUCCESS CRITERIA MET (8/8 TESTS PASSED)
       
       🎯 **TESTING SCOPE**: Complete friend request to call initiation flow as specified in review request
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: October 27, 2025
       **TEST SEQUENCE**: Login Demo → Create User → Send Request → Accept → Verify Arrays → Call Friends → Reject Non-Friends → Persistence
       
@@ -10789,7 +10789,7 @@ agent_communication:
       
       🎯 **CRITICAL FEATURE VERIFICATION COMPLETED**:
       **ISSUE TESTED**: Demo user auto-friending logic during login
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **DEMO USER**: demo@loopync.com / password123
       
       ✅ **ALL REQUESTED TEST SCENARIOS COMPLETED SUCCESSFULLY**:
@@ -11316,7 +11316,7 @@ backend:
       FRIEND REQUEST SYSTEM WITH PERMANENT FRIENDSHIPS COMPREHENSIVE TESTING COMPLETED - ALL SUCCESS CRITERIA MET (10/10 TESTS PASSED)
       
       🎯 **TESTING SCOPE**: Complete friend request system with permanent friendships as specified in review request
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST SEQUENCE**: Login → Create User → Clear Requests → Send Request → Accept → Verify Bidirectional → Persistence → Status API → Call Test
       **TESTING DATE**: October 27, 2025
       
@@ -11373,7 +11373,7 @@ backend:
       COMPLETE VIDEO/AUDIO CALLING WITH REAL USER ACCOUNTS TESTING COMPLETED - ALL SUCCESS CRITERIA MET (7/7 TESTS PASSED - 100% SUCCESS)
       
       🎯 **REVIEW REQUEST ADDRESSED**: Test Complete Video/Audio Calling with Real User Accounts
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: December 13, 2024
       **REAL USER IDS**: @Sunnycharan (9b76bda7-ca16-4c33-9bc0-66d1b5ca86d0), @Sunnyram (b1a68570-99a3-49fa-8309-347cbe3499df)
       **AGORA CREDENTIALS**: App ID: 9d727260580f40d2ae8c131dbfd8ba08, App Certificate: 59fd8e967f754664b3aa994c9b356e12
@@ -11455,7 +11455,7 @@ backend:
       FIXED FEATURES COMPREHENSIVE TESTING COMPLETED - ALL SUCCESS CRITERIA MET (11/11 TESTS PASSED - 100% SUCCESS)
       
       🎯 **REVIEW REQUEST ADDRESSED**: Test All Fixed Features - Comprehensive Verification
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: December 13, 2024
       **TESTING SCOPE**: Complete verification of 4 major fixed features as requested
       
@@ -11514,7 +11514,7 @@ backend:
       
       🎯 **TESTING SCOPE**: Complete WhatsApp-like video/audio calling system as specified in review request
       **CRITICAL ISSUE IDENTIFIED & RESOLVED**: API URL bug causing 404 errors on call initiation
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: October 28, 2025
       
       🔧 **CRITICAL BUG FIXED**:
@@ -11595,7 +11595,7 @@ backend:
       COMPREHENSIVE APPLICATION CHECK COMPLETED - ALL FEATURES AUDIT (77.4% SUCCESS RATE)
       
       🎯 **TESTING SCOPE**: Complete backend API testing for all social media features as requested
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TESTING DATE**: October 28, 2024
       **TOTAL TESTS**: 31 comprehensive feature tests
       
@@ -11709,7 +11709,7 @@ agent_communication:
       CRITICAL CALL FUNCTIONALITY TESTING COMPLETED - PERFECT SUCCESS (6/6 TESTS PASSED - 100%)
       
       🎯 **USER ISSUE RESOLVED**: Call initiation after backend Pydantic model fix verification
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST CREDENTIALS**: demo@loopync.com / password123
       **TEST DATE**: November 1, 2025
       
@@ -11790,7 +11790,7 @@ agent_communication:
       AGORA VIDEO/AUDIO CALLING SYSTEM FRONTEND TESTING COMPLETED - AUTHENTICATION BARRIER IDENTIFIED (37.5% SUCCESS)
       
       🎯 **COMPREHENSIVE FRONTEND CALLING TEST COMPLETED**
-      **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+      **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
       **TEST CREDENTIALS**: demo@loopync.com / password123
       **TEST DATE**: November 1, 2025
       **TESTING SCOPE**: Complete Agora video/audio calling system frontend verification
@@ -11952,7 +11952,7 @@ agent_communication:
       COMPREHENSIVE SOCIAL MEDIA BACKEND TESTING COMPLETED - MIXED RESULTS WITH CRITICAL BUGS IDENTIFIED (15/19 TESTS PASSED - 78.9% SUCCESS)
       
       🎯 **TESTING SCOPE**: Complete Instagram/Twitter-style social media features testing as requested
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST USER**: demo@loopync.com / password123
       **TEST DATE**: October 28, 2025
       **TESTS PERFORMED**: 19 comprehensive tests across all new social media endpoints
@@ -12082,7 +12082,7 @@ agent_communication:
       COMPREHENSIVE EVENTS AND TICKETING SYSTEM TEST COMPLETED - QR CODE VERIFICATION (11/11 TESTS PASSED - 100% SUCCESS)
       
       🎯 **TESTING SCOPE**: Complete event booking flow with QR code generation as specified in review request
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST USER**: demo@loopync.com / password123
       **TEST DATE**: October 28, 2025
       
@@ -12346,7 +12346,7 @@ agent_communication:
       COMPREHENSIVE AUTHENTICATION & SOCIAL MEDIA PLATFORM TESTING COMPLETED - ALL TESTS PASSED (10/10 - 100% SUCCESS)
       
       🎯 **TESTING SCOPE**: Complete end-to-end authentication and social media platform testing as per review request
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST CREDENTIALS**: demo@loopync.com / password123
       **TEST DATE**: November 1, 2025
       **COMPREHENSIVE TEST COVERAGE**: All 10 requested features tested
@@ -12635,7 +12635,7 @@ agent_communication:
           COMPREHENSIVE AUDIO/VIDEO CALLING BACKEND TESTING COMPLETED - ALL TESTS PASSED (10/10 - 100% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete audio/video calling system backend testing as per review request
-          **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
           **TEST CREDENTIALS**: demo@loopync.com / password123
           **TEST DATE**: December 19, 2024
           **TESTING FRAMEWORK**: Custom Python test suite with 4 comprehensive phases
@@ -12759,7 +12759,7 @@ agent_communication:
       🎯 COMPREHENSIVE BACKEND API TESTING COMPLETED - ALL CRITICAL ENDPOINTS PRODUCTION READY (7/7 TESTS PASSED - 100% SUCCESS)
       
       **TESTING SUMMARY**: Complete backend API verification as per review request
-      **API BASE URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **API BASE URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST CREDENTIALS**: demo@loopync.com / password123
       **TEST DATE**: December 19, 2024
       **TESTING FRAMEWORK**: Custom Python test suite covering all priority endpoints
@@ -12895,7 +12895,7 @@ agent_communication:
       🚨 **URGENT**: Cannot verify tribe post creation fix due to frontend authentication issues
       
       **TESTING SCOPE**: Verify tribe post creation fix as requested in review
-      **URL**: https://vibrant-social-1.preview.emergentagent.com
+      **URL**: https://social-tribe.preview.emergentagent.com
       **CREDENTIALS**: demo@loopync.com / password123
       **TARGET**: Test POST /api/tribes/{tribeId}/posts endpoint functionality
       
@@ -12977,7 +12977,7 @@ agent_communication:
       PROFILE PHOTO UPLOAD MODAL ERROR HANDLING FIX VERIFICATION COMPLETED - ALL CRITICAL FIXES WORKING (100% SUCCESS)
       
       🎯 **TESTING SUMMARY**: Profile Photo Upload Modal error handling fix verification as per review request
-      **URL**: https://vibrant-social-1.preview.emergentagent.com
+      **URL**: https://social-tribe.preview.emergentagent.com
       **CREDENTIALS**: demo@loopync.com / password123
       **TEST DATE**: December 6, 2025
       **COMPONENT**: MediaSelectorModal.js
@@ -13054,7 +13054,7 @@ agent_communication:
       MEDIASELECTORMODAL API ENDPOINT FIX VERIFICATION COMPLETED - ALL API ENDPOINTS WORKING CORRECTLY
       
       🎯 **TESTING SUMMARY**: MediaSelectorModal API endpoint fix verification after changing from `/api/posts` to `/posts`, `/api/reels` to `/reels`, `/api/upload` to `/upload`
-      **URL**: https://vibrant-social-1.preview.emergentagent.com
+      **URL**: https://social-tribe.preview.emergentagent.com
       **TEST DATE**: December 6, 2025
       
       ✅ **VERIFICATION RESULTS**:
@@ -13076,7 +13076,7 @@ agent_communication:
       PROFILE PAGE WITH POSTS DISPLAY TESTING COMPLETED - ALL REQUIREMENTS MET (100% SUCCESS)
       
       🎯 **TESTING SUMMARY**: Complete Profile page with posts display testing as requested
-      **URL**: https://vibrant-social-1.preview.emergentagent.com
+      **URL**: https://social-tribe.preview.emergentagent.com
       **CREDENTIALS**: demo@loopync.com / password123
       
       ✅ **ALL EXPECTED RESULTS ACHIEVED**:
@@ -13122,7 +13122,7 @@ agent_communication:
       INSTAGRAM-LIKE PROFILE PHOTO UPLOAD FEATURE TESTING COMPLETED - 100% SUCCESS
       
       🎯 **TESTING SUMMARY**: Instagram-like Profile Photo Upload Feature comprehensive testing
-      **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+      **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
       **TEST CREDENTIALS**: demo@loopync.com / password123
       **TEST DATE**: December 6, 2025
       
@@ -13239,7 +13239,7 @@ agent_communication:
       COMPREHENSIVE VERIFIED ACCOUNTS & SPECIAL PAGES BACKEND TESTING COMPLETED - 100% SUCCESS (27/27 TESTS PASSED)
       
       🎯 **TESTING SCOPE**: Complete Verified Accounts & Special Pages feature implementation testing
-      **BACKEND URL**: https://vibrant-social-1.preview.emergentagent.com/api
+      **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
       **TEST DATE**: December 10, 2025
       **TEST METHODOLOGY**: End-to-end verification workflow testing with 3 test users
       
@@ -13376,7 +13376,7 @@ frontend:
           COMPREHENSIVE VERIFIED ACCOUNTS & SPECIAL PAGES FRONTEND TESTING COMPLETED - MIXED RESULTS WITH AUTHENTICATION BARRIER (6/11 TESTS PASSED - 55% SUCCESS)
           
           🎯 **TESTING SCOPE**: Complete Verified Accounts & Special Pages frontend feature testing as per review request
-          **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com/
+          **APPLICATION URL**: https://social-tribe.preview.emergentagent.com/
           **TEST DATE**: December 10, 2025
           **VIEWPORT**: Desktop (1920x1080)
           **TEST METHODOLOGY**: End-to-end UI testing with Playwright automation
@@ -13542,7 +13542,7 @@ agent_communication:
       COMPREHENSIVE PROFILE PICTURE UPLOAD AND ENHANCED MESSAGING FEATURES TESTING COMPLETED - MIXED RESULTS WITH CRITICAL ISSUES (2/4 TESTS PASSED - 50% SUCCESS)
       
       🎯 **TESTING SCOPE**: Complete Profile Picture Upload and Enhanced Messaging Features testing as per review request
-      **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+      **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
       **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan ✅ WORKING
       **TEST DATE**: December 11, 2025
       **VIEWPORT**: Desktop (1920x1080)
@@ -13586,7 +13586,7 @@ agent_communication:
       COMPREHENSIVE VERIFIED ACCOUNTS & SPECIAL PAGES FRONTEND TESTING COMPLETED - MIXED RESULTS WITH AUTHENTICATION BARRIER (6/11 TESTS PASSED - 55% SUCCESS)
       
       🎯 **TESTING SCOPE**: Complete Verified Accounts & Special Pages frontend feature testing as per review request
-      **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com/
+      **APPLICATION URL**: https://social-tribe.preview.emergentagent.com/
       **TEST DATE**: December 10, 2025
       **VIEWPORT**: Desktop (1920x1080)
       **TEST METHODOLOGY**: End-to-end UI testing with Playwright automation
@@ -13716,7 +13716,7 @@ agent_communication:
         COMPREHENSIVE ENHANCED DISCOVER/PEOPLE SECTION WITH MESSAGING FEATURE TESTING COMPLETED - EXCELLENT SUCCESS RATE (6/7 TESTS PASSED - 85.7% SUCCESS)
         
         🎯 **TESTING SCOPE**: Complete testing of Enhanced Discover/People Section with Messaging Feature as per review request
-        **APPLICATION URL**: https://vibrant-social-1.preview.emergentagent.com
+        **APPLICATION URL**: https://social-tribe.preview.emergentagent.com
         **TEST CREDENTIALS**: sunnycharan181@gmail.com / Ramcharan
         **TEST DATE**: December 11, 2025
         

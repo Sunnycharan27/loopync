@@ -7,7 +7,7 @@ This is a FOCUSED retest of only the 2 failing features from the previous test:
 1. Session Persistence Test (was FAILING before)
 2. Error Handling Test (was FAILING before)
 
-Backend URL: https://vibrant-social-1.preview.emergentagent.com/api
+Backend URL: https://social-tribe.preview.emergentagent.com/api
 Test Credentials: demo@loopync.com / password123
 """
 
@@ -18,7 +18,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://vibrant-social-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://social-tribe.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 

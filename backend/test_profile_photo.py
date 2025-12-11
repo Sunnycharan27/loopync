@@ -12,7 +12,7 @@ from PIL import Image
 
 load_dotenv()
 
-API_URL = "https://vibrant-social-1.preview.emergentagent.com/api"
+API_URL = "https://social-tribe.preview.emergentagent.com/api"
 
 def create_test_image():
     """Create a simple test image"""
@@ -87,7 +87,7 @@ async def test_profile_photo_flow():
     print("\n4️⃣ Verifying photo is accessible...")
     
     try:
-        photo_url = f"https://vibrant-social-1.preview.emergentagent.com{media_url}"
+        photo_url = f"https://social-tribe.preview.emergentagent.com{media_url}"
         photo_response = requests.get(photo_url, timeout=10)
         
         if photo_response.status_code == 200:

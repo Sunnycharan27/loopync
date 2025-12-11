@@ -14,7 +14,7 @@
 
 STEP 1️⃣  Open Login Page
 ┌────────────────────────────────────────────────────────────────┐
-│ https://vibrant-social-1.preview.emergentagent.com/auth          │
+│ https://social-tribe.preview.emergentagent.com/auth          │
 └────────────────────────────────────────────────────────────────┘
 
 STEP 2️⃣  Enter Your Credentials
@@ -27,7 +27,7 @@ STEP 2️⃣  Enter Your Credentials
 
 STEP 3️⃣  Go to Admin Dashboard
 ┌────────────────────────────────────────────────────────────────┐
-│ https://vibrant-social-1.preview.emergentagent.com/admin/verification│
+│ https://social-tribe.preview.emergentagent.com/admin/verification│
 └────────────────────────────────────────────────────────────────┘
 
 STEP 4️⃣  Review & Approve Requests

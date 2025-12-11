@@ -457,7 +457,7 @@ On other users' profiles:
 
 ## 📱 Platform URLs
 
-**Main App**: `https://vibrant-social-1.preview.emergentagent.com`
+**Main App**: `https://social-tribe.preview.emergentagent.com`
 
 **Key Routes**:
 - Home: `/`
