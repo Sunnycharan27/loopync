@@ -59,7 +59,13 @@ export const WebSocketProvider = ({ children }) => {
     // Friend request notifications
     newSocket.on('friend_request', (data) => {
       console.log('📬 New friend request:', data);
-      toast.info(`${data.from_user?.name} sent you a friend request`);
+      toast.info(`${data.from_user?.name || 'Someone'} sent you a friend request`, {
+        duration: 5000,
+        action: {
+          label: 'View',
+          onClick: () => window.location.href = '/notifications'
+        }
+      });
     });
 
     // Friend events
@@ -67,10 +73,72 @@ export const WebSocketProvider = ({ children }) => {
       console.log('👥 Friend event:', data);
       
       if (data.type === 'accepted') {
-        toast.success('Friend request accepted!');
+        toast.success(`${data.user?.name || 'Someone'} accepted your friend request!`, {
+          duration: 5000
+        });
       } else if (data.type === 'removed') {
         toast.info('A friend was removed');
       }
+    });
+
+    // Follow notification
+    newSocket.on('new_follower', (data) => {
+      console.log('👤 New follower:', data);
+      toast.info(`${data.follower?.name || 'Someone'} started following you`, {
+        duration: 5000,
+        action: {
+          label: 'View Profile',
+          onClick: () => window.location.href = `/@${data.follower?.handle}`
+        }
+      });
+    });
+
+    // Like notification
+    newSocket.on('post_liked', (data) => {
+      console.log('❤️ Post liked:', data);
+      toast.success(`${data.user?.name || 'Someone'} liked your ${data.type || 'post'}`, {
+        duration: 4000,
+        action: {
+          label: 'View',
+          onClick: () => window.location.href = `/post/${data.postId}`
+        }
+      });
+    });
+
+    // Comment notification
+    newSocket.on('post_commented', (data) => {
+      console.log('💬 New comment:', data);
+      toast.info(`${data.user?.name || 'Someone'} commented on your post: "${data.comment?.substring(0, 50)}${data.comment?.length > 50 ? '...' : ''}"`, {
+        duration: 5000,
+        action: {
+          label: 'Reply',
+          onClick: () => window.location.href = `/post/${data.postId}`
+        }
+      });
+    });
+
+    // Share notification
+    newSocket.on('post_shared', (data) => {
+      console.log('🔄 Post shared:', data);
+      toast.success(`${data.user?.name || 'Someone'} shared your post`, {
+        duration: 4000,
+        action: {
+          label: 'View',
+          onClick: () => window.location.href = `/post/${data.postId}`
+        }
+      });
+    });
+
+    // Mention notification
+    newSocket.on('mentioned', (data) => {
+      console.log('📌 Mentioned:', data);
+      toast.info(`${data.user?.name || 'Someone'} mentioned you in a ${data.type || 'post'}`, {
+        duration: 5000,
+        action: {
+          label: 'View',
+          onClick: () => window.location.href = data.link || '/notifications'
+        }
+      });
     });
 
     // Message events
