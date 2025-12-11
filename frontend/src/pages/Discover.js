@@ -376,33 +376,62 @@ const Discover = () => {
                           src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.handle}`}
                           alt={user.name}
                           className="w-16 h-16 rounded-full cursor-pointer"
-                          onClick={() => navigate(`/profile/${user.id}`)}
+                          onClick={() => navigate(`/u/${user.handle}`)}
                         />
                         <div className="flex-1">
-                          <h3 
-                            className="font-semibold text-white cursor-pointer hover:underline"
-                            onClick={() => navigate(`/profile/${user.id}`)}
-                          >
-                            {user.name}
-                          </h3>
+                          <div className="flex items-center gap-2">
+                            <h3 
+                              className="font-semibold text-white cursor-pointer hover:underline"
+                              onClick={() => navigate(`/u/${user.handle}`)}
+                            >
+                              {user.name}
+                            </h3>
+                            {user.isVerified && <VerifiedBadge size={16} />}
+                          </div>
                           <p className="text-sm text-gray-400">@{user.handle}</p>
                           {user.bio && <p className="text-sm text-gray-300 mt-1 line-clamp-2">{user.bio}</p>}
                         </div>
-                        <div className="flex gap-2">
-                          {user.id !== currentUser?.id && !user.isFriend && !user.requestSent && (
-                            <button
-                              onClick={() => sendFriendRequest(user.id)}
-                              className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition-all"
-                            >
-                              <UserPlus size={16} />
-                              Add
-                            </button>
-                          )}
-                          {user.requestSent && (
-                            <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-400 text-sm">Requested</span>
-                          )}
-                          {user.isFriend && (
-                            <span className="px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm">Friends</span>
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          {currentUser && user.id !== currentUser.id && (
+                            <>
+                              {/* Follow Button */}
+                              <button
+                                onClick={() => handleFollowUser(user.id)}
+                                className={`flex items-center justify-center gap-1 px-3 py-2 rounded-full font-semibold transition-all text-xs ${
+                                  user.isFollowing || currentUser.following?.includes(user.id)
+                                    ? 'bg-gray-700 text-white hover:bg-gray-600'
+                                    : 'bg-cyan-400 text-black hover:bg-cyan-300'
+                                }`}
+                              >
+                                <UserPlus size={14} />
+                                {user.isFollowing || currentUser.following?.includes(user.id) ? 'Following' : 'Follow'}
+                              </button>
+                              
+                              {/* Message Button - Show if friends */}
+                              {(user.isFriend || currentUser.friends?.includes(user.id)) && (
+                                <button
+                                  onClick={() => startConversation(user)}
+                                  className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-all text-xs"
+                                >
+                                  <MessageCircle size={14} />
+                                  Message
+                                </button>
+                              )}
+                              
+                              {/* Add Friend / Request Sent */}
+                              {!user.isFriend && !currentUser.friends?.includes(user.id) && !user.requestSent && (
+                                <button
+                                  onClick={() => sendFriendRequest(user.id)}
+                                  className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all text-xs"
+                                >
+                                  <UserPlus size={14} />
+                                  Add
+                                </button>
+                              )}
+                              {user.requestSent && (
+                                <span className="px-3 py-2 rounded-full bg-gray-700 text-gray-400 text-xs">Requested</span>
+                              )}
+                            </>
                           )}
                         </div>
                       </div>
