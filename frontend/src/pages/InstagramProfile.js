@@ -413,6 +413,20 @@ const InstagramProfile = () => {
                     <Edit3 size={16} />
                     Edit Profile
                   </button>
+                  {!profileUser.isVerified ? (
+                    <button
+                      onClick={() => navigate('/verification')}
+                      className="py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
+                    >
+                      <BadgeCheck size={16} />
+                      Get Verified
+                    </button>
+                  ) : (
+                    <div className="py-2 px-4 bg-green-500/20 text-green-400 font-semibold rounded-lg flex items-center justify-center gap-2 border border-green-500/30">
+                      <Shield size={16} />
+                      Verified
+                    </div>
+                  )}
                   <button className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors">
                     <Share2 size={20} />
                   </button>
