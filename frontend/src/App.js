@@ -322,6 +322,28 @@ function App() {
                 !authLoaded ? (
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
                 ) : isAuthenticated ? (
+                  <InstagramProfile />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
+              path="/@:username"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : (
+                  <InstagramProfile />
+                )
+              }
+            />
+            <Route
+              path="/profile-old"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
                   <Profile />
                 ) : (
                   <Navigate to="/auth" />
@@ -335,18 +357,6 @@ function App() {
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
                 ) : isAuthenticated ? (
                   <LoopPay />
-                ) : (
-                  <Navigate to="/auth" />
-                )
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                !authLoaded ? (
-                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : isAuthenticated ? (
-                  <Profile />
                 ) : (
                   <Navigate to="/auth" />
                 )
