@@ -7158,6 +7158,16 @@ async def react_to_message(messageId: str, userId: str, reaction: str):
         logger.error(f"Error adding reaction: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@api_router.delete("/messenger/messages/{messageId}/react")
+async def remove_message_reaction(messageId: str, userId: str):
+    """Remove reaction from a message"""
+    try:
+        result = await messenger_service.remove_reaction(messageId, userId)
+        return result
+    except Exception as e:
+        logger.error(f"Error removing reaction: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @api_router.delete("/messenger/messages/{messageId}")
 async def delete_message(messageId: str, userId: str):
     """Delete a message"""
