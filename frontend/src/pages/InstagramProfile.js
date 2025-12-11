@@ -95,7 +95,7 @@ const InstagramProfile = () => {
   const fetchUserByUsername = async (username) => {
     try {
       const cleanUsername = username.replace('@', '');
-      const response = await axios.get(`${API}/api/users/handle/${cleanUsername}`);
+      const response = await axios.get(`${API}/users/handle/${cleanUsername}`);
       const userData = response.data;
       setProfileUser(userData);
       setIsOwnProfile(currentUser && currentUser.id === userData.id);
