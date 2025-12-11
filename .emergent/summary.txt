@@ -1,190 +1,179 @@
-<analysis>**original_problem_statement**: The user's initial goal was to build a Version 1 high-retention social media community app, focusing on core engagement features like profiles, content feeds, messaging, and VibeRooms (audio chat). The session focused on implementing features based on the user's iterative feedback, which included adding a Reels-like video feed (VibeZone), revamping the Discover page with community Tribes, and fixing numerous UI/UX issues and bugs across the application.
+<analysis>**original_problem_statement**: The user wants to build a comprehensive, high-retention social media app. The initial scope included a Reels clone (VibeZone), community Tribes, and a robust verification system for different user types. Recent requests have significantly expanded the scope to include:
+1.  A complete, Instagram-style user profile system with multiple profile types (Regular, Creator, Verified Page).
+2.  A fully functional follow/unfollow system akin to Instagram.
+3.  A messaging system for users who are friends or follow each other.
+4.  A real-time notification system with pop-up alerts for likes, comments, shares, and friend/follow requests.
+5.  A consistent UI/UX theme across the entire application.
+6.  Fixing existing bugs, particularly in the Discover section, where users cannot reliably view profiles or follow others.
 
-PRODUCT REQUIREMENTS (V1 Social Media App):
--   User profiles (Bio, portfolio, interests)
--   Short-form content feed (videos, photos)
--   Like / Comment / Share / Save
--   Messaging (Chat & Creator DMs)
--   Creator onboarding & verification
--   Hyperlocal discovery (areas, events, interests)
--   Content categories & hashtags
--   Push notifications
--   Basic analytics for creators
--   Report/Block features
--   AI-powered content moderation (v1)
--   Secure login (phone, mail, social login)
--   VibeRooms (Clubhouse-like audio rooms)
--   Tribes (User-created communities)
+PRODUCT REQUIREMENTS (New Profile & Social System):
+-   **Profile System**: Instagram-style layout with profile picture (upload/crop), username, name, bio, pronouns, website link, and action buttons. A 3-column grid for posts, and tabs for VibeZone and Analytics.
+-   **Social Graph**: A follow/unfollow system should be the primary connection method. A friends system also exists and needs to coexist logically.
+-   **Messaging**: Users who are connected (friends/followers) should be able to message each other.
+-   **Real-time Notifications**: Instant, pop-up notifications for all key social interactions.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a full-stack social media platform using React, FastAPI, and MongoDB. The agent has implemented several key features based on direct user requests:
--   **VibeZone (Reels):** A TikTok-style video feed page () was created. The agent debugged numerous video playback issues and implemented audio controls (tap-to-unmute, persistence) to improve the user experience.
--   **Discover Page:** The page was significantly revamped to include tabs for exploring Posts, Reels, People (with search), and a new Tribes feature for discovering communities.
--   **Tribes Feature:** A complete community feature was implemented. Users can view tribes on the Discover page, view a specific tribe's feed on a detail page (), create posts within a tribe, and join tribes.
--   **Post Management:** A critical bug was fixed, allowing users to delete their posts from the feed, profile, and tribes. The issue of post media not appearing was also resolved.
--   **UI/UX Refinements:** Many small UI changes were made based on user screenshots, such as removing call buttons from the messenger, removing promotional text from various components, and adjusting the Made in India badge in the header.
--   **Bug Fixes:** The agent resolved multiple critical bugs related to profile photo uploads (Not Found error) by correcting inconsistent API path prefixes across the frontend.
+The application is a full-stack social media platform (React, FastAPI, MongoDB) with a mobile-ready Capacitor shell. A verification system is in place, and an admin account has been created for the user. Recent work focused on overhauling the user profile and social features. A new  page has replaced the old profile system, and the backend has been updated to support followers/following. A real-time notification system using WebSockets has been partially implemented, and UI/branding has been made more consistent (e.g., Reels -> VibeZone, unified background color).
 
 **Last working item**:
--   **Last item agent was working**: The user requested to remove the AI Quick Actions section and the Need a quick walkthrough? button from the home feed. The agent acknowledged the request but has not yet started the implementation.
--   **Status**: NOT STARTED
--   **Agent Testing Done**: N
--   **Which testing method agent to use?**: screenshot tool (This is a minor UI change, a screenshot is sufficient to verify removal).
+-   **Last item agent was working**: Making the Discover (People) section fully functional. The agent ran backend tests using the testing agent to validate user search, follow, and friend request functionality. The tests passed with an 85.7% success rate, indicating the backend is mostly correct and the remaining bugs (like Failed to follow user) are on the frontend.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: Y (Backend only)
+-   **Which testing method agent to use?**: Frontend testing agent. The next step is to run a comprehensive frontend test on the Discover page to identify and fix the UI bugs.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1 (P0)**: Remove AI Quick Actions and walkthrough button from the home feed.
--   **Issue 2 (P1)**: VibeZone (Reels) audio and playback is unstable.
--   **Issue 3 (P2)**: End-to-end testing for VibeRooms is blocked by an authentication issue.
--   **Issue 4 (P2)**: A recurring authentication bug prevents the testing agent from logging in, blocking all end-to-end tests for authenticated features.
+-   **Issue 1 (P0)**: The Discover (People) section is not fully functional. Users report a Failed to follow user error, and clicking View Profile is unreliable. This is the current highest priority task.
+-   **Issue 2 (P1)**: The messaging system is not implemented. The user requested that friends/followers be able to text each other, but this feature has not been started.
+-   **Issue 3 (P2)**: The new  page is missing requested features like the Analytics tab (it currently shows Tagged) and the profile picture crop/upload functionality.
 
 **Issues Detail**:
--   **Issue 1**: Remove UI elements from the home feed.
-    -   **Attempted fixes**: None.
+-   **Issue 1**: Discover (People) Section is not fully functional.
+    -   **Attempted fixes**: The agent fixed a blank screen error on the profile page and an issue with fetching user data by handle. Backend tests were run and passed for the most part. The agent identified the next step is to test the frontend.
     -   **Next debug checklist**:
-        1.  Locate the relevant components in .
-        2.  Remove the JSX for the AI Quick Actions and Need a quick walkthrough? button.
-        3.  Use the screenshot tool to verify the change.
-    -   **Why fix this issue and what will be achieved with the fix?**: To clean up the main feed UI as requested by the user.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Frontend.
--   **Issue 2**: VibeZone (Reels) audio and playback is unstable.
-    -   **Description**: The user wants the Reels feature to work like TikTok/Instagram. The agent implemented audio controls, but video playback was unreliable in the testing environment (), possibly due to the headless browser trying to load multiple videos at once. The experience may not be smooth for a real user.
-    -   **Attempted fixes**: Muting the video by default, adding user-controlled unmute, cleaning up broken video URLs from the database, and attempting to load only one video at a time.
-    -   **Next debug checklist**:
-        1.  Investigate and implement a more robust video loading strategy in , such as using an Intersection Observer to only load/play the video that is currently in the viewport.
-        2.  After implementation, use the frontend testing agent to verify smooth playback and audio functionality.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a core content consumption feature, and making it stable is critical for user retention.
+        1.  Invoke the frontend testing agent to perform an end-to-end test of the  page.
+        2.  Analyze the test results to find the root cause of the Failed to follow user error.
+        3.  Fix the API call or state management logic in .
+        4.  Ensure the View Profile link correctly navigates to  and the profile page loads the correct user data.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a core social feature required for user growth and engagement. Fixing it will allow users to connect with each other as intended.
     -   **Status**: IN PROGRESS
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend.
--   **Issue 3**: VibeRooms functionality is not fully tested.
-    -   **Description**: The backend API for getting an Agora token was fixed in a previous session, but the full end-to-end flow has never been successfully tested from the frontend because the testing agent gets stuck at login.
-    -   **Attempted fixes**: Backend API was fixed and verified with .
-    -   **Next debug checklist**: First, resolve the authentication bug (Issue 4). Then, use the frontend testing agent to perform a full E2E test: log in, navigate to VibeRooms, create a room, and join it.
-    -   **Why fix this issue and what will be achieved with the fix?**: VibeRooms are a key V1 feature. This will ensure they are fully functional.
-    -   **Status**: BLOCKED
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend.
-    -   **Blocked on other issue**: Issue 4: Recurring authentication bug.
--   **Issue 4**: Recurring authentication bug blocking testing.
-    -   **Description**: Throughout the session, the frontend testing agent has consistently failed to log in, preventing any meaningful end-to-end testing of authenticated features (Profile, Tribes, VibeRooms, Messenger). This could indicate a bug in the login form, state management (), or token handling.
-    -   **Attempted fixes**: None directly. The agent has worked around it by testing backend APIs with  or testing UI changes on pages that don't require login.
-    -   **Next debug checklist**:
-        1.  Manually review the login logic in  and the context in .
-        2.  Add verbose logging to the login flow to see where it fails.
-        3.  Invoke the  specifically for this persistent authentication failure.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical show-stopper for quality assurance. Fixing it will unblock testing for most of the application's features.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend.
+    -   **Should Test frontend/backend/both after fix?**: Frontend
+    -   **Blocked on other issue**: None
+
+**In progress Task List**:
+-   **Task 1 (P0)**: Make the Discover (People) section fully functional.
+    -   **Where to resume**: The backend has been tested. The immediate next step is to invoke the  agent to test the  page functionality from the user's perspective.
+    -   **What will be achieved with this?**: A reliable system for users to search for, view profiles of, and follow other users.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: Frontend
+    -   **Blocked on something**: No.
 
 **Upcoming and Future Tasks**
--   **Upcoming Tasks (V1)**:
-    -   (P1) Implement Report/Block functionality for users and content.
-    -   (P1) Implement a creator verification system.
-    -   (P2) Build the basic Analytics dashboard UI for creators.
-    -   (P2) Implement hyperlocal discovery features.
--   **Future Tasks (V2)**:
-    -   Implement push notifications.
+-   **Upcoming Tasks**:
+    -   (P0) Implement the messaging system for friends/followers.
+    -   (P1) Complete the  page:
+        -   Replace the Tagged tab with an Analytics tab.
+        -   Integrate the  to allow users to upload, crop, and change their profile picture.
+        -   Implement Story ring and Highlights features.
+    -   (P2) Build the full Creator/Business Analytics Dashboard.
+-   **Future Tasks**:
+    -   Implement native push notifications via Capacitor.
     -   Implement AI-powered content moderation.
-    -   Enhance login with social/phone options.
+    -   Implement Report/Block functionality.
+    -   Implement 2-Factor Authentication (2FA).
 
 **Completed work in this session**
--   **VibeZone (Reels) Feature**: Implemented a Reels-like video feed with audio controls (, ).
--   **Discover Page Overhaul**: Revamped the page to include tabs for Posts, Reels, People search, and a new Tribes feature ().
--   **Tribes (Communities) Feature**: Built a full community feature where users can create posts, view tribe-specific feeds, and join/leave tribes (, ).
--   **Post Deletion**: Fixed a critical bug by implementing post deletion functionality across the app (, , ).
--   **Profile Page Cleanup**: Removed Tickets and Marketplace tabs and ensured user posts are displayed correctly ().
--   **API Path Standardization**: Corrected numerous inconsistent API paths (missing or duplicate  prefix) across multiple frontend components.
--   **UI/UX Fixes**: Removed video/call buttons from messenger, cleaned up promotional text, and adjusted the Made in India header badge per user requests.
+-   **Instagram-Style Profile**: A new profile page () was created and integrated, replacing the old one.
+-   **Follow System**: Added / to the backend user model, fixed the follow API endpoint, and added a  to the UI.
+-   **Real-Time Notifications**: Enhanced the WebSocket system to provide real-time toast notifications for likes, comments, and follows.
+-   **Admin Access & UX**: Created a dedicated admin user, secured admin endpoints, and added an Admin Dashboard button to the profile page for easy access.
+-   **UI/Branding**:
+    -   Redesigned the verified badge to an Instagram-style blue tick.
+    -   Renamed all UI instances of Reels to VibeZone.
+    -   Removed the Made in India badge from the header.
+    -   Standardized the page background to a consistent purple gradient.
+-   **Bug Fixes**:
+    -   Resolved a blank screen error on the profile page.
+    -   Fixed an issue preventing profiles from loading correctly when navigated to from the Discover page.
+    -   Fixed an issue where the verified badge wouldn't appear instantly after admin approval by adding a Refresh Profile button.
 
 **Earlier issues found/mentioned but not fixed**
--   The empty-data API bug mentioned in the initial handoff (where APIs return  despite data in the DB) was not explicitly addressed or re-tested. It remains a potential underlying issue.
+-   **Full Messaging System**: User requested messaging between friends/followers, which has not been implemented.
+-   **VibeRooms Feature**: The Agora.io-based audio chat room feature remains untested end-to-end.
 
 **Known issue recurrence from previous fork**
--   The previous handoff noted recurring API URL and auth token issues. This session confirmed this pattern, as the agent spent significant time fixing incorrect  prefixes and was repeatedly blocked by authentication failures during testing.
+-   None. The previous authentication testing issue was confirmed resolved.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Full-Stack**: React (JavaScript), FastAPI (Python)
--   **Database**: MongoDB
--   **Authentication**: JWT stored in localStorage
--   **Real-time Audio**: Agora.io (Backend support exists, frontend untested)
+-   **Full-Stack**: React (JavaScript), FastAPI (Python), MongoDB
+-   **Real-Time**: WebSockets (python-socketio on backend, socket.io-client on frontend) for notifications.
+-   **UI**: ,  (for toasts), .
+-   **State Management**: React Context (, ).
+-   **Mobile**: CapacitorJS for the native shell.
 
 **key DB schema**
--   **tribes**: Implicitly used collection with uid=0(root) gid=0(root) groups=0(root), , , , .
--   **posts**: Modified to include a  to associate posts with a community.
+-   **users**: Extended with new fields:
+    -   : str
+    -   : str
+    -   : List[str] (list of user IDs)
+    -   : List[str] (list of user IDs)
 
 **changes in tech stack**
--   None.
+-   ****: Added as a dependency for profile picture editing.
 
 **All files of reference**
--   **Created/Heavily Modified**:
-    -   : Rewritten to be a multi-tab discovery hub.
-    -   : Created for the Reels feature.
-    -   : Created for viewing and interacting with specific tribes.
-    -   : Created to render the video reel feed.
-    -   : Updated with delete functionality and media URL fixes.
-    -   : Updated with new endpoints for tribe functionality.
+-   **/app/frontend/src/pages/Discover.js**: The page with the broken follow and view profile functionality that needs to be fixed.
+-   **/app/frontend/src/pages/InstagramProfile.js**: The new, primary profile page.
+-   **/app/backend/server.py**: Contains all backend logic, including the recently modified User model and API endpoints for follow and user fetching.
+-   **/app/frontend/src/context/WebSocketContext.js**: Manages the real-time notification logic on the frontend.
+-   **/app/frontend/src/components/FollowersModal.js**: New component for displaying follower/following lists.
 
 **Areas that need refactoring**:
--   **Authentication Flow**: The recurring login failures for the testing agent point to a brittle authentication process. The logic in  and  needs a thorough review and potential refactoring to be more robust.
--   **API URL Management**: The agent repeatedly fixed bugs related to incorrect API prefixes. A centralized API service utility in the frontend should be created or enforced to ensure all API calls are constructed correctly, preventing this class of bug.
--   **Dead Code**: The backend still contains unused code and model files from the previously removed marketplace and video platform features, which should be deleted.
+-   The  component has become very large and complex. It should be broken down into smaller components and custom hooks for better maintainability.
+-   API endpoints are still concentrated in  and should be moved into dedicated router files under .
 
 **key api endpoints**
--   : Create a post in a tribe.
--   : Get all tribes.
--   : Delete a post.
--   : Fetch reels for VibeZone.
--   : Handles all media uploads.
+-   : Fetches a user's profile data by their username.
+-   : Endpoint to follow/unfollow a user.
+-   **WebSocket Events**:  (emitted on like, comment, follow), , .
 
 **Critical Info for New Agent**
-1.  **Immediate Task**: Your first task is to clean up the home feed by removing the AI Quick Actions and walkthrough button from , as per the user's latest request.
-2.  **Authentication is the Biggest Blocker**: You will be unable to test most features end-to-end until you solve the recurring authentication issue that prevents the testing agent from logging in. Prioritize investigating  and  or using the .
-3.  **VibeZone Needs Stabilization**: The user wants a TikTok-like experience for Reels. The current implementation is unstable in the test environment. You should focus on implementing a more robust video loading strategy (e.g., Intersection Observer) in .
-4.  **Watch API Paths**: Be extremely careful with API request URLs. The codebase has a history of inconsistent prefixes. Ensure all calls use the correct base URL and  prefix, but not duplicates like .
+1.  **Immediate Priority**: Your first task is to fix the Discover page. The backend is likely working, so the focus should be on the frontend. Start by running the frontend testing agent to replicate and diagnose the Failed to follow user error and the View Profile navigation issue.
+2.  **Profile System is New**: The  page is the new standard. The user wants it to be the centerpiece of the app. Key missing pieces are the Analytics tab and the profile picture upload/crop feature.
+3.  **Messaging is Next**: After fixing the Discover page, the next major feature to build is the direct messaging system between users.
+4.  **Admin User Exists**: You can test all admin functionality by logging in as  with the password .
+
+**documents created in this job**
+-   /app/ADMIN_DASHBOARD_ACCESS_STEPS.md
+-   /app/VERIFIED_BADGE_DESIGN.md
+-   /app/INDIAN_SOCIAL_MEDIA_PLATFORM.md
+-   /app/ADMIN_BUTTON_LOCATION.md
+-   /app/VERIFIED_BADGE_VISIBILITY_GUIDE.md
+-   /app/QUICK_START_ADMIN.txt
+-   /app/ADMIN_ACCESS_GUIDE.md
 
 **Last 10 User Messages and any pending user messages**
-1.  **User**: fix this issue (Post not visible in tribe). **Status**: Completed. Agent fixed the API path in .
-2.  **User**: i cant see the tribes at all. **Status**: Completed. Agent fixed a double  prefix bug in .
-3.  **User**: here in timeline beside it just edit as made in india. **Status**: Completed. Agent changed Timeline to Feed.
-4.  **User**: 🇮🇳 Made in India here remove in. **Status**: Completed. Agent changed it to Made India.
-5.  **User**: made in india. **Status**: Completed. Agent changed it back to Made in India.
-6.  **User**: post media is not avalible and not visible. **Status**: Completed. Agent fixed the  component to use the correct media property.
-7.  **User**: reemove video call and audio call feature from messenger. **Status**: Completed. Agent removed the buttons from .
-8.  **User**: 🎙️ Clubhouse-style remove this text from this. **Status**: Completed. Agent removed the subtitle from .
-9.  **User**: remove Powered by OpenAI GPT-4o from this. **Status**: Completed. Agent removed the text from .
-10. **User**: in reels i cant listen the audio fix the issue.... **Status**: Completed. Agent implemented TikTok-style audio controls in .
-11. **User**: i cant delete the post fix this issue. **Status**: Completed. Agent implemented the  function across the app.
-12. **User**: remove these things from the feed. **Status**: **Pending**. This is the current .
+1.  **User**: Request for real-time notifications with pop-ups. - **Status**: COMPLETED (Phase 1).
+2.  **User**: fix this issue... if i search a profile i cant see the profile in discover section. - **Status**: IN PROGRESS. Agent identified the problem and is about to run frontend tests.
+3.  **User**: see its showing blank screen i cant see the profile fix this issue. - **Status**: COMPLETED. Agent fixed a rendering race condition in .
+4.  **User**: make this whole section working fully functional (referring to Discover page). - **Status**: IN PROGRESS. This is the current .
+5.  **User**: perfect now make the colour same as all pages for profile page. - **Status**: COMPLETED.
+6.  **User**: followers should be like instagram and messenges people can text each other. - **Status**: IN PROGRESS (Followers part done, messaging is pending).
+7.  **User**: change the color and all the pages should have the same background colour. - **Status**: COMPLETED.
+8.  **User**: build a complete user profile system similar to Instagram. - **Status**: COMPLETED (Phase 1).
+9.  **User**: change reels to vibezone. - **Status**: COMPLETED.
+10. **User**: remove made in india completely. - **Status**: COMPLETED.
 
 **Project Health Check:**
 -   **Broken**:
-    -   The application's authentication flow is highly suspect, as it consistently fails during automated testing, blocking verification of most features.
-    -   VibeRooms remain untested end-to-end due to the auth issue.
--   **Mocked**: All data is from seed scripts (, , etc.). There is no real user data persistence beyond the session.
+    -   The Discover page's core social actions (follow, view profile) are not working reliably for the user.
+    -   The messaging system is entirely missing.
+-   **Mocked**: No mocked components.
 
-**3rd Party Integrations**:
--   Agora.io — requires User API Key (present in ). Backend is configured, frontend is untested.
+**3rd Party Integrations**
+-   **Agora.io**: Configured for VibeRooms (audio chat), but the feature remains untested. Requires User API Key.
+-   **Capacitor**: Used for mobile app conversion. Not a runtime integration.
 
 **Testing status**
--   Testing agent used after significant changes: YES (but repeatedly failed at login).
--   Troubleshoot agent used after agent stuck in loop: NO
--   Test files created: None.
--   Known regressions: The authentication flow for the testing agent seems to have regressed or was never fully working.
+-   **Testing agent used after significant changes**: YES. The backend testing agent was used to validate the Discover page's backend APIs.
+-   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Test files created**:  (created by backend testing agent).
+-   **Known regressions**: The follow functionality on the Discover page appears to be regressed or was never fully functional on the frontend.
 
 **Credentials to test flow:**
--   **Email**: 
--   **Password**: 
+-   **Admin User**:
+    -   **Email**: 
+    -   **Password**: 
+-   **Regular Users**: Must be created via the signup flow for testing.
 
 **What agent forgot to execute**
--   The agent did not remove the dead code related to the old marketplace/video features as noted in the initial handoff summary.
--   The agent did not investigate the root cause of the original empty-data API bug.
--   The agent did not resolve the core authentication issue, instead working around it for most of the session.</analysis>
+-   **Profile Analytics Tab**: The user requested the Tagged tab in the new profile be replaced with Analytics, but it was implemented as Tagged.
+-   **Profile Picture Crop/Upload**: An  component was created, but it was never integrated into the  page, so users cannot change their profile picture.
+-   **Profile Story Ring & Highlights**: These Instagram-like features were requested for the profile page but were not implemented.
+-   **Friend System Cohesion**: The user mentioned friends too along with followers. The agent did not clarify how the existing friend request system should interact with the new follow-centric model, leading to UI with both Add Friend and Follow buttons.</analysis>

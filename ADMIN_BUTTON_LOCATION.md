@@ -5,13 +5,13 @@
 ### Where to Find It
 
 **Step 1: Login**
-- Go to: `https://verified-vibes.preview.emergentagent.com/auth`
+- Go to: `https://vibrant-social-1.preview.emergentagent.com/auth`
 - Email: `sunnycharan181@gmail.com`
 - Password: `Ramcharan`
 
 **Step 2: Go to Your Profile**
 - Click on the "Profile" icon in the bottom navigation bar
-- Or go to: `https://verified-vibes.preview.emergentagent.com/profile`
+- Or go to: `https://vibrant-social-1.preview.emergentagent.com/profile`
 
 **Step 3: Find the Admin Dashboard Button**
 - Scroll down to see your profile buttons
@@ -74,7 +74,7 @@
 
 **Step 1: Open Profile**
 ```
-https://verified-vibes.preview.emergentagent.com/profile
+https://vibrant-social-1.preview.emergentagent.com/profile
 ```
 
 **Step 2: Look for the Button**
@@ -103,7 +103,7 @@ Profile → Click "Admin Dashboard" button → Dashboard
 
 ### Method 2: Direct URL (Still works)
 ```
-https://verified-vibes.preview.emergentagent.com/admin/verification
+https://vibrant-social-1.preview.emergentagent.com/admin/verification
 ```
 
 ### Method 3: Bookmark

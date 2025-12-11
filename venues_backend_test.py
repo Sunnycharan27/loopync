@@ -10,7 +10,7 @@ import sys
 from typing import Dict, List, Any
 
 # Backend URL from environment
-BACKEND_URL = "https://verified-vibes.preview.emergentagent.com/api"
+BACKEND_URL = "https://vibrant-social-1.preview.emergentagent.com/api"
 
 class VenuesBackendTester:
     def __init__(self):

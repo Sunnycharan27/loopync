@@ -11,7 +11,7 @@
 
 ### STEP 1: Open the Application
 ```
-URL: https://verified-vibes.preview.emergentagent.com
+URL: https://vibrant-social-1.preview.emergentagent.com
 ```
 
 **What you'll see:**
@@ -22,7 +22,7 @@ URL: https://verified-vibes.preview.emergentagent.com
 
 ### STEP 2: Go to Login Page
 ```
-Direct Login URL: https://verified-vibes.preview.emergentagent.com/auth
+Direct Login URL: https://vibrant-social-1.preview.emergentagent.com/auth
 ```
 
 **Actions:**
@@ -68,7 +68,7 @@ Ramcharan
 
 **Option A: Direct URL (Easiest)**
 ```
-https://verified-vibes.preview.emergentagent.com/admin/verification
+https://vibrant-social-1.preview.emergentagent.com/admin/verification
 ```
 
 **Actions:**
@@ -152,7 +152,7 @@ Each request shows:
 - [ ] Password: `Ramcharan`
 
 ✅ **Direct dashboard URL:**
-- [ ] `https://verified-vibes.preview.emergentagent.com/admin/verification`
+- [ ] `https://vibrant-social-1.preview.emergentagent.com/admin/verification`
 
 ---
 
@@ -160,22 +160,22 @@ Each request shows:
 
 **1. Main App:**
 ```
-https://verified-vibes.preview.emergentagent.com
+https://vibrant-social-1.preview.emergentagent.com
 ```
 
 **2. Login Page:**
 ```
-https://verified-vibes.preview.emergentagent.com/auth
+https://vibrant-social-1.preview.emergentagent.com/auth
 ```
 
 **3. Admin Dashboard:**
 ```
-https://verified-vibes.preview.emergentagent.com/admin/verification
+https://vibrant-social-1.preview.emergentagent.com/admin/verification
 ```
 
 **4. Your Profile (after login):**
 ```
-https://verified-vibes.preview.emergentagent.com/profile
+https://vibrant-social-1.preview.emergentagent.com/profile
 ```
 
 ---
@@ -184,9 +184,9 @@ https://verified-vibes.preview.emergentagent.com/profile
 
 Same steps work on mobile:
 1. Open mobile browser (Chrome, Safari)
-2. Go to: `https://verified-vibes.preview.emergentagent.com/auth`
+2. Go to: `https://vibrant-social-1.preview.emergentagent.com/auth`
 3. Enter credentials
-4. Navigate to: `https://verified-vibes.preview.emergentagent.com/admin/verification`
+4. Navigate to: `https://vibrant-social-1.preview.emergentagent.com/admin/verification`
 
 ---
 
