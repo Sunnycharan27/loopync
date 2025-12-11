@@ -322,8 +322,9 @@ class DiscoverPeopleBackendTester:
             
             if pending_request:
                 self.friend_request_id = pending_request.get("id")
+                from_user = pending_request.get("fromUser", {})
                 self.log_result("User B Receives Friend Request", True, 
-                              f"Request ID: {self.friend_request_id}, From: {pending_request.get('fromUserName')}")
+                              f"Request ID: {self.friend_request_id}, From: {from_user.get('name', 'Unknown')}")
             else:
                 # Check if they're already friends (auto-accepted)
                 response = self.make_request("GET", f"/users/{self.user_b_id}/friends", token=self.user_b_token)
@@ -336,7 +337,7 @@ class DiscoverPeopleBackendTester:
                         return True
                 
                 self.log_result("User B Receives Friend Request", False, 
-                              error=f"No pending request found. Received: {len(received)}, Sent: {len(sent)}")
+                              error=f"No pending request found. Total requests: {len(requests_list)}")
                 return False
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
