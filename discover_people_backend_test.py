@@ -158,9 +158,9 @@ class DiscoverPeopleBackendTester:
         """Test follow/unfollow functionality between users"""
         self.log("Testing Follow/Unfollow Functionality...")
         
-        # Test User A follows User B
+        # Test User A follows User B - the endpoint expects userId in URL to be the follower
         follow_data = {"targetUserId": self.user_b_id}
-        response = self.make_request("POST", f"/users/{self.user_b_id}/follow", follow_data, token=self.user_a_token)
+        response = self.make_request("POST", f"/users/{self.user_a_id}/follow", follow_data, token=self.user_a_token)
         
         if response and response.status_code == 200:
             result = response.json()
