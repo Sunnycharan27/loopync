@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../App';
 import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import {
   Camera, Edit3, Settings, Grid, Film, Tag, Share2,
   Mail, Phone, MessageCircle, Globe, MapPin, Clock,
