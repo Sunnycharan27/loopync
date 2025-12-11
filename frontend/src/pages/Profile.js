@@ -501,7 +501,7 @@ const Profile = () => {
                 <span className="text-white font-bold">{userContent.posts?.length || 0}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400">Reels</span>
+                <span className="text-gray-400">VibeZone</span>
                 <span className="text-white font-bold">{userContent.reels?.length || 0}</span>
               </div>
               <div className="flex items-center justify-between">
