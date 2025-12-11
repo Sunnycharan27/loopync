@@ -24,6 +24,7 @@ import UserProfile from "./pages/UserProfile";
 import People from "./pages/People";
 import Settings from "./pages/Settings";
 import AdminVerificationDashboard from "./pages/AdminVerificationDashboard";
+import VerificationRequest from "./pages/VerificationRequest";
 import PageView from "./pages/PageView";
 import Rooms from "./pages/Rooms";
 import RoomDetailClubhouse from "./pages/RoomDetailClubhouse";
