@@ -790,11 +790,14 @@ const MessengerNew = () => {
             {messages.map((message, idx) => {
               const isOwn = message.senderId === currentUser.id;
               const showAvatar = idx === 0 || messages[idx - 1]?.senderId !== message.senderId;
+              const hasReactions = message.reactions && message.reactions.length > 0;
+              const isVoiceMessage = message.mediaType === 'voice';
+              const isVideoMessage = message.mediaType === 'video';
 
               return (
                 <div
                   key={message.id}
-                  className={`flex items-end gap-2 ${
+                  className={`flex items-end gap-2 group ${
                     isOwn ? 'flex-row-reverse' : 'flex-row'
                   }`}
                 >
@@ -808,29 +811,109 @@ const MessengerNew = () => {
                     <div className="w-6" />
                   )}
 
-                  <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
-                      isOwn
-                        ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-lg shadow-cyan-400/30'
-                        : 'text-white'
-                    }`}
-                    style={!isOwn ? { 
-                      background: 'rgba(18, 20, 39, 0.9)', 
-                      border: '1px solid rgba(0, 224, 255, 0.2)'
-                    } : {}}
-                  >
-                    {message.text && <p className="text-sm">{message.text}</p>}
-                    {message.mediaUrl && (
-                      <img
-                        src={message.mediaUrl}
-                        alt=""
-                        className="rounded-lg mt-2 max-w-full"
-                      />
+                  <div className="relative">
+                    {/* Message bubble */}
+                    <div
+                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl cursor-pointer ${
+                        isOwn
+                          ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-lg shadow-cyan-400/30'
+                          : 'text-white'
+                      }`}
+                      style={!isOwn ? { 
+                        background: 'rgba(18, 20, 39, 0.9)', 
+                        border: '1px solid rgba(0, 224, 255, 0.2)'
+                      } : {}}
+                      onDoubleClick={() => setShowEmojiPicker(showEmojiPicker === message.id ? null : message.id)}
+                    >
+                      {/* Voice message */}
+                      {isVoiceMessage && message.mediaUrl ? (
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => playAudio(message.id, message.mediaUrl)}
+                            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                              isOwn ? 'bg-black/20 hover:bg-black/30' : 'bg-cyan-400/20 hover:bg-cyan-400/30'
+                            }`}
+                          >
+                            {playingAudio === message.id ? (
+                              <Pause size={18} className={isOwn ? 'text-black' : 'text-cyan-400'} />
+                            ) : (
+                              <Play size={18} className={isOwn ? 'text-black' : 'text-cyan-400'} />
+                            )}
+                          </button>
+                          <div className="flex-1">
+                            <div className={`h-1 rounded-full ${isOwn ? 'bg-black/30' : 'bg-cyan-400/30'}`}>
+                              <div className={`h-full w-1/2 rounded-full ${isOwn ? 'bg-black' : 'bg-cyan-400'}`}></div>
+                            </div>
+                            <p className="text-xs mt-1 opacity-70">Voice message</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          {message.text && !message.text.startsWith('🎤') && !message.text.startsWith('📷') && !message.text.startsWith('🎬') && (
+                            <p className="text-sm">{message.text}</p>
+                          )}
+                        </>
+                      )}
+                      
+                      {/* Image/Video message */}
+                      {message.mediaUrl && !isVoiceMessage && (
+                        <div className="mt-1">
+                          {isVideoMessage ? (
+                            <video
+                              src={message.mediaUrl}
+                              controls
+                              className="rounded-lg max-w-full max-h-60"
+                            />
+                          ) : (
+                            <img
+                              src={message.mediaUrl}
+                              alt=""
+                              className="rounded-lg max-w-full max-h-60 cursor-pointer hover:opacity-90 transition-opacity"
+                              onClick={() => window.open(message.mediaUrl, '_blank')}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Reactions display */}
+                    {hasReactions && (
+                      <div className={`absolute -bottom-3 ${isOwn ? 'right-2' : 'left-2'} flex items-center gap-0.5 bg-gray-800 rounded-full px-1.5 py-0.5 border border-gray-700`}>
+                        {[...new Set(message.reactions.map(r => r.emoji))].map((emoji, i) => (
+                          <span key={i} className="text-xs">{emoji}</span>
+                        ))}
+                        {message.reactions.length > 1 && (
+                          <span className="text-xs text-gray-400 ml-0.5">{message.reactions.length}</span>
+                        )}
+                      </div>
                     )}
+
+                    {/* Reaction picker */}
+                    {showEmojiPicker === message.id && (
+                      <div className={`absolute bottom-full mb-2 ${isOwn ? 'right-0' : 'left-0'} bg-gray-800 rounded-full px-2 py-1 flex items-center gap-1 shadow-lg border border-gray-700 z-10`}>
+                        {REACTIONS.map((reaction) => (
+                          <button
+                            key={reaction.name}
+                            onClick={() => addReaction(message.id, reaction)}
+                            className="hover:scale-125 transition-transform text-lg"
+                          >
+                            {reaction.emoji}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Smile button on hover (for adding reactions) */}
+                    <button
+                      onClick={() => setShowEmojiPicker(showEmojiPicker === message.id ? null : message.id)}
+                      className={`absolute top-1/2 -translate-y-1/2 ${isOwn ? '-left-8' : '-right-8'} opacity-0 group-hover:opacity-100 transition-opacity text-gray-500 hover:text-cyan-400`}
+                    >
+                      <Smile size={16} />
+                    </button>
                   </div>
 
                   {isOwn && (
-                    <div className="text-cyan-400">
+                    <div className="text-cyan-400 flex items-center">
                       {message.read ? (
                         <CheckCheck size={14} />
                       ) : (
@@ -844,57 +927,124 @@ const MessengerNew = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
-          <form onSubmit={sendMessage} className="p-4 border-t border-cyan-500/10" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
-            <div className="flex items-center gap-2">
+          {/* Voice Recording Preview */}
+          {audioBlob && !isRecording && (
+            <div className="p-4 border-t border-cyan-500/10 flex items-center gap-3" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
               <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="text-cyan-400 hover:text-cyan-300"
+                onClick={() => {
+                  setAudioBlob(null);
+                  setRecordingTime(0);
+                }}
+                className="text-red-400 hover:text-red-300"
               >
-                <Image size={24} />
+                <Trash2 size={20} />
               </button>
-              
+              <div className="flex-1 flex items-center gap-2 bg-gray-800 rounded-full px-4 py-2">
+                <Mic size={16} className="text-cyan-400" />
+                <span className="text-white text-sm">Voice message ready</span>
+              </div>
               <button
-                type="button"
-                onClick={getAISuggestion}
-                disabled={aiLoading}
-                className="text-cyan-400 hover:text-cyan-300 disabled:opacity-50"
-                title="AI Suggest"
+                onClick={sendVoiceMessage}
+                disabled={uploadingMedia}
+                className="bg-cyan-400 text-black p-2 rounded-full hover:bg-cyan-300 disabled:opacity-50"
               >
-                <Sparkles size={24} className={aiLoading ? 'animate-spin' : ''} />
+                {uploadingMedia ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-black"></div>
+                ) : (
+                  <Send size={20} />
+                )}
               </button>
-
-              <input
-                type="file"
-                ref={fileInputRef}
-                className="hidden"
-                accept="image/*,video/*"
-              />
-
-              <input
-                type="text"
-                placeholder="Message..."
-                value={messageText}
-                onChange={handleTyping}
-                className="flex-1 px-4 py-2 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
-                style={{ background: 'rgba(18, 20, 39, 0.8)', border: '1px solid rgba(0, 224, 255, 0.15)' }}
-              />
-
-              {messageText.trim() ? (
-                <button
-                  type="submit"
-                  className="text-cyan-400 hover:text-cyan-300 font-semibold"
-                >
-                  Send
-                </button>
-              ) : (
-                <button type="button" className="text-cyan-400 hover:text-cyan-300">
-                  <Mic size={24} />
-                </button>
-              )}
             </div>
-          </form>
+          )}
+
+          {/* Recording UI */}
+          {isRecording && (
+            <div className="p-4 border-t border-cyan-500/10 flex items-center gap-3" style={{ background: 'rgba(220, 38, 38, 0.1)' }}>
+              <button
+                onClick={cancelRecording}
+                className="text-red-400 hover:text-red-300"
+              >
+                <X size={24} />
+              </button>
+              <div className="flex-1 flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-white font-mono">{formatRecordingTime(recordingTime)}</span>
+                <div className="flex-1 h-1 bg-red-500/30 rounded-full overflow-hidden">
+                  <div className="h-full bg-red-500 animate-pulse" style={{ width: `${Math.min(recordingTime * 2, 100)}%` }}></div>
+                </div>
+              </div>
+              <button
+                onClick={stopRecording}
+                className="bg-red-500 text-white p-2 rounded-full hover:bg-red-400"
+              >
+                <Check size={20} />
+              </button>
+            </div>
+          )}
+
+          {/* Normal Input */}
+          {!isRecording && !audioBlob && (
+            <form onSubmit={sendMessage} className="p-4 border-t border-cyan-500/10" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploadingMedia}
+                  className="text-cyan-400 hover:text-cyan-300 disabled:opacity-50"
+                >
+                  {uploadingMedia ? (
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-cyan-400"></div>
+                  ) : (
+                    <Image size={24} />
+                  )}
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={getAISuggestion}
+                  disabled={aiLoading}
+                  className="text-cyan-400 hover:text-cyan-300 disabled:opacity-50"
+                  title="AI Suggest"
+                >
+                  <Sparkles size={24} className={aiLoading ? 'animate-spin' : ''} />
+                </button>
+
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  accept="image/*,video/*"
+                  onChange={handleMediaSelect}
+                />
+
+                <input
+                  type="text"
+                  placeholder="Message..."
+                  value={messageText}
+                  onChange={handleTyping}
+                  className="flex-1 px-4 py-2 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+                  style={{ background: 'rgba(18, 20, 39, 0.8)', border: '1px solid rgba(0, 224, 255, 0.15)' }}
+                />
+
+                {messageText.trim() ? (
+                  <button
+                    type="submit"
+                    className="text-cyan-400 hover:text-cyan-300 font-semibold"
+                  >
+                    Send
+                  </button>
+                ) : (
+                  <button 
+                    type="button" 
+                    onClick={startRecording}
+                    className="text-cyan-400 hover:text-cyan-300"
+                  >
+                    <Mic size={24} />
+                  </button>
+                )}
+              </div>
+            </form>
+          )}
         </div>
       ) : (
         <div className="hidden md:flex flex-1 items-center justify-center">
