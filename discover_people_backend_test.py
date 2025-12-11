@@ -674,9 +674,9 @@ class DiscoverPeopleBackendTester:
         follow_data = {"targetUserId": self.user_b_id}
         
         # Follow User B
-        response1 = self.make_request("POST", f"/users/{self.user_b_id}/follow", follow_data, token=self.user_a_token)
+        response1 = self.make_request("POST", f"/users/{self.user_a_id}/follow", follow_data, token=self.user_a_token)
         # Follow again immediately
-        response2 = self.make_request("POST", f"/users/{self.user_b_id}/follow", follow_data, token=self.user_a_token)
+        response2 = self.make_request("POST", f"/users/{self.user_a_id}/follow", follow_data, token=self.user_a_token)
         
         if response1 and response2 and response1.status_code == 200 and response2.status_code == 200:
             result1 = response1.json()
