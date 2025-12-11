@@ -115,6 +115,52 @@ const Discover = () => {
     }
   };
 
+  const handleFollowUser = async (targetUserId) => {
+    if (!currentUser) {
+      toast.error("Please login to follow");
+      navigate('/auth');
+      return;
+    }
+    
+    try {
+      const token = localStorage.getItem('loopync_token');
+      await axios.post(
+        `${API}/api/users/${currentUser.id}/follow`,
+        { targetUserId },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      
+      // Check if already following
+      const isCurrentlyFollowing = currentUser.following?.includes(targetUserId);
+      toast.success(isCurrentlyFollowing ? 'Unfollowed' : 'Following!');
+      
+      // Refresh current user data
+      const userRes = await axios.get(`${API}/api/auth/me`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      // Update people and search results
+      const updatedFollowing = userRes.data.following || [];
+      setPeople(people.map(p => ({
+        ...p,
+        isFollowing: updatedFollowing.includes(p.id)
+      })));
+      
+      if (searchResults?.users) {
+        setSearchResults({
+          ...searchResults,
+          users: searchResults.users.map(u => ({
+            ...u,
+            isFollowing: updatedFollowing.includes(u.id)
+          }))
+        });
+      }
+    } catch (error) {
+      console.error('Error following user:', error);
+      toast.error("Failed to follow user");
+    }
+  };
+
   const joinTribe = async (tribeId) => {
     if (!currentUser) {
       toast.error("Please login to join tribes");
