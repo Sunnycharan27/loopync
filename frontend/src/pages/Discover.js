@@ -44,10 +44,31 @@ const Discover = () => {
       } else if (activeTab === "people") {
         const res = await axios.get(`${API}/users`);
         // Filter out current user and existing friends
-        const filtered = res.data.filter(u => {
+        let filtered = res.data.filter(u => {
           if (!currentUser) return true;
           return u.id !== currentUser.id && !currentUser.friends?.includes(u.id);
         });
+        
+        // If logged in, check for pending friend requests to mark them
+        if (currentUser) {
+          try {
+            const token = localStorage.getItem('loopync_token');
+            const frRes = await axios.get(`${API}/friend-requests?userId=${currentUser.id}`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const sentRequests = frRes.data.filter(fr => fr.fromUserId === currentUser.id && fr.status === 'pending');
+            const sentToIds = sentRequests.map(fr => fr.toUserId);
+            
+            // Mark users with pending friend requests
+            filtered = filtered.map(u => ({
+              ...u,
+              requestSent: sentToIds.includes(u.id)
+            }));
+          } catch (e) {
+            console.log('Could not fetch friend requests');
+          }
+        }
+        
         setPeople(filtered);
       } else if (activeTab === "tribes") {
         const res = await axios.get(`${API}/tribes`);
