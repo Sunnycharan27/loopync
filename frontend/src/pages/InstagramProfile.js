@@ -403,7 +403,7 @@ const InstagramProfile = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {isOwnProfile ? (
                 <>
                   <button
@@ -413,7 +413,17 @@ const InstagramProfile = () => {
                     <Edit3 size={16} />
                     Edit Profile
                   </button>
-                  {!profileUser.isVerified ? (
+                  {/* Admin Dashboard Button */}
+                  {(profileUser.isAdmin || profileUser.role === 'super_admin' || profileUser.role === 'admin') && (
+                    <button
+                      onClick={() => navigate('/admin/verification')}
+                      className="py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-500/20"
+                    >
+                      <Shield size={16} />
+                      Admin Dashboard
+                    </button>
+                  )}
+                  {!profileUser.isVerified && !profileUser.isAdmin ? (
                     <button
                       onClick={() => navigate('/verification')}
                       className="py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
@@ -421,7 +431,7 @@ const InstagramProfile = () => {
                       <BadgeCheck size={16} />
                       Get Verified
                     </button>
-                  ) : (
+                  ) : profileUser.isVerified && (
                     <div className="py-2 px-4 bg-green-500/20 text-green-400 font-semibold rounded-lg flex items-center justify-center gap-2 border border-green-500/30">
                       <Shield size={16} />
                       Verified
