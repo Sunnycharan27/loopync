@@ -82,8 +82,12 @@ const VerificationRequest = () => {
       const formData = new FormData();
       formData.append('file', file);
 
+      const token = localStorage.getItem('loopync_token');
       const res = await axios.post(`${API}/upload`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       setDocuments(prev => ({
