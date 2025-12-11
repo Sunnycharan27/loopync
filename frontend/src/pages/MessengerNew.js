@@ -664,7 +664,7 @@ const MessengerNew = () => {
               ))}
               {searchResults.length === 0 && (
                 <div className="text-center py-4 text-gray-500 text-sm">
-                  <p>No friends found with "{searchQuery}"</p>
+                  <p>No friends found with &quot;{searchQuery}&quot;</p>
                   <p className="mt-1">Try searching for someone else</p>
                 </div>
               )}
