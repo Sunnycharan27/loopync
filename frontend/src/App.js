@@ -19,6 +19,7 @@ import Onboarding from "./pages/Onboarding";
 import MessengerNew from "./pages/MessengerNew";
 import Notifications from "./pages/Notifications";
 import Profile from "./pages/ProfileVibe";
+import InstagramProfile from "./pages/InstagramProfile";
 import UserProfile from "./pages/UserProfile";
 import People from "./pages/People";
 import Settings from "./pages/Settings";
