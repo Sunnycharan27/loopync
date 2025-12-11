@@ -146,12 +146,6 @@ const Discover = () => {
       toast.error(error.response?.data?.detail || "Failed to send request");
     }
   };
-        });
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to send request");
-    }
-  };
 
   const handleFollowUser = async (targetUserId) => {
     if (!currentUser) {
