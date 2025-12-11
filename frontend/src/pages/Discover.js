@@ -624,7 +624,7 @@ const Discover = () => {
                                   </>
                                 )}
                                 <button
-                                  onClick={() => navigate(`/@${user.handle}`)}
+                                  onClick={() => navigate(`/u/${user.handle}`)}
                                   className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition text-sm"
                                 >
                                   View Profile
