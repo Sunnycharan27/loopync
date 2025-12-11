@@ -43,20 +43,22 @@ const Discover = () => {
         setReels(res.data);
       } else if (activeTab === "people") {
         const res = await axios.get(`${API}/users`);
-        // Filter out current user and existing friends
+        // Filter out current user only (keep friends to show Message button)
         let filtered = res.data.filter(u => {
           if (!currentUser) return true;
-          return u.id !== currentUser.id && !currentUser.friends?.includes(u.id);
+          return u.id !== currentUser.id;
         });
         
-        // If logged in, check for pending friend requests and following status
+        // If logged in, check for pending friend requests, following status, and friend status
         if (currentUser) {
           const following = currentUser.following || [];
+          const friends = currentUser.friends || [];
           
-          // Mark following status
+          // Mark following and friend status
           filtered = filtered.map(u => ({
             ...u,
-            isFollowing: following.includes(u.id)
+            isFollowing: following.includes(u.id),
+            isFriend: friends.includes(u.id)
           }));
           
           // Also check for pending friend requests
