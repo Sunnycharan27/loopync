@@ -4,30 +4,32 @@ import { AuthContext } from '../App';
 import axios from 'axios';
 import { toast } from 'sonner';
 import {
-  Camera, Edit3, Settings, Grid, Film, Tag, Share2,
-  Mail, Phone, MessageCircle, Globe, MapPin, Clock,
-  MoreHorizontal, UserPlus, UserCheck, CheckCircle
+  Camera, Edit3, Settings, Grid, Film, BarChart3,
+  Mail, Phone, MessageCircle, Globe, MapPin,
+  MoreHorizontal, UserPlus, UserCheck, UserMinus, Share2
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import ImageCropModal from '../components/ImageCropModal';
 import VerifiedBadge from '../components/VerifiedBadge';
+import PostCard from '../components/PostCard';
 import { getMediaUrl } from '../utils/mediaUtils';
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
 const InstagramProfile = () => {
   const navigate = useNavigate();
-  const { username } = useParams(); // For viewing other profiles via @username
+  const { username } = useParams();
   const { currentUser, refreshUserData } = useContext(AuthContext);
   
   const [profileUser, setProfileUser] = useState(null);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFriend, setIsFriend] = useState(false);
   
   // Content states
   const [posts, setPosts] = useState([]);
   const [reels, setReels] = useState([]);
-  const [tagged, setTagged] = useState([]);
   const [activeTab, setActiveTab] = useState('posts');
   
   // Stats
@@ -55,16 +57,12 @@ const InstagramProfile = () => {
   const [tempImage, setTempImage] = useState(null);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const fileInputRef = useRef(null);
-  
-  // Profile picture zoom modal
   const [showAvatarModal, setShowAvatarModal] = useState(false);
 
   useEffect(() => {
     if (username) {
-      // Viewing someone else's profile via @username
       fetchUserByUsername(username);
     } else {
-      // Viewing own profile
       if (currentUser) {
         setProfileUser(currentUser);
         setIsOwnProfile(true);
@@ -73,6 +71,13 @@ const InstagramProfile = () => {
       }
     }
   }, [username, currentUser]);
+
+  useEffect(() => {
+    if (profileUser && currentUser && !isOwnProfile) {
+      checkFollowStatus();
+      checkFriendStatus();
+    }
+  }, [profileUser, currentUser, isOwnProfile]);
 
   const fetchUserByUsername = async (username) => {
     try {
@@ -90,26 +95,79 @@ const InstagramProfile = () => {
     }
   };
 
+  const checkFollowStatus = () => {
+    if (currentUser && profileUser) {
+      const following = currentUser.following || [];
+      setIsFollowing(following.includes(profileUser.id));
+    }
+  };
+
+  const checkFriendStatus = () => {
+    if (currentUser && profileUser) {
+      const friends = currentUser.friends || [];
+      setIsFriend(friends.includes(profileUser.id));
+    }
+  };
+
   const fetchUserContent = async (userId) => {
     try {
-      // Fetch posts
       const postsRes = await axios.get(`${API}/api/posts`);
       const userPosts = postsRes.data.filter(post => post.authorId === userId);
       setPosts(userPosts);
       
-      // Fetch reels
       const reelsRes = await axios.get(`${API}/api/reels`);
       const userReels = reelsRes.data.filter(reel => reel.authorId === userId);
       setReels(userReels);
       
-      // Update stats
+      const followers = Array.isArray(profileUser?.followers) ? profileUser.followers.length : 0;
+      const following = Array.isArray(profileUser?.following) ? profileUser.following.length : 0;
+      
       setStats({
         posts: userPosts.length,
-        followers: 0, // TODO: Implement followers count
-        following: 0  // TODO: Implement following count
+        followers: followers,
+        following: following
       });
     } catch (error) {
       console.error('Error fetching content:', error);
+    }
+  };
+
+  const handleFollow = async () => {
+    try {
+      const token = localStorage.getItem('loopync_token');
+      await axios.post(
+        `${API}/api/users/${currentUser.id}/follow`,
+        { targetUserId: profileUser.id },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      
+      setIsFollowing(!isFollowing);
+      setStats(prev => ({
+        ...prev,
+        followers: isFollowing ? prev.followers - 1 : prev.followers + 1
+      }));
+      
+      toast.success(isFollowing ? 'Unfollowed' : 'Following');
+      await refreshUserData();
+    } catch (error) {
+      console.error('Error following user:', error);
+      toast.error('Failed to follow user');
+    }
+  };
+
+  const handleAddFriend = async () => {
+    try {
+      const token = localStorage.getItem('loopync_token');
+      await axios.post(
+        `${API}/api/users/${currentUser.id}/friend-request`,
+        { targetUserId: profileUser.id },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      
+      toast.success('Friend request sent!');
+    } catch (error) {
+      console.error('Error sending friend request:', error);
+      toast.error('Failed to send friend request');
     }
   };
 
@@ -160,13 +218,10 @@ const InstagramProfile = () => {
 
       const imageUrl = response.data.url;
       
-      // Update user avatar
       await axios.put(
         `${API}/api/users/${currentUser.id}`,
         { avatar: imageUrl },
-        {
-          headers: { 'Authorization': `Bearer ${token}` }
-        }
+        { headers: { 'Authorization': `Bearer ${token}` } }
       );
 
       toast.success('Profile picture updated!');
@@ -200,9 +255,7 @@ const InstagramProfile = () => {
       await axios.put(
         `${API}/api/users/${currentUser.id}`,
         editForm,
-        {
-          headers: { 'Authorization': `Bearer ${token}` }
-        }
+        { headers: { 'Authorization': `Bearer ${token}` } }
       );
 
       toast.success('Profile updated successfully!');
@@ -239,10 +292,10 @@ const InstagramProfile = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black pb-20">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800">
+      <div className="sticky top-0 z-10 bg-gray-900/95 backdrop-blur-lg border-b border-gray-800">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1 className="text-xl font-semibold text-white flex items-center gap-2">
-            {profileUser.handle}
+            @{profileUser.handle}
             {profileUser.isVerified && <VerifiedBadge size={20} />}
           </h1>
           {isOwnProfile && (
@@ -267,7 +320,7 @@ const InstagramProfile = () => {
               className="relative group"
               disabled={uploadingAvatar}
             >
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-gray-700 hover:border-cyan-400 transition-colors">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden ring-2 ring-cyan-400/30 hover:ring-cyan-400 transition-all">
                 <img
                   src={getMediaUrl(profileUser.avatar)}
                   alt={profileUser.name}
@@ -321,26 +374,45 @@ const InstagramProfile = () => {
                 <>
                   <button
                     onClick={handleEditProfile}
-                    className="flex-1 py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
                   >
                     <Edit3 size={16} />
                     Edit Profile
                   </button>
-                  <button className="p-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors">
+                  <button className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors">
                     <Share2 size={20} />
                   </button>
                 </>
               ) : (
                 <>
-                  <button className="flex-1 py-2 px-4 bg-cyan-400 hover:bg-cyan-500 text-black font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
-                    <UserPlus size={16} />
-                    Follow
+                  <button 
+                    onClick={handleFollow}
+                    className={`flex-1 py-2 px-4 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 ${
+                      isFollowing 
+                        ? 'bg-gray-800/80 hover:bg-gray-700 text-white' 
+                        : 'bg-cyan-400 hover:bg-cyan-500 text-black'
+                    }`}
+                  >
+                    {isFollowing ? <UserCheck size={16} /> : <UserPlus size={16} />}
+                    {isFollowing ? 'Following' : 'Follow'}
                   </button>
-                  <button className="flex-1 py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+                  {!isFriend && (
+                    <button 
+                      onClick={handleAddFriend}
+                      className="py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                    >
+                      <UserPlus size={16} />
+                      Add Friend
+                    </button>
+                  )}
+                  <button 
+                    onClick={() => navigate('/messenger')}
+                    className="py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                  >
                     <MessageCircle size={16} />
                     Message
                   </button>
-                  <button className="p-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors">
+                  <button className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors">
                     <MoreHorizontal size={20} />
                   </button>
                 </>
@@ -356,7 +428,7 @@ const InstagramProfile = () => {
             <p className="text-gray-400 text-sm mb-2">{profileUser.pronouns}</p>
           )}
           {profileUser.category && (
-            <p className="text-gray-400 text-sm mb-2">{profileUser.category}</p>
+            <p className="text-cyan-400 text-sm mb-2">{profileUser.category}</p>
           )}
           {profileUser.bio && (
             <p className="text-white text-sm mb-2 whitespace-pre-wrap">{profileUser.bio}</p>
@@ -386,7 +458,7 @@ const InstagramProfile = () => {
             {profileUser.contactEmail && (
               <a
                 href={`mailto:${profileUser.contactEmail}`}
-                className="flex-1 py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="flex-1 py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <Mail size={16} />
                 Email
@@ -395,7 +467,7 @@ const InstagramProfile = () => {
             {profileUser.phone && (
               <a
                 href={`tel:${profileUser.phone}`}
-                className="flex-1 py-2 px-4 bg-gray-800 hover:bg-gray-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="flex-1 py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <Phone size={16} />
                 Call
@@ -408,10 +480,10 @@ const InstagramProfile = () => {
         <div className="border-t border-gray-800 flex items-center justify-around mb-6">
           <button
             onClick={() => setActiveTab('posts')}
-            className={`flex-1 py-3 flex items-center justify-center gap-2 border-t-2 ${
+            className={`flex-1 py-3 flex items-center justify-center gap-2 border-t-2 transition-colors ${
               activeTab === 'posts'
-                ? 'border-white text-white'
-                : 'border-transparent text-gray-400'
+                ? 'border-cyan-400 text-cyan-400'
+                : 'border-transparent text-gray-400 hover:text-gray-300'
             }`}
           >
             <Grid size={18} />
@@ -419,49 +491,39 @@ const InstagramProfile = () => {
           </button>
           <button
             onClick={() => setActiveTab('reels')}
-            className={`flex-1 py-3 flex items-center justify-center gap-2 border-t-2 ${
+            className={`flex-1 py-3 flex items-center justify-center gap-2 border-t-2 transition-colors ${
               activeTab === 'reels'
-                ? 'border-white text-white'
-                : 'border-transparent text-gray-400'
+                ? 'border-cyan-400 text-cyan-400'
+                : 'border-transparent text-gray-400 hover:text-gray-300'
             }`}
           >
             <Film size={18} />
             <span className="text-xs font-semibold uppercase">Vibes</span>
           </button>
-          <button
-            onClick={() => setActiveTab('tagged')}
-            className={`flex-1 py-3 flex items-center justify-center gap-2 border-t-2 ${
-              activeTab === 'tagged'
-                ? 'border-white text-white'
-                : 'border-transparent text-gray-400'
-            }`}
-          >
-            <Tag size={18} />
-            <span className="text-xs font-semibold uppercase">Tagged</span>
-          </button>
+          {isOwnProfile && (
+            <button
+              onClick={() => setActiveTab('analytics')}
+              className={`flex-1 py-3 flex items-center justify-center gap-2 border-t-2 transition-colors ${
+                activeTab === 'analytics'
+                  ? 'border-cyan-400 text-cyan-400'
+                  : 'border-transparent text-gray-400 hover:text-gray-300'
+              }`}
+            >
+              <BarChart3 size={18} />
+              <span className="text-xs font-semibold uppercase">Analytics</span>
+            </button>
+          )}
         </div>
 
-        {/* Content Grid */}
+        {/* Content */}
         {activeTab === 'posts' && (
-          <div className="grid grid-cols-3 gap-1">
+          <div className="space-y-4">
             {posts.length > 0 ? (
               posts.map((post) => (
-                <div
-                  key={post.id}
-                  onClick={() => navigate(`/post/${post.id}`)}
-                  className="aspect-square bg-gray-800 rounded-sm overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                >
-                  {post.mediaUrls && post.mediaUrls.length > 0 && (
-                    <img
-                      src={getMediaUrl(post.mediaUrls[0])}
-                      alt="Post"
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                </div>
+                <PostCard key={post.id} post={post} />
               ))
             ) : (
-              <div className="col-span-3 text-center py-12">
+              <div className="text-center py-12">
                 <p className="text-gray-400">No posts yet</p>
               </div>
             )}
@@ -475,7 +537,7 @@ const InstagramProfile = () => {
                 <div
                   key={reel.id}
                   onClick={() => navigate(`/vibezone?reel=${reel.id}`)}
-                  className="aspect-[9/16] bg-gray-800 rounded-sm overflow-hidden cursor-pointer hover:opacity-80 transition-opacity relative"
+                  className="aspect-[9/16] bg-gray-800/50 rounded-sm overflow-hidden cursor-pointer hover:opacity-80 transition-opacity relative"
                 >
                   <video
                     src={getMediaUrl(reel.videoUrl)}
@@ -494,9 +556,35 @@ const InstagramProfile = () => {
           </div>
         )}
 
-        {activeTab === 'tagged' && (
-          <div className="col-span-3 text-center py-12">
-            <p className="text-gray-400">No tagged posts</p>
+        {activeTab === 'analytics' && isOwnProfile && (
+          <div className="space-y-4">
+            <div className="glass-card p-6 rounded-2xl">
+              <h3 className="text-lg font-bold text-white mb-4">Profile Analytics</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-cyan-400/10 rounded-xl border border-cyan-400/30">
+                  <p className="text-sm text-gray-400 mb-1">Total Posts</p>
+                  <p className="text-2xl font-bold text-cyan-400">{stats.posts}</p>
+                </div>
+                <div className="p-4 bg-purple-400/10 rounded-xl border border-purple-400/30">
+                  <p className="text-sm text-gray-400 mb-1">Followers</p>
+                  <p className="text-2xl font-bold text-purple-400">{stats.followers}</p>
+                </div>
+                <div className="p-4 bg-green-400/10 rounded-xl border border-green-400/30">
+                  <p className="text-sm text-gray-400 mb-1">Following</p>
+                  <p className="text-2xl font-bold text-green-400">{stats.following}</p>
+                </div>
+                <div className="p-4 bg-orange-400/10 rounded-xl border border-orange-400/30">
+                  <p className="text-sm text-gray-400 mb-1">Engagement</p>
+                  <p className="text-2xl font-bold text-orange-400">--</p>
+                </div>
+              </div>
+              <button
+                onClick={() => navigate('/analytics')}
+                className="w-full mt-4 py-3 bg-cyan-400 hover:bg-cyan-500 text-black font-semibold rounded-lg transition-colors"
+              >
+                View Full Analytics
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -504,7 +592,7 @@ const InstagramProfile = () => {
       {/* Edit Profile Modal */}
       {isEditing && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-900 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-gray-900 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-gray-800">
             <div className="p-6 border-b border-gray-800 flex items-center justify-between">
               <h2 className="text-xl font-bold text-white">Edit Profile</h2>
               <button
