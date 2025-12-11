@@ -270,7 +270,7 @@ const InstagramProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-cyan-400"></div>
       </div>
     );
@@ -278,7 +278,7 @@ const InstagramProfile = () => {
 
   if (!profileUser) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
         <p className="text-white">User not found</p>
       </div>
     );
