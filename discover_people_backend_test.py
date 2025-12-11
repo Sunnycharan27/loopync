@@ -288,16 +288,14 @@ class DiscoverPeopleBackendTester:
         
         if response and response.status_code == 200:
             result = response.json()
+            self.log(f"Friend request response: {result}")
+            
             if result.get("success"):
-                message = result.get("message", "")
-                now_friends = result.get("nowFriends", False)
+                request_id = result.get("requestId", "")
+                status = result.get("status", "")
                 
-                if now_friends:
-                    self.log_result("Send Friend Request", True, 
-                                  f"Auto-accepted: {message}")
-                else:
-                    self.log_result("Send Friend Request", True, 
-                                  f"Request sent: {message}")
+                self.log_result("Send Friend Request", True, 
+                              f"Request ID: {request_id}, Status: {status}")
             else:
                 self.log_result("Send Friend Request", False, error=f"Success false: {result}")
                 return False
