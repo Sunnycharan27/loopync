@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import { X, RotateCw, ZoomIn, ZoomOut } from 'lucide-react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const ImageCropModal = ({ imageSrc, onClose, onCropComplete, aspectRatio = 1 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
