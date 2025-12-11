@@ -193,6 +193,48 @@ const Discover = () => {
     }
   };
 
+  // Start or open a conversation with a user
+  const startConversation = async (user) => {
+    if (!currentUser) {
+      toast.error("Please login to message");
+      navigate('/auth');
+      return;
+    }
+    
+    try {
+      // Check if they are friends first (required for messaging)
+      const isFriend = currentUser.friends?.includes(user.id);
+      
+      if (!isFriend) {
+        toast.error("You need to be friends to message this user");
+        return;
+      }
+      
+      // Start conversation via API
+      const res = await axios.post(
+        `${API}/messenger/start?userId=${currentUser.id}&friendId=${user.id}`
+      );
+      
+      if (res.data.success) {
+        // Navigate to messenger with the thread
+        navigate('/messages', { 
+          state: { 
+            selectedThread: res.data.thread 
+          } 
+        });
+        toast.success(`Started chat with ${user.name}`);
+      }
+    } catch (error) {
+      console.error('Error starting conversation:', error);
+      // If they're not friends, prompt them to add as friend
+      if (error.response?.status === 403) {
+        toast.error("Send a friend request first to message this user");
+      } else {
+        toast.error(error.response?.data?.detail || "Failed to start conversation");
+      }
+    }
+  };
+
   const joinTribe = async (tribeId) => {
     if (!currentUser) {
       toast.error("Please login to join tribes");
