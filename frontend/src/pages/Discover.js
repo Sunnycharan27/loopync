@@ -292,12 +292,12 @@ const Discover = () => {
               </div>
             )}
 
-            {/* Reels Results */}
+            {/* VibeZone Results */}
             {searchResults.reels && searchResults.reels.length > 0 && (
               <div>
                 <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                   <Video size={20} className="text-cyan-400" />
-                  Reels ({searchResults.reels.length})
+                  VibeZone ({searchResults.reels.length})
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {searchResults.reels.map(reel => (
