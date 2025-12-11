@@ -2027,6 +2027,26 @@ async def create_post_comment(postId: str, comment: CommentCreate, authorId: str
     
     author = await db.users.find_one({"id": authorId}, {"_id": 0})
     doc["author"] = author
+    
+    # Send notification to post author
+    post = await db.posts.find_one({"id": postId}, {"_id": 0, "authorId": 1})
+    if post and post["authorId"] != authorId:
+        commenter = await db.users.find_one({"id": authorId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1})
+        notification = Notification(
+            userId=post["authorId"],
+            type="comment",
+            content=f"{commenter.get('name', 'Someone')} commented on your post",
+            link=f"/posts/{postId}"
+        )
+        await db.notifications.insert_one(notification.model_dump())
+        
+        # Emit real-time notification
+        await sio.emit('post_commented', {
+            'user': commenter,
+            'postId': postId,
+            'comment': comment.text
+        }, room=f"user:{post['authorId']}")
+    
     return doc
 
 
