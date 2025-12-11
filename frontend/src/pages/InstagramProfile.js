@@ -71,8 +71,16 @@ const InstagramProfile = () => {
       if (currentUser) {
         setProfileUser(currentUser);
         setIsOwnProfile(true);
-        fetchUserContent(currentUser.id);
+        fetchUserContent(currentUser.id, currentUser);
         setLoading(false);
+      } else {
+        // If no currentUser yet, set loading to false after a delay
+        const timer = setTimeout(() => {
+          if (!currentUser && !username) {
+            setLoading(false);
+          }
+        }, 2000);
+        return () => clearTimeout(timer);
       }
     }
   }, [username, currentUser]);
