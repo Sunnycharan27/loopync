@@ -114,7 +114,7 @@ const Rooms = () => {
               <div
                 key={room.id}
                 onClick={() => navigate(`/viberooms/${room.id}`)}
-                className="glass-card p-5 cursor-pointer hover:scale-[1.01] transition-transform"
+                className="glass-card p-5 cursor-pointer hover:scale-[1.01] transition-transform group"
                 data-testid="room-card"
               >
                 <div className="flex items-start gap-4">
@@ -151,10 +151,20 @@ const Rooms = () => {
                     </div>
                   </div>
 
-                  {/* Join Indicator */}
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
-                    <span className="text-green-400 text-xs font-semibold">LIVE</span>
+                  {/* Actions */}
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
+                      <span className="text-green-400 text-xs font-semibold">LIVE</span>
+                    </div>
+                    {/* Share Button */}
+                    <button
+                      onClick={(e) => handleShareRoom(room, e)}
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-all text-xs opacity-0 group-hover:opacity-100"
+                    >
+                      <Share2 size={12} />
+                      Invite
+                    </button>
                   </div>
                 </div>
               </div>
