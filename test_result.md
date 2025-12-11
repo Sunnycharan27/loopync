@@ -59,14 +59,19 @@
 ## agent_communication:
     - agent: "main"
       message: |
-        TESTING REQUEST: Test profile picture upload and messaging features
+        COMPREHENSIVE SOCIAL MEDIA APP TEST
         
-        1. Login as sunnycharan181@gmail.com / Ramcharan
-        2. Go to /profile and click on profile picture to upload/crop
-        3. Verify the image crop modal appears
-        4. Go to /messenger and test sending an image
-        5. Test voice recording button
-        6. Test message reactions (double-click on message)
+        Test all core social media features:
+        1. Authentication (signup, login, logout)
+        2. User profiles (view, edit, follow/unfollow)
+        3. Friend system (send request, accept, reject)
+        4. Posts (create, like, comment)
+        5. Messaging (send message, view conversations)
+        6. Discover (search users, view profiles)
+        7. Tribes (view, join)
+        8. VibeRooms (view)
+        9. Notifications
+        10. Verification request flow
     - agent: "testing"
       message: |
         COMPREHENSIVE DISCOVER/PEOPLE SECTION TESTING COMPLETED - EXCELLENT SUCCESS RATE (85.7%)
