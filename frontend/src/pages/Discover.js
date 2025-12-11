@@ -393,7 +393,7 @@ const Discover = () => {
                 }`}
               >
                 <Video size={18} />
-                Reels
+                VibeZone
               </button>
               <button
                 onClick={() => setActiveTab("people")}
