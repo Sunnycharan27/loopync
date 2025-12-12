@@ -158,7 +158,7 @@ class SharingSystemTester:
         
         # Create test reel
         try:
-            reel_response = self.session.post(f"{BACKEND_URL}/reels",
+            reel_response = self.session.post(f"{BACKEND_URL}/reels?authorId={self.test_user_id}",
                 headers=headers,
                 json={
                     "videoUrl": "https://example.com/test-video.mp4",
