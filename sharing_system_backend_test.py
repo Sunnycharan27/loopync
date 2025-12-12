@@ -138,7 +138,7 @@ class SharingSystemTester:
         # Create test post
         try:
             headers = {"Authorization": f"Bearer {self.test_user_token}"}
-            post_response = self.session.post(f"{BACKEND_URL}/posts", 
+            post_response = self.session.post(f"{BACKEND_URL}/posts?authorId={self.test_user_id}", 
                 headers=headers,
                 json={
                     "text": "This is a test post for sharing functionality #test #sharing",
