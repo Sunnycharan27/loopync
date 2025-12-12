@@ -79,7 +79,6 @@ const Analytics = () => {
           <>
             {activeTab === "user" && <UserAnalytics data={analytics} />}
             {activeTab === "creator" && <CreatorDashboard data={analytics} />}
-            {activeTab === "wallet" && <WalletAnalytics data={analytics} />}
             {activeTab === "admin" && <AdminDashboard data={analytics} />}
           </>
         )}
