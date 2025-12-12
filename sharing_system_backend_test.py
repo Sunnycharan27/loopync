@@ -179,7 +179,7 @@ class SharingSystemTester:
         
         # Create test tribe
         try:
-            tribe_response = self.session.post(f"{BACKEND_URL}/tribes",
+            tribe_response = self.session.post(f"{BACKEND_URL}/tribes?ownerId={self.test_user_id}",
                 headers=headers,
                 json={
                     "name": "Test Sharing Tribe",
