@@ -669,15 +669,6 @@ const TicketCard = ({ ticket }) => {
           </div>
         </div>
       )}
-
-      {/* Media Selector Modal */}
-      {showMediaSelector && (
-        <MediaSelectorModal
-          user={currentUser}
-          onClose={() => setShowMediaSelector(false)}
-          onSelect={handleProfilePictureSelect}
-        />
-      )}
     </div>
   );
 };
