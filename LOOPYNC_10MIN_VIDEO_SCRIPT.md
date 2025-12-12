@@ -409,9 +409,7 @@ Powered by **FastAPI** for lightning-fast performance.
 **V.O.:**
 "And there's so much more..."
 
-**[VISUAL: Payments wallet]**
 
-"**Payments** – our integrated wallet for seamless payments."
 
 **[VISUAL: Events section]**
 
