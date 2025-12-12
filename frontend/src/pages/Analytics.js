@@ -3,7 +3,7 @@ import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
 import TopHeader from "../components/TopHeader";
-import { TrendingUp, Users, Activity, Wallet, Shield, Heart, MessageCircle, Eye, Share2, Award, BarChart3 } from "lucide-react";
+import { TrendingUp, Users, Activity, Shield, Heart, MessageCircle, Eye, Share2, Award, BarChart3 } from "lucide-react";
 import { toast } from "sonner";
 
 const Analytics = () => {
