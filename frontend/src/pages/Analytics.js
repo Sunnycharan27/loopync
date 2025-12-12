@@ -201,55 +201,6 @@ const CreatorDashboard = ({ data }) => (
   </div>
 );
 
-const WalletAnalytics = ({ data }) => (
-  <div className="space-y-4">
-    {/* Balance Overview */}
-    <div className="glass-card p-6 bg-gradient-to-br from-green-400/10 to-emerald-400/10 border-green-400/30">
-      <h3 className="text-sm text-gray-400 mb-2">Current Balance</h3>
-      <p className="text-4xl font-bold text-green-400 mb-4">₹{data.currentBalance?.toFixed(2) || "0.00"}</p>
-      <div className="grid grid-cols-2 gap-4 text-sm">
-        <div>
-          <p className="text-gray-400 mb-1">Total Added</p>
-          <p className="text-white font-bold">₹{data.totalAdded?.toFixed(2) || "0.00"}</p>
-        </div>
-        <div>
-          <p className="text-gray-400 mb-1">Total Spent</p>
-          <p className="text-white font-bold">₹{data.totalSpent?.toFixed(2) || "0.00"}</p>
-        </div>
-      </div>
-    </div>
-
-    {/* Credits */}
-    <div className="glass-card p-6">
-      <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-        <Award size={20} className="text-cyan-400" />
-        Loop Credits Earned
-      </h3>
-      <p className="text-3xl font-bold text-cyan-400">{data.totalCreditsEarned || 0}</p>
-      <p className="text-sm text-gray-400 mt-2">From cashbacks and rewards</p>
-    </div>
-
-    {/* Spending Breakdown */}
-    <div className="glass-card p-6">
-      <h3 className="text-lg font-bold text-white mb-4">Spending Breakdown</h3>
-      <div className="space-y-3">
-        {data.spendingBreakdown && Object.entries(data.spendingBreakdown).map(([category, amount]) => (
-          <div key={category} className="flex items-center justify-between">
-            <span className="text-gray-400 capitalize">{category}</span>
-            <span className="text-white font-bold">₹{amount.toFixed(2)}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Transaction Stats */}
-    <div className="grid grid-cols-2 gap-4">
-      <StatCard icon={<BarChart3 />} label="Transactions" value={data.transactionCount || 0} color="blue" />
-      <StatCard icon={<TrendingUp />} label="Avg Amount" value={`₹${data.avgTransactionAmount?.toFixed(0) || 0}`} color="purple" />
-    </div>
-  </div>
-);
-
 const AdminDashboard = ({ data }) => (
   <div className="space-y-4">
     {/* Platform Stats */}
