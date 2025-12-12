@@ -471,6 +471,15 @@ const Profile = () => {
         />
       )}
 
+      {/* Media Selector Modal */}
+      {showMediaSelector && (
+        <MediaSelectorModal
+          user={currentUser}
+          onClose={() => setShowMediaSelector(false)}
+          onSelect={handleProfilePictureSelect}
+        />
+      )}
+
       <BottomNav active="profile" />
     </div>
   );
