@@ -209,18 +209,6 @@ function App() {
               }
             />
             <Route
-              path="/wallet"
-              element={
-                !authLoaded ? (
-                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : isAuthenticated ? (
-                  <Wallet />
-                ) : (
-                  <Navigate to="/auth" />
-                )
-              }
-            />
-            <Route
               path="/discover"
               element={
                 !authLoaded ? (
