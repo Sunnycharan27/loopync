@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext, API } from "../App";
 import axios from "axios";
-import { ArrowLeft, CreditCard, Wallet, QrCode, CheckCircle, Shield } from "lucide-react";
+import { ArrowLeft, CreditCard, QrCode, CheckCircle, Shield } from "lucide-react";
 import { toast } from "sonner";
 
 const Payment = () => {
