@@ -14,10 +14,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [analytics, setAnalytics] = useState(null);
-  const [credits, setCredits] = useState(null);
   const [tickets, setTickets] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
-  const [walletBalance, setWalletBalance] = useState(0);
   const [userContent, setUserContent] = useState({ posts: [], reels: [], products: [] });
   const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,20 +27,16 @@ const Profile = () => {
 
   const fetchProfileData = async () => {
     try {
-      const [analyticsRes, creditsRes, ticketsRes, bookmarksRes, walletRes, contentRes] = await Promise.all([
+      const [analyticsRes, ticketsRes, bookmarksRes, contentRes] = await Promise.all([
         axios.get(`${API}/analytics/${currentUser.id}`),
-        axios.get(`${API}/credits/${currentUser.id}`),
         axios.get(`${API}/tickets/${currentUser.id}`),
         axios.get(`${API}/bookmarks/${currentUser.id}`),
-        axios.get(`${API}/wallet?userId=${currentUser.id}`),
         axios.get(`${API}/users/${currentUser.id}/content`)
       ]);
 
       setAnalytics(analyticsRes.data);
-      setCredits(creditsRes.data);
       setTickets(ticketsRes.data);
       setBookmarks(bookmarksRes.data);
-      setWalletBalance(walletRes.data.balance || 0);
       setUserContent(contentRes.data);
     } catch (error) {
       console.error("Failed to fetch profile data");
