@@ -409,9 +409,9 @@ Powered by **FastAPI** for lightning-fast performance.
 **V.O.:**
 "And there's so much more..."
 
-**[VISUAL: Loop Pay wallet]**
+**[VISUAL: Payments wallet]**
 
-"**Loop Pay** – our integrated wallet for seamless payments."
+"**Payments** – our integrated wallet for seamless payments."
 
 **[VISUAL: Events section]**
 

@@ -119,7 +119,7 @@ Visual: App screenshots showing:
 - Send money to friends
 - One app for everything
 
-*Screenshot of Loop Pay*
+*Screenshot of Payments*
 
 ---
 

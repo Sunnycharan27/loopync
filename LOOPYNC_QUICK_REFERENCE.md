@@ -5,7 +5,7 @@
 
 ## 🎯 ELEVATOR PITCH (30 seconds)
 
-"Loopync is India's own social media platform – built by Indians, for Indians, with all data hosted on Indian servers. The name combines 'Loop' for endless connections and 'Sync' for staying connected in harmony. We offer Instagram-style profiles, Twitter-like feeds, Clubhouse-style VibeRooms, interest-based Tribes, secure messaging with content sharing, and Loop Pay wallet. In a world where 95% of Indian data is stored abroad, Loopync brings Digital Atmanirbharta to social media. Loop in, sync up, stay connected!"
+"Loopync is India's own social media platform – built by Indians, for Indians, with all data hosted on Indian servers. The name combines 'Loop' for endless connections and 'Sync' for staying connected in harmony. We offer Instagram-style profiles, Twitter-like feeds, Clubhouse-style VibeRooms, interest-based Tribes, secure messaging with content sharing, and Payments wallet. In a world where 95% of Indian data is stored abroad, Loopync brings Digital Atmanirbharta to social media. Loop in, sync up, stay connected!"
 
 ---
 
@@ -58,7 +58,7 @@
 | 🎙️ **VibeRooms** | Live audio conversations |
 | 💬 **Messenger** | Real-time secure messaging |
 | 🔄 **Sharing** | Share posts, reels, tribes, rooms via DM |
-| 💳 **Loop Pay** | Integrated digital wallet |
+| 💳 **Payments** | Integrated digital wallet |
 | ✅ **Verification** | For creators & businesses |
 | 📊 **Analytics** | Track your growth |
 | 🎫 **Events** | Discover & book tickets |
@@ -86,7 +86,7 @@ A: "Absolutely. JWT authentication, bcrypt encryption, all data on Indian server
 **Q: Can I share content with friends?**
 A: "Yes! Our comprehensive sharing system lets you share posts, reels, tribes, and VibeRoom invites directly to friends via DM or to your feed. One tap sharing."
 
-**Q: What's Loop Pay?**
+**Q: What's Payments?**
 A: "Our integrated wallet. Pay at venues, buy event tickets, send money to friends – all within Loopync. One app for social and payments."
 
 ---
@@ -153,7 +153,7 @@ A: "Our integrated wallet. Pay at venues, buy event tickets, send money to frien
 **Join Tribes** to find your community.
 **Host VibeRooms** for live audio conversations.
 **Message friends** securely and share any content instantly.
-**Pay with Loop Pay** – wallet built right in.
+**Pay with Payments** – wallet built right in.
 **Get verified** if you're a creator.
 **Track analytics** to grow your audience.
 **Book event tickets** and discover what's happening.

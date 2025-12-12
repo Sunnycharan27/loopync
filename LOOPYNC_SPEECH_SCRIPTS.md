@@ -76,7 +76,7 @@ Let me walk you through what makes Loopync special:
 - Voice messages, image sharing, and reactions
 - End-to-end privacy
 
-**🔐 Loop Pay - Digital Wallet**
+**🔐 Payments - Digital **
 - Integrated payment system
 - Send and receive money seamlessly
 - Pay at venues, buy event tickets
@@ -150,7 +150,7 @@ Our platform works efficiently even on 3G networks because we know that's the re
 
 **🎫 Events & Ticketing**
 - Discover local events
-- Buy tickets with Loop Pay
+- Buy tickets with Payments
 - QR-based entry system
 - Support Indian event organizers
 
@@ -300,7 +300,7 @@ Thank you."
 
 **[Show Messenger - sharing posts/reels]**
 
-"Pay seamlessly with Loop Pay..."
+"Pay seamlessly with Payments..."
 
 **[Show wallet feature]**
 
@@ -346,7 +346,7 @@ Thank you."
 🎙️ Live Audio VibeRooms
 💬 Secure Real-time Messenger
 🔄 Share Everything with Everyone
-💳 Integrated Loop Pay Wallet
+💳 Integrated Payments 
 ✅ Creator Verification
 📊 Analytics Dashboard
 🎫 Events & Ticketing
@@ -419,7 +419,7 @@ Made in India 🇮🇳 | For India"
    "We believe in ethical monetization. No selling user data. No manipulative algorithms designed to create addiction. Indian businesses get priority in advertising. We make money when our users and advertisers succeed together."
 
 5. **On Future Plans:**
-   "We're working on supporting all 22 scheduled languages. We're building AI-powered content moderation that understands Indian context. We're expanding Loop Pay for UPI integration. The roadmap is exciting!"
+   "We're working on supporting all 22 scheduled languages. We're building AI-powered content moderation that understands Indian context. We're expanding Payments for UPI integration. The roadmap is exciting!"
 
 6. **On the Team:**
    "Loopync is built by a passionate team of Indian engineers, designers, and dreamers who believe in Digital Atmanirbharta. We're always looking for talented Indians who share our vision."
@@ -481,7 +481,7 @@ Made in India 🇮🇳 | For India"
 - ✅ Creator Pages
 
 ### Payment Features
-- ✅ Loop Pay Wallet
+- ✅ Payments 
 - ✅ QR Payments
 - ✅ Event Tickets
 
