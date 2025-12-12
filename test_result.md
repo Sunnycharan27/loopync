@@ -5182,7 +5182,7 @@ frontend:
 
   - task: "Sharing UI Functionality - Posts and Tribes"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/components/ShareModal.js, /app/frontend/src/components/UniversalShareModal.js, /app/frontend/src/pages/Discover.js"
     stuck_count: 0
     priority: "high"
