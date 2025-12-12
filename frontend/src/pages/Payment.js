@@ -138,14 +138,6 @@ const Payment = () => {
               Events
             </button>
           </div>
-
-          {/* Credits Earned */}
-          <div className="mt-6 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 border border-yellow-400">
-              <span className="text-2xl">🎁</span>
-              <span className="text-yellow-400 font-semibold">+20 Loop Credits earned!</span>
-            </div>
-          </div>
         </div>
       </div>
     );
