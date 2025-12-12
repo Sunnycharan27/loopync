@@ -13668,7 +13668,7 @@ frontend:
 
 test_plan:
   current_focus:
-    - "Profile Picture Upload and Enhanced Messaging Features"
+    - "Sharing UI Functionality - Posts and Tribes"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
