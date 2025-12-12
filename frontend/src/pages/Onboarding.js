@@ -88,11 +88,7 @@ const Onboarding = () => {
         aadhaarNumber: null
       });
 
-      // Award onboarding credits
-      const creditsUrl = `${API}/credits/earn?userId=${currentUser.id}&amount=100&source=onboarding&description=${encodeURIComponent('Welcome bonus for completing onboarding')}`;
-      await axios.post(creditsUrl);
-
-      toast.success("Welcome to Loopync! 🎉 +100 Loop Credits earned!");
+      toast.success("Welcome to Loopync! 🎉");
       
       // Update state and navigate to home (no page reload)
       setNeedsOnboarding(false);
