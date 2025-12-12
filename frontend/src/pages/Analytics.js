@@ -33,9 +33,6 @@ const Analytics = () => {
         case "creator":
           endpoint = `/analytics/creator/${currentUser.id}`;
           break;
-        case "wallet":
-          endpoint = `/analytics/wallet/${currentUser.id}`;
-          break;
         case "admin":
           endpoint = `/analytics/admin?adminUserId=${currentUser.id}`;
           break;
