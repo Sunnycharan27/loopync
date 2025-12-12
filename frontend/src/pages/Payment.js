@@ -36,16 +36,6 @@ const Payment = () => {
         }
       });
 
-      // Award credits for booking
-      await axios.post(`${API}/credits/earn`, null, {
-        params: {
-          userId: currentUser.id,
-          amount: 20,
-          source: 'ticket_booking',
-          description: `Booked tickets for ${event.name}`
-        }
-      });
-
       setTicketData({
         ...response.data.ticket,
         event,
