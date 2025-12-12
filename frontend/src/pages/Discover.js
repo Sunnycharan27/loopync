@@ -604,6 +604,26 @@ const Discover = () => {
                         post={post} 
                         currentUser={currentUser} 
                         onLike={handleLike}
+                        onRepost={async (postId) => {
+                          if (!currentUser) {
+                            toast.error("Please login to repost");
+                            navigate('/auth');
+                            return;
+                          }
+                          try {
+                            const token = localStorage.getItem('loopync_token');
+                            await axios.post(
+                              `${API}/posts/${postId}/repost?userId=${currentUser.id}`,
+                              {},
+                              { headers: { Authorization: `Bearer ${token}` } }
+                            );
+                            const res = await axios.get(`${API}/posts/${postId}`);
+                            setPosts(prev => prev.map(p => p.id === postId ? res.data : p));
+                            toast.success("Reposted!");
+                          } catch (error) {
+                            toast.error("Failed to repost");
+                          }
+                        }}
                         onDelete={async (postId) => {
                           if (!window.confirm("Are you sure you want to delete this post?")) return;
                           try {
