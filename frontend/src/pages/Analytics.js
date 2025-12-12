@@ -15,7 +15,6 @@ const Analytics = () => {
   const tabs = [
     { id: "user", name: "My Analytics", icon: <Activity size={16} /> },
     { id: "creator", name: "Creator", icon: <TrendingUp size={16} /> },
-    { id: "wallet", name: "Wallet", icon: <Wallet size={16} /> },
     { id: "admin", name: "Platform", icon: <Shield size={16} /> },
   ];
 
