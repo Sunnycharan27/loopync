@@ -593,7 +593,7 @@ class SharingSystemTester:
         try:
             # First, get tribe invites for friend user
             headers = {"Authorization": f"Bearer {self.friend_user_token}"}
-            invites_response = self.session.get(f"{BACKEND_URL}/tribe-invites",
+            invites_response = self.session.get(f"{BACKEND_URL}/tribe-invites?userId={self.friend_user_id}",
                 headers=headers
             )
             
