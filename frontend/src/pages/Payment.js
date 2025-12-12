@@ -251,42 +251,6 @@ const Payment = () => {
                 )}
               </div>
             </div>
-
-            {/* Loop Credits */}
-            <div
-              onClick={() => setPaymentMethod("credits")}
-              className={`p-4 rounded-xl cursor-pointer transition-all ${
-                paymentMethod === "credits"
-                  ? 'bg-gradient-to-r from-cyan-400/20 to-purple-400/20 border-2 border-cyan-400'
-                  : 'bg-gray-800/50 border-2 border-gray-700 hover:border-gray-600'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center">
-                  <Wallet size={24} className="text-yellow-400" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-white">Loop Credits</p>
-                  <p className="text-sm text-gray-400">Use your earned credits</p>
-                </div>
-                {paymentMethod === "credits" && (
-                  <div className="w-6 h-6 rounded-full bg-cyan-400 flex items-center justify-center">
-                    <CheckCircle size={16} className="text-black" />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Offers */}
-        <div className="glass-card p-4 mb-6">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🎁</span>
-            <div className="flex-1">
-              <p className="text-white font-semibold">Earn 20 Loop Credits</p>
-              <p className="text-sm text-gray-400">Complete this booking to earn credits</p>
-            </div>
           </div>
         </div>
 
