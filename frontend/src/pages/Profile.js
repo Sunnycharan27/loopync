@@ -243,30 +243,6 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-
-            {/* Credits History */}
-            <div className="glass-card p-6">
-              <h3 className="text-lg font-bold text-white mb-4">Recent Credits Activity</h3>
-              <div className="space-y-3">
-                {credits?.history && credits.history.length > 0 ? (
-                  credits.history.slice(0, 5).map((txn) => (
-                    <div key={txn.id} className="flex items-center justify-between py-2 border-b border-gray-700 last:border-0">
-                      <div>
-                        <p className="text-white text-sm font-medium">{txn.description || txn.source}</p>
-                        <p className="text-gray-400 text-xs">
-                          {new Date(txn.createdAt).toLocaleDateString('en-IN')}
-                        </p>
-                      </div>
-                      <span className={`font-bold ${txn.type === 'earn' ? 'text-green-400' : 'text-red-400'}`}>
-                        {txn.type === 'earn' ? '+' : '-'}{txn.amount}
-                      </span>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-400 text-center py-4">No activity yet</p>
-                )}
-              </div>
-            </div>
           </div>
         )}
 
