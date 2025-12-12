@@ -5180,6 +5180,39 @@ frontend:
           
           **INSTAGRAM-LIKE PROFILE PHOTO UPLOAD FEATURE IS 100% FUNCTIONAL AND PRODUCTION-READY**
 
+  - task: "Sharing UI Functionality - Posts and Tribes"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/ShareModal.js, /app/frontend/src/components/UniversalShareModal.js, /app/frontend/src/pages/Discover.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: |
+          TESTING SHARING UI FUNCTIONALITY AS PER REVIEW REQUEST:
+          
+          SCOPE: Test sharing functionality for posts and tribes in Discover page
+          - Navigate to /discover page
+          - Test share icon on posts (Share2 icon) - should open share modal
+          - Verify share modal has Copy Link option and social sharing icons (WhatsApp, Facebook, Twitter, Email)
+          - Test Invite button on tribe cards - should open share modal
+          - Verify modal can be closed by clicking outside or X button
+          
+          COMPONENTS TO TEST:
+          - ShareModal.js (main share modal component)
+          - UniversalShareModal.js (universal share modal used by PostCard)
+          - PostCard.js (Share2 button functionality)
+          - Discover.js (handleShare function and share modal state)
+          - Tribes section in Discover page (Invite button functionality)
+          
+          EXPECTED BEHAVIOR:
+          - Share icon on posts opens share modal with Copy Link and social sharing options
+          - Invite button on tribes opens share modal
+          - Modal closes properly when clicking X or outside
+          - No console errors during sharing flow
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
