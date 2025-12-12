@@ -13717,6 +13717,30 @@ test_plan:
   test_priority: "high_first"
 
 agent_communication:
+    -agent: "testing"
+    message: |
+      CRITICAL SHARING UI FUNCTIONALITY TESTING RESULTS - JAVASCRIPT ERRORS BLOCKING ALL FUNCTIONALITY
+      
+      🚨 **URGENT FIXES REQUIRED**:
+      
+      **CRITICAL BUG**: PostCard component missing onRepost prop in Discover.js
+      - **Error**: "TypeError: onRepost is not a function"
+      - **Location**: /app/frontend/src/pages/Discover.js lines 602-617
+      - **Fix Required**: Add onRepost prop to PostCard component
+      - **Impact**: Share functionality completely broken, webpack error overlay blocking UI
+      
+      **MISSING FUNCTIONALITY**:
+      1. Share modal not opening when clicking share button on posts
+      2. No Invite buttons found on tribe cards (expected for tribes sharing)
+      3. Cannot test Copy Link, WhatsApp, Facebook, Twitter, Email sharing due to errors
+      
+      **IMMEDIATE ACTION NEEDED**:
+      1. Add handleRepost function to Discover.js
+      2. Pass onRepost prop to PostCard component
+      3. Implement Invite buttons on tribe cards
+      4. Test share modal functionality after fixes
+      
+      **TESTING STATUS**: 0% functional - Cannot proceed with sharing UI testing until JavaScript errors resolved
     -agent: "main"
     message: |
       TESTING REQUEST: Profile Picture Upload and Enhanced Messaging Features
