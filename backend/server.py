@@ -8427,7 +8427,13 @@ async def upload_verification_document(
         file_url = f"/uploads/{filename}"
         
         # Update pending verification request with document URL
-        update_field = f"{document_type}Url" if document_type != "aadhaar" else "aadhaarCardUrl"
+        # Map document_type to correct field name
+        field_mapping = {
+            "aadhaar": "aadhaarCardUrl",
+            "selfie": "selfieUrl",
+            "business_registration": "businessRegistrationDocUrl"
+        }
+        update_field = field_mapping.get(document_type, f"{document_type}Url")
         
         await db.verification_requests.update_one(
             {"userId": user_id, "status": "pending"},
