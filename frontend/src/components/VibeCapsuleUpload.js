@@ -107,9 +107,7 @@ const VibeCapsuleUpload = ({ currentUser, onUploadComplete, onClose, isOpen = fa
       }
       
       // Then close modal and reset
-      setShowModal(false);
-      setMediaUrl("");
-      setCaption("");
+      handleClose();
     } catch (error) {
       console.error("Failed to create capsule:", error);
       toast.error("Failed to create Vibe Capsule");
