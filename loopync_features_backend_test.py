@@ -167,12 +167,18 @@ class LoopyncFeaturesTest:
                 if data.get("success") == True:
                     self.log_result("Delete Post Feature", True, "Post deleted successfully", f"Response: {data}")
                     
-                    # Verify post is actually deleted
-                    verify_response = requests.get(f"{API_BASE}/posts/{delete_test_post_id}", headers=headers)
-                    if verify_response.status_code == 404:
-                        self.log_result("Delete Post Feature - Verification", True, "Post successfully removed from database")
+                    # Verify post is actually deleted by checking posts list
+                    verify_response = requests.get(f"{API_BASE}/posts", headers=headers)
+                    if verify_response.status_code == 200:
+                        all_posts = verify_response.json()
+                        post_still_exists = any(post.get("id") == delete_test_post_id for post in all_posts)
+                        
+                        if not post_still_exists:
+                            self.log_result("Delete Post Feature - Verification", True, "Post successfully removed from database")
+                        else:
+                            self.log_result("Delete Post Feature - Verification", False, "Post still exists after deletion")
                     else:
-                        self.log_result("Delete Post Feature - Verification", False, "Post still exists after deletion")
+                        self.log_result("Delete Post Feature - Verification", False, f"Could not verify deletion - Status: {verify_response.status_code}")
                 else:
                     self.log_result("Delete Post Feature", False, f"Delete response missing success=true", f"Response: {data}")
             else:
