@@ -87,6 +87,11 @@ sio = socketio.AsyncServer(
 # Create Socket.IO ASGI app (this will be mounted)
 sio_asgi_app = socketio.ASGIApp(sio, other_asgi_app=app)
 
+# Rate Limiter for API protection (100K users scalability)
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 api_router = APIRouter(prefix="/api")
 
 # Store connected clients: {userId: sid}
