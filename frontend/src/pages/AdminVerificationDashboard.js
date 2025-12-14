@@ -414,28 +414,45 @@ const AdminVerificationDashboard = () => {
                       </div>
                     )}
                     
-                    {/* Documents */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {request.aadhaarCardUrl && (
-                        <a href={request.aadhaarCardUrl} target="_blank" rel="noopener noreferrer"
-                           className="px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 rounded-full text-xs flex items-center gap-1 hover:bg-blue-500/30 transition-colors">
-                          <FileText size={14} />
-                          Aadhaar Card
-                        </a>
-                      )}
-                      {request.selfieUrl && (
-                        <a href={request.selfieUrl} target="_blank" rel="noopener noreferrer"
-                           className="px-3 py-1.5 bg-purple-500/20 border border-purple-500/30 rounded-full text-xs flex items-center gap-1 hover:bg-purple-500/30 transition-colors">
-                          <User size={14} />
-                          Selfie
-                        </a>
-                      )}
-                      {request.businessRegistrationDocUrl && (
-                        <a href={request.businessRegistrationDocUrl} target="_blank" rel="noopener noreferrer"
-                           className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-full text-xs flex items-center gap-1 hover:bg-green-500/30 transition-colors">
-                          <FileText size={14} />
-                          Business Doc
-                        </a>
+                    {/* Documents - Inline Image Previews */}
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Image size={16} className="text-gray-400" />
+                        <span className="text-sm font-medium text-gray-300">Verification Documents</span>
+                      </div>
+                      
+                      {(request.aadhaarCardUrl || request.selfieUrl || request.businessRegistrationDocUrl) ? (
+                        <div className="flex flex-wrap gap-3">
+                          {request.aadhaarCardUrl && (
+                            <DocumentThumbnail
+                              url={request.aadhaarCardUrl}
+                              label="Aadhaar/ID"
+                              icon={FileText}
+                              colorClass="border-blue-500/50 hover:border-blue-400"
+                              onClick={() => openImagePreview(request, 0)}
+                            />
+                          )}
+                          {request.selfieUrl && (
+                            <DocumentThumbnail
+                              url={request.selfieUrl}
+                              label="Selfie"
+                              icon={User}
+                              colorClass="border-purple-500/50 hover:border-purple-400"
+                              onClick={() => openImagePreview(request, request.aadhaarCardUrl ? 1 : 0)}
+                            />
+                          )}
+                          {request.businessRegistrationDocUrl && (
+                            <DocumentThumbnail
+                              url={request.businessRegistrationDocUrl}
+                              label="Business Doc"
+                              icon={FileText}
+                              colorClass="border-green-500/50 hover:border-green-400"
+                              onClick={() => openImagePreview(request, getDocumentImages(request).length - 1)}
+                            />
+                          )}
+                        </div>
+                      ) : (
+                        <div className="text-sm text-gray-500 italic">No documents uploaded</div>
                       )}
                     </div>
                     
