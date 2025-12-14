@@ -75,7 +75,7 @@ const VibeCapsules = ({ currentUser }) => {
                           <div className="w-full h-full rounded-full border-4 border-gray-900 overflow-hidden">
                             <img
                               src={userStory.author.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`}
-                              alt="Your Story"
+                              alt="Vibe Capsule"
                               className="w-full h-full object-cover"
                             />
                           </div>
@@ -90,7 +90,7 @@ const VibeCapsules = ({ currentUser }) => {
                           </div>
                         )}
                       </div>
-                      <span className="text-xs text-cyan-400 font-semibold">Your Story</span>
+                      <span className="text-xs text-cyan-400 font-semibold">Vibe Capsule</span>
                     </button>
                   );
                 } else {
