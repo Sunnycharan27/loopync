@@ -8418,7 +8418,9 @@ async def upload_verification_document(
     try:
         # Save file
         file_extension = file.filename.split('.')[-1]
-        filename = f"verification_{user_id}_{document_type}_{uuid.uuid4().hex[:8]}.{file_extension}"
+        # Create filename with correct document type label
+        doc_type_for_filename = document_type.replace("_", "")  # e.g., "business_registration" -> "businessregistration"
+        filename = f"verification_{user_id}_{doc_type_for_filename}_{uuid.uuid4().hex[:8]}.{file_extension}"
         file_path = UPLOAD_DIR / filename
         
         with open(file_path, "wb") as buffer:
