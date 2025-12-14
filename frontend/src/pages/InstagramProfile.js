@@ -112,13 +112,6 @@ const InstagramProfile = () => {
     }
   };
 
-  const checkFriendStatus = () => {
-    if (currentUser && profileUser) {
-      const friends = currentUser.friends || [];
-      setIsFriend(friends.includes(profileUser.id));
-    }
-  };
-
   const fetchUserContent = async (userId, userData = null) => {
     try {
       const postsRes = await axios.get(`${API}/posts`);
