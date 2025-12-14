@@ -132,24 +132,41 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
       }
     } catch (error) {
       console.error("Failed to share:", error);
-      // Fallback: Send as DMs
+      // Fallback: Send as DMs with rich content
       try {
         const message = getShareMessage();
         const link = getShareLink();
         
-        // Send DMs to each selected user
+        // Build shared content object for rich preview
+        const sharedContent = {
+          caption: item.caption || item.content || item.name || '',
+          mediaUrl: item.mediaUrl || item.imageUrl || item.videoUrl || '',
+          author: item.author || { name: currentUser.name, handle: currentUser.handle, avatar: currentUser.avatar }
+        };
+        
+        // Send DMs to each selected user via messenger API
         const sendPromises = selectedUsers.map(userId =>
-          axios.post(`${API}/messages`, {
-            conversationId: `dm_${[currentUser.id, userId].sort().join('_')}`,
+          axios.post(`${API}/messenger/send`, {
             senderId: currentUser.id,
-            receiverId: userId,
-            text: `${message}\n\n🔗 ${link}`,
+            recipientId: userId,
+            text: message,
             contentType: type,
             contentId: item.id,
-            isSharedPost: true
+            isSharedPost: true,
+            sharedContent: sharedContent
           }).catch(err => {
             console.error(`Failed to send DM to ${userId}:`, err);
-            return null;
+            // Try legacy endpoint as fallback
+            return axios.post(`${API}/messages`, {
+              conversationId: `dm_${[currentUser.id, userId].sort().join('_')}`,
+              senderId: currentUser.id,
+              receiverId: userId,
+              text: `${message}\n\n🔗 ${link}`,
+              contentType: type,
+              contentId: item.id,
+              isSharedPost: true,
+              sharedContent: sharedContent
+            }).catch(() => null);
           })
         );
 
