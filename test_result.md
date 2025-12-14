@@ -334,6 +334,10 @@ test_plan:
     - "Stats Update After Follow Actions"
     - "Notifications Page UI"
     - "International Phone Number Sign-up"
+    - "Analytics APIs - User Analytics"
+    - "Analytics APIs - Creator Analytics"
+    - "Analytics APIs - Admin Analytics"
+    - "VibeZone View Tracking"
 
 agent_communication:
   - agent: "testing"
