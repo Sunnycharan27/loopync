@@ -9,6 +9,16 @@ import BottomNav from '../components/BottomNav';
 
 const ADMIN_EMAIL = 'loopyncpvt@gmail.com';
 
+// Helper function to get full URL for uploaded files
+const getUploadUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('/uploads')) {
+    // Convert /uploads/filename.jpg to API_URL/api/uploads/filename.jpg
+    return `${API}/uploads${url.substring(8)}`;
+  }
+  return url;
+};
+
 // Image Preview Modal Component
 const ImagePreviewModal = ({ images, initialIndex, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex || 0);
