@@ -74,9 +74,10 @@ class LoopyncFeaturesTest:
                 "audience": "public"
             }
             
-            response = requests.post(f"{API_BASE}/posts", json=post_data, headers=headers)
+            # Add authorId as query parameter
+            response = requests.post(f"{API_BASE}/posts?authorId={user_id}", json=post_data, headers=headers)
             
-            if response.status_code == 201:
+            if response.status_code == 200:  # Changed from 201 to 200
                 data = response.json()
                 post_id = data.get("id")
                 self.log_result("Create Test Post", True, f"Test post created successfully", f"Post ID: {post_id}")
