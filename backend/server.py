@@ -2072,12 +2072,40 @@ async def get_post_comments(postId: str):
     return comments
 
 @api_router.delete("/posts/{postId}")
-async def delete_post(postId: str):
-    """Delete a post"""
+async def delete_post(postId: str, current_user: dict = Depends(get_current_user)):
+    """Delete a post and all related data"""
+    # Find the post first
+    post = await db.posts.find_one({"id": postId}, {"_id": 0})
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    
+    # Check if user is authorized to delete (post author or admin)
+    if post["authorId"] != current_user["id"] and current_user.get("role") != "super_admin":
+        raise HTTPException(status_code=403, detail="Not authorized to delete this post")
+    
+    # Delete the post
     result = await db.posts.delete_one({"id": postId})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Post not found")
-    return {"success": True, "message": "Post deleted"}
+    
+    # Delete related comments
+    await db.comments.delete_many({"postId": postId})
+    
+    # Delete related notifications
+    await db.notifications.delete_many({"contentId": postId, "contentType": "post"})
+    
+    # Delete from bookmarks
+    await db.bookmarks.delete_many({"itemId": postId, "itemType": "post"})
+    
+    # Delete any shares related to this post
+    await db.shares.delete_many({"contentId": postId, "contentType": "post"})
+    
+    # Delete reshares of this post
+    await db.posts.delete_many({"originalPostId": postId})
+    
+    logger.info(f"Post {postId} deleted by user {current_user['id']}")
+    
+    return {"success": True, "message": "Post deleted successfully"}
 
 @api_router.post("/posts/{postId}/comments")
 async def create_post_comment(postId: str, comment: CommentCreate, authorId: str):
