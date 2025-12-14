@@ -2130,20 +2130,29 @@ async def create_post_comment(postId: str, comment: CommentCreate, authorId: str
     # Send notification to post author
     post = await db.posts.find_one({"id": postId}, {"_id": 0, "authorId": 1})
     if post and post["authorId"] != authorId:
-        commenter = await db.users.find_one({"id": authorId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1})
+        commenter = await db.users.find_one({"id": authorId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
         notification = Notification(
             userId=post["authorId"],
-            type="comment",
-            content=f"{commenter.get('name', 'Someone')} commented on your post",
-            link=f"/posts/{postId}"
+            type="post_comment",
+            fromUserId=authorId,
+            fromUserName=commenter.get('name', 'Someone') if commenter else 'Someone',
+            fromUserAvatar=commenter.get('avatar', '') if commenter else '',
+            contentType="post",
+            contentId=postId,
+            payload={"text": comment.text[:100]},  # Store first 100 chars of comment
+            message=f"{commenter.get('name', 'Someone') if commenter else 'Someone'} commented: \"{comment.text[:50]}...\"",
+            link=f"/post/{postId}"
         )
         await db.notifications.insert_one(notification.model_dump())
         
         # Emit real-time notification
-        await sio.emit('post_commented', {
-            'user': commenter,
-            'postId': postId,
-            'comment': comment.text
+        await sio.emit('notification', {
+            'type': 'post_comment',
+            'userId': post['authorId'],
+            'fromUser': commenter,
+            'contentId': postId,
+            'payload': {'text': comment.text[:100]},
+            'createdAt': datetime.now(timezone.utc).isoformat()
         }, room=f"user:{post['authorId']}")
     
     return doc
