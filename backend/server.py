@@ -6513,6 +6513,22 @@ async def cancel_friend_request(requestId: str):
     
     return {"success": True, "status": "cancelled"}
 
+@api_router.post("/friend-requests/{requestId}/decline")
+async def decline_friend_request(requestId: str):
+    """Decline a friend request (alias for reject)"""
+    return await reject_friend_request(requestId)
+
+@api_router.delete("/friend-requests/{requestId}")
+async def delete_friend_request(requestId: str):
+    """Delete/cancel a friend request"""
+    request = await db.friend_requests.find_one({"id": requestId}, {"_id": 0})
+    if not request:
+        raise HTTPException(status_code=404, detail="Friend request not found")
+    
+    await db.friend_requests.delete_one({"id": requestId})
+    
+    return {"success": True, "message": "Friend request deleted"}
+
 @api_router.get("/friends/list")
 async def get_friends_list(userId: str, q: str = "", cursor: str = "0", limit: int = 50):
     """Get user's friends list with search"""
