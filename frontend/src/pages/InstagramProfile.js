@@ -375,15 +375,6 @@ const InstagramProfile = () => {
                 <div className="text-xl font-bold text-white">{stats.following}</div>
                 <div className="text-sm text-gray-400">following</div>
               </button>
-              {isOwnProfile && (
-                <button 
-                  onClick={() => navigate('/friends')}
-                  className="text-center hover:opacity-80 transition-opacity"
-                >
-                  <div className="text-xl font-bold text-cyan-400">{profileUser?.friends?.length || 0}</div>
-                  <div className="text-sm text-gray-400">friends</div>
-                </button>
-              )}
             </div>
 
             {/* Action Buttons */}
