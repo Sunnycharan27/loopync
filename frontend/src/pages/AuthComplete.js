@@ -4,6 +4,8 @@ import { API, AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { Mail, Lock, User, Eye, EyeOff, CheckCircle, ArrowLeft, Phone } from "lucide-react";
 import { toast } from "sonner";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 const AuthComplete = () => {
   const { login } = useContext(AuthContext);
