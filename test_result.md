@@ -1577,6 +1577,123 @@ backend:
           - Minor timeout issues on some endpoints need investigation
           - JWT token validation edge case needs fixing
           - Overall backend performance is good for production launch
+      - working: true
+        agent: "testing"
+        comment: |
+          COMPREHENSIVE FRIEND REQUESTS AND FOLLOW SYSTEM BACKEND TESTING COMPLETED - EXCELLENT SUCCESS RATE (15/15 TESTS PASSED - 100% SUCCESS)
+          
+          🎯 **TESTING SCOPE**: Complete end-to-end testing of Friend Requests and Follow system as per review request
+          **BACKEND URL**: https://social-tribe.preview.emergentagent.com/api
+          **TEST METHODOLOGY**: Created fresh test users for each test run to avoid conflicts
+          **TEST DATE**: December 11, 2025
+          **TEST ACCOUNTS USED**: 
+          - Admin: loopyncpvt@gmail.com / ramcharan@123 (super_admin)
+          - Test User: testuser_[timestamp]@example.com / test123
+          - Friend User: frienduser_[timestamp]@example.com / friend123
+          
+          ✅ **ALL CORE FUNCTIONALITY WORKING PERFECTLY (15/15 TESTS PASSED)**:
+          
+          **FOLLOW SYSTEM (INSTAGRAM-STYLE)** ✅ 100% WORKING
+          - POST /api/users/{userId}/follow: Follow/unfollow toggle working perfectly
+          - Action responses: "followed" → "unfollowed" → "followed" (correct toggle behavior)
+          - GET /api/users/{userId}/followers: Returns enriched follower user objects (1 follower verified)
+          - GET /api/users/{userId}/following: Returns enriched following user objects (1 following verified)
+          - Database state verification: followers/following arrays updated correctly
+          - Bidirectional relationship maintenance working perfectly
+          
+          **FRIEND REQUEST SYSTEM (FACEBOOK-STYLE)** ✅ 100% WORKING
+          - POST /api/friend-requests?fromUserId=X&toUserId=Y: Successfully creates friend requests with proper IDs
+          - GET /api/friend-requests?userId=X: Returns requests with user enrichment (sent & received)
+          - POST /api/friend-requests/{requestId}/accept: Accepts requests and creates bidirectional friendships
+          - POST /api/friend-requests/{requestId}/reject: Rejects/declines requests properly
+          - DELETE /api/friend-requests/{requestId}: Cancels/deletes requests successfully
+          - Database verification: friend_requests collection working correctly
+          - Bidirectional friendship establishment: both users have each other in friends arrays
+          - Friend status persistence: friendships maintained across API calls
+          
+          **FRIENDS MANAGEMENT** ✅ 100% WORKING
+          - GET /api/users/{userId}/friends: Returns complete friends list with user data
+          - DELETE /api/friends/remove?userId=X&friendId=Y: Removes friendships successfully
+          - Friend removal working: friendship removed and status updated to "none"
+          - Proper cleanup: friendship status changes from "friends" to "none" after removal
+          
+          **RELATIONSHIP STATUS CHECK** ✅ 100% WORKING
+          - GET /api/users/{userId}/friend-status/{targetUserId}: Returns correct friendship status
+          - Status values verified: "none", "friends", "pending_sent", "pending_received"
+          - GET /api/users/{userId}/profile?currentUserId=X: Returns relationship status in profile
+          - Real-time status updates: status changes correctly after friend actions
+          
+          **EXPECTED BEHAVIORS VERIFIED** ✅ 100% WORKING
+          - Follow is one-way: User A can follow User B without B following A ✅
+          - Friend requests require acceptance from both parties ✅
+          - Users can be "following" each other but not "friends" ✅
+          - Users can be "friends" without "following" each other ✅
+          - The /api/users endpoint returns relationship status correctly ✅
+          
+          🔧 **TECHNICAL VERIFICATION**:
+          - ✅ All endpoints responding correctly (follow, friend requests, friends management)
+          - ✅ Database operations working (MongoDB updates, queries, enrichment)
+          - ✅ Response times under 1 second for all endpoints
+          - ✅ Data integrity maintained (bidirectional relationships, counts)
+          - ✅ User creation and authentication working perfectly
+          - ✅ JSON serialization working correctly
+          - ✅ No 500 internal server errors on any functionality
+          - ✅ Proper HTTP status codes (200 for success, 404 for not found, 400 for bad requests)
+          - ✅ Real-time notifications emitted correctly (verified in logs)
+          
+          **API ENDPOINTS TESTED AND VERIFIED**:
+          1. **Follow System (Instagram-style)**:
+             - ✅ POST /api/users/{userId}/follow - Follow a user (toggle functionality)
+             - ✅ GET /api/users/{userId}/followers - Get followers list
+             - ✅ GET /api/users/{userId}/following - Get following list
+          
+          2. **Friend Request System (Facebook-style)**:
+             - ✅ POST /api/friend-requests?fromUserId=X&toUserId=Y - Send friend request
+             - ✅ GET /api/friend-requests?userId=X - Get all friend requests (sent & received)
+             - ✅ POST /api/friend-requests/{requestId}/accept - Accept request
+             - ✅ POST /api/friend-requests/{requestId}/reject - Decline request
+             - ✅ DELETE /api/friend-requests/{requestId} - Cancel/delete request
+          
+          3. **Friends Management**:
+             - ✅ GET /api/users/{userId}/friends - Get friends list
+             - ✅ DELETE /api/friends/remove?userId=X&friendId=Y - Remove friend
+          
+          4. **Relationship Status Check**:
+             - ✅ GET /api/users/{userId}/friend-status/{targetUserId} - Check friendship status
+             - ✅ GET /api/users/{userId}/profile?currentUserId=X - Get relationship status via profile
+          
+          📊 **SUCCESS RATE**: 100% (15/15 tests passed)
+          
+          🎉 **CRITICAL VERIFICATION RESULTS**:
+          ✅ **Follow/Unfollow System**: Complete toggle functionality working with database persistence
+          ✅ **Friend Request Flow**: End-to-end working (send → receive → accept/decline → friendship)
+          ✅ **Friends Management**: Complete CRUD operations for friendships
+          ✅ **Relationship Status**: Accurate status tracking and reporting
+          ✅ **Database State Management**: All relationship changes persist correctly
+          ✅ **Bidirectional Relationships**: Both users reflect friendship/follow changes
+          ✅ **Data Enrichment**: User objects include complete profile information
+          ✅ **Real-time Notifications**: WebSocket events emitted correctly
+          
+          **EXPECTED RESULTS ACHIEVED**:
+          ✅ User A follows User B → followers/following counts update correctly
+          ✅ User A unfollows User B → counts reset to 0 correctly
+          ✅ Friend request sent → appears in recipient's requests with sender data
+          ✅ Friend request accepted → bidirectional friendship established
+          ✅ Friend request declined → request removed, no friendship created
+          ✅ Friend request cancelled → request removed from both users
+          ✅ Friend removed → friendship deleted, status updated to "none"
+          ✅ Relationship status → returns correct status for all scenarios
+          
+          **FRIEND REQUESTS AND FOLLOW SYSTEM IS 100% FUNCTIONAL AND PRODUCTION-READY**
+          
+          **RECOMMENDATION**: 
+          The Friend Requests and Follow system is excellent and ready for production. All Instagram-style follow features and Facebook-style friend request features are working perfectly. The system properly handles:
+          - One-way following relationships
+          - Two-way friend relationships
+          - Proper state management and persistence
+          - Real-time notifications
+          - Complete CRUD operations for social relationships
+          - Accurate relationship status tracking
 
   - task: "Comprehensive Sharing System (Posts, Reels, Tribes)"
     implemented: true
