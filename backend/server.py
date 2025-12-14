@@ -2839,20 +2839,15 @@ async def get_activity_feed(userId: str, limit: int = 50):
 @api_router.get("/reels")
 async def get_reels(limit: int = 50):
     """Get all reels for VibeZone."""
-    cursor = db.reels.find().sort("createdAt", -1).limit(limit)
-    reels = await cursor.to_list(length=limit)
+    reels = await db.reels.find({}, {"_id": 0}).sort("createdAt", -1).to_list(limit)
+    
     for reel in reels:
-        reel["_id"] = str(reel["_id"])
         # Add author info
         if "authorId" in reel:
-            author = await db.users.find_one({"id": reel["authorId"]})
+            author = await db.users.find_one({"id": reel["authorId"]}, {"_id": 0, "id": 1, "handle": 1, "name": 1, "avatar": 1, "isVerified": 1})
             if author:
-                reel["author"] = {
-                    "id": author["id"],
-                    "handle": author["handle"],
-                    "name": author["name"],
-                    "avatar": author.get("avatar", "")
-                }
+                reel["author"] = author
+    
     return reels
 
 @api_router.get("/music/search")
@@ -2870,13 +2865,6 @@ async def search_music(q: str, limit: int = 10):
         for i in range(min(limit, 10))
     ]
     return {"items": sample}
-
-
-    reels = await db.reels.find({}, {"_id": 0}).sort("createdAt", -1).to_list(limit)
-    for reel in reels:
-        author = await db.users.find_one({"id": reel["authorId"]}, {"_id": 0})
-        reel["author"] = author if author else None
-    return reels
 
 @api_router.post("/reels")
 async def create_reel(reel: ReelCreate, authorId: str):
