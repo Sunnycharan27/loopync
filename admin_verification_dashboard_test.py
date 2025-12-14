@@ -274,11 +274,8 @@ class AdminVerificationDashboardTester:
         total_docs = len(documents_to_test)
         
         for doc_type, doc_url in documents_to_test[:10]:  # Test first 10 documents
-            # Convert relative URL to API endpoint
-            if doc_url.startswith("/uploads/"):
-                api_url = f"/api{doc_url}"
-            else:
-                api_url = doc_url
+            # Use the document URL as-is since it should already be in the correct format
+            api_url = doc_url
             
             print(f"    Testing {doc_type}: {api_url}")
             
