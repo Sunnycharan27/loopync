@@ -617,6 +617,15 @@ const AdminVerificationDashboard = () => {
       )}
       
       <BottomNav />
+      
+      {/* Image Preview Modal */}
+      {imagePreview.show && (
+        <ImagePreviewModal
+          images={imagePreview.images}
+          initialIndex={imagePreview.index}
+          onClose={() => setImagePreview({ show: false, images: [], index: 0 })}
+        />
+      )}
     </div>
   );
 };
