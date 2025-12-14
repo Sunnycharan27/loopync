@@ -139,7 +139,7 @@ const VibeCapsuleUpload = ({ currentUser, onUploadComplete, onClose, isOpen = fa
             <div className="flex items-center justify-between p-4 border-b border-gray-700">
               <h2 className="text-xl font-bold text-white">Create Vibe Capsule</h2>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={handleClose}
                 className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
               >
                 <X size={24} className="text-gray-400" />
