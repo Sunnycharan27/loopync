@@ -112,13 +112,24 @@ class MessengerService:
             "reactions": [],
             "read": False,
             "createdAt": datetime.now(timezone.utc).isoformat(),
-            "updatedAt": datetime.now(timezone.utc).isoformat()
+            "updatedAt": datetime.now(timezone.utc).isoformat(),
+            # Shared content fields
+            "contentType": request.contentType,
+            "contentId": request.contentId,
+            "isSharedPost": request.isSharedPost or False,
+            "sharedContent": request.sharedContent
         }
         
         await self.db.messages.insert_one(message)
         
         # Remove MongoDB _id field for JSON serialization
         message.pop('_id', None)
+        
+        # Determine display text for shared content
+        display_text = message["text"]
+        if message["isSharedPost"] and message["contentType"]:
+            content_label = "Reel" if message["contentType"] == "reel" else message["contentType"].capitalize()
+            display_text = f"Shared a {content_label}"
         
         # Update thread last message
         await self.db.threads.update_one(
@@ -127,9 +138,11 @@ class MessengerService:
                 "$set": {
                     "lastMessage": {
                         "id": message["id"],
-                        "text": message["text"],
+                        "text": display_text or message["text"],
                         "senderId": message["senderId"],
-                        "createdAt": message["createdAt"]
+                        "createdAt": message["createdAt"],
+                        "isSharedPost": message["isSharedPost"],
+                        "contentType": message["contentType"]
                     },
                     "lastMessageAt": message["createdAt"]
                 },
@@ -151,7 +164,7 @@ class MessengerService:
             "message": message
         })
         
-        logger.info(f"Message sent from {request.senderId} to {request.recipientId}")
+        logger.info(f"Message sent from {request.senderId} to {request.recipientId} (shared: {message['isSharedPost']})")
         
         return message
     
