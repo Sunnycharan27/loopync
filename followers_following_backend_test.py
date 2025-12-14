@@ -366,6 +366,52 @@ class FollowSystemTester:
         
         return False
     
+    def reset_follow_relationships(self):
+        """Reset follow relationships to ensure clean test state"""
+        self.log("🔄 Resetting follow relationships...")
+        
+        # Ensure test user is not following admin
+        response = self.make_authenticated_request(
+            'GET',
+            f'/users/{TEST_ID}/following',
+            self.test_token
+        )
+        
+        if response and response.status_code == 200:
+            following_data = response.json()
+            admin_followed = any(user['id'] == ADMIN_ID for user in following_data.get('users', []))
+            
+            if admin_followed:
+                # Unfollow admin
+                self.make_authenticated_request(
+                    'POST',
+                    f'/users/{TEST_ID}/follow',
+                    self.test_token,
+                    {"targetUserId": ADMIN_ID}
+                )
+                self.log("🔄 Test user unfollowed admin")
+        
+        # Ensure admin is not following test user
+        response = self.make_authenticated_request(
+            'GET',
+            f'/users/{ADMIN_ID}/following',
+            self.admin_token
+        )
+        
+        if response and response.status_code == 200:
+            following_data = response.json()
+            test_followed = any(user['id'] == TEST_ID for user in following_data.get('users', []))
+            
+            if test_followed:
+                # Unfollow test user
+                self.make_authenticated_request(
+                    'POST',
+                    f'/users/{ADMIN_ID}/follow',
+                    self.admin_token,
+                    {"targetUserId": TEST_ID}
+                )
+                self.log("🔄 Admin unfollowed test user")
+
     def run_all_tests(self):
         """Run all follow system tests"""
         self.log("🚀 Starting Followers/Following System Tests...")
@@ -378,6 +424,9 @@ class FollowSystemTester:
         if not self.admin_token or not self.test_token:
             self.log("❌ Failed to login users. Cannot proceed with tests.", "ERROR")
             return False
+        
+        # Reset relationships to ensure clean state
+        self.reset_follow_relationships()
         
         # Run tests
         tests = [
