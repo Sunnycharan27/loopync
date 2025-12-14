@@ -30,6 +30,7 @@ import RoomDetailClubhouse from "./pages/RoomDetailClubhouse";
 import Analytics from "./pages/Analytics";
 import Auth from "./pages/Auth";
 import AuthComplete from "./pages/AuthComplete";
+import Friends from "./pages/Friends";
 import { Toaster } from "sonner";
 
 // Marketplace Pages
