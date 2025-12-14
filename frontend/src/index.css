@@ -162,3 +162,63 @@ code {
         border-bottom-color: inherit;
     }
 }
+
+
+/* Phone Input Custom Styles for Dark Theme */
+.phone-input-custom {
+  display: flex;
+  align-items: center;
+}
+
+.phone-input-custom .PhoneInputCountry {
+  margin-right: 8px;
+  padding-right: 8px;
+  border-right: 1px solid rgba(75, 85, 99, 0.5);
+}
+
+.phone-input-custom .PhoneInputCountrySelect {
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.phone-input-custom .PhoneInputCountrySelect:focus {
+  outline: none;
+}
+
+.phone-input-custom .PhoneInputCountrySelectArrow {
+  border-color: white;
+  opacity: 0.6;
+}
+
+.phone-input-custom .PhoneInputCountryIcon {
+  width: 24px;
+  height: 18px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.phone-input-custom .PhoneInputCountryIcon--border {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.phone-input-custom input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  flex: 1;
+  outline: none;
+}
+
+.phone-input-custom input::placeholder {
+  color: rgb(107, 114, 128);
+}
+
+/* Override default dropdown styles */
+.PhoneInputCountrySelect option {
+  background: #1f2937;
+  color: white;
+}
