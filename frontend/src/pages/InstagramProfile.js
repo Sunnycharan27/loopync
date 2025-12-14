@@ -6,13 +6,14 @@ import { toast } from 'sonner';
 import {
   Camera, Edit3, Settings, Grid, Film, BarChart3,
   Mail, Phone, MessageCircle, Globe, MapPin,
-  MoreHorizontal, UserPlus, UserCheck, UserMinus, UserX, Share2, BadgeCheck, Shield
+  MoreHorizontal, UserPlus, UserCheck, UserMinus, UserX, Share2, BadgeCheck, Shield, Plus
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import ImageCropModal from '../components/ImageCropModal';
 import VerifiedBadge from '../components/VerifiedBadge';
 import PostCard from '../components/PostCard';
 import FollowersModal from '../components/FollowersModal';
+import VibeCapsuleViewer from '../components/VibeCapsuleViewer';
 import { getMediaUrl } from '../utils/mediaUtils';
 
 const InstagramProfile = () => {
