@@ -2349,11 +2349,14 @@ async def get_followers(userId: str, limit: int = 100):
     followers = []
     
     for follower_id in follower_ids[:limit]:
-        follower = await db.users.find_one({"id": follower_id}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "id": 1})
+        follower = await db.users.find_one(
+            {"id": follower_id}, 
+            {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "id": 1, "isVerified": 1, "bio": 1}
+        )
         if follower:
             followers.append(follower)
     
-    return followers
+    return {"users": followers, "count": len(follower_ids)}
 
 @api_router.get("/users/{userId}/following")
 async def get_following(userId: str, limit: int = 100):
@@ -2366,11 +2369,14 @@ async def get_following(userId: str, limit: int = 100):
     following = []
     
     for following_id in following_ids[:limit]:
-        user_data = await db.users.find_one({"id": following_id}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "id": 1})
+        user_data = await db.users.find_one(
+            {"id": following_id}, 
+            {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "id": 1, "isVerified": 1, "bio": 1}
+        )
         if user_data:
             following.append(user_data)
     
-    return following
+    return {"users": following, "count": len(following_ids)}
 
 # ===== TWITTER-STYLE FEATURES =====
 
