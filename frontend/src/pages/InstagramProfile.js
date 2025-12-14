@@ -85,7 +85,6 @@ const InstagramProfile = () => {
   useEffect(() => {
     if (profileUser && currentUser && !isOwnProfile) {
       checkFollowStatus();
-      checkFriendStatus();
     }
   }, [profileUser, currentUser, isOwnProfile]);
 
