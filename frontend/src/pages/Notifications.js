@@ -244,6 +244,7 @@ const Notifications = () => {
             <div className="text-center py-12 glass-card p-8">
               <Bell size={48} className="text-gray-600 mx-auto mb-4" />
               <p className="text-gray-400">No notifications yet</p>
+              <p className="text-gray-500 text-sm mt-2">When someone follows you, likes or comments on your posts, you'll see it here</p>
             </div>
           ) : (
             notifications.map(notif => (
@@ -251,31 +252,58 @@ const Notifications = () => {
                 key={notif.id}
                 onClick={() => handleNotificationClick(notif)}
                 className={`glass-card p-4 cursor-pointer hover:bg-cyan-400/5 transition-all ${
-                  !notif.read ? 'border-l-4 border-cyan-400' : ''
+                  !notif.read ? 'border-l-4 border-cyan-400 bg-cyan-400/5' : ''
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0">
-                    {getNotificationIcon(notif.type)}
+                <div className="flex items-start gap-3">
+                  {/* User Avatar or Icon */}
+                  <div className="relative flex-shrink-0">
+                    {notif.fromUser?.avatar ? (
+                      <img 
+                        src={notif.fromUser.avatar.startsWith('/api') 
+                          ? `${API.replace('/api', '')}${notif.fromUser.avatar}` 
+                          : notif.fromUser.avatar}
+                        alt={notif.fromUser.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-gray-700"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${notif.fromUser?.handle || 'user'}`;
+                        }}
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+                        {getNotificationIcon(notif.type)}
+                      </div>
+                    )}
+                    {/* Type indicator badge */}
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-gray-900 border-2 border-gray-800 flex items-center justify-center">
+                      {getNotificationIcon(notif.type)}
+                    </div>
                   </div>
-                  <div className="flex-1">
+                  
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="text-sm">
-                          <span className="font-semibold text-white">{notif.fromUser?.name || 'Loopync'}</span>
+                      <div className="flex-1">
+                        <p className="text-sm leading-relaxed">
+                          <span className="font-bold text-white hover:underline">
+                            {notif.fromUser?.name || notif.fromUserName || 'Someone'}
+                          </span>
+                          {notif.fromUser?.isVerified && (
+                            <span className="ml-1 inline-flex items-center justify-center w-4 h-4 bg-cyan-400 rounded-full">
+                              <svg className="w-2.5 h-2.5 text-black" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                              </svg>
+                            </span>
+                          )}
                           <span className="text-gray-400"> {getNotificationText(notif)}</span>
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {new Date(notif.createdAt).toLocaleDateString('en-IN', {
-                            day: 'numeric',
-                            month: 'short',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
+                          {formatTimeAgo(notif.createdAt)}
                         </p>
                       </div>
                       {!notif.read && (
-                        <div className="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0 mt-1"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 flex-shrink-0 mt-1 animate-pulse"></div>
                       )}
                     </div>
                   </div>
