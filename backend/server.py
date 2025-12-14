@@ -4368,7 +4368,40 @@ async def get_thread_messages(userId: str, peerId: str):
 @api_router.get("/notifications")
 async def get_notifications(userId: str):
     notifications = await db.notifications.find({"userId": userId}, {"_id": 0}).sort("createdAt", -1).to_list(100)
-    return notifications
+    
+    # Enrich notifications with fromUser data
+    enriched_notifications = []
+    for notif in notifications:
+        # Populate fromUser if we have fromUserId
+        if notif.get("fromUserId"):
+            from_user = await db.users.find_one(
+                {"id": notif["fromUserId"]}, 
+                {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1}
+            )
+            if from_user:
+                notif["fromUser"] = from_user
+        
+        # If fromUser not populated but we have payload with user info
+        if not notif.get("fromUser"):
+            payload = notif.get("payload", {})
+            if payload.get("fromUser"):
+                user_data = payload["fromUser"]
+                notif["fromUser"] = {
+                    "id": user_data.get("id", ""),
+                    "name": user_data.get("name", "Unknown"),
+                    "handle": user_data.get("handle", "user"),
+                    "avatar": user_data.get("avatar", ""),
+                    "isVerified": user_data.get("isVerified", False)
+                }
+            elif notif.get("fromUserName"):
+                notif["fromUser"] = {
+                    "name": notif.get("fromUserName", "Unknown"),
+                    "avatar": notif.get("fromUserAvatar", ""),
+                }
+        
+        enriched_notifications.append(notif)
+    
+    return enriched_notifications
 
 @api_router.post("/notifications/{notificationId}/read")
 async def mark_notification_read(notificationId: str):
