@@ -941,6 +941,33 @@ const InstagramProfile = () => {
         />
       )}
 
+      {/* Vibe Capsule Viewer Modal */}
+      {viewingCapsule && (
+        <VibeCapsuleViewer
+          capsule={viewingCapsule}
+          allCapsules={capsules}
+          currentIndex={capsuleIndex}
+          onClose={() => setViewingCapsule(null)}
+          onNext={() => {
+            const nextIndex = capsuleIndex + 1;
+            if (nextIndex < capsules.length) {
+              setCapsuleIndex(nextIndex);
+              setViewingCapsule(capsules[nextIndex]);
+            } else {
+              setViewingCapsule(null);
+            }
+          }}
+          onPrev={() => {
+            const prevIndex = capsuleIndex - 1;
+            if (prevIndex >= 0) {
+              setCapsuleIndex(prevIndex);
+              setViewingCapsule(capsules[prevIndex]);
+            }
+          }}
+          currentUser={currentUser}
+        />
+      )}
+
       <BottomNav active="profile" />
     </div>
   );
