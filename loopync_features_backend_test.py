@@ -125,9 +125,9 @@ class LoopyncFeaturesTest:
                             if self.admin_user_id in reposted_by:
                                 self.log_result("Repost Feature - User in Array", True, "User ID correctly added to repostedBy array")
                             else:
-                                self.log_result("Repost Feature - User in Array", False, f"User ID not found in repostedBy array", f"Array: {reposted_by}")
+                                self.log_result("Repost Feature - User in Array", False, f"User ID not found in repostedBy array", f"Array: {reposted_by}, UserID: {self.admin_user_id}")
                         else:
-                            self.log_result("Repost Feature - Verification", False, "Could not verify repostedBy array")
+                            self.log_result("Repost Feature - Verification", False, f"Could not verify repostedBy array - Status: {post_response.status_code}", post_response.text)
                     else:
                         self.log_result("Repost Feature - Action", False, f"Unexpected action: {action}")
                 else:
