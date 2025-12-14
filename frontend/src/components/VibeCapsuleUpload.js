@@ -113,7 +113,7 @@ const VibeCapsuleUpload = ({ currentUser, onUploadComplete }) => {
         <div className="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center border-4 border-gray-900 relative">
           <Plus size={24} className="text-white" />
         </div>
-        <span className="text-xs text-white font-medium">Your Story</span>
+        <span className="text-xs text-white font-medium">Vibe Capsule</span>
       </button>
 
       {/* Upload Modal */}
