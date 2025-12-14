@@ -2291,19 +2291,30 @@ async def follow_user(userId: str, request: FollowRequest):
         followers.append(userId)
         action = "followed"
         
-        # Create notification
-        follower_info = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "id": 1})
+        # Create notification with full user info
         notification = Notification(
             userId=targetUserId,
-            type="follow",
-            content=f"{user.get('name', 'Someone')} started following you",
-            link=f"/profile/{userId}"
+            type="new_follower",
+            fromUserId=userId,
+            fromUserName=user.get('name', 'Someone'),
+            fromUserAvatar=user.get('avatar', ''),
+            message=f"{user.get('name', 'Someone')} started following you",
+            link=f"/user/{userId}"
         )
         await db.notifications.insert_one(notification.model_dump())
         
         # Emit real-time notification
-        await sio.emit('new_follower', {
-            'follower': follower_info
+        await sio.emit('notification', {
+            'type': 'new_follower',
+            'userId': targetUserId,
+            'fromUser': {
+                'id': userId,
+                'name': user.get('name', 'Someone'),
+                'handle': user.get('handle', 'user'),
+                'avatar': user.get('avatar', ''),
+                'isVerified': user.get('isVerified', False)
+            },
+            'createdAt': datetime.now(timezone.utc).isoformat()
         }, room=f"user:{targetUserId}")
     
     await db.users.update_one({"id": userId}, {"$set": {"following": following}})
