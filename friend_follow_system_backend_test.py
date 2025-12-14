@@ -396,46 +396,50 @@ class FriendFollowSystemTester:
             except Exception as e:
                 self.log_test("Accept Friend Request", False, error=str(e))
         
-        # Test 5: Test decline friend request (create new request first)
-        try:
-            # Send another request for decline test
-            decline_request_response = self.session.post(
-                f"{BACKEND_URL}/friend-requests?fromUserId={user2_id}&toUserId={user1_id}",
-                headers=self.get_auth_headers(user2_name),
-                timeout=10
-            )
-            
-            if decline_request_response.status_code == 200:
-                decline_request_data = decline_request_response.json()
-                decline_request_id = decline_request_data.get("id", "")
-                
-                # Now decline it
-                decline_response = self.session.post(
-                    f"{BACKEND_URL}/friend-requests/{decline_request_id}/reject",
-                    headers=self.get_auth_headers(user1_name),
+        # Test 5: Test decline friend request (use admin user to test decline)
+        if "admin" in self.users:
+            admin_id = self.users["admin"]["id"]
+            try:
+                # Send request from admin to user1 for decline test
+                decline_request_response = self.session.post(
+                    f"{BACKEND_URL}/friend-requests?fromUserId={admin_id}&toUserId={user1_id}",
+                    headers=self.get_auth_headers("admin"),
                     timeout=10
                 )
                 
-                if decline_response.status_code == 200:
-                    self.log_test(
-                        "Decline Friend Request", 
-                        True, 
-                        "Friend request declined successfully"
+                if decline_request_response.status_code == 200:
+                    decline_request_data = decline_request_response.json()
+                    decline_request_id = decline_request_data.get("id", "")
+                    
+                    # Now decline it
+                    decline_response = self.session.post(
+                        f"{BACKEND_URL}/friend-requests/{decline_request_id}/reject",
+                        headers=self.get_auth_headers(user1_name),
+                        timeout=10
                     )
+                    
+                    if decline_response.status_code == 200:
+                        self.log_test(
+                            "Decline Friend Request", 
+                            True, 
+                            "Friend request declined successfully"
+                        )
+                    else:
+                        self.log_test(
+                            "Decline Friend Request", 
+                            False, 
+                            error=f"Status: {decline_response.status_code}"
+                        )
                 else:
                     self.log_test(
-                        "Decline Friend Request", 
+                        "Decline Friend Request Setup", 
                         False, 
-                        error=f"Status: {decline_response.status_code}"
+                        error=f"Could not create request for decline test: {decline_request_response.text}"
                     )
-            else:
-                self.log_test(
-                    "Decline Friend Request Setup", 
-                    False, 
-                    error="Could not create request for decline test"
-                )
-        except Exception as e:
-            self.log_test("Decline Friend Request", False, error=str(e))
+            except Exception as e:
+                self.log_test("Decline Friend Request", False, error=str(e))
+        else:
+            self.log_test("Decline Friend Request", False, error="Admin user not available for decline test")
     
     def test_friends_management(self):
         """Test friends management endpoints"""
