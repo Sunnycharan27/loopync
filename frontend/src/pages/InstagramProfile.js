@@ -944,27 +944,15 @@ const InstagramProfile = () => {
       {/* Vibe Capsule Viewer Modal */}
       {viewingCapsule && (
         <VibeCapsuleViewer
-          capsule={viewingCapsule}
-          allCapsules={capsules}
-          currentIndex={capsuleIndex}
+          stories={[{
+            author: profileUser,
+            capsules: capsules.map(c => ({
+              ...c,
+              mediaType: c.mediaType || (c.mediaUrl?.includes('.mp4') ? 'video' : 'image')
+            }))
+          }]}
+          currentUserId={currentUser?.id}
           onClose={() => setViewingCapsule(null)}
-          onNext={() => {
-            const nextIndex = capsuleIndex + 1;
-            if (nextIndex < capsules.length) {
-              setCapsuleIndex(nextIndex);
-              setViewingCapsule(capsules[nextIndex]);
-            } else {
-              setViewingCapsule(null);
-            }
-          }}
-          onPrev={() => {
-            const prevIndex = capsuleIndex - 1;
-            if (prevIndex >= 0) {
-              setCapsuleIndex(prevIndex);
-              setViewingCapsule(capsules[prevIndex]);
-            }
-          }}
-          currentUser={currentUser}
         />
       )}
 
