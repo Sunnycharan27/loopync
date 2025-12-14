@@ -16,7 +16,6 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
-  const [userMood, setUserMood] = useState("happy");
 
   useEffect(() => {
     fetchPosts();
