@@ -268,7 +268,13 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
 
             <button
               data-testid="post-repost-btn"
-              onClick={() => onRepost(post.id)}
+              onClick={() => {
+                if (onRepost) {
+                  onRepost(post.id);
+                } else {
+                  toast.error("Repost not available");
+                }
+              }}
               className={`flex items-center gap-2 hover:text-green-400 transition-colors ${
                 isReposted ? 'text-green-400' : ''
               }`}
