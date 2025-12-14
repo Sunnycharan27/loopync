@@ -6391,57 +6391,6 @@ async def get_wallet_analytics(userId: str):
         "recentTransactions": sorted(transactions, key=lambda x: x.get("createdAt", ""), reverse=True)[:10]
     }
 
-@api_router.get("/analytics/admin")
-async def get_admin_dashboard(adminUserId: str):
-    """Get platform-wide admin analytics"""
-    # Verify admin (in production, check admin role)
-    admin = await db.users.find_one({"id": adminUserId}, {"_id": 0})
-    if not admin:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    # Count totals
-    total_users = await db.users.count_documents({})
-    total_posts = await db.posts.count_documents({})
-    total_reels = await db.reels.count_documents({})
-    total_tribes = await db.tribes.count_documents({})
-    total_rooms = await db.vibe_rooms.count_documents({})
-    
-    # Active users (posted in last 7 days)
-    from datetime import timedelta
-    week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
-    active_post_users = await db.posts.distinct("authorId", {"createdAt": {"$gte": week_ago}})
-    active_reel_users = await db.reels.distinct("authorId", {"createdAt": {"$gte": week_ago}})
-    active_users = list(set(active_post_users + active_reel_users))
-    
-    # Platform engagement
-    all_posts = await db.posts.find({}, {"_id": 0, "likes": 1, "comments": 1}).limit(1000).to_list(1000)
-    all_reels = await db.reels.find({}, {"_id": 0, "stats": 1, "likedBy": 1}).limit(1000).to_list(1000)
-    
-    total_post_likes = sum(len(p.get("likes", [])) for p in all_posts)
-    total_reel_likes = sum(r.get("stats", {}).get("likes", 0) for r in all_reels)
-    total_likes = total_post_likes + total_reel_likes
-    
-    total_post_comments = sum(len(p.get("comments", [])) for p in all_posts)
-    total_reel_comments = sum(r.get("stats", {}).get("comments", 0) for r in all_reels)
-    total_comments = total_post_comments + total_reel_comments
-    
-    # Calculate real growth rate based on active users percentage
-    growth_rate = round((len(active_users) / max(total_users, 1)) * 100, 1) if total_users > 0 else 0
-    
-    return {
-        "totalUsers": total_users,
-        "activeUsers": len(active_users),
-        "totalPosts": total_posts,
-        "totalReels": total_reels,
-        "totalTribes": total_tribes,
-        "totalRooms": total_rooms,
-        "totalLikes": total_likes,
-        "totalComments": total_comments,
-        "platformEngagementRate": round((total_likes + total_comments) / max(total_posts + total_reels, 1), 2),
-        "growthRate": f"+{growth_rate}%",
-        "timestamp": datetime.now(timezone.utc).isoformat()
-    }
-
 # ===== USER SETTINGS ROUTES =====
 
 @api_router.put("/users/{userId}/profile")
