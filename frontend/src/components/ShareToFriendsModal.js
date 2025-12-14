@@ -5,39 +5,52 @@ import { X, Search, Send, Check } from "lucide-react";
 import { toast } from "sonner";
 
 const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
-  const [friends, setFriends] = useState([]);
+  const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFriends, setSelectedFriends] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    fetchFriends();
+    fetchUsers();
   }, []);
 
-  const fetchFriends = async () => {
+  const fetchUsers = async () => {
     try {
-      // Get actual friends list
-      const res = await axios.get(`${API}/users/${currentUser.id}/friends`);
-      setFriends(res.data || []);
+      // Get followers and following (people the user can share with)
+      const [followersRes, followingRes] = await Promise.all([
+        axios.get(`${API}/users/${currentUser.id}/followers`),
+        axios.get(`${API}/users/${currentUser.id}/following`)
+      ]);
+      
+      // Combine and dedupe users
+      const followersData = followersRes.data?.users || [];
+      const followingData = followingRes.data?.users || [];
+      
+      const allUsers = [...followersData, ...followingData];
+      const uniqueUsers = allUsers.filter((user, index, self) =>
+        index === self.findIndex((u) => u.id === user.id)
+      );
+      
+      setUsers(uniqueUsers);
     } catch (error) {
-      console.error("Failed to fetch friends:", error);
-      toast.error("Failed to load friends");
+      console.error("Failed to fetch users:", error);
+      toast.error("Failed to load users");
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredFriends = friends.filter(friend =>
-    friend.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    friend.handle?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = users.filter(user =>
+    user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.handle?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const toggleFriend = (friendId) => {
-    if (selectedFriends.includes(friendId)) {
-      setSelectedFriends(selectedFriends.filter(id => id !== friendId));
+  const toggleUser = (userId) => {
+    if (selectedUsers.includes(userId)) {
+      setSelectedUsers(selectedUsers.filter(id => id !== userId));
     } else {
-      setSelectedFriends([...selectedFriends, friendId]);
+      setSelectedUsers([...selectedUsers, userId]);
     }
   };
 
