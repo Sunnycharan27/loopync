@@ -429,15 +429,6 @@ const InstagramProfile = () => {
                     {isFollowing ? <UserCheck size={16} /> : <UserPlus size={16} />}
                     {isFollowing ? 'Following' : 'Follow'}
                   </button>
-                  {!isFriend && (
-                    <button 
-                      onClick={handleAddFriend}
-                      className="py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-                    >
-                      <UserPlus size={16} />
-                      Add Friend
-                    </button>
-                  )}
                   <button 
                     onClick={() => navigate('/messenger')}
                     className="py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
