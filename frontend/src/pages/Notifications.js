@@ -9,7 +9,7 @@ import { useWebSocket } from "../context/WebSocketContext";
 
 const Notifications = () => {
   const { currentUser } = useContext(AuthContext);
-  const { connected } = useWebSocket() || { connected: false };
+  const { connected, lastMessage } = useWebSocket() || { connected: false, lastMessage: null };
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,6 +17,15 @@ const Notifications = () => {
   useEffect(() => {
     fetchNotifications();
   }, []);
+
+  // Listen for real-time notifications
+  useEffect(() => {
+    if (lastMessage?.type === 'notification' && lastMessage?.data?.userId === currentUser?.id) {
+      // Add new notification to the top
+      setNotifications(prev => [lastMessage.data, ...prev]);
+      toast.success('New notification!');
+    }
+  }, [lastMessage, currentUser]);
 
   const [roomInvites, setRoomInvites] = useState([]);
 
