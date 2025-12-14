@@ -455,7 +455,7 @@ class FriendFollowSystemTester:
                 
                 if cancel_request_response.status_code == 200:
                     cancel_request_data = cancel_request_response.json()
-                    cancel_request_id = cancel_request_data.get("id", "")
+                    cancel_request_id = cancel_request_data.get("requestId", "")
                     print(f"DEBUG: Cancel request ID: {cancel_request_id}")
                     
                     # Now cancel/delete it
