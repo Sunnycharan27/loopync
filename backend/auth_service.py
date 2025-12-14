@@ -26,7 +26,7 @@ class AuthService:
         """Verify a password against its hash"""
         return pwd_context.verify(plain_password, hashed_password)
     
-    async def create_user(self, email: str, password: str, name: str, handle: str = None) -> dict:
+    async def create_user(self, email: str, password: str, name: str, handle: str = None, phone: str = None) -> dict:
         """Create a new user account"""
         # Check if email already exists
         existing_user = await self.db.users.find_one({"email": email.lower()})
@@ -60,6 +60,7 @@ class AuthService:
             "password": hashed_password,  # Store hashed password
             "name": name,
             "handle": handle.lower(),
+            "phone": phone or "",  # Store phone number with country code
             "avatar": f"https://api.dicebear.com/7.x/avataaars/svg?seed={handle}",
             "bio": "",
             "isVerified": False,
