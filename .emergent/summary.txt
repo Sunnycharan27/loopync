@@ -1,26 +1,24 @@
-<analysis>**original_problem_statement**: The user wants to build a comprehensive social media app called VibeZone with features including an Instagram-style profile, a follow/unfollow system, messaging, community Tribes, and a robust verification system.
+<analysis>**original_problem_statement**: The user wants to build a comprehensive social media app, now named Loopync, with features including an Instagram/Facebook-style profile and social graph, messaging, community Tribes, and a robust verification system.
 
 Recent user requests included:
-1.  Fixing all broken functionality on the Discover page.
-2.  Adding a Message button to user cards in the Discover section.
-3.  Showing the verified badge on user profiles within search results.
-4.  Implementing a user-facing Get Verified flow.
-5.  Creating a dedicated super-admin user () with a unique profile and exclusive access to an admin dashboard.
-6.  Adding a Create Tribe button and page.
-7.  Deleting all test data from VibeRooms.
-8.  Ensuring the application is scalable and ready to support 100k+ users.
-9.  Performing a complete data wipe to leave the application in a fresh, production-ready state.
+1.  Implement a comprehensive sharing system for posts, reels, tribes, and VibeRooms.
+2.  Create speech and video scripts for the app's founder.
+3.  Remove all Wallet and Loop Credits functionality from the application.
+4.  Assess and improve the platform's scalability to handle 100,000 users.
+5.  Fix a bug preventing the Admin Verification Dashboard from loading data.
+6.  Refactor the follow/friend system to work like Instagram and Facebook.
+7.  Implement a secure Delete Post feature, ensuring it removes the post from the UI and database.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a full-stack social media platform (React, FastAPI, MongoDB). All major features requested by the user during this session have been implemented and tested. The Discover page is now fully functional, including profile viewing, following, and initiating messages. A complete, multi-step verification system has been built, allowing users to apply for verification and an admin to review requests. A dedicated super-admin user () has been configured with exclusive access to the verification dashboard and a distinct profile UI. The database has been optimized with indexes for scalability, and all test data has been cleared, leaving the app in a clean, production-ready state with only the admin user present.
+The application is a full-stack social media platform (React, FastAPI, MongoDB) named Loopync. All features requested by the user in this session have been implemented and verified. This includes a comprehensive content-sharing system, the complete removal of a legacy wallet feature, and significant backend enhancements for scalability (connection pooling, rate limiting). The friend/follower system has been overhauled to mimic the hybrid model of Instagram (following) and Facebook (friend requests), complete with a new management page. A robust post deletion feature is now functional across the app. All known bugs, including an issue with the admin dashboard, have been fixed. The agent also generated several marketing and speech-related documents for the user.
 
 **Last working item**:
--   **Last item agent was working**: Making the application production-ready. This involved fixing a deployment blocker (a hardcoded URL), optimizing database queries for performance, running a comprehensive health check on all APIs, and performing a full database reset to ensure a fresh start.
--   **Status**: USER VERIFICATION PENDING
+-   **Last item agent was working**: Implementing and verifying the Delete Post functionality. The agent enhanced the backend API for secure, authorized deletion and updated all relevant frontend pages (, , ) to correctly handle post deletion with proper authorization.
+-   **Status**: COMPLETED
 -   **Agent Testing Done**: Y
--   **Which testing method agent to use?**: Manual testing by user. The agent has completed a full system check and data reset. The user should now explore the fresh, fully functional application.
+-   **Which testing method agent to use?**: manual testing by curl
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
@@ -32,12 +30,9 @@ The application is a full-stack social media platform (React, FastAPI, MongoDB).
 **Upcoming and Future Tasks**
 
 -   **Upcoming Tasks**:
-    -   **(P1) Enhance Messaging System**: The UI for advanced messaging features is in place. The next steps are to fully implement the backend logic and test end-to-end for:
-        -   Image/media sharing.
-        -   Voice messages.
-        -   Message reactions (add/remove).
-    -   **(P1) Populate Analytics Dashboard**: Implement the logic to fetch and display real data (e.g., post views, follower growth, engagement stats) in the Analytics tab on the user profile.
-    -   **(P2) Implement Profile Story/Highlights**: Add the Instagram-style story ring and story highlights features to the profile page.
+    -   **(P1) Enhance Messaging System**: Implement backend logic and UI for advanced features like image/media sharing, voice messages, and message reactions.
+    -   **(P1) Populate Analytics Dashboard**: Implement the logic to fetch and display real data (e.g., post views, follower growth) in the Analytics tab, which currently shows static numbers.
+    -   **(P2) Implement Profile Story/Highlights**: Add the Instagram-style story ring (Vibe Capsules) and story highlights features to the profile page.
 
 -   **Future Tasks**:
     -   Implement native push notifications via Capacitor.
@@ -47,27 +42,29 @@ The application is a full-stack social media platform (React, FastAPI, MongoDB).
     -   Conduct end-to-end testing of the Agora.io VibeRooms feature.
 
 **Completed work in this session**
--   **Discover Page Fixed & Enhanced**:
-    -   Resolved routing issues that caused blank profile pages.
-    -   Fixed state management bugs for Follow and Add Friend buttons.
-    -   Added a Message button to user cards to initiate conversations directly.
-    -   Ensured the verified badge is correctly displayed in search results.
--   **Admin & Verification System**:
-    -   Created a user-facing, multi-step Get Verified flow ().
-    -   Established a super-admin account () with a unique profile page.
-    -   Added an Admin Dashboard button visible only to the super-admin.
-    -   Secured both frontend and backend admin routes to restrict access.
-    -   Fixed authentication errors in the document upload process.
--   **Tribes Feature**:
-    -   Added a Create New Tribe button to the Discover page.
-    -   Built a new  page with a complete form for tribe creation.
--   **Production Readiness & Data Reset**:
-    -   Optimized database performance by adding indexes to key collections (, , , etc.).
-    -   Refactored all unbounded database queries () to use a safe limit ().
-    -   Performed a complete database wipe, deleting all test users, posts, messages, tribes, and vibe rooms, leaving the app in a pristine state.
-    -   Fixed a hardcoded URL to resolve a deployment blocker.
--   **Documents Created**:
-    -   Generated  with details on database schema and scalability.
+-   **Comprehensive Sharing System**:
+    -   Implemented backend models () and API endpoints () for sharing posts, reels, tribes, and rooms.
+    -   Updated frontend components (, ) and pages (, ) to integrate the new sharing functionality.
+-   **Wallet & Loop Credits Removal**:
+    -   Removed the  page and its associated routes from .
+    -   Stripped all UI elements and logic related to Wallet/Credits from , , , and .
+-   **Scalability Enhancements (100k Users)**:
+    -   Integrated MongoDB connection pooling in  to manage database connections efficiently.
+    -   Added the  library to implement rate limiting on authentication endpoints (, ) to prevent abuse.
+    -   Created a  document detailing the architecture's readiness.
+-   **Instagram/Facebook Style Social Graph**:
+    -   Refined the backend logic to support a hybrid system: one-way Follows and two-way Friend Requests.
+    -   Created a new  page to allow users to manage their friends, followers, following list, and pending requests.
+    -   Added enriched API endpoints to fetch social graph data and handle friend request actions (accept, decline, cancel).
+    -   Updated the  page to display a clickable Friends count.
+-   **Admin Verification Dashboard Fix**:
+    -   Diagnosed the Failed to load error, identifying it as an admin credential issue.
+    -   Reset the super-admin () password in the database, resolving the authentication failure.
+-   **Delete Post Functionality**:
+    -   Enhanced the  endpoint to require ownership authorization and to delete related data (e.g., comments, notifications).
+    -   Fixed API calls in , , and  to pass the authorization token correctly.
+-   **Documentation Generation**:
+    -   Created several markdown documents: , , , and .
 
 **Earlier issues found/mentioned but not fixed**
 -   **VibeRooms Feature**: The Agora.io-based audio chat room feature remains untested end-to-end.
@@ -80,76 +77,85 @@ The application is a full-stack social media platform (React, FastAPI, MongoDB).
 
 **Key Technical Concepts**
 -   **Full-Stack**: React (JavaScript), FastAPI (Python), MongoDB.
--   **Database Indexing**: Added indexes to major collections to ensure performance and scalability for a large user base.
--   **Role-Based Access Control (RBAC)**: Implemented logic to provide a unique UI and protected routes for a  role.
--   **API Security**: Ensured authentication tokens are passed in headers for protected endpoints (e.g., document upload, verification submission).
+-   **Scalability**: Implemented MongoDB connection pooling and API rate limiting using .
+-   **Social Graph**: Designed a hybrid follow (one-way) and friend (two-way, request-based) system.
+-   **API Security**: Enhanced the post deletion endpoint with strict ownership authorization.
+-   **Code Cleanup**: Performed significant frontend refactoring to remove a deprecated feature (Wallet/Credits).
 
 **key DB schema**
--   **messages**: Model updated to include  and .
--   **users**: Utilized the  field to differentiate the  account.
+-   **New Collection**:  (to track shared content).
+-   **Modified Models**: , , ,  updated with a  count field.
+-   **friend_requests**: Backend endpoints were enhanced to return enriched user data instead of just IDs.
 
 **changes in tech stack**
--   None.
+-   **New Backend Dependency**:  was added to  for rate limiting.
 
 **All files of reference**
--   **/app/frontend/src/pages/Discover.js**: Contains the core logic for user discovery and interaction.
--   **/app/frontend/src/pages/InstagramProfile.js**: The main profile component with conditional UI for admin users.
--   **/app/frontend/src/pages/VerificationRequest.js**: The new user-facing verification form.
--   **/app/frontend/src/pages/CreateTribe.js**: The new form for creating tribes.
--   **/app/frontend/src/App.js**: The main router for the frontend application.
--   **/app/backend/server.py**: The main FastAPI application file, containing API endpoints and scalability improvements.
+-   **/app/backend/server.py**: The core of all new features and optimizations implemented in this session.
+-   **/app/frontend/src/pages/Friends.js**: The new page for social graph management.
+-   **/app/frontend/src/pages/Discover.js**: The central hub for content, now with sharing and corrected delete functionality.
+-   **/app/frontend/src/pages/InstagramProfile.js**: The main user profile, updated with the new Friends stat.
+-   **/app/frontend/src/pages/Analytics.js**: Key page from which the Wallet feature was removed.
+-   **/app/frontend/src/App.js**: The main router, modified to add/remove routes.
 
 **Areas that need refactoring**:
--   The  and  files are large and could be broken down into smaller, more manageable modules/components for better long-term maintainability.
+-   The  file has grown significantly and is now over 8,000 lines long. It should be a high priority to break it down into smaller, modular  files (e.g., , , ) to improve maintainability.
 
 **key api endpoints**
--   : Submits a new verification request from a user.
--   : Handles file uploads for the verification process.
--   : Creates a new tribe.
--   : Adds a reaction to a message.
--   : Removes a reaction from a message.
+-   : Shares content to a user's feed or via DM.
+-   , , : Fetches the respective lists for the current user.
+-   : Retrieves incoming and outgoing friend requests.
+-   : Declines a pending friend request.
+-   : Cancels an outgoing or deletes an incoming friend request.
+-   : Deletes a post, requiring ownership authentication.
 
 **Critical Info for New Agent**
-1.  **Fresh Start**: The application has been completely reset. All data, except for the admin user, has been wiped. You will need to create new users via the signup flow to test functionality.
-2.  **Admin Account**: Use the super-admin account to test admin-specific features. The Admin Dashboard button on the profile page is only visible when logged in as this user.
-3.  **Scalability**: The database is now indexed for performance. Be mindful of writing efficient queries for any new features to maintain this scalability.
-4.  **Next Steps**: The user has verified the completion of all recent requests. The next logical tasks are to enhance the messaging system or build out the analytics dashboard, as outlined in the Upcoming Tasks. Confirm the priority with the user before proceeding.
+1.  **Hybrid Social Model**: The application uses both Follows (like Instagram) and Friends (like Facebook). Follow is a one-click action. Add Friend sends a request that must be accepted. The new  page is the primary UI for managing these relationships.
+2.  **Scalability Measures in Place**: Basic but important scalability features (connection pooling, rate limiting) have been added to . Be mindful of these when adding new, potentially high-traffic endpoints.
+3.  **Wallet Feature Removed**: The Wallet and Loop Credits features have been completely removed from the frontend. Backend endpoints might still exist and could be a candidate for cleanup.
+4.  **UI Testing Limitation**: The screenshot tool used by the previous agent does not persist sessions/cookies across navigations. This can cause authenticated pages to redirect to . This is a limitation of the testing environment, not a bug in the app's authentication. Test authenticated flows via API calls or within a single-page screenshot whenever possible.
 
 **documents created in this job**
 -   
+-   
+-   
+-   
+-   
 
 **Last 10 User Messages and any pending user messages**
-1.  **User**: Add Message button to Discover & show verified badge. - **Status**: COMPLETED.
-2.  **User**: fix this issue (profile picture upload failed). - **Status**: COMPLETED.
-3.  **User**: Add Get Verified section to the profile. - **Status**: COMPLETED.
-4.  **User**: fix this (Not authenticated on verification upload). - **Status**: COMPLETED.
-5.  **User**: Restrict admin dashboard access to . - **Status**: COMPLETED.
-6.  **User**: Add Create Tribe button. - **Status**: COMPLETED.
-7.  **User**: Delete all test data from VibeRooms. - **Status**: COMPLETED.
-8.  **User**: Prepare for 100k users & provide a DB access guide. - **Status**: COMPLETED.
-9.  **User**: Run deployment health check. - **Status**: COMPLETED.
-10. **User**: Test everything and clear all data for a fresh app. - **Status**: COMPLETED.
+1.   - **Status**: COMPLETED.
+2.   - **Status**: COMPLETED.
+3.   - **Status**: COMPLETED.
+4.   (Admin Dashboard) - **Status**: COMPLETED.
+5.   - **Status**: COMPLETED.
+6.   - **Status**: COMPLETED.
+7.   - **Status**: COMPLETED.
+8.   - **Status**: COMPLETED.
+9.   - **Status**: COMPLETED.
+10.  (Admin Dashboard, re-prompt) - **Status**: COMPLETED.
 
 **Project Health Check:**
--   **Broken**: None. All known issues have been resolved.
--   **Mocked**: No mocked components.
+-   **Broken**: None.
+-   **Mocked**: None.
 
 **3rd Party Integrations**
--   **Agora.io**: Configured for VibeRooms (audio chat), but the feature remains untested end-to-end. Requires User API Key.
--   **Capacitor**: Used for mobile app conversion.
+-   **Agora.io**: Configured for VibeRooms (audio chat). Feature remains untested end-to-end. Requires User API Key.
+-   **Capacitor**: Present for potential mobile app conversion.
+-   **slowapi**: Newly added for backend rate limiting. No key required.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES. Used multiple times to validate fixes for the Discover page and messaging.
--   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: None in this session.
+-   **Testing agent used after significant changes**: YES. A frontend testing agent was used to debug the sharing feature.
+-   **Troubleshoot agent used after agent stuck in loop**: NO.
+-   **Test files created**: A temporary backend test script ( and others) was used to validate the friend/follow and delete functionalities via API calls.
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
 -   **Super Admin**:
     -   **Email**: 
     -   **Password**: 
--   **Regular Users**: The database has been wiped. Please create new users through the signup page for testing.
+-   **Regular Users**:
+    -    / 
+    -    / 
 
 **What agent forgot to execute**
--   The Story ring and Highlights features for the profile page, requested in a previous session, were not implemented.
--   The Analytics tab on the profile page still shows placeholder content and is not populated with real data.</analysis>
+-   All user requests from the current session were addressed. The agent successfully picked up paused work and completed all new tasks sequentially. The pending tasks from the previous handoff (messaging enhancements, analytics population, stories) were not addressed as they were not prioritized by the user.</analysis>

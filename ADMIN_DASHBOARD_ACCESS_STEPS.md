@@ -11,7 +11,7 @@
 
 ### STEP 1: Open the Application
 ```
-URL: https://social-tribe.preview.emergentagent.com
+URL: https://loopync-social-2.preview.emergentagent.com
 ```
 
 **What you'll see:**
@@ -22,7 +22,7 @@ URL: https://social-tribe.preview.emergentagent.com
 
 ### STEP 2: Go to Login Page
 ```
-Direct Login URL: https://social-tribe.preview.emergentagent.com/auth
+Direct Login URL: https://loopync-social-2.preview.emergentagent.com/auth
 ```
 
 **Actions:**
@@ -68,7 +68,7 @@ Ramcharan
 
 **Option A: Direct URL (Easiest)**
 ```
-https://social-tribe.preview.emergentagent.com/admin/verification
+https://loopync-social-2.preview.emergentagent.com/admin/verification
 ```
 
 **Actions:**
@@ -152,7 +152,7 @@ Each request shows:
 - [ ] Password: `Ramcharan`
 
 ✅ **Direct dashboard URL:**
-- [ ] `https://social-tribe.preview.emergentagent.com/admin/verification`
+- [ ] `https://loopync-social-2.preview.emergentagent.com/admin/verification`
 
 ---
 
@@ -160,22 +160,22 @@ Each request shows:
 
 **1. Main App:**
 ```
-https://social-tribe.preview.emergentagent.com
+https://loopync-social-2.preview.emergentagent.com
 ```
 
 **2. Login Page:**
 ```
-https://social-tribe.preview.emergentagent.com/auth
+https://loopync-social-2.preview.emergentagent.com/auth
 ```
 
 **3. Admin Dashboard:**
 ```
-https://social-tribe.preview.emergentagent.com/admin/verification
+https://loopync-social-2.preview.emergentagent.com/admin/verification
 ```
 
 **4. Your Profile (after login):**
 ```
-https://social-tribe.preview.emergentagent.com/profile
+https://loopync-social-2.preview.emergentagent.com/profile
 ```
 
 ---
@@ -184,9 +184,9 @@ https://social-tribe.preview.emergentagent.com/profile
 
 Same steps work on mobile:
 1. Open mobile browser (Chrome, Safari)
-2. Go to: `https://social-tribe.preview.emergentagent.com/auth`
+2. Go to: `https://loopync-social-2.preview.emergentagent.com/auth`
 3. Enter credentials
-4. Navigate to: `https://social-tribe.preview.emergentagent.com/admin/verification`
+4. Navigate to: `https://loopync-social-2.preview.emergentagent.com/admin/verification`
 
 ---
 

@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://social-tribe.preview.emergentagent.com/api"
+BACKEND_URL = "https://loopync-social-2.preview.emergentagent.com/api"
 
 class AuthFlowTester:
     def __init__(self):

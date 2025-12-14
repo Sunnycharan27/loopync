@@ -457,7 +457,7 @@ On other users' profiles:
 
 ## 📱 Platform URLs
 
-**Main App**: `https://social-tribe.preview.emergentagent.com`
+**Main App**: `https://loopync-social-2.preview.emergentagent.com`
 
 **Key Routes**:
 - Home: `/`
