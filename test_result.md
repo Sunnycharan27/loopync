@@ -155,11 +155,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Real-Time Notifications System - Follow Notifications"
-    - "Real-Time Notifications System - Like Notifications"
-    - "Real-Time Notifications System - Comment Notifications"
-    - "Real-Time Notifications System - Notification Enrichment"
-    - "Real-Time Notifications System - Navigation Links"
+    - "Followers/Following System - Follow User API"
+    - "Followers/Following System - Get Followers API"
+    - "Followers/Following System - Get Following API"
+    - "Followers/Following System - Mutual Follow"
+    - "Followers/Following System - Unfollow"
+    - "Followers/Following System - Follow Notifications"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
