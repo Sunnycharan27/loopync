@@ -138,8 +138,7 @@ const ImagePreviewModal = ({ images, initialIndex, onClose }) => {
 const DocumentThumbnail = ({ url, label, icon: Icon, colorClass, onClick }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  // Use /api/uploads path for proper routing through ingress
-  const fullUrl = url?.startsWith('/uploads') ? `${API}/uploads${url.substring(8)}` : url;
+  const fullUrl = getUploadUrl(url);
   
   return (
     <button
