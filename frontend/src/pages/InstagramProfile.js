@@ -30,7 +30,12 @@ const InstagramProfile = () => {
   // Content states
   const [posts, setPosts] = useState([]);
   const [reels, setReels] = useState([]);
+  const [capsules, setCapsules] = useState([]);
   const [activeTab, setActiveTab] = useState('posts');
+  
+  // Capsule viewer state
+  const [viewingCapsule, setViewingCapsule] = useState(null);
+  const [capsuleIndex, setCapsuleIndex] = useState(0);
   
   // Stats
   const [stats, setStats] = useState({
