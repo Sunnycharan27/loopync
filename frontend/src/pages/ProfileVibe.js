@@ -264,6 +264,15 @@ const ProfileVibe = () => {
                       toast.error("Failed to delete post");
                     }
                   }}
+                  onRepost={async (postId) => {
+                    if (!currentUser) return;
+                    try {
+                      await axios.post(`${API}/posts/${postId}/repost?userId=${currentUser.id}`);
+                      toast.success("Reposted!");
+                    } catch (error) {
+                      toast.error("Failed to repost");
+                    }
+                  }}
                 />
               )) : (
                 <div className="py-16 text-center glass-card">
