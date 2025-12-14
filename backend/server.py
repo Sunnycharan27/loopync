@@ -1226,7 +1226,8 @@ async def signup(request: Request, req: SignupRequest):
         raise HTTPException(status_code=500, detail="Signup failed")
 
 @api_router.post("/auth/login", response_model=dict)
-async def login(req: LoginRequest):
+@limiter.limit("10/minute")  # Rate limit: 10 login attempts per minute per IP
+async def login(request: Request, req: LoginRequest):
     """
     Login with email and password using MongoDB.
     Returns a JWT token on successful authentication.
