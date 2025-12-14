@@ -256,17 +256,20 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "VibeZone Instagram Reels Style UI"
-  stuck_tasks:
-    - "VibeZone Instagram Reels Style UI"
-  test_all: false
-  test_priority: "high_first"
+  current_focus: []
+  stuck_tasks: []
+  test_all: true
+  test_priority: "completed"
   completed_features:
     - "Repost Feature"
     - "Delete Post Feature" 
     - "Share to Messenger Feature"
     - "VibeZone (Reels) API"
+    - "VibeZone Instagram Reels Style UI"
+    - "Vibe Capsule Label on Home Page"
+    - "Following/Unfollow Button Functionality"
+    - "Stats Update After Follow Actions"
+    - "Notifications Page UI"
 
 agent_communication:
   - agent: "testing"
