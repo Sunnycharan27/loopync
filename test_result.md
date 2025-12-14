@@ -203,13 +203,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Followers/Following System - Follow User API"
-    - "Followers/Following System - Get Followers API"
-    - "Followers/Following System - Get Following API"
-    - "Followers/Following System - Mutual Follow"
-    - "Followers/Following System - Unfollow"
-    - "Followers/Following System - Follow Notifications"
-  stuck_tasks: []
+    - "VibeZone Instagram Reels Style UI"
+  stuck_tasks:
+    - "VibeZone Instagram Reels Style UI"
   test_all: false
   test_priority: "high_first"
 
