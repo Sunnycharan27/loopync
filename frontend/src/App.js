@@ -220,6 +220,18 @@ function App() {
               }
             />
             <Route
+              path="/friends"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <Friends />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
               path="/admin/verifications"
               element={
                 !authLoaded ? (
