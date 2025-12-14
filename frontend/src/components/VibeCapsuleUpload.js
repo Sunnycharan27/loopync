@@ -5,13 +5,28 @@ import { toast } from "sonner";
 import axios from "axios";
 import { API } from "../App";
 
-const VibeCapsuleUpload = ({ currentUser, onUploadComplete }) => {
-  const [showModal, setShowModal] = useState(false);
+const VibeCapsuleUpload = ({ currentUser, onUploadComplete, onClose, isOpen = false }) => {
+  const [showModal, setShowModal] = useState(isOpen);
   const [uploading, setUploading] = useState(false);
   const [mediaType, setMediaType] = useState("image");
   const [mediaUrl, setMediaUrl] = useState("");
   const [caption, setCaption] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
+
+  // Sync external isOpen prop with internal state
+  React.useEffect(() => {
+    if (isOpen !== undefined) {
+      setShowModal(isOpen);
+    }
+  }, [isOpen]);
+
+  const handleClose = () => {
+    setShowModal(false);
+    setMediaUrl("");
+    setCaption("");
+    setUploadProgress(0);
+    if (onClose) onClose();
+  };
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
