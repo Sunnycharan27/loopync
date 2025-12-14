@@ -294,6 +294,24 @@ const PageView = () => {
                         post={post} 
                         currentUser={currentUser}
                         onDelete={() => fetchPage()}
+                        onLike={async (postId) => {
+                          if (!currentUser) return;
+                          try {
+                            await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`);
+                            fetchPage();
+                          } catch (error) {
+                            console.error("Like error:", error);
+                          }
+                        }}
+                        onRepost={async (postId) => {
+                          if (!currentUser) return;
+                          try {
+                            await axios.post(`${API}/posts/${postId}/repost?userId=${currentUser.id}`);
+                            toast.success("Reposted!");
+                          } catch (error) {
+                            toast.error("Failed to repost");
+                          }
+                        }}
                       />
                     ))
                   )}
