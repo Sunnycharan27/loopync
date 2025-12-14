@@ -6343,12 +6343,24 @@ async def get_admin_dashboard(adminUserId: str):
     # Active users (posted in last 7 days)
     from datetime import timedelta
     week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
-    active_users = await db.posts.distinct("authorId", {"createdAt": {"$gte": week_ago}})
+    active_post_users = await db.posts.distinct("authorId", {"createdAt": {"$gte": week_ago}})
+    active_reel_users = await db.reels.distinct("authorId", {"createdAt": {"$gte": week_ago}})
+    active_users = list(set(active_post_users + active_reel_users))
     
     # Platform engagement
     all_posts = await db.posts.find({}, {"_id": 0, "likes": 1, "comments": 1}).limit(1000).to_list(1000)
-    total_likes = sum(len(p.get("likes", [])) for p in all_posts)
-    total_comments = sum(len(p.get("comments", [])) for p in all_posts)
+    all_reels = await db.reels.find({}, {"_id": 0, "stats": 1, "likedBy": 1}).limit(1000).to_list(1000)
+    
+    total_post_likes = sum(len(p.get("likes", [])) for p in all_posts)
+    total_reel_likes = sum(r.get("stats", {}).get("likes", 0) for r in all_reels)
+    total_likes = total_post_likes + total_reel_likes
+    
+    total_post_comments = sum(len(p.get("comments", [])) for p in all_posts)
+    total_reel_comments = sum(r.get("stats", {}).get("comments", 0) for r in all_reels)
+    total_comments = total_post_comments + total_reel_comments
+    
+    # Calculate real growth rate based on active users percentage
+    growth_rate = round((len(active_users) / max(total_users, 1)) * 100, 1) if total_users > 0 else 0
     
     return {
         "totalUsers": total_users,
@@ -6359,8 +6371,8 @@ async def get_admin_dashboard(adminUserId: str):
         "totalRooms": total_rooms,
         "totalLikes": total_likes,
         "totalComments": total_comments,
-        "platformEngagementRate": round((total_likes + total_comments) / max(total_posts, 1), 2),
-        "growthRate": "+23%",  # Mock - track historical data
+        "platformEngagementRate": round((total_likes + total_comments) / max(total_posts + total_reels, 1), 2),
+        "growthRate": f"+{growth_rate}%",
         "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
