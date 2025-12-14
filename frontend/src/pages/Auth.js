@@ -12,6 +12,7 @@ const Auth = () => {
   const [handle, setHandle] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkingHandle, setCheckingHandle] = useState(false);
