@@ -347,6 +347,54 @@ class FriendFollowSystemTester:
                     )
             except Exception as e:
                 self.log_test("Accept Friend Request", False, error=str(e))
+        else:
+            # Get the first pending request to accept
+            try:
+                requests_response = self.session.get(
+                    f"{BACKEND_URL}/friend-requests",
+                    params={"userId": user2_id},
+                    headers=self.get_auth_headers(user2_name),
+                    timeout=10
+                )
+                
+                if requests_response.status_code == 200:
+                    requests_data = requests_response.json()
+                    pending_requests = [r for r in requests_data if r.get("status") == "pending" and r.get("toUserId") == user2_id]
+                    
+                    if pending_requests:
+                        request_id = pending_requests[0]["id"]
+                        accept_response = self.session.post(
+                            f"{BACKEND_URL}/friend-requests/{request_id}/accept",
+                            headers=self.get_auth_headers(user2_name),
+                            timeout=10
+                        )
+                        
+                        if accept_response.status_code == 200:
+                            self.log_test(
+                                "Accept Friend Request", 
+                                True, 
+                                "Friend request accepted successfully"
+                            )
+                        else:
+                            self.log_test(
+                                "Accept Friend Request", 
+                                False, 
+                                error=f"Status: {accept_response.status_code}"
+                            )
+                    else:
+                        self.log_test(
+                            "Accept Friend Request", 
+                            False, 
+                            error="No pending requests to accept"
+                        )
+                else:
+                    self.log_test(
+                        "Accept Friend Request", 
+                        False, 
+                        error="Could not fetch requests for acceptance"
+                    )
+            except Exception as e:
+                self.log_test("Accept Friend Request", False, error=str(e))
         
         # Test 5: Test decline friend request (create new request first)
         try:
