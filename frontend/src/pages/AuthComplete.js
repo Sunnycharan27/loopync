@@ -74,7 +74,7 @@ const AuthComplete = () => {
     }
 
     if (phone.length < 10) {
-      toast.error("Please enter a valid 10-digit phone number");
+      toast.error("Please enter a valid phone number");
       return;
     }
 
