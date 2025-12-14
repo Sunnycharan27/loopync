@@ -251,17 +251,18 @@ frontend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.3"
-  test_sequence: 4
+  version: "1.4"
+  test_sequence: 5
   run_ui: true
   last_comprehensive_test: "2024-12-14"
   deployment_ready: true
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "International Phone Number Sign-up"
   stuck_tasks: []
-  test_all: true
-  test_priority: "completed"
+  test_all: false
+  test_priority: "high"
   completed_features:
     - "Repost Feature"
     - "Delete Post Feature" 
