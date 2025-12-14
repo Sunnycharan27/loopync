@@ -484,7 +484,7 @@ const AdminVerificationDashboard = () => {
       {/* Review Modal */}
       {reviewModal && selectedRequest && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gray-900 rounded-2xl max-w-2xl w-full p-6">
+          <div className="bg-gray-900 rounded-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold">
                 {reviewAction === 'approved' ? 'Approve' : 'Reject'} Verification
