@@ -122,7 +122,7 @@ const ImagePreviewModal = ({ images, initialIndex, onClose }) => {
               }`}
             >
               <img
-                src={img.url?.startsWith('/uploads') ? `${API}/uploads${img.url.substring(8)}` : img.url}
+                src={getUploadUrl(img.url)}
                 alt={img.label}
                 className="w-full h-full object-cover"
               />
