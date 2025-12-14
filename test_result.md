@@ -367,7 +367,9 @@ frontend:
         comment: "✅ VibeZone View Count Display working perfectly! Comprehensive testing confirmed: (1) Reels loading successfully with video content ✅, (2) View counts displaying actual numbers (30 views detected on reels) ✅, (3) View count text properly positioned at bottom of reels near author info ✅, (4) Author handles (@testuser, @loopync) visible and clickable ✅, (5) Reel counter showing proper navigation (1/4, 2/4 format) ✅, (6) Arrow key navigation working for reel browsing ✅, (7) Real-time view tracking functional (view counts increment on reel view) ✅. View counts show actual tracked numbers, not static zeros. Feature fully functional and production-ready."
 
 test_plan:
-  current_focus: []
+  current_focus: 
+    - "Vibe Capsule Highlights on Profile"
+    - "Enhanced Messaging - Share Post to DM"
   stuck_tasks: []
   test_all: false
   test_priority: "high"
@@ -388,6 +390,9 @@ test_plan:
     - "VibeZone View Tracking"
     - "Analytics Dashboard Frontend"
     - "VibeZone View Count Display"
+  failed_features:
+    - "Vibe Capsule Highlights on Profile"
+    - "Enhanced Messaging - Share Post to DM"
 
 agent_communication:
   - agent: "testing"
