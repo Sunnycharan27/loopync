@@ -6280,7 +6280,7 @@ async def get_creator_dashboard(userId: str):
     
     # Top performing content
     top_posts = sorted(posts, key=lambda x: len(x.get("likes", [])), reverse=True)[:5]
-    top_reels = sorted(reels, key=lambda x: r.get("stats", {}).get("likes", 0) if isinstance(r.get("stats"), dict) else len(r.get("likedBy", [])), reverse=True)[:5]
+    top_reels = sorted(reels, key=lambda x: x.get("stats", {}).get("likes", 0) if isinstance(x.get("stats"), dict) else len(x.get("likedBy", [])), reverse=True)[:5]
     
     # Calculate real engagement metrics
     total_post_likes = sum(len(p.get("likes", [])) for p in posts)
