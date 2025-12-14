@@ -1191,6 +1191,7 @@ class SignupRequest(BaseModel):
     password: str
     name: str
     handle: Optional[str] = None
+    phone: Optional[str] = None
 
 @api_router.post("/auth/signup", response_model=dict)
 @limiter.limit("5/minute")  # Rate limit: 5 signups per minute per IP
