@@ -24,6 +24,11 @@ class SendMessageRequest(BaseModel):
     mediaUrl: Optional[str] = None
     mediaType: Optional[str] = None  # 'image', 'video', 'audio', 'file'
     replyToId: Optional[str] = None
+    # Shared content fields
+    contentType: Optional[str] = None  # 'post', 'reel', 'room', 'tribe'
+    contentId: Optional[str] = None
+    isSharedPost: Optional[bool] = False
+    sharedContent: Optional[dict] = None  # {caption, mediaUrl, author: {name, handle, avatar}}
 
 class AIMessageRequest(BaseModel):
     message: str
