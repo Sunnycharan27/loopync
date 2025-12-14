@@ -163,6 +163,21 @@ const Auth = () => {
             </div>
           )}
 
+          {!isLogin && (
+            <div>
+              <label className="block text-sm font-medium mb-2 text-white">Phone Number</label>
+              <PhoneInput
+                data-testid="auth-phone-input"
+                international
+                defaultCountry="IN"
+                value={phone}
+                onChange={setPhone}
+                placeholder="Enter phone number"
+                className="phone-input-custom w-full px-4 py-3 rounded-xl bg-gray-800/50 border-2 border-gray-700 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none"
+              />
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium mb-2 text-white">Email</label>
             <input
