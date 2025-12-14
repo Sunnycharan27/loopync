@@ -98,8 +98,8 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
   };
 
   const handleSend = async () => {
-    if (selectedFriends.length === 0) {
-      toast.error("Please select at least one friend");
+    if (selectedUsers.length === 0) {
+      toast.error("Please select at least one person");
       return;
     }
 
@@ -118,45 +118,47 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
           contentType,
           contentId: item.id,
           shareType: 'dm',
-          toUserIds: selectedFriends,
+          toUserIds: selectedUsers,
           message: getShareMessage()
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (res.data.success) {
-        const count = res.data.sharedToCount || res.data.invitedCount || selectedFriends.length;
+        const count = res.data.sharedToCount || res.data.invitedCount || selectedUsers.length;
         const label = (type === 'tribe' || type === 'room') ? 'Invited' : 'Shared with';
-        toast.success(`${label} ${count} friend${count > 1 ? 's' : ''}!`);
+        toast.success(`${label} ${count} person${count > 1 ? 's' : ''}!`);
         onClose();
       }
     } catch (error) {
       console.error("Failed to share:", error);
-      // Fallback to legacy API if new API fails
+      // Fallback: Send as DMs
       try {
         const message = getShareMessage();
         const link = getShareLink();
         
-        const sendPromises = selectedFriends.map(friendId =>
-          axios.post(`${API}/share`, {
-            fromUserId: currentUser.id,
-            toUserId: friendId,
+        // Send DMs to each selected user
+        const sendPromises = selectedUsers.map(userId =>
+          axios.post(`${API}/messages`, {
+            conversationId: `dm_${[currentUser.id, userId].sort().join('_')}`,
+            senderId: currentUser.id,
+            receiverId: userId,
+            text: `${message}\n\n🔗 ${link}`,
             contentType: type,
             contentId: item.id,
-            message: message,
-            link: link
+            isSharedPost: true
           }).catch(err => {
-            console.error(`Failed to share with ${friendId}:`, err);
+            console.error(`Failed to send DM to ${userId}:`, err);
             return null;
           })
         );
 
         await Promise.all(sendPromises);
-        toast.success(`Shared with ${selectedFriends.length} friend${selectedFriends.length > 1 ? 's' : ''}!`);
+        toast.success(`Shared with ${selectedUsers.length} person${selectedUsers.length > 1 ? 's' : ''}!`);
         onClose();
       } catch (fallbackError) {
         console.error("Fallback share failed:", fallbackError);
-        toast.error("Failed to share with friends");
+        toast.error("Failed to share");
       }
     } finally {
       setSending(false);
