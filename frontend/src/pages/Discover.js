@@ -370,14 +370,22 @@ const Discover = () => {
                       onDelete={async (postId) => {
                         if (!window.confirm("Are you sure you want to delete this post?")) return;
                         try {
-                          await axios.delete(`${API}/posts/${postId}`);
+                          const token = localStorage.getItem('loopync_token');
+                          await axios.delete(`${API}/posts/${postId}`, {
+                            headers: { Authorization: `Bearer ${token}` }
+                          });
                           setSearchResults({
                             ...searchResults,
                             posts: searchResults.posts.filter(p => p.id !== postId)
                           });
                           toast.success("Post deleted!");
                         } catch (error) {
-                          toast.error("Failed to delete post");
+                          console.error("Delete error:", error);
+                          if (error.response?.status === 403) {
+                            toast.error("You can only delete your own posts");
+                          } else {
+                            toast.error(error.response?.data?.detail || "Failed to delete post");
+                          }
                         }
                       }}
                     />
