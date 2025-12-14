@@ -342,8 +342,7 @@ class FriendFollowSystemTester:
         try:
             # Send another request for decline test
             decline_request_response = self.session.post(
-                f"{BACKEND_URL}/friend-requests",
-                params={"fromUserId": user2_id, "toUserId": user1_id},
+                f"{BACKEND_URL}/friend-requests?fromUserId={user2_id}&toUserId={user1_id}",
                 headers=self.get_auth_headers(user2_name),
                 timeout=10
             )
