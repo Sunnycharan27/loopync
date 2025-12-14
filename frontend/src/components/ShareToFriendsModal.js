@@ -171,7 +171,7 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
         {/* Header */}
         <div className="p-4 border-b border-gray-800">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-white">Share with Friends</h3>
+            <h3 className="text-xl font-bold text-white">Share</h3>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition"
@@ -187,44 +187,44 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search friends..."
+              placeholder="Search people..."
               className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400"
             />
           </div>
 
           {/* Selected Count */}
-          {selectedFriends.length > 0 && (
+          {selectedUsers.length > 0 && (
             <div className="mt-3 text-center">
               <span className="text-sm text-cyan-400">
-                {selectedFriends.length} friend{selectedFriends.length > 1 ? 's' : ''} selected
+                {selectedUsers.length} selected
               </span>
             </div>
           )}
         </div>
 
-        {/* Friends List */}
+        {/* Users List */}
         <div className="flex-1 overflow-y-auto p-4">
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
             </div>
-          ) : filteredFriends.length === 0 ? (
+          ) : filteredUsers.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-400">
-                {searchQuery ? "No friends found" : "No friends yet"}
+                {searchQuery ? "No one found" : "No followers or following yet"}
               </p>
               <p className="text-sm text-gray-500 mt-2">
-                {!searchQuery && "Add friends to share content with them!"}
+                {!searchQuery && "Follow people to share content with them!"}
               </p>
             </div>
           ) : (
             <div className="space-y-2">
-              {filteredFriends.map((friend) => {
-                const isSelected = selectedFriends.includes(friend.id);
+              {filteredUsers.map((user) => {
+                const isSelected = selectedUsers.includes(user.id);
                 return (
                   <button
-                    key={friend.id}
-                    onClick={() => toggleFriend(friend.id)}
+                    key={user.id}
+                    onClick={() => toggleUser(user.id)}
                     className={`w-full flex items-center gap-3 p-3 rounded-2xl transition ${
                       isSelected
                         ? 'bg-cyan-400/20 border-2 border-cyan-400'
@@ -232,13 +232,13 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
                     }`}
                   >
                     <img
-                      src={friend.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.name}`}
-                      alt={friend.name}
+                      src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
+                      alt={user.name}
                       className="w-12 h-12 rounded-full"
                     />
                     <div className="flex-1 text-left">
-                      <p className="text-white font-semibold">{friend.name}</p>
-                      <p className="text-sm text-gray-400">@{friend.handle}</p>
+                      <p className="text-white font-semibold">{user.name}</p>
+                      <p className="text-sm text-gray-400">@{user.handle}</p>
                     </div>
                     {isSelected && (
                       <div className="w-6 h-6 rounded-full bg-cyan-400 flex items-center justify-center">
@@ -256,7 +256,7 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
         <div className="p-4 border-t border-gray-800">
           <button
             onClick={handleSend}
-            disabled={selectedFriends.length === 0 || sending}
+            disabled={selectedUsers.length === 0 || sending}
             className="w-full py-3 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition flex items-center justify-center gap-2"
           >
             {sending ? (
@@ -267,7 +267,7 @@ const ShareToFriendsModal = ({ currentUser, item, type, onClose }) => {
             ) : (
               <>
                 <Send size={20} />
-                Send to {selectedFriends.length || '...'} Friend{selectedFriends.length !== 1 ? 's' : ''}
+                Send{selectedUsers.length > 0 ? ` to ${selectedUsers.length}` : ''}
               </>
             )}
           </button>
