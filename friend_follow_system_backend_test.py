@@ -239,8 +239,7 @@ class FriendFollowSystemTester:
         # Test 1: Send friend request
         try:
             friend_request_response = self.session.post(
-                f"{BACKEND_URL}/friend-requests",
-                params={"fromUserId": user1_id, "toUserId": user2_id},
+                f"{BACKEND_URL}/friend-requests?fromUserId={user1_id}&toUserId={user2_id}",
                 headers=self.get_auth_headers(user1_name),
                 timeout=10
             )
