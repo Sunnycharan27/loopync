@@ -175,6 +175,29 @@ const AdminVerificationDashboard = () => {
   const [rejectionReason, setRejectionReason] = useState('');
   const [adminNotes, setAdminNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [imagePreview, setImagePreview] = useState({ show: false, images: [], index: 0 });
+  
+  // Helper to get document images for preview
+  const getDocumentImages = (request) => {
+    const images = [];
+    if (request.aadhaarCardUrl) {
+      images.push({ url: request.aadhaarCardUrl, label: 'Aadhaar Card / ID Document' });
+    }
+    if (request.selfieUrl) {
+      images.push({ url: request.selfieUrl, label: 'Selfie with Document' });
+    }
+    if (request.businessRegistrationDocUrl) {
+      images.push({ url: request.businessRegistrationDocUrl, label: 'Business Registration' });
+    }
+    return images;
+  };
+  
+  const openImagePreview = (request, startIndex = 0) => {
+    const images = getDocumentImages(request);
+    if (images.length > 0) {
+      setImagePreview({ show: true, images, index: startIndex });
+    }
+  };
 
   useEffect(() => {
     // Check if user is the admin
