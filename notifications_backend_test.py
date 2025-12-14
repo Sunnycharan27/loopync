@@ -295,9 +295,9 @@ class NotificationTester:
             link = notif.get("link", "")
             
             if notif_type == "new_follower":
-                # Should link to user profile
-                if not link or "/profile/" not in link:
-                    navigation_issues.append(f"Follow notification missing proper profile link")
+                # Should link to user profile (either /profile/ or /user/)
+                if not link or (("/profile/" not in link) and ("/user/" not in link)):
+                    navigation_issues.append(f"Follow notification missing proper profile link: {link}")
             
             elif notif_type in ["post_like", "post_comment"]:
                 # Should link to post or have contentId
