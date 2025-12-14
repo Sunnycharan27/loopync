@@ -80,6 +80,19 @@ const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
 
   return (
     <div className="glass-card p-4 mb-4 hover:bg-gray-800/30 transition-all relative" data-testid="post-card">
+      {/* Repost indicator */}
+      {post.isRepost && post.repostAuthor && (
+        <div className="flex items-center gap-2 text-gray-400 text-sm mb-3 ml-14">
+          <Repeat2 size={14} />
+          <span 
+            className="hover:underline cursor-pointer"
+            onClick={() => navigate(`/profile/${post.repostAuthor.id}`)}
+          >
+            {post.repostAuthor.name} reposted
+          </span>
+        </div>
+      )}
+
       {/* Reactions popup */}
       {showReactions && (
         <div className="absolute -top-14 left-12 z-50 glass-card p-2 rounded-full shadow-2xl flex gap-2 animate-slideUp">
