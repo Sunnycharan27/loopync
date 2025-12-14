@@ -440,6 +440,51 @@ class FriendFollowSystemTester:
                 self.log_test("Decline Friend Request", False, error=str(e))
         else:
             self.log_test("Decline Friend Request", False, error="Admin user not available for decline test")
+        
+        # Test 6: Test cancel/delete friend request
+        if "admin" in self.users:
+            admin_id = self.users["admin"]["id"]
+            try:
+                # Send request from user1 to admin for cancel test
+                cancel_request_response = self.session.post(
+                    f"{BACKEND_URL}/friend-requests?fromUserId={user1_id}&toUserId={admin_id}",
+                    headers=self.get_auth_headers(user1_name),
+                    timeout=10
+                )
+                
+                if cancel_request_response.status_code == 200:
+                    cancel_request_data = cancel_request_response.json()
+                    cancel_request_id = cancel_request_data.get("id", "")
+                    
+                    # Now cancel/delete it
+                    cancel_response = self.session.delete(
+                        f"{BACKEND_URL}/friend-requests/{cancel_request_id}",
+                        headers=self.get_auth_headers(user1_name),
+                        timeout=10
+                    )
+                    
+                    if cancel_response.status_code == 200:
+                        self.log_test(
+                            "Cancel Friend Request", 
+                            True, 
+                            "Friend request cancelled successfully"
+                        )
+                    else:
+                        self.log_test(
+                            "Cancel Friend Request", 
+                            False, 
+                            error=f"Status: {cancel_response.status_code}"
+                        )
+                else:
+                    self.log_test(
+                        "Cancel Friend Request Setup", 
+                        False, 
+                        error="Could not create request for cancel test"
+                    )
+            except Exception as e:
+                self.log_test("Cancel Friend Request", False, error=str(e))
+        else:
+            self.log_test("Cancel Friend Request", False, error="Admin user not available for cancel test")
     
     def test_friends_management(self):
         """Test friends management endpoints"""
