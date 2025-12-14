@@ -363,7 +363,7 @@ class FriendFollowSystemTester:
                 
                 # Now decline it
                 decline_response = self.session.post(
-                    f"{BACKEND_URL}/friend-requests/{decline_request_id}/decline",
+                    f"{BACKEND_URL}/friend-requests/{decline_request_id}/reject",
                     headers=self.get_auth_headers(user1_name),
                     timeout=10
                 )
