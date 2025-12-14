@@ -64,7 +64,7 @@ const ImagePreviewModal = ({ images, initialIndex, onClose }) => {
             <ZoomIn size={20} className="text-white" />
           </button>
           <a
-            href={currentImage?.url}
+            href={getUploadUrl(currentImage?.url)}
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 hover:bg-gray-800 rounded-full transition-colors ml-2"
