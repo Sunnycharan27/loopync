@@ -962,6 +962,7 @@ const InstagramProfile = () => {
       {showCapsuleUpload && (
         <VibeCapsuleUpload
           currentUser={currentUser}
+          isOpen={showCapsuleUpload}
           onUploadComplete={() => {
             setShowCapsuleUpload(false);
             // Refresh capsules
