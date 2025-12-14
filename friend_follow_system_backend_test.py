@@ -410,7 +410,6 @@ class FriendFollowSystemTester:
                 if decline_request_response.status_code == 200:
                     decline_request_data = decline_request_response.json()
                     decline_request_id = decline_request_data.get("requestId", "")
-                    print(f"DEBUG: Decline request ID: {decline_request_id}")
                     
                     # Now decline it
                     decline_response = self.session.post(
