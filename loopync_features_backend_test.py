@@ -116,18 +116,26 @@ class LoopyncFeaturesTest:
                     if action == "reposted":
                         self.log_result("Repost Feature - Action", True, f"Repost action successful", f"Action: {action}, Reposts: {reposts_count}")
                         
-                        # Verify post.repostedBy array includes the user ID
-                        post_response = requests.get(f"{API_BASE}/posts/{self.test_post_id}", headers=headers)
-                        if post_response.status_code == 200:
-                            post_data = post_response.json()
-                            reposted_by = post_data.get("repostedBy", [])
+                        # Verify post.repostedBy array includes the user ID by getting all posts and finding ours
+                        posts_response = requests.get(f"{API_BASE}/posts", headers=headers)
+                        if posts_response.status_code == 200:
+                            all_posts = posts_response.json()
+                            target_post = None
+                            for post in all_posts:
+                                if post.get("id") == self.test_post_id:
+                                    target_post = post
+                                    break
                             
-                            if self.admin_user_id in reposted_by:
-                                self.log_result("Repost Feature - User in Array", True, "User ID correctly added to repostedBy array")
+                            if target_post:
+                                reposted_by = target_post.get("repostedBy", [])
+                                if self.admin_user_id in reposted_by:
+                                    self.log_result("Repost Feature - User in Array", True, "User ID correctly added to repostedBy array")
+                                else:
+                                    self.log_result("Repost Feature - User in Array", False, f"User ID not found in repostedBy array", f"Array: {reposted_by}, UserID: {self.admin_user_id}")
                             else:
-                                self.log_result("Repost Feature - User in Array", False, f"User ID not found in repostedBy array", f"Array: {reposted_by}, UserID: {self.admin_user_id}")
+                                self.log_result("Repost Feature - Verification", False, f"Could not find post with ID {self.test_post_id} in posts list")
                         else:
-                            self.log_result("Repost Feature - Verification", False, f"Could not verify repostedBy array - Status: {post_response.status_code}", post_response.text)
+                            self.log_result("Repost Feature - Verification", False, f"Could not get posts list - Status: {posts_response.status_code}", posts_response.text)
                     else:
                         self.log_result("Repost Feature - Action", False, f"Unexpected action: {action}")
                 else:
