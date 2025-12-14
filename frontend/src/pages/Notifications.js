@@ -108,14 +108,25 @@ const Notifications = () => {
   const getNotificationIcon = (type) => {
     switch (type) {
       case 'new_follower':
+      case 'follow':
         return <UserPlus size={18} className="text-blue-400" />;
       case 'post_like':
-        return <Heart size={18} className="text-pink-400" />;
+      case 'like':
+        return <Heart size={18} className="text-pink-400 fill-pink-400" />;
       case 'post_comment':
-      case 'dm':
+      case 'comment':
         return <MessageCircle size={18} className="text-cyan-400" />;
+      case 'dm':
+      case 'message':
+        return <MessageCircle size={18} className="text-green-400 fill-green-400" />;
       case 'tribe_join':
-        return <Users size={18} className="text-green-400" />;
+        return <Users size={18} className="text-purple-400" />;
+      case 'reel_like':
+        return <Play size={18} className="text-pink-400" />;
+      case 'share':
+        return <Share2 size={18} className="text-orange-400" />;
+      case 'mention':
+        return <span className="text-cyan-400 font-bold">@</span>;
       case 'order_placed':
       case 'order_ready':
         return <ShoppingBag size={18} className="text-yellow-400" />;
@@ -130,23 +141,33 @@ const Notifications = () => {
     const { type, payload } = notif;
     switch (type) {
       case 'new_follower':
+      case 'follow':
         return 'started following you';
       case 'post_like':
+      case 'like':
         return 'liked your post';
+      case 'reel_like':
+        return 'liked your reel';
       case 'post_comment':
-        return 'commented on your post';
+      case 'comment':
+        return payload?.text ? `commented: "${payload.text.substring(0, 50)}${payload.text.length > 50 ? '...' : ''}"` : 'commented on your post';
       case 'tribe_join':
-        return 'joined your tribe';
+        return `joined ${payload?.tribeName || 'your tribe'}`;
+      case 'share':
+        return 'shared your post';
+      case 'mention':
+        return 'mentioned you in a post';
       case 'order_placed':
-        return `Order placed • ₹${payload.total}`;
+        return `Order placed • ₹${payload?.total || 0}`;
       case 'order_ready':
         return 'Your order is ready!';
       case 'ticket_bought':
         return 'Ticket purchased successfully';
       case 'dm':
-        return payload.text || 'sent you a message';
+      case 'message':
+        return payload?.text ? `sent: "${payload.text.substring(0, 40)}${payload.text.length > 40 ? '...' : ''}"` : 'sent you a message';
       default:
-        return 'New notification';
+        return notif.message || 'New activity';
     }
   };
 
