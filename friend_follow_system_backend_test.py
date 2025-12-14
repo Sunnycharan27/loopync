@@ -538,9 +538,9 @@ class FriendFollowSystemTester:
                 is_friend = any(friend.get("id") == user2_id for friend in friends)
                 
                 if is_friend:
-                    # Try to remove the friendship
+                    # Try to remove the friendship using the correct endpoint
                     remove_response = self.session.delete(
-                        f"{BACKEND_URL}/friends/{user1_id}/{user2_id}",
+                        f"{BACKEND_URL}/friends/remove?userId={user1_id}&friendId={user2_id}",
                         headers=self.get_auth_headers(user1_name),
                         timeout=10
                     )
