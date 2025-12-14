@@ -110,17 +110,6 @@ const Home = () => {
         {/* Vibe Capsules (Stories) */}
         <VibeCapsules currentUser={currentUser} />
 
-        {/* User Status Bar - Only for authenticated users */}
-        {currentUser && (
-          <div className="px-4 py-3 flex items-center justify-between gap-3 border-b border-gray-800">
-            <MoodSelector currentMood={userMood} onMoodChange={setUserMood} />
-            <StreakCounter />
-          </div>
-        )}
-
-        {/* Live Activity Feed - Only for authenticated users */}
-        {currentUser && <LiveActivityFeed />}
-
         {/* Posts Feed */}
         <div className="space-y-4 px-4 mt-4">
           {loading ? (
