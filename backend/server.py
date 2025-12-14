@@ -1206,7 +1206,8 @@ async def signup(request: Request, req: SignupRequest):
             email=req.email,
             password=req.password,
             name=req.name,
-            handle=req.handle
+            handle=req.handle,
+            phone=req.phone
         )
         
         # Generate JWT token
