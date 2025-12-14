@@ -498,7 +498,7 @@ const AdminVerificationDashboard = () => {
             </div>
             
             <div className="mb-6 p-4 bg-gray-800/50 rounded-xl">
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-4">
                 <img
                   src={selectedRequest.userInfo?.avatar}
                   alt={selectedRequest.fullName}
@@ -509,6 +509,45 @@ const AdminVerificationDashboard = () => {
                   <div className="text-sm text-gray-400">@{selectedRequest.userInfo?.handle}</div>
                 </div>
               </div>
+              
+              {/* Document Previews in Review Modal */}
+              {(selectedRequest.aadhaarCardUrl || selectedRequest.selfieUrl || selectedRequest.businessRegistrationDocUrl) && (
+                <div className="border-t border-gray-700 pt-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Image size={16} className="text-cyan-400" />
+                    <span className="text-sm font-medium text-gray-300">Submitted Documents</span>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedRequest.aadhaarCardUrl && (
+                      <DocumentThumbnail
+                        url={selectedRequest.aadhaarCardUrl}
+                        label="Aadhaar/ID"
+                        icon={FileText}
+                        colorClass="border-blue-500/50 hover:border-blue-400"
+                        onClick={() => openImagePreview(selectedRequest, 0)}
+                      />
+                    )}
+                    {selectedRequest.selfieUrl && (
+                      <DocumentThumbnail
+                        url={selectedRequest.selfieUrl}
+                        label="Selfie"
+                        icon={User}
+                        colorClass="border-purple-500/50 hover:border-purple-400"
+                        onClick={() => openImagePreview(selectedRequest, selectedRequest.aadhaarCardUrl ? 1 : 0)}
+                      />
+                    )}
+                    {selectedRequest.businessRegistrationDocUrl && (
+                      <DocumentThumbnail
+                        url={selectedRequest.businessRegistrationDocUrl}
+                        label="Business Doc"
+                        icon={FileText}
+                        colorClass="border-green-500/50 hover:border-green-400"
+                        onClick={() => openImagePreview(selectedRequest, getDocumentImages(selectedRequest).length - 1)}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
             
             {reviewAction === 'rejected' && (
