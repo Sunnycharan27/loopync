@@ -794,6 +794,7 @@ const MessengerNew = () => {
               const hasReactions = message.reactions && message.reactions.length > 0;
               const isVoiceMessage = message.mediaType === 'voice';
               const isVideoMessage = message.mediaType === 'video';
+              const isSharedPost = message.isSharedPost || message.contentType === 'post' || message.contentType === 'reel';
 
               return (
                 <div
@@ -813,69 +814,157 @@ const MessengerNew = () => {
                   )}
 
                   <div className="relative">
-                    {/* Message bubble */}
-                    <div
-                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl cursor-pointer ${
-                        isOwn
-                          ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-lg shadow-cyan-400/30'
-                          : 'text-white'
-                      }`}
-                      style={!isOwn ? { 
-                        background: 'rgba(18, 20, 39, 0.9)', 
-                        border: '1px solid rgba(0, 224, 255, 0.2)'
-                      } : {}}
-                      onDoubleClick={() => setShowEmojiPicker(showEmojiPicker === message.id ? null : message.id)}
-                    >
-                      {/* Voice message */}
-                      {isVoiceMessage && message.mediaUrl ? (
-                        <div className="flex items-center gap-3">
-                          <button
-                            onClick={() => playAudio(message.id, message.mediaUrl)}
-                            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                              isOwn ? 'bg-black/20 hover:bg-black/30' : 'bg-cyan-400/20 hover:bg-cyan-400/30'
-                            }`}
-                          >
-                            {playingAudio === message.id ? (
-                              <Pause size={18} className={isOwn ? 'text-black' : 'text-cyan-400'} />
-                            ) : (
-                              <Play size={18} className={isOwn ? 'text-black' : 'text-cyan-400'} />
-                            )}
-                          </button>
-                          <div className="flex-1">
-                            <div className={`h-1 rounded-full ${isOwn ? 'bg-black/30' : 'bg-cyan-400/30'}`}>
-                              <div className={`h-full w-1/2 rounded-full ${isOwn ? 'bg-black' : 'bg-cyan-400'}`}></div>
-                            </div>
-                            <p className="text-xs mt-1 opacity-70">Voice message</p>
-                          </div>
-                        </div>
-                      ) : (
-                        <>
-                          {message.text && !message.text.startsWith('🎤') && !message.text.startsWith('📷') && !message.text.startsWith('🎬') && (
-                            <p className="text-sm">{message.text}</p>
-                          )}
-                        </>
-                      )}
-                      
-                      {/* Image/Video message */}
-                      {message.mediaUrl && !isVoiceMessage && (
-                        <div className="mt-1">
-                          {isVideoMessage ? (
-                            <video
-                              src={message.mediaUrl}
-                              controls
-                              className="rounded-lg max-w-full max-h-60"
-                            />
+                    {/* Shared Post/Reel Card */}
+                    {isSharedPost && message.contentId ? (
+                      <div
+                        className={`max-w-xs lg:max-w-md rounded-2xl overflow-hidden cursor-pointer ${
+                          isOwn ? 'shadow-lg shadow-cyan-400/30' : ''
+                        }`}
+                        style={{ 
+                          background: isOwn ? 'linear-gradient(135deg, #00bcd4, #3b82f6)' : 'rgba(18, 20, 39, 0.9)', 
+                          border: isOwn ? 'none' : '1px solid rgba(0, 224, 255, 0.2)'
+                        }}
+                        onClick={() => navigate(message.contentType === 'reel' ? '/vibezone' : `/post/${message.contentId}`)}
+                      >
+                        {/* Shared Content Header */}
+                        <div className={`px-3 py-2 flex items-center gap-2 ${isOwn ? 'bg-black/10' : 'bg-cyan-400/10'}`}>
+                          {message.contentType === 'reel' ? (
+                            <Film size={14} className={isOwn ? 'text-black' : 'text-cyan-400'} />
                           ) : (
-                            <img
-                              src={message.mediaUrl}
-                              alt=""
-                              className="rounded-lg max-w-full max-h-60 cursor-pointer hover:opacity-90 transition-opacity"
-                              onClick={() => window.open(message.mediaUrl, '_blank')}
-                            />
+                            <Image size={14} className={isOwn ? 'text-black' : 'text-cyan-400'} />
                           )}
+                          <span className={`text-xs font-medium ${isOwn ? 'text-black/80' : 'text-cyan-400'}`}>
+                            Shared {message.contentType === 'reel' ? 'Reel' : 'Post'}
+                          </span>
                         </div>
-                      )}
-                    </div>
+                        
+                        {/* Shared Content Preview */}
+                        {message.sharedContent && (
+                          <div className="p-3">
+                            {/* Media Preview */}
+                            {message.sharedContent.mediaUrl && (
+                              <div className="mb-2 rounded-lg overflow-hidden bg-black/20">
+                                {message.contentType === 'reel' || message.sharedContent.mediaUrl?.includes('.mp4') ? (
+                                  <div className="relative aspect-[9/16] max-h-40 flex items-center justify-center bg-black">
+                                    <Play size={32} className="text-white/80" />
+                                    <span className="absolute bottom-2 left-2 text-white text-xs bg-black/50 px-2 py-1 rounded">
+                                      Video
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <img 
+                                    src={message.sharedContent.mediaUrl}
+                                    alt="Shared content"
+                                    className="w-full max-h-32 object-cover"
+                                    onError={(e) => e.target.style.display = 'none'}
+                                  />
+                                )}
+                              </div>
+                            )}
+                            
+                            {/* Caption Preview */}
+                            {message.sharedContent.caption && (
+                              <p className={`text-xs line-clamp-2 ${isOwn ? 'text-black/80' : 'text-gray-300'}`}>
+                                {message.sharedContent.caption}
+                              </p>
+                            )}
+                            
+                            {/* Author */}
+                            {message.sharedContent.author && (
+                              <div className="flex items-center gap-2 mt-2">
+                                <img 
+                                  src={message.sharedContent.author.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${message.sharedContent.author.name}`}
+                                  alt=""
+                                  className="w-5 h-5 rounded-full"
+                                />
+                                <span className={`text-xs ${isOwn ? 'text-black/70' : 'text-gray-400'}`}>
+                                  @{message.sharedContent.author.handle || message.sharedContent.author.name}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Tap to view indicator */}
+                        <div className={`px-3 py-2 flex items-center justify-between ${isOwn ? 'bg-black/10' : 'bg-cyan-400/5'}`}>
+                          <span className={`text-xs ${isOwn ? 'text-black/60' : 'text-gray-500'}`}>
+                            Tap to view
+                          </span>
+                          <ExternalLink size={12} className={isOwn ? 'text-black/60' : 'text-gray-500'} />
+                        </div>
+                        
+                        {/* Message text if any */}
+                        {message.text && !message.text.includes('shared') && (
+                          <div className={`px-3 py-2 border-t ${isOwn ? 'border-black/10' : 'border-gray-700'}`}>
+                            <p className={`text-sm ${isOwn ? 'text-black' : 'text-white'}`}>{message.text}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      /* Regular Message bubble */
+                      <div
+                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl cursor-pointer ${
+                          isOwn
+                            ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-lg shadow-cyan-400/30'
+                            : 'text-white'
+                        }`}
+                        style={!isOwn ? { 
+                          background: 'rgba(18, 20, 39, 0.9)', 
+                          border: '1px solid rgba(0, 224, 255, 0.2)'
+                        } : {}}
+                        onDoubleClick={() => setShowEmojiPicker(showEmojiPicker === message.id ? null : message.id)}
+                      >
+                        {/* Voice message */}
+                        {isVoiceMessage && message.mediaUrl ? (
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={() => playAudio(message.id, message.mediaUrl)}
+                              className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                                isOwn ? 'bg-black/20 hover:bg-black/30' : 'bg-cyan-400/20 hover:bg-cyan-400/30'
+                              }`}
+                            >
+                              {playingAudio === message.id ? (
+                                <Pause size={18} className={isOwn ? 'text-black' : 'text-cyan-400'} />
+                              ) : (
+                                <Play size={18} className={isOwn ? 'text-black' : 'text-cyan-400'} />
+                              )}
+                            </button>
+                            <div className="flex-1">
+                              <div className={`h-1 rounded-full ${isOwn ? 'bg-black/30' : 'bg-cyan-400/30'}`}>
+                                <div className={`h-full w-1/2 rounded-full ${isOwn ? 'bg-black' : 'bg-cyan-400'}`}></div>
+                              </div>
+                              <p className="text-xs mt-1 opacity-70">Voice message</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {message.text && !message.text.startsWith('🎤') && !message.text.startsWith('📷') && !message.text.startsWith('🎬') && (
+                              <p className="text-sm">{message.text}</p>
+                            )}
+                          </>
+                        )}
+                        
+                        {/* Image/Video message */}
+                        {message.mediaUrl && !isVoiceMessage && (
+                          <div className="mt-1">
+                            {isVideoMessage ? (
+                              <video
+                                src={message.mediaUrl}
+                                controls
+                                className="rounded-lg max-w-full max-h-60"
+                              />
+                            ) : (
+                              <img
+                                src={message.mediaUrl}
+                                alt=""
+                                className="rounded-lg max-w-full max-h-60 cursor-pointer hover:opacity-90 transition-opacity"
+                                onClick={() => window.open(message.mediaUrl, '_blank')}
+                              />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
 
                     {/* Reactions display */}
                     {hasReactions && (
