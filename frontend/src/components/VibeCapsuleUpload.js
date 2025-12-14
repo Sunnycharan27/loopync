@@ -116,6 +116,117 @@ const VibeCapsuleUpload = ({ currentUser, onUploadComplete, onClose, isOpen = fa
     }
   };
 
+  // If opened externally, only render the modal
+  if (isOpen) {
+    return showModal ? ReactDOM.createPortal(
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4" style={{ zIndex: 9999 }}>
+        <div className="bg-gray-800 rounded-2xl max-w-lg w-full border border-gray-700" style={{ zIndex: 10000 }}>
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-gray-700">
+            <h2 className="text-xl font-bold text-white">Create Vibe Capsule</h2>
+            <button
+              onClick={handleClose}
+              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            >
+              <X size={24} className="text-gray-400" />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="p-6 space-y-4">
+            {/* Media Upload */}
+            {!mediaUrl ? (
+              <div className="border-2 border-dashed border-gray-600 rounded-xl p-8 text-center">
+                <input
+                  type="file"
+                  id="media-upload-modal"
+                  accept="image/*,video/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+                <label
+                  htmlFor="media-upload-modal"
+                  className="cursor-pointer flex flex-col items-center gap-4"
+                >
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center">
+                    <Upload size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">Upload Photo or Video</p>
+                    <p className="text-gray-400 text-sm mt-1">Max 10MB for images, 150MB for videos</p>
+                  </div>
+                </label>
+                {uploading && (
+                  <div className="mt-4">
+                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                    <p className="text-gray-400 text-sm mt-2">{uploadProgress}% uploaded</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="relative rounded-xl overflow-hidden bg-gray-900">
+                {mediaType === "image" ? (
+                  <img
+                    src={mediaUrl}
+                    alt="Preview"
+                    className="w-full max-h-64 object-contain"
+                  />
+                ) : (
+                  <video
+                    src={mediaUrl}
+                    controls
+                    className="w-full max-h-64"
+                  />
+                )}
+                <button
+                  onClick={() => setMediaUrl("")}
+                  className="absolute top-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70"
+                >
+                  <X size={16} className="text-white" />
+                </button>
+              </div>
+            )}
+
+            {/* Caption */}
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">Add a caption</label>
+              <textarea
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                placeholder="Write something..."
+                className="w-full bg-gray-700 text-white rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                rows={3}
+                maxLength={150}
+              />
+              <p className="text-right text-gray-500 text-xs mt-1">{caption.length}/150</p>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="p-4 border-t border-gray-700">
+            <button
+              onClick={handleCreateCapsule}
+              disabled={!mediaUrl || uploading}
+              className={`w-full py-3 rounded-xl font-semibold transition-all ${
+                mediaUrl && !uploading
+                  ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-black hover:opacity-90"
+                  : "bg-gray-700 text-gray-400 cursor-not-allowed"
+              }`}
+            >
+              {uploading ? "Uploading..." : "Share to Vibe Capsule"}
+            </button>
+          </div>
+        </div>
+      </div>,
+      document.body
+    ) : null;
+  }
+
   return (
     <>
       {/* Add Story Button */}
