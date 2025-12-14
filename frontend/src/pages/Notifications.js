@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
-import { ArrowLeft, Heart, MessageCircle, Users, ShoppingBag, Ticket, UserPlus, UserCheck, UserX, Bell } from "lucide-react";
+import { ArrowLeft, Heart, MessageCircle, Users, ShoppingBag, Ticket, UserPlus, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import BottomNav from "../components/BottomNav";
