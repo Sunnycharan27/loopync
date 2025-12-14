@@ -24,6 +24,7 @@ const InstagramProfile = () => {
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [showUnfollowHover, setShowUnfollowHover] = useState(false);
   
   // Content states
   const [posts, setPosts] = useState([]);
