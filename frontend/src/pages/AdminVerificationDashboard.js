@@ -83,7 +83,7 @@ const ImagePreviewModal = ({ images, initialIndex, onClose }) => {
         
         <div className="max-w-full max-h-full overflow-auto p-4">
           <img
-            src={currentImage?.url?.startsWith('/uploads') ? `${API}${currentImage.url.replace('/uploads', '/uploads')}` : currentImage?.url}
+            src={currentImage?.url?.startsWith('/uploads') ? `${API}/uploads${currentImage.url.substring(8)}` : currentImage?.url}
             alt={currentImage?.label}
             style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }}
             className="max-w-full max-h-[80vh] object-contain transition-transform duration-200 rounded-lg"
