@@ -626,6 +626,23 @@ const InstagramProfile = () => {
                       }
                     }
                   }}
+                  onRepost={async (postId) => {
+                    if (!currentUser) {
+                      toast.error("Login to repost");
+                      return;
+                    }
+                    try {
+                      const token = localStorage.getItem('loopync_token');
+                      await axios.post(`${API}/posts/${postId}/repost?userId=${currentUser.id}`, {}, {
+                        headers: { Authorization: `Bearer ${token}` }
+                      });
+                      toast.success("Reposted!");
+                      fetchUserContent(profileUser.id, profileUser);
+                    } catch (error) {
+                      console.error("Repost error:", error);
+                      toast.error("Failed to repost");
+                    }
+                  }}
                 />
               ))
             ) : (
