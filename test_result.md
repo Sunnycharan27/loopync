@@ -306,6 +306,30 @@ metadata:
   deployment_ready: true
 
 frontend:
+  - task: "Vibe Capsule Highlights on Profile"
+    implemented: false
+    working: "NA"
+    file: "InstagramProfile.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "❌ Vibe Capsule Highlights section NOT FOUND on profile page. Expected horizontal scrollable row with circular items between bio and tabs with 'New' button for uploading capsules, but no such section exists. Profile page loads correctly but missing the Vibe Capsule highlights feature entirely. Found 0 circular elements on profile. This feature appears to be not implemented yet."
+
+  - task: "Enhanced Messaging - Share Post to DM"
+    implemented: true
+    working: false
+    file: "PostCard.js, UniversalShareModal.js, ShareToFriendsModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ Enhanced Messaging Share to DM partially working but missing key functionality. WORKING: (1) Posts have share buttons ✅, (2) Share modal opens successfully ✅, (3) Modal shows copy link and social media options ✅. MISSING: (1) 'Share with Friends' option not found in share modal ❌, (2) Cannot share posts directly to DM conversations ❌, (3) No friends selection interface available ❌. The share modal only provides external sharing (WhatsApp, Facebook, Twitter, Email) but lacks the internal 'Share with Friends' functionality for DM sharing. Messenger has 0 conversations for testing shared post previews."
+
   - task: "International Phone Number Sign-up"
     implemented: true
     working: true
