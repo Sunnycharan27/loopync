@@ -577,7 +577,7 @@ const InstagramProfile = () => {
               {/* Add New Capsule Button (only for own profile) */}
               {isOwnProfile && (
                 <button
-                  onClick={() => navigate('/create-capsule')}
+                  onClick={() => setShowCapsuleUpload(true)}
                   className="flex-shrink-0 flex flex-col items-center"
                 >
                   <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-600 flex items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
