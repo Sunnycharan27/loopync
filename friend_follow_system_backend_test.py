@@ -256,9 +256,8 @@ class FriendFollowSystemTester:
             
             if friend_request_response.status_code == 200:
                 data = friend_request_response.json()
-                request_id = data.get("id", "")
+                request_id = data.get("requestId", "")
                 self.friend_request_id = request_id
-                print(f"DEBUG: Friend request response: {data}")
                 self.log_test(
                     "Send Friend Request", 
                     True, 
