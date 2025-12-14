@@ -6155,10 +6155,16 @@ async def get_user_analytics(userId: str):
     posts = await db.posts.find({"authorId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     reels = await db.reels.find({"authorId": userId}, {"_id": 0}).limit(1000).to_list(1000)
     
-    # Calculate engagement
-    total_likes = sum(len(p.get("likes", [])) for p in posts) + sum(len(r.get("likes", [])) for r in reels)
-    total_comments = sum(len(p.get("comments", [])) for p in posts) + sum(len(r.get("comments", [])) for r in reels)
-    total_shares = sum(p.get("shares", 0) for p in posts) + sum(r.get("shares", 0) for r in reels)
+    # Calculate engagement - correctly read from stats for reels
+    total_post_likes = sum(len(p.get("likes", [])) for p in posts)
+    total_reel_likes = sum(r.get("stats", {}).get("likes", 0) for r in reels)
+    total_likes = total_post_likes + total_reel_likes
+    
+    total_post_comments = sum(len(p.get("comments", [])) for p in posts)
+    total_reel_comments = sum(r.get("stats", {}).get("comments", 0) for r in reels)
+    total_comments = total_post_comments + total_reel_comments
+    
+    total_shares = sum(p.get("shares", 0) for p in posts) + sum(r.get("stats", {}).get("shares", 0) for r in reels)
     
     # Get follower count
     followers_count = len(user.get("followers", []))
@@ -6169,15 +6175,24 @@ async def get_user_analytics(userId: str):
     now = datetime.now(timezone.utc)
     week_ago = now - timedelta(days=7)
     
-    recent_posts = [p for p in posts if datetime.fromisoformat(p.get("createdAt", now.isoformat())) > week_ago]
-    recent_reels = [r for r in reels if datetime.fromisoformat(r.get("createdAt", now.isoformat())) > week_ago]
+    def parse_date(date_str):
+        try:
+            return datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+        except:
+            return now
+    
+    recent_posts = [p for p in posts if parse_date(p.get("createdAt", now.isoformat())) > week_ago]
+    recent_reels = [r for r in reels if parse_date(r.get("createdAt", now.isoformat())) > week_ago]
     
     weekly_engagement = {
         "posts": len(recent_posts),
         "reels": len(recent_reels),
-        "likes": sum(len(p.get("likes", [])) for p in recent_posts) + sum(len(r.get("likes", [])) for r in recent_reels),
-        "comments": sum(len(p.get("comments", [])) for p in recent_posts) + sum(len(r.get("comments", [])) for r in recent_reels)
+        "likes": sum(len(p.get("likes", [])) for p in recent_posts) + sum(r.get("stats", {}).get("likes", 0) for r in recent_reels),
+        "comments": sum(len(p.get("comments", [])) for p in recent_posts) + sum(r.get("stats", {}).get("comments", 0) for r in recent_reels)
     }
+    
+    total_content = len(posts) + len(reels)
+    engagement_rate = round((total_likes + total_comments) / max(total_content, 1), 2) if total_content > 0 else 0
     
     return {
         "userId": userId,
@@ -6189,7 +6204,7 @@ async def get_user_analytics(userId: str):
         "followersCount": followers_count,
         "followingCount": following_count,
         "weeklyEngagement": weekly_engagement,
-        "engagementRate": round((total_likes + total_comments) / max(len(posts) + len(reels), 1), 2),
+        "engagementRate": engagement_rate,
         "tier": user.get("tier", "Bronze")
     }
 
