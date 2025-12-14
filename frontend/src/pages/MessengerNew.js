@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Search, Send, Image, Smile, MoreVertical,
   ArrowLeft, Check, CheckCheck, Circle, Mic, X, Sparkles,
-  Play, Pause, Heart, ThumbsUp, Laugh, AlertCircle, Trash2
+  Play, Pause, Heart, ThumbsUp, Laugh, AlertCircle, Trash2,
+  Film, ExternalLink
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
