@@ -61,25 +61,49 @@ const InstagramProfile = () => {
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [followModalType, setFollowModalType] = useState('followers');
 
-  useEffect(() => {
-    if (username) {
-      fetchUserByUsername(username);
-    } else {
-      if (currentUser) {
-        setProfileUser(currentUser);
-        setIsOwnProfile(true);
-        fetchUserContent(currentUser.id, currentUser);
-        setLoading(false);
-      } else {
-        // If no currentUser yet, set loading to false after a delay
-        const timer = setTimeout(() => {
-          if (!currentUser && !username) {
-            setLoading(false);
-          }
-        }, 2000);
-        return () => clearTimeout(timer);
-      }
+  // Fetch fresh user data from server
+  const fetchFreshUserData = async (userId) => {
+    try {
+      const response = await axios.get(`${API}/users/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching fresh user data:', error);
+      return null;
     }
+  };
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (username) {
+        fetchUserByUsername(username);
+      } else {
+        if (currentUser) {
+          // Always fetch fresh data from server for own profile
+          const freshUserData = await fetchFreshUserData(currentUser.id);
+          if (freshUserData) {
+            setProfileUser(freshUserData);
+            setIsOwnProfile(true);
+            fetchUserContent(currentUser.id, freshUserData);
+          } else {
+            // Fallback to currentUser if fetch fails
+            setProfileUser(currentUser);
+            setIsOwnProfile(true);
+            fetchUserContent(currentUser.id, currentUser);
+          }
+          setLoading(false);
+        } else {
+          // If no currentUser yet, set loading to false after a delay
+          const timer = setTimeout(() => {
+            if (!currentUser && !username) {
+              setLoading(false);
+            }
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+      }
+    };
+    
+    loadProfile();
   }, [username, currentUser]);
 
   useEffect(() => {
