@@ -3,7 +3,7 @@
 Comprehensive Backend API Testing for Production Launch
 
 **Test Environment:**
-- Backend URL: https://loopync-social-2.preview.emergentagent.com/api
+- Backend URL: https://loopync-social-3.preview.emergentagent.com/api
 - Fresh database (0 users, 0 posts)
 
 **Test Scenarios:**
@@ -29,7 +29,7 @@ import uuid
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://loopync-social-2.preview.emergentagent.com/api"
+BASE_URL = "https://loopync-social-3.preview.emergentagent.com/api"
 TEST_EMAIL_1 = f"testuser1_{int(time.time())}@loopync.com"
 TEST_EMAIL_2 = f"testuser2_{int(time.time())}@loopync.com"
 TEST_PASSWORD = "testpassword123"
