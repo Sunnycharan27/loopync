@@ -84,7 +84,7 @@ const Auth = () => {
         toast.success("Welcome back!");
         navigate("/");
       } else {
-        const res = await axios.post(`${API}/auth/signup`, { handle, name, email, password });
+        const res = await axios.post(`${API}/auth/signup`, { handle, name, email, phone, password });
         login(res.data.token, res.data.user);
         toast.success("Account created successfully!");
         navigate("/");
