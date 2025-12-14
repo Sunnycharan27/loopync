@@ -180,7 +180,7 @@ class FollowSystemTester:
                 valid_users = True
                 
                 for user in users:
-                    if not all(field in user for field in required_fields):
+                    if not all(field in user for field in required_user_fields):
                         self.log(f"❌ User missing required fields: {user}", "ERROR")
                         valid_users = False
                 
