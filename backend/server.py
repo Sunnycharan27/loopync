@@ -1193,7 +1193,8 @@ class SignupRequest(BaseModel):
     handle: Optional[str] = None
 
 @api_router.post("/auth/signup", response_model=dict)
-async def signup(req: SignupRequest):
+@limiter.limit("5/minute")  # Rate limit: 5 signups per minute per IP
+async def signup(request: Request, req: SignupRequest):
     """
     Create a new user account with email and password.
     Returns a JWT token on successful signup.
