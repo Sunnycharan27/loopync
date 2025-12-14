@@ -94,28 +94,61 @@ const Notifications = () => {
   const handleNotificationClick = async (notif) => {
     // Mark as read
     if (!notif.read) {
-      await axios.post(`${API}/notifications/${notif.id}/read`);
+      try {
+        await axios.post(`${API}/notifications/${notif.id}/read`);
+        setNotifications(prev => 
+          prev.map(n => n.id === notif.id ? { ...n, read: true } : n)
+        );
+      } catch (error) {
+        console.error('Failed to mark notification as read');
+      }
     }
 
-    // Deep link routing
-    const { type, payload } = notif;
+    // Deep link routing based on notification type
+    const { type, payload, fromUserId, contentId } = notif;
     switch (type) {
+      case 'new_follower':
+      case 'follow':
+        // Navigate to the follower's profile
+        if (fromUserId || notif.fromUser?.id) {
+          navigate(`/user/${fromUserId || notif.fromUser?.id}`);
+        }
+        break;
       case 'post_like':
+      case 'like':
       case 'post_comment':
-        navigate('/');
+      case 'comment':
+      case 'share':
+        // Navigate to the post
+        if (contentId || payload?.postId) {
+          navigate(`/post/${contentId || payload?.postId}`);
+        } else {
+          navigate('/');
+        }
+        break;
+      case 'reel_like':
+        if (payload?.reelId) {
+          navigate(`/reels?id=${payload.reelId}`);
+        }
         break;
       case 'tribe_join':
-        navigate(`/tribes/${payload.tribeId}`);
+        if (payload?.tribeId) {
+          navigate(`/tribes/${payload.tribeId}`);
+        }
+        break;
+      case 'dm':
+      case 'message':
+        navigate('/messenger');
         break;
       case 'order_placed':
       case 'order_ready':
-        navigate('/discover');
-        break;
       case 'ticket_bought':
         navigate('/discover');
         break;
-      case 'dm':
-        navigate('/messenger');
+      case 'mention':
+        if (payload?.postId) {
+          navigate(`/post/${payload.postId}`);
+        }
         break;
       default:
         break;
