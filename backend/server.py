@@ -8407,13 +8407,15 @@ async def submit_verification_request(
 @api_router.post("/verification/upload-document")
 async def upload_verification_document(
     file: UploadFile = File(...),
-    document_type: str = "aadhaar",  # aadhaar, selfie, business_registration
+    document_type: str = Form("aadhaar"),  # aadhaar, selfie, business_registration
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """Upload verification documents"""
     user_id = verify_token(credentials.credentials)
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+    logger.info(f"Document upload - type: {document_type}, user: {user_id}")
     
     try:
         # Save file
