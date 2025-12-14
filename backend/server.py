@@ -41,9 +41,19 @@ load_dotenv(ROOT_DIR / '.env')
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# MongoDB connection
+# MongoDB connection with connection pooling for scalability
 mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
+client = AsyncIOMotorClient(
+    mongo_url,
+    maxPoolSize=100,          # Max connections in pool
+    minPoolSize=10,           # Min connections to maintain
+    maxIdleTimeMS=30000,      # Close idle connections after 30s
+    waitQueueTimeoutMS=5000,  # Timeout waiting for connection
+    serverSelectionTimeoutMS=5000,  # Timeout for server selection
+    connectTimeoutMS=10000,   # Connection timeout
+    retryWrites=True,         # Retry failed writes
+    retryReads=True           # Retry failed reads
+)
 db = client[os.environ['DB_NAME']]
 
 # Initialize services
