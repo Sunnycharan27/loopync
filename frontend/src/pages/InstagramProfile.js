@@ -568,6 +568,51 @@ const InstagramProfile = () => {
           </div>
         )}
 
+        {/* Vibe Capsule Highlights */}
+        {(capsules.length > 0 || isOwnProfile) && (
+          <div className="mb-6">
+            <div className="flex items-center gap-4 overflow-x-auto pb-2 scrollbar-hide">
+              {/* Add New Capsule Button (only for own profile) */}
+              {isOwnProfile && (
+                <button
+                  onClick={() => navigate('/create-capsule')}
+                  className="flex-shrink-0 flex flex-col items-center"
+                >
+                  <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-600 flex items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
+                    <Plus size={24} className="text-gray-400" />
+                  </div>
+                  <span className="text-xs text-gray-400 mt-1">New</span>
+                </button>
+              )}
+              
+              {/* Capsule Highlights */}
+              {capsules.map((capsule, index) => (
+                <button
+                  key={capsule.id}
+                  onClick={() => {
+                    setViewingCapsule(capsule);
+                    setCapsuleIndex(index);
+                  }}
+                  className="flex-shrink-0 flex flex-col items-center group"
+                >
+                  <div className="w-16 h-16 rounded-full p-[2px] bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500">
+                    <div className="w-full h-full rounded-full p-[2px] bg-black">
+                      <img
+                        src={capsule.mediaUrl || capsule.thumbnail || `https://api.dicebear.com/7.x/shapes/svg?seed=${capsule.id}`}
+                        alt=""
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-300 mt-1 max-w-16 truncate">
+                    {capsule.caption?.slice(0, 10) || 'Capsule'}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Tabs */}
         <div className="border-t border-gray-800 flex items-center justify-around mb-6">
           <button
