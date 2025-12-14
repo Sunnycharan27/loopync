@@ -258,6 +258,7 @@ class FriendFollowSystemTester:
                 data = friend_request_response.json()
                 request_id = data.get("id", "")
                 self.friend_request_id = request_id
+                print(f"DEBUG: Friend request response: {data}")
                 self.log_test(
                     "Send Friend Request", 
                     True, 
