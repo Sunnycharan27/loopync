@@ -1071,7 +1071,7 @@ backend:
   - task: "Discover/People Section - Follow/Unfollow & Friend Request System"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/Discover.js"
+    file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
