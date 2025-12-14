@@ -4,6 +4,8 @@ import { API, AuthContext } from "../App";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, XCircle, Loader } from "lucide-react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
