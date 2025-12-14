@@ -2,12 +2,168 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../App';
-import { CheckCircle, X, Eye, FileText, User, Mail, Phone, Globe, AlertCircle, Clock, Shield } from 'lucide-react';
+import { CheckCircle, X, Eye, FileText, User, Mail, Phone, Globe, AlertCircle, Clock, Shield, ZoomIn, ZoomOut, Maximize2, Image, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import TopHeader from '../components/TopHeader';
 import BottomNav from '../components/BottomNav';
 
 const ADMIN_EMAIL = 'loopyncpvt@gmail.com';
+
+// Image Preview Modal Component
+const ImagePreviewModal = ({ images, initialIndex, onClose }) => {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex || 0);
+  const [zoom, setZoom] = useState(1);
+  
+  const currentImage = images[currentIndex];
+  
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+    setZoom(1);
+  };
+  
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+    setZoom(1);
+  };
+  
+  const handleZoomIn = () => setZoom((prev) => Math.min(prev + 0.5, 3));
+  const handleZoomOut = () => setZoom((prev) => Math.max(prev - 0.5, 0.5));
+  
+  return (
+    <div className="fixed inset-0 bg-black/95 z-[60] flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 bg-black/50">
+        <div className="flex items-center gap-4">
+          <span className="text-white font-medium">{currentImage?.label}</span>
+          <span className="text-gray-400 text-sm">{currentIndex + 1} / {images.length}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleZoomOut}
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            disabled={zoom <= 0.5}
+          >
+            <ZoomOut size={20} className="text-white" />
+          </button>
+          <span className="text-white text-sm w-16 text-center">{Math.round(zoom * 100)}%</span>
+          <button
+            onClick={handleZoomIn}
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            disabled={zoom >= 3}
+          >
+            <ZoomIn size={20} className="text-white" />
+          </button>
+          <a
+            href={currentImage?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors ml-2"
+          >
+            <Maximize2 size={20} className="text-white" />
+          </a>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors ml-2"
+          >
+            <X size={24} className="text-white" />
+          </button>
+        </div>
+      </div>
+      
+      {/* Image Container */}
+      <div className="flex-1 flex items-center justify-center overflow-hidden relative">
+        {images.length > 1 && (
+          <button
+            onClick={handlePrev}
+            className="absolute left-4 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-colors z-10"
+          >
+            <ChevronLeft size={28} className="text-white" />
+          </button>
+        )}
+        
+        <div className="max-w-full max-h-full overflow-auto p-4">
+          <img
+            src={currentImage?.url?.startsWith('/uploads') ? `${API.replace('/api', '')}${currentImage.url}` : currentImage?.url}
+            alt={currentImage?.label}
+            style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }}
+            className="max-w-full max-h-[80vh] object-contain transition-transform duration-200 rounded-lg"
+          />
+        </div>
+        
+        {images.length > 1 && (
+          <button
+            onClick={handleNext}
+            className="absolute right-4 p-3 bg-black/50 hover:bg-black/70 rounded-full transition-colors z-10"
+          >
+            <ChevronRight size={28} className="text-white" />
+          </button>
+        )}
+      </div>
+      
+      {/* Thumbnail Strip */}
+      {images.length > 1 && (
+        <div className="flex items-center justify-center gap-3 p-4 bg-black/50">
+          {images.map((img, index) => (
+            <button
+              key={index}
+              onClick={() => { setCurrentIndex(index); setZoom(1); }}
+              className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                index === currentIndex ? 'border-cyan-400 scale-110' : 'border-transparent opacity-60 hover:opacity-100'
+              }`}
+            >
+              <img
+                src={img.url?.startsWith('/uploads') ? `${API.replace('/api', '')}${img.url}` : img.url}
+                alt={img.label}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Document Thumbnail Component
+const DocumentThumbnail = ({ url, label, icon: Icon, colorClass, onClick }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const fullUrl = url?.startsWith('/uploads') ? `${API.replace('/api', '')}${url}` : url;
+  
+  return (
+    <button
+      onClick={onClick}
+      className={`relative group rounded-xl overflow-hidden border-2 ${colorClass} transition-all hover:scale-105 hover:shadow-lg`}
+    >
+      {!error ? (
+        <>
+          <img
+            src={fullUrl}
+            alt={label}
+            className={`w-24 h-24 object-cover transition-opacity ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setLoaded(true)}
+            onError={() => setError(true)}
+          />
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+              <div className="animate-spin w-6 h-6 border-2 border-cyan-400 border-t-transparent rounded-full" />
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="w-24 h-24 flex items-center justify-center bg-gray-800">
+          <Icon size={24} className="text-gray-500" />
+        </div>
+      )}
+      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <Eye size={24} className="text-white" />
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-1.5">
+        <span className="text-[10px] text-white font-medium">{label}</span>
+      </div>
+    </button>
+  );
+};
 
 const AdminVerificationDashboard = () => {
   const navigate = useNavigate();
