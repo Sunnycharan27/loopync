@@ -587,7 +587,44 @@ const InstagramProfile = () => {
           <div className="space-y-4">
             {posts.length > 0 ? (
               posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <PostCard 
+                  key={post.id} 
+                  post={post}
+                  currentUser={currentUser}
+                  onLike={async (postId) => {
+                    if (!currentUser) return;
+                    try {
+                      const token = localStorage.getItem('loopync_token');
+                      await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`, {}, {
+                        headers: { Authorization: `Bearer ${token}` }
+                      });
+                      const res = await axios.get(`${API}/posts/${postId}`);
+                      setPosts(prev => prev.map(p => p.id === postId ? res.data : p));
+                    } catch (error) {
+                      console.error("Like error:", error);
+                    }
+                  }}
+                  onDelete={async (postId) => {
+                    if (!isOwnProfile && currentUser?.role !== 'super_admin') return;
+                    if (!window.confirm("Are you sure you want to delete this post?")) return;
+                    try {
+                      const token = localStorage.getItem('loopync_token');
+                      await axios.delete(`${API}/posts/${postId}`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                      });
+                      setPosts(posts.filter(p => p.id !== postId));
+                      setStats(prev => ({ ...prev, posts: prev.posts - 1 }));
+                      toast.success("Post deleted!");
+                    } catch (error) {
+                      console.error("Delete error:", error);
+                      if (error.response?.status === 403) {
+                        toast.error("You can only delete your own posts");
+                      } else {
+                        toast.error(error.response?.data?.detail || "Failed to delete post");
+                      }
+                    }
+                  }}
+                />
               ))
             ) : (
               <div className="text-center py-12">
