@@ -2023,20 +2023,27 @@ async def toggle_like_post(postId: str, userId: str):
         
         # Create notification for post author
         if post["authorId"] != userId:
-            liker = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1})
+            liker = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
             notification = Notification(
                 userId=post["authorId"],
-                type="like",
-                content=f"{liker.get('name', 'Someone')} liked your post",
-                link=f"/posts/{postId}"
+                type="post_like",
+                fromUserId=userId,
+                fromUserName=liker.get('name', 'Someone') if liker else 'Someone',
+                fromUserAvatar=liker.get('avatar', '') if liker else '',
+                contentType="post",
+                contentId=postId,
+                message=f"{liker.get('name', 'Someone') if liker else 'Someone'} liked your post",
+                link=f"/post/{postId}"
             )
             await db.notifications.insert_one(notification.model_dump())
             
             # Emit real-time notification
-            await sio.emit('post_liked', {
-                'user': liker,
-                'postId': postId,
-                'type': 'post'
+            await sio.emit('notification', {
+                'type': 'post_like',
+                'userId': post['authorId'],
+                'fromUser': liker,
+                'contentId': postId,
+                'createdAt': datetime.now(timezone.utc).isoformat()
             }, room=f"user:{post['authorId']}")
     
     await db.posts.update_one({"id": postId}, {"$set": {"likedBy": liked_by, "stats": stats}})
