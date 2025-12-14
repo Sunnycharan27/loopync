@@ -526,31 +526,50 @@ class FriendFollowSystemTester:
         except Exception as e:
             self.log_test("Get Friends List", False, error=str(e))
         
-        # Test 2: Remove friend (if they are friends)
+        # Test 2: Remove friend (test with actual friends)
         try:
-            remove_response = self.session.delete(
-                f"{BACKEND_URL}/friends/{user1_id}/{user2_id}",
+            # First check if they are friends
+            friends_response = self.session.get(
+                f"{BACKEND_URL}/users/{user1_id}/friends",
                 headers=self.get_auth_headers(user1_name),
                 timeout=10
             )
             
-            if remove_response.status_code == 200:
-                self.log_test(
-                    "Remove Friend", 
-                    True, 
-                    "Friend removed successfully"
-                )
-            elif remove_response.status_code == 404:
-                self.log_test(
-                    "Remove Friend", 
-                    True, 
-                    "No friendship to remove (expected if not friends)"
-                )
+            if friends_response.status_code == 200:
+                friends = friends_response.json()
+                is_friend = any(friend.get("id") == user2_id for friend in friends)
+                
+                if is_friend:
+                    # Try to remove the friendship
+                    remove_response = self.session.delete(
+                        f"{BACKEND_URL}/friends/{user1_id}/{user2_id}",
+                        headers=self.get_auth_headers(user1_name),
+                        timeout=10
+                    )
+                    
+                    if remove_response.status_code == 200:
+                        self.log_test(
+                            "Remove Friend", 
+                            True, 
+                            "Friend removed successfully"
+                        )
+                    else:
+                        self.log_test(
+                            "Remove Friend", 
+                            False, 
+                            error=f"Status: {remove_response.status_code}, Response: {remove_response.text}"
+                        )
+                else:
+                    self.log_test(
+                        "Remove Friend", 
+                        True, 
+                        "No friendship to remove (users are not friends)"
+                    )
             else:
                 self.log_test(
                     "Remove Friend", 
                     False, 
-                    error=f"Status: {remove_response.status_code}"
+                    error="Could not fetch friends list for removal test"
                 )
         except Exception as e:
             self.log_test("Remove Friend", False, error=str(e))
