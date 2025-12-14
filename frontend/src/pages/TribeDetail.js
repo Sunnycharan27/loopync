@@ -348,6 +348,15 @@ const TribeDetail = () => {
                     currentUser={currentUser}
                     onLike={handleLike}
                     onDelete={handleDelete}
+                    onRepost={async (postId) => {
+                      if (!currentUser) return;
+                      try {
+                        await axios.post(`${API}/posts/${postId}/repost?userId=${currentUser.id}`);
+                        toast.success("Reposted!");
+                      } catch (error) {
+                        toast.error("Failed to repost");
+                      }
+                    }}
                   />
                 ))
               ) : (
