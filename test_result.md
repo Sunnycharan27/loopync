@@ -131,6 +131,54 @@ backend:
         agent: "testing"
         comment: "✅ Navigation links working correctly. Follow notifications link to '/user/{userId}', like/comment notifications link to '/post/{postId}'. All notifications have proper contentId and link fields for frontend navigation."
 
+  - task: "Repost Feature"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Repost Feature working perfectly. POST /api/posts/{postId}/repost?userId={userId} successfully toggles repost/unrepost. Returns proper response with action: 'reposted' and updated reposts count. Verified that post.repostedBy array correctly includes the user ID after reposting."
+
+  - task: "Delete Post Feature"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Delete Post Feature working correctly. DELETE /api/posts/{postId} with Authorization header successfully deletes posts. Returns proper response with success: true. Verified that posts are actually removed from the database after deletion."
+
+  - task: "Share to Messenger Feature"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Share to Messenger Feature working correctly. POST /api/messages endpoint successfully creates messages with shared post content. Message structure includes text with contentType: post, contentId: {postId}, and isSharedPost: true information. Proper message creation and delivery verified."
+
+  - task: "VibeZone (Reels) API"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VibeZone (Reels) API working correctly. GET /api/reels returns valid reel structure with videoUrl, author, and stats fields. Found 2 reels in system with proper author information (id, name) and stats structure. API ready for frontend integration."
+
 frontend:
   - task: "Notifications Page UI"
     implemented: true
