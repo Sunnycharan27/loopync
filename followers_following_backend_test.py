@@ -338,7 +338,7 @@ class FollowSystemTester:
             # Check Admin's notifications
             notifications_response = self.make_authenticated_request(
                 'GET',
-                '/notifications',
+                f'/notifications?userId={ADMIN_ID}',
                 self.admin_token
             )
             
