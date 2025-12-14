@@ -445,23 +445,43 @@ const InstagramProfile = () => {
                 <>
                   <button 
                     onClick={handleFollow}
-                    className={`flex-1 py-2 px-4 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 ${
+                    onMouseEnter={() => isFollowing && setShowUnfollowHover(true)}
+                    onMouseLeave={() => setShowUnfollowHover(false)}
+                    className={`flex-1 py-2.5 px-6 font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
                       isFollowing 
-                        ? 'bg-gray-800/80 hover:bg-gray-700 text-white' 
+                        ? showUnfollowHover 
+                          ? 'bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/50' 
+                          : 'bg-gray-800/80 hover:bg-gray-700 text-white border border-gray-700'
                         : 'bg-cyan-400 hover:bg-cyan-500 text-black'
                     }`}
                   >
-                    {isFollowing ? <UserCheck size={16} /> : <UserPlus size={16} />}
-                    {isFollowing ? 'Following' : 'Follow'}
+                    {isFollowing ? (
+                      showUnfollowHover ? (
+                        <>
+                          <UserX size={18} />
+                          Unfollow
+                        </>
+                      ) : (
+                        <>
+                          <UserCheck size={18} />
+                          Following
+                        </>
+                      )
+                    ) : (
+                      <>
+                        <UserPlus size={18} />
+                        Follow
+                      </>
+                    )}
                   </button>
                   <button 
                     onClick={() => navigate('/messenger')}
-                    className="py-2 px-4 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="py-2.5 px-6 bg-gray-800/80 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 border border-gray-700"
                   >
-                    <MessageCircle size={16} />
+                    <MessageCircle size={18} />
                     Message
                   </button>
-                  <button className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors">
+                  <button className="p-2.5 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-700">
                     <MoreHorizontal size={20} />
                   </button>
                 </>
