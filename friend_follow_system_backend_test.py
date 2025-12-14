@@ -462,8 +462,7 @@ class FriendFollowSystemTester:
         # Test 1: Check friendship status
         try:
             status_response = self.session.get(
-                f"{BACKEND_URL}/users/{user2_id}/friend-status",
-                params={"currentUserId": user1_id},
+                f"{BACKEND_URL}/users/{user1_id}/friend-status/{user2_id}",
                 headers=self.get_auth_headers(user1_name),
                 timeout=10
             )
