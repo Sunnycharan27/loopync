@@ -153,6 +153,23 @@ const InstagramProfile = () => {
       const userReels = reelsRes.data.filter(reel => reel.authorId === userId);
       setReels(userReels);
       
+      // Fetch user's Vibe Capsules (Stories)
+      try {
+        const capsulesRes = await axios.get(`${API}/capsules`);
+        const allCapsules = capsulesRes.data?.capsulesByUser || capsulesRes.data || [];
+        // Filter capsules by user - handle both array and object formats
+        let userCapsules = [];
+        if (Array.isArray(allCapsules)) {
+          userCapsules = allCapsules.filter(c => c.authorId === userId);
+        } else if (allCapsules[userId]) {
+          userCapsules = allCapsules[userId];
+        }
+        setCapsules(userCapsules);
+      } catch (capsuleError) {
+        console.log('No capsules found:', capsuleError);
+        setCapsules([]);
+      }
+      
       // Use passed userData or current profileUser
       const user = userData || profileUser;
       const followers = Array.isArray(user?.followers) ? user.followers.length : 0;
