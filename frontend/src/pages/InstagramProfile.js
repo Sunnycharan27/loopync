@@ -958,6 +958,20 @@ const InstagramProfile = () => {
         />
       )}
 
+      {/* Vibe Capsule Upload Modal */}
+      {showCapsuleUpload && (
+        <VibeCapsuleUpload
+          currentUser={currentUser}
+          onUploadComplete={() => {
+            setShowCapsuleUpload(false);
+            // Refresh capsules
+            fetchUserContent(profileUser.id, profileUser);
+            toast.success('Vibe Capsule uploaded!');
+          }}
+          onClose={() => setShowCapsuleUpload(false)}
+        />
+      )}
+
       <BottomNav active="profile" />
     </div>
   );
