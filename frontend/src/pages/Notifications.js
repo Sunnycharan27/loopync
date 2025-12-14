@@ -98,10 +98,8 @@ const Notifications = () => {
 
   const getNotificationIcon = (type) => {
     switch (type) {
-      case 'friend_request':
+      case 'new_follower':
         return <UserPlus size={18} className="text-blue-400" />;
-      case 'friend_accepted':
-        return <UserCheck size={18} className="text-green-400" />;
       case 'post_like':
         return <Heart size={18} className="text-pink-400" />;
       case 'post_comment':
@@ -122,10 +120,8 @@ const Notifications = () => {
   const getNotificationText = (notif) => {
     const { type, payload } = notif;
     switch (type) {
-      case 'friend_request':
-        return 'sent you a friend request';
-      case 'friend_accepted':
-        return 'accepted your friend request';
+      case 'new_follower':
+        return 'started following you';
       case 'post_like':
         return 'liked your post';
       case 'post_comment':
