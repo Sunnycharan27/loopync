@@ -60,7 +60,17 @@ class FriendFollowSystemTester:
         """Create or authenticate test users"""
         print("🔧 Setting up test users...")
         
-        for account_name, credentials in TEST_ACCOUNTS.items():
+        # Create unique test users for this session to avoid conflicts
+        import time
+        timestamp = str(int(time.time()))
+        
+        fresh_accounts = {
+            "test_user": {"email": f"testuser_{timestamp}@example.com", "password": "test123"},
+            "friend_user": {"email": f"frienduser_{timestamp}@example.com", "password": "friend123"},
+            "admin": {"email": "loopyncpvt@gmail.com", "password": "ramcharan@123"}
+        }
+        
+        for account_name, credentials in fresh_accounts.items():
             try:
                 # Try to login first
                 login_response = self.session.post(
@@ -80,7 +90,7 @@ class FriendFollowSystemTester:
                         "email": credentials["email"],
                         "password": credentials["password"],
                         "name": account_name.replace("_", " ").title(),
-                        "handle": account_name
+                        "handle": f"{account_name}_{timestamp}"
                     }
                     
                     signup_response = self.session.post(
