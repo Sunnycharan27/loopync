@@ -362,6 +362,8 @@ test_plan:
     - "Analytics APIs - Creator Analytics"
     - "Analytics APIs - Admin Analytics"
     - "VibeZone View Tracking"
+    - "Analytics Dashboard Frontend"
+    - "VibeZone View Count Display"
 
 agent_communication:
   - agent: "testing"
