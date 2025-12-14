@@ -37,6 +37,7 @@ const InstagramProfile = () => {
   // Capsule viewer state
   const [viewingCapsule, setViewingCapsule] = useState(null);
   const [capsuleIndex, setCapsuleIndex] = useState(0);
+  const [showCapsuleUpload, setShowCapsuleUpload] = useState(false);
   
   // Stats
   const [stats, setStats] = useState({
