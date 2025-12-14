@@ -160,22 +160,6 @@ const InstagramProfile = () => {
     }
   };
 
-  const handleAddFriend = async () => {
-    try {
-      const token = localStorage.getItem('loopync_token');
-      await axios.post(
-        `${API}/users/${currentUser.id}/friend-request`,
-        { targetUserId: profileUser.id },
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
-      
-      toast.success('Friend request sent!');
-    } catch (error) {
-      console.error('Error sending friend request:', error);
-      toast.error('Failed to send friend request');
-    }
-  };
-
   const handleAvatarClick = () => {
     if (isOwnProfile) {
       fileInputRef.current.click();
