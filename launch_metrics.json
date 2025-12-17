@@ -1,0 +1,57 @@
+{
+  "generated_at": "2025-12-17T05:20:01.228419+00:00",
+  "metrics": {
+    "Total Users": 21,
+    "Real Users": 7,
+    "Test Accounts": 14,
+    "Verified Users": 1,
+    "Posts": 9,
+    "Reels (VibeZone)": 4,
+    "Vibe Capsules": 1,
+    "Total Content": 14,
+    "Content Views": 195,
+    "Total Likes": 1,
+    "Total Comments": 1,
+    "Tribes (Communities)": 3,
+    "VibeRooms": 1,
+    "Messages": 11,
+    "Notifications": 12
+  },
+  "real_users": [
+    {
+      "name": "Loopync",
+      "email": "loopyncpvt@gmail.com",
+      "handle": "loopync"
+    },
+    {
+      "name": "Test User",
+      "email": "test@example.com",
+      "handle": "testuser"
+    },
+    {
+      "name": "Friend User",
+      "email": "friend@example.com",
+      "handle": "frienduser"
+    },
+    {
+      "name": "Bitla Ramcharan",
+      "email": "bitlaramcharan5@gmail.com",
+      "handle": "sunnycharan"
+    },
+    {
+      "name": "Test Verification User",
+      "email": "testverify@example.com",
+      "handle": "testverifyuser"
+    },
+    {
+      "name": "John Creator",
+      "email": "verify2@example.com",
+      "handle": "johncreator"
+    },
+    {
+      "name": "Test International",
+      "email": "testintl123@example.com",
+      "handle": "testintl123"
+    }
+  ]
+}
