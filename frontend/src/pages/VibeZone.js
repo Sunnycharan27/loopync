@@ -2,16 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
-import CreateFAB from "../components/CreateFAB";
 import ReelViewer from "../components/ReelViewer";
 import ReelComposerModal from "../components/ReelComposerModal";
 import { toast } from "sonner";
+import { Plus, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const VibeZone = () => {
   const { currentUser } = useContext(AuthContext);
   const [reels, setReels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchReels();
