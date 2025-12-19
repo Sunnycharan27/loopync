@@ -104,9 +104,6 @@ const VibeZone = () => {
       ) : (
         <ReelViewer reels={reels} currentUser={currentUser} onLike={handleLike} />
       )}
-
-      {/* Create FAB - Only for authenticated users */}
-      {currentUser && <CreateFAB onClick={() => setShowComposer(true)} type="reel" />}
       
       {/* Login prompt for unauthenticated users */}
       {!currentUser && (
