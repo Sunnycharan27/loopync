@@ -156,7 +156,7 @@ function App() {
                 ) : isAuthenticated ? (
                   needsOnboarding ? <Navigate to="/onboarding" /> : <Home />
                 ) : (
-                  <Home />
+                  <Navigate to="/auth" />
                 )
               }
             />
