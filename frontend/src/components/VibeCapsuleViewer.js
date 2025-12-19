@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
-import { X, Heart, MessageCircle, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, Heart, MessageCircle, Eye, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 import { API } from "../App";
@@ -15,17 +15,38 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
   const currentStory = stories[currentStoryIndex];
   const currentCapsule = currentStory?.capsules[currentCapsuleIndex];
 
+  const goToNext = useCallback(() => {
+    if (currentCapsuleIndex < currentStory.capsules.length - 1) {
+      setCurrentCapsuleIndex(currentCapsuleIndex + 1);
+      setProgress(0);
+    } else if (currentStoryIndex < stories.length - 1) {
+      setCurrentStoryIndex(currentStoryIndex + 1);
+      setCurrentCapsuleIndex(0);
+      setProgress(0);
+    } else {
+      onClose();
+    }
+  }, [currentCapsuleIndex, currentStory?.capsules?.length, currentStoryIndex, stories.length, onClose]);
+
+  const goToPrevious = useCallback(() => {
+    if (currentCapsuleIndex > 0) {
+      setCurrentCapsuleIndex(currentCapsuleIndex - 1);
+      setProgress(0);
+    } else if (currentStoryIndex > 0) {
+      setCurrentStoryIndex(currentStoryIndex - 1);
+      const prevStory = stories[currentStoryIndex - 1];
+      setCurrentCapsuleIndex(prevStory.capsules.length - 1);
+      setProgress(0);
+    }
+  }, [currentCapsuleIndex, currentStoryIndex, stories]);
+
   useEffect(() => {
     if (!currentCapsule || isPaused) return;
 
-    // Reset media error state when changing capsules
     setMediaError(false);
-
-    // Mark as viewed
     markAsViewed();
 
-    // Progress bar animation
-    const duration = currentCapsule.mediaType === "video" ? currentCapsule.duration * 1000 : 5000;
+    const duration = currentCapsule.mediaType === "video" ? (currentCapsule.duration || 15) * 1000 : 5000;
     const interval = 50;
     let elapsed = 0;
 
@@ -40,9 +61,30 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
     }, interval);
 
     return () => clearInterval(timer);
-  }, [currentStoryIndex, currentCapsuleIndex, isPaused]);
+  }, [currentStoryIndex, currentCapsuleIndex, isPaused, currentCapsule, goToNext]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        goToNext();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToPrevious();
+      } else if (e.key === 'Escape') {
+        onClose();
+      } else if (e.key === 'p') {
+        setIsPaused(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [goToNext, goToPrevious, onClose]);
 
   const markAsViewed = async () => {
+    if (!currentCapsule || !currentUserId) return;
     try {
       await axios.post(
         `${API}/capsules/${currentCapsule.id}/view?userId=${currentUserId}`
@@ -52,32 +94,11 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
     }
   };
 
-  const goToNext = () => {
-    if (currentCapsuleIndex < currentStory.capsules.length - 1) {
-      setCurrentCapsuleIndex(currentCapsuleIndex + 1);
-      setProgress(0);
-    } else if (currentStoryIndex < stories.length - 1) {
-      setCurrentStoryIndex(currentStoryIndex + 1);
-      setCurrentCapsuleIndex(0);
-      setProgress(0);
-    } else {
-      onClose();
-    }
-  };
-
-  const goToPrevious = () => {
-    if (currentCapsuleIndex > 0) {
-      setCurrentCapsuleIndex(currentCapsuleIndex - 1);
-      setProgress(0);
-    } else if (currentStoryIndex > 0) {
-      setCurrentStoryIndex(currentStoryIndex - 1);
-      const prevStory = stories[currentStoryIndex - 1];
-      setCurrentCapsuleIndex(prevStory.capsules.length - 1);
-      setProgress(0);
-    }
-  };
-
   const handleReaction = async (emoji) => {
+    if (!currentUserId) {
+      toast.error("Please login to react");
+      return;
+    }
     try {
       await axios.post(
         `${API}/capsules/${currentCapsule.id}/react?userId=${currentUserId}&reaction=${emoji}`
@@ -89,27 +110,24 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
   };
 
   const getMediaUrl = (url) => {
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
-    if (!backendUrl) {
-      console.error('REACT_APP_BACKEND_URL is not configured');
-      return url;
-    }
-    // If URL starts with /uploads or /api/uploads, prepend backend URL
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    if (!backendUrl) return url;
     if (url?.startsWith('/uploads') || url?.startsWith('/api/uploads')) {
       return `${backendUrl}${url.startsWith('/api') ? url : `/api${url}`}`;
     }
-    // Return as-is for absolute URLs (external images)
     return url;
   };
 
   const handleMediaError = () => {
-    console.error("Failed to load media:", currentCapsule.mediaUrl);
+    console.error("Failed to load media:", currentCapsule?.mediaUrl);
     setMediaError(true);
   };
 
   if (!currentStory || !currentCapsule) return null;
 
-  // Render using portal to ensure it's on top of everything
+  const canGoPrevious = currentCapsuleIndex > 0 || currentStoryIndex > 0;
+  const canGoNext = currentCapsuleIndex < currentStory.capsules.length - 1 || currentStoryIndex < stories.length - 1;
+
   return ReactDOM.createPortal(
     <div className="fixed inset-0 bg-black flex items-center justify-center" style={{ zIndex: 9999 }}>
       {/* Progress Bars */}
@@ -120,7 +138,7 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
             className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden"
           >
             <div
-              className="h-full bg-white transition-all"
+              className="h-full bg-white transition-all duration-100"
               style={{
                 width: idx === currentCapsuleIndex ? `${progress}%` : idx < currentCapsuleIndex ? "100%" : "0%"
               }}
@@ -133,41 +151,81 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
       <div className="absolute top-8 left-4 right-4 flex items-center justify-between" style={{ zIndex: 10001 }}>
         <div className="flex items-center gap-3">
           <img
-            src={currentStory.author.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentStory.author.name}`}
-            alt={currentStory.author.name}
-            className="w-10 h-10 rounded-full border-2 border-white"
+            src={currentStory.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentStory.author?.name || 'user'}`}
+            alt={currentStory.author?.name}
+            className="w-10 h-10 rounded-full border-2 border-white object-cover"
           />
           <div>
-            <p className="text-white font-semibold">{currentStory.author.name}</p>
-            <p className="text-white/80 text-xs">@{currentStory.author.handle}</p>
+            <p className="text-white font-semibold">{currentStory.author?.name || 'User'}</p>
+            <p className="text-white/80 text-xs">@{currentStory.author?.handle || 'user'}</p>
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className="p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-        >
-          <X size={24} className="text-white" />
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Pause/Play button */}
+          <button
+            onClick={() => setIsPaused(!isPaused)}
+            className="p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+          >
+            {isPaused ? (
+              <Play size={20} className="text-white" />
+            ) : (
+              <Pause size={20} className="text-white" />
+            )}
+          </button>
+          <button
+            onClick={onClose}
+            className="p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+          >
+            <X size={24} className="text-white" />
+          </button>
+        </div>
       </div>
 
-      {/* Navigation Areas */}
-      <div className="absolute inset-0 flex" style={{ zIndex: 10000 }}>
+      {/* Side Navigation - Left */}
+      <button
+        onClick={goToPrevious}
+        disabled={!canGoPrevious}
+        className={`absolute left-0 top-0 bottom-0 w-1/4 flex items-center justify-start pl-2 transition-opacity ${
+          canGoPrevious ? 'opacity-100 cursor-pointer' : 'opacity-0 cursor-default'
+        }`}
+        style={{ zIndex: 10000 }}
+      >
+        <div className={`p-3 bg-black/30 rounded-full backdrop-blur-sm hover:bg-black/50 transition-all ${
+          canGoPrevious ? 'opacity-100' : 'opacity-0'
+        }`}>
+          <ChevronLeft size={32} className="text-white" />
+        </div>
+      </button>
+
+      {/* Side Navigation - Right */}
+      <button
+        onClick={goToNext}
+        className="absolute right-0 top-0 bottom-0 w-1/4 flex items-center justify-end pr-2 cursor-pointer"
+        style={{ zIndex: 10000 }}
+      >
+        <div className="p-3 bg-black/30 rounded-full backdrop-blur-sm hover:bg-black/50 transition-all">
+          <ChevronRight size={32} className="text-white" />
+        </div>
+      </button>
+
+      {/* Tap zones for mobile */}
+      <div className="absolute inset-0 flex md:hidden" style={{ zIndex: 9999 }}>
         <button
           onClick={goToPrevious}
-          className="flex-1 cursor-pointer"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          className="flex-1"
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
         />
         <button
           onClick={goToNext}
-          className="flex-1 cursor-pointer"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          className="flex-1"
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
         />
       </div>
 
       {/* Content */}
-      <div className="relative w-full max-w-lg h-full flex items-center justify-center" style={{ zIndex: 10000 }}>
+      <div className="relative w-full max-w-lg h-full flex items-center justify-center px-16" style={{ zIndex: 9998 }}>
         {mediaError ? (
           <div className="flex flex-col items-center justify-center gap-4 text-white">
             <div className="w-24 h-24 rounded-full bg-gray-800 flex items-center justify-center">
@@ -184,39 +242,68 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
           <img
             src={getMediaUrl(currentCapsule.mediaUrl)}
             alt="Story"
-            className="w-full h-full object-contain"
+            className="max-w-full max-h-full object-contain rounded-lg"
             onError={handleMediaError}
-            crossOrigin="anonymous"
           />
         ) : (
           <video
             src={getMediaUrl(currentCapsule.mediaUrl)}
             autoPlay
-            muted
-            className="w-full h-full object-contain"
+            muted={false}
+            playsInline
+            className="max-w-full max-h-full object-contain rounded-lg"
             onError={handleMediaError}
-            crossOrigin="anonymous"
+            onPause={() => setIsPaused(true)}
+            onPlay={() => setIsPaused(false)}
           />
+        )}
+
+        {/* Paused indicator */}
+        {isPaused && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg">
+            <div className="p-4 bg-black/50 rounded-full">
+              <Pause size={48} className="text-white" />
+            </div>
+          </div>
         )}
 
         {/* Caption */}
         {currentCapsule.caption && !mediaError && (
-          <div className="absolute bottom-24 left-4 right-4">
-            <p className="text-white text-lg font-medium bg-black/50 backdrop-blur-sm rounded-xl p-4">
+          <div className="absolute bottom-32 left-0 right-0 px-4">
+            <p className="text-white text-lg font-medium bg-black/50 backdrop-blur-sm rounded-xl p-4 text-center">
               {currentCapsule.caption}
             </p>
           </div>
         )}
       </div>
 
+      {/* Story indicator dots */}
+      {stories.length > 1 && (
+        <div className="absolute bottom-28 left-0 right-0 flex justify-center gap-2" style={{ zIndex: 10001 }}>
+          {stories.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setCurrentStoryIndex(idx);
+                setCurrentCapsuleIndex(0);
+                setProgress(0);
+              }}
+              className={`w-2 h-2 rounded-full transition-all ${
+                idx === currentStoryIndex ? 'bg-white w-4' : 'bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
       {/* Reactions Bar */}
       <div className="absolute bottom-8 left-4 right-4" style={{ zIndex: 10001 }}>
-        <div className="flex items-center justify-center gap-4 bg-black/50 backdrop-blur-sm rounded-full p-3">
-          {["❤️", "🔥", "😂", "😮", "👏"].map((emoji) => (
+        <div className="flex items-center justify-center gap-4 bg-black/50 backdrop-blur-sm rounded-full p-3 max-w-md mx-auto">
+          {["❤️", "🔥", "😂", "😮", "👏", "😍"].map((emoji) => (
             <button
               key={emoji}
               onClick={() => handleReaction(emoji)}
-              className="text-2xl hover:scale-125 transition-transform"
+              className="text-2xl hover:scale-125 transition-transform active:scale-95"
             >
               {emoji}
             </button>
@@ -224,31 +311,17 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
         </div>
 
         {/* View Count */}
-        <div className="flex items-center justify-center gap-2 mt-3 text-white text-sm">
+        <div className="flex items-center justify-center gap-2 mt-3 text-white/80 text-sm">
           <Eye size={16} />
-          <span>{currentCapsule.views?.length || 0} views</span>
+          <span>{currentCapsule.views?.length || currentCapsule.viewCount || 0} views</span>
+          <span className="mx-2">•</span>
+          <span>Tap sides to navigate</span>
         </div>
       </div>
 
-      {/* Navigation Arrows (Desktop) */}
-      <div className="hidden md:block" style={{ zIndex: 10001 }}>
-        {currentCapsuleIndex > 0 || currentStoryIndex > 0 ? (
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-          >
-            <ChevronLeft size={32} className="text-white" />
-          </button>
-        ) : null}
-
-        {currentCapsuleIndex < currentStory.capsules.length - 1 || currentStoryIndex < stories.length - 1 ? (
-          <button
-            onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-          >
-            <ChevronRight size={32} className="text-white" />
-          </button>
-        ) : null}
+      {/* Keyboard shortcuts hint */}
+      <div className="absolute bottom-2 left-0 right-0 text-center text-white/40 text-xs hidden md:block" style={{ zIndex: 10001 }}>
+        ← → Navigate • Space: Next • P: Pause • Esc: Close
       </div>
     </div>,
     document.body
