@@ -213,8 +213,10 @@ function App() {
               element={
                 !authLoaded ? (
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : (
+                ) : isAuthenticated ? (
                   <Discover />
+                ) : (
+                  <Navigate to="/auth" />
                 )
               }
             />
