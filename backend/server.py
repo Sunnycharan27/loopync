@@ -1987,10 +1987,13 @@ async def get_friend_status(userId: str, targetUserId: str):
 @api_router.get("/posts")
 async def get_posts(limit: int = 50):
     posts = await db.posts.find({}, {"_id": 0}).sort("createdAt", -1).to_list(limit)
-    # Enrich with author data
+    # Enrich with author data and compute like count
     for post in posts:
         author = await db.users.find_one({"id": post["authorId"]}, {"_id": 0})
         post["author"] = author if author else None
+        # Ensure likeCount is set
+        post["likeCount"] = len(post.get("likedBy", []))
+        post["commentCount"] = len(post.get("comments", []))
     return posts
 
 @api_router.post("/posts")
