@@ -21,9 +21,13 @@ const Tribes = () => {
   const fetchTribes = async () => {
     try {
       const res = await axios.get(`${API}/tribes`);
-      setTribes(res.data);
+      // Ensure tribes is always an array
+      const tribesData = Array.isArray(res.data) ? res.data : [];
+      setTribes(tribesData);
     } catch (error) {
-      toast.error("Failed to load tribes");
+      console.error("Failed to load tribes:", error);
+      const errorMsg = error?.response?.data?.detail || error?.message || "Failed to load tribes";
+      toast.error(typeof errorMsg === 'string' ? errorMsg : "Failed to load tribes");
     } finally {
       setLoading(false);
     }
@@ -35,6 +39,10 @@ const Tribes = () => {
   };
 
   const handleJoinLeave = async (tribeId, isMember) => {
+    if (!currentUser) {
+      toast.error("Please login to join tribes");
+      return;
+    }
     try {
       const endpoint = isMember ? "leave" : "join";
       const res = await axios.post(`${API}/tribes/${tribeId}/${endpoint}?userId=${currentUser.id}`);
@@ -42,16 +50,18 @@ const Tribes = () => {
       setTribes(tribes.map(t => {
         if (t.id === tribeId) {
           const newMembers = isMember
-            ? t.members.filter(m => m !== currentUser.id)
-            : [...t.members, currentUser.id];
-          return { ...t, members: newMembers, memberCount: res.data.memberCount };
+            ? (t.members || []).filter(m => m !== currentUser.id)
+            : [...(t.members || []), currentUser.id];
+          return { ...t, members: newMembers, memberCount: res.data?.memberCount || newMembers.length };
         }
         return t;
       }));
       
       toast.success(isMember ? "Left tribe" : "Joined tribe!");
     } catch (error) {
-      toast.error("Action failed");
+      console.error("Join/Leave failed:", error);
+      const errorMsg = error?.response?.data?.detail || error?.message || "Action failed";
+      toast.error(typeof errorMsg === 'string' ? errorMsg : "Action failed");
     }
   };
 
