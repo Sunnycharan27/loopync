@@ -60,6 +60,34 @@ const VibeZone = () => {
 
   return (
     <div className="min-h-screen" style={{ background: '#0f021e' }}>
+      {/* Top Header with Upload and Profile */}
+      {currentUser && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/80 to-transparent">
+          <h1 className="text-white font-bold text-lg">VibeZone</h1>
+          <div className="flex items-center gap-3">
+            {/* Upload Button */}
+            <button
+              onClick={() => setShowComposer(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-full hover:shadow-lg hover:shadow-cyan-400/50 transition-all"
+            >
+              <Plus size={18} />
+              <span className="text-sm">Upload</span>
+            </button>
+            {/* Profile Button */}
+            <button
+              onClick={() => navigate('/profile')}
+              className="w-9 h-9 rounded-full overflow-hidden border-2 border-cyan-400"
+            >
+              <img
+                src={currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.handle}`}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </button>
+          </div>
+        </div>
+      )}
+
       {loading ? (
         <div className="flex items-center justify-center h-screen">
           <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
