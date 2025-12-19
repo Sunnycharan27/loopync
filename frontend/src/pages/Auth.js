@@ -90,7 +90,16 @@ const Auth = () => {
         navigate("/");
       }
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Authentication failed");
+      const detail = error.response?.data?.detail;
+      let errorMsg = "Authentication failed";
+      if (typeof detail === 'string') {
+        errorMsg = detail;
+      } else if (Array.isArray(detail) && detail[0]?.msg) {
+        errorMsg = detail[0].msg;
+      } else if (detail?.msg) {
+        errorMsg = detail.msg;
+      }
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
