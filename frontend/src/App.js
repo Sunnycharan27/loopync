@@ -473,16 +473,6 @@ function App() {
                 )
               }
             />
-            <Route
-              path="/page/:pageId"
-              element={
-                !authLoaded ? (
-                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : (
-                  <PageView />
-                )
-              }
-            />
             
             {/* Catch-all route for @username - MUST be last! */}
             <Route
@@ -490,8 +480,10 @@ function App() {
               element={
                 !authLoaded ? (
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : (
+                ) : isAuthenticated ? (
                   <UsernameRouter />
+                ) : (
+                  <Navigate to="/auth" />
                 )
               }
             />
