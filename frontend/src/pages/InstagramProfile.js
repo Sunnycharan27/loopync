@@ -574,16 +574,16 @@ const InstagramProfile = () => {
         {(capsules.length > 0 || isOwnProfile) && (
           <div className="mb-6">
             <div className="flex items-center gap-4 overflow-x-auto pb-2 scrollbar-hide">
-              {/* Add New Capsule Button (only for own profile) */}
+              {/* Add New Capsule Button (ALWAYS visible for own profile) */}
               {isOwnProfile && (
                 <button
                   onClick={() => setShowCapsuleUpload(true)}
                   className="flex-shrink-0 flex flex-col items-center"
                 >
-                  <div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-600 flex items-center justify-center bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                    <Plus size={24} className="text-gray-400" />
+                  <div className="w-16 h-16 rounded-full border-2 border-dashed border-cyan-400 flex items-center justify-center bg-gray-800/50 hover:bg-cyan-400/20 transition-colors">
+                    <Plus size={28} className="text-cyan-400" />
                   </div>
-                  <span className="text-xs text-gray-400 mt-1">New</span>
+                  <span className="text-xs text-cyan-400 mt-1 font-medium">Add Story</span>
                 </button>
               )}
               
@@ -607,7 +607,7 @@ const InstagramProfile = () => {
                     </div>
                   </div>
                   <span className="text-xs text-gray-300 mt-1 max-w-16 truncate">
-                    {capsule.caption?.slice(0, 10) || 'Capsule'}
+                    {capsule.caption?.slice(0, 10) || 'Story'}
                   </span>
                 </button>
               ))}
