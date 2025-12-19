@@ -168,7 +168,7 @@ function App() {
                 ) : isAuthenticated ? (
                   <VibeZone />
                 ) : (
-                  <VibeZone />
+                  <Navigate to="/auth" />
                 )
               }
             />
