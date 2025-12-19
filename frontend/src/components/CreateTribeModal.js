@@ -21,15 +21,22 @@ const CreateTribeModal = ({ currentUser, onClose, onTribeCreated }) => {
     setLoading(true);
     try {
       const res = await axios.post(`${API}/tribes?ownerId=${currentUser.id}`, {
-        name,
-        description,
+        name: name.trim(),
+        description: description.trim(),
         tags: tags.split(',').map(t => t.trim()).filter(t => t),
         type
       });
       toast.success("Tribe created!");
       onTribeCreated(res.data);
     } catch (error) {
-      toast.error("Failed to create tribe");
+      console.error("Failed to create tribe:", error);
+      const errorMsg = error?.response?.data?.detail || error?.message || "Failed to create tribe";
+      // Handle validation errors array
+      if (Array.isArray(errorMsg)) {
+        toast.error(errorMsg[0]?.msg || "Failed to create tribe");
+      } else {
+        toast.error(typeof errorMsg === 'string' ? errorMsg : "Failed to create tribe");
+      }
     } finally {
       setLoading(false);
     }
