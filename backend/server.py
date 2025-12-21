@@ -8980,6 +8980,219 @@ async def search_verified_accounts(
     
     return {"results": users, "total": len(users)}
 
+# ===== DIGITAL PRODUCTS (FREE RESOURCES) =====
+
+PRODUCT_CATEGORIES = [
+    "courses", "ebooks", "templates", "software", 
+    "graphics", "audio", "video", "documents", "other"
+]
+
+@api_router.get("/digital-products")
+async def get_digital_products(
+    category: Optional[str] = None,
+    search: Optional[str] = None,
+    featured: Optional[bool] = None,
+    author_id: Optional[str] = None,
+    sort_by: str = "newest",  # newest, popular, downloads
+    skip: int = 0,
+    limit: int = 20
+):
+    """Get digital products with filters"""
+    query = {}
+    
+    if category and category != "all":
+        query["category"] = category
+    
+    if search:
+        query["$or"] = [
+            {"title": {"$regex": search, "$options": "i"}},
+            {"description": {"$regex": search, "$options": "i"}},
+            {"tags": {"$regex": search, "$options": "i"}}
+        ]
+    
+    if featured:
+        query["featured"] = True
+    
+    if author_id:
+        query["authorId"] = author_id
+    
+    # Sorting
+    sort_field = "createdAt"
+    sort_order = -1
+    if sort_by == "popular":
+        sort_field = "viewCount"
+    elif sort_by == "downloads":
+        sort_field = "downloadCount"
+    elif sort_by == "rating":
+        sort_field = "rating"
+    
+    products = await db.digital_products.find(query, {"_id": 0}).sort(sort_field, sort_order).skip(skip).limit(limit).to_list(limit)
+    
+    # Enrich with author info
+    for product in products:
+        author = await db.users.find_one({"id": product.get("authorId")}, {"_id": 0, "password": 0})
+        product["author"] = author
+    
+    total = await db.digital_products.count_documents(query)
+    
+    return {"products": products, "total": total, "categories": PRODUCT_CATEGORIES}
+
+@api_router.get("/digital-products/featured")
+async def get_featured_products(limit: int = 6):
+    """Get featured digital products"""
+    products = await db.digital_products.find(
+        {"featured": True}, {"_id": 0}
+    ).sort("downloadCount", -1).limit(limit).to_list(limit)
+    
+    for product in products:
+        author = await db.users.find_one({"id": product.get("authorId")}, {"_id": 0, "password": 0})
+        product["author"] = author
+    
+    return products
+
+@api_router.get("/digital-products/categories")
+async def get_product_categories():
+    """Get available categories with counts"""
+    categories = []
+    for cat in PRODUCT_CATEGORIES:
+        count = await db.digital_products.count_documents({"category": cat})
+        categories.append({"name": cat, "count": count})
+    return categories
+
+@api_router.get("/digital-products/{productId}")
+async def get_digital_product(productId: str):
+    """Get single digital product details"""
+    product = await db.digital_products.find_one({"id": productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    # Increment view count
+    await db.digital_products.update_one(
+        {"id": productId},
+        {"$inc": {"viewCount": 1}}
+    )
+    product["viewCount"] = product.get("viewCount", 0) + 1
+    
+    # Get author info
+    author = await db.users.find_one({"id": product.get("authorId")}, {"_id": 0, "password": 0})
+    product["author"] = author
+    
+    return product
+
+@api_router.post("/digital-products")
+async def create_digital_product(product: DigitalProductCreate, authorId: str):
+    """Create a new digital product"""
+    product_obj = DigitalProduct(
+        authorId=authorId,
+        isFree=product.price == 0,
+        **product.model_dump()
+    )
+    doc = product_obj.model_dump()
+    await db.digital_products.insert_one(doc)
+    doc.pop('_id', None)
+    return doc
+
+@api_router.put("/digital-products/{productId}")
+async def update_digital_product(productId: str, updates: DigitalProductUpdate, userId: str):
+    """Update a digital product - only author can update"""
+    product = await db.digital_products.find_one({"id": productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    if product.get("authorId") != userId:
+        raise HTTPException(status_code=403, detail="Only the author can update this product")
+    
+    update_dict = {"updatedAt": datetime.now(timezone.utc).isoformat()}
+    for field, value in updates.model_dump().items():
+        if value is not None:
+            update_dict[field] = value
+    
+    if "price" in update_dict:
+        update_dict["isFree"] = update_dict["price"] == 0
+    
+    await db.digital_products.update_one({"id": productId}, {"$set": update_dict})
+    
+    updated_product = await db.digital_products.find_one({"id": productId}, {"_id": 0})
+    return updated_product
+
+@api_router.delete("/digital-products/{productId}")
+async def delete_digital_product(productId: str, userId: str):
+    """Delete a digital product - only author can delete"""
+    product = await db.digital_products.find_one({"id": productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    if product.get("authorId") != userId:
+        raise HTTPException(status_code=403, detail="Only the author can delete this product")
+    
+    await db.digital_products.delete_one({"id": productId})
+    return {"message": "Product deleted successfully"}
+
+@api_router.post("/digital-products/{productId}/download")
+async def download_product(productId: str, userId: str):
+    """Track download and return file URL"""
+    product = await db.digital_products.find_one({"id": productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    # Increment download count
+    await db.digital_products.update_one(
+        {"id": productId},
+        {"$inc": {"downloadCount": 1}}
+    )
+    
+    # Track user download
+    await db.product_downloads.insert_one({
+        "id": str(uuid.uuid4()),
+        "productId": productId,
+        "userId": userId,
+        "downloadedAt": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {
+        "fileUrl": product.get("fileUrl"),
+        "fileName": product.get("title"),
+        "fileType": product.get("fileType")
+    }
+
+@api_router.post("/digital-products/{productId}/like")
+async def like_digital_product(productId: str, userId: str):
+    """Like/unlike a digital product"""
+    product = await db.digital_products.find_one({"id": productId}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    likes = product.get("likes", [])
+    
+    if userId in likes:
+        likes.remove(userId)
+        action = "unliked"
+    else:
+        likes.append(userId)
+        action = "liked"
+    
+    await db.digital_products.update_one(
+        {"id": productId},
+        {"$set": {"likes": likes, "likeCount": len(likes)}}
+    )
+    
+    return {"action": action, "likeCount": len(likes)}
+
+@api_router.get("/digital-products/user/{userId}/downloads")
+async def get_user_downloads(userId: str):
+    """Get products downloaded by a user"""
+    downloads = await db.product_downloads.find(
+        {"userId": userId}, {"_id": 0}
+    ).sort("downloadedAt", -1).to_list(100)
+    
+    # Get product details
+    product_ids = [d["productId"] for d in downloads]
+    products = await db.digital_products.find(
+        {"id": {"$in": product_ids}}, {"_id": 0}
+    ).to_list(100)
+    
+    return {"downloads": downloads, "products": products}
+
 # Include router
 app.include_router(api_router)
 
