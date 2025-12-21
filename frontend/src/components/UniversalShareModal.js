@@ -116,6 +116,78 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
     }
   };
 
+  // Share to Instagram Stories
+  const handleInstagramStory = async () => {
+    setGeneratingStory(true);
+    try {
+      // Get the media URL from the post
+      const mediaUrl = item.mediaUrl || item.image || item.coverImage;
+      
+      if (mediaUrl) {
+        // For mobile devices with Instagram app installed
+        // Try to open Instagram Stories directly with the image
+        const instagramStoryUrl = `instagram-stories://share?source_application=${encodeURIComponent(window.location.origin)}`;
+        
+        // Check if we can use Web Share API with files (mobile)
+        if (navigator.share && navigator.canShare) {
+          try {
+            // Try to fetch and share the image directly
+            const response = await fetch(mediaUrl);
+            const blob = await response.blob();
+            const file = new File([blob], 'loopync-share.jpg', { type: 'image/jpeg' });
+            
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: 'Share to Instagram Stories',
+                text: `${getShareText()} #Loopync`,
+              });
+              toast.success('Opening share menu...');
+              return;
+            }
+          } catch (err) {
+            console.log('File sharing not supported:', err);
+          }
+        }
+        
+        // Fallback: Copy link and show instructions
+        await navigator.clipboard.writeText(`${getShareText()}\n\n${shareUrl}\n\n#Loopync`);
+        toast.success(
+          'Link copied! Open Instagram, create a Story, and paste the link.',
+          { duration: 5000 }
+        );
+        
+        // Try to open Instagram (might work on mobile)
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          // Try opening Instagram app
+          setTimeout(() => {
+            window.location.href = 'instagram://story-camera';
+          }, 500);
+        }
+      } else {
+        // No media, just copy the text/link
+        await navigator.clipboard.writeText(`${getShareText()}\n\n${shareUrl}\n\n#Loopync`);
+        toast.success(
+          'Content copied! Open Instagram Stories and paste to share.',
+          { duration: 4000 }
+        );
+      }
+    } catch (error) {
+      console.error('Instagram share error:', error);
+      // Final fallback
+      const textArea = document.createElement("textarea");
+      textArea.value = `${getShareText()}\n\n${shareUrl}\n\n#Loopync`;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      textArea.remove();
+      toast.success('Content copied! Open Instagram Stories and paste to share.');
+    } finally {
+      setGeneratingStory(false);
+    }
+  };
+
   const getItemTitle = () => {
     switch (type) {
       case 'post':
