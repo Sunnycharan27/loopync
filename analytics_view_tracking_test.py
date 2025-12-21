@@ -24,7 +24,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://loopync-social-3.preview.emergentagent.com/api"
+BASE_URL = "https://socialsync-app-2.preview.emergentagent.com/api"
 TEST_EMAIL = "test@example.com"
 TEST_PASSWORD = "test123"
 

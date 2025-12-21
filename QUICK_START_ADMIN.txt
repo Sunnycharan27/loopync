@@ -14,7 +14,7 @@
 
 STEP 1️⃣  Open Login Page
 ┌────────────────────────────────────────────────────────────────┐
-│ https://loopync-social-3.preview.emergentagent.com/auth          │
+│ https://socialsync-app-2.preview.emergentagent.com/auth          │
 └────────────────────────────────────────────────────────────────┘
 
 STEP 2️⃣  Enter Your Credentials
@@ -27,7 +27,7 @@ STEP 2️⃣  Enter Your Credentials
 
 STEP 3️⃣  Go to Admin Dashboard
 ┌────────────────────────────────────────────────────────────────┐
-│ https://loopync-social-3.preview.emergentagent.com/admin/verification│
+│ https://socialsync-app-2.preview.emergentagent.com/admin/verification│
 └────────────────────────────────────────────────────────────────┘
 
 STEP 4️⃣  Review & Approve Requests

@@ -19,7 +19,7 @@ import time
 from datetime import datetime
 
 # Configuration from review request
-BASE_URL = "https://loopync-social-3.preview.emergentagent.com/api"
+BASE_URL = "https://socialsync-app-2.preview.emergentagent.com/api"
 ADMIN_EMAIL = "loopyncpvt@gmail.com"
 ADMIN_PASSWORD = "ramcharan@123"
 TEST_USER_EMAIL = "verify2@example.com"

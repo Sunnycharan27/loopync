@@ -223,7 +223,7 @@ db.vibe_rooms.deleteMany({})
 
 ### Base URL
 ```
-https://loopync-social-3.preview.emergentagent.com/api
+https://socialsync-app-2.preview.emergentagent.com/api
 ```
 
 ### Key Endpoints

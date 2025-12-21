@@ -15,7 +15,7 @@ import requests
 import json
 from datetime import datetime, timedelta
 
-BACKEND_URL = "https://loopync-social-3.preview.emergentagent.com/api"
+BACKEND_URL = "https://socialsync-app-2.preview.emergentagent.com/api"
 
 print("=" * 80)
 print("🚀 COMPLETE DATABASE RESET - INVESTOR DEMO READY")

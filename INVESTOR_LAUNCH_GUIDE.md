@@ -4,9 +4,9 @@
 
 | Resource | URL |
 |----------|-----|
-| **Live App** | https://loopync-social-3.preview.emergentagent.com |
-| **Admin Dashboard** | https://loopync-social-3.preview.emergentagent.com/admin |
-| **Analytics Dashboard** | https://loopync-social-3.preview.emergentagent.com/analytics |
+| **Live App** | https://socialsync-app-2.preview.emergentagent.com |
+| **Admin Dashboard** | https://socialsync-app-2.preview.emergentagent.com/admin |
+| **Analytics Dashboard** | https://socialsync-app-2.preview.emergentagent.com/analytics |
 
 ---
 
@@ -83,7 +83,7 @@ Connection String: mongodb://localhost:27017/test_database
 #### 1. Via Admin Analytics API
 ```bash
 # Get platform metrics
-curl "https://loopync-social-3.preview.emergentagent.com/api/analytics/admin?adminUserId=YOUR_USER_ID"
+curl "https://socialsync-app-2.preview.emergentagent.com/api/analytics/admin?adminUserId=YOUR_USER_ID"
 ```
 
 #### 2. Via In-App Analytics Dashboard
@@ -232,7 +232,7 @@ The app is built with:
 MONGO_URL=mongodb://localhost:27017
 DB_NAME=test_database
 JWT_SECRET=loopync-production-secret-key-2024-secure-jwt-token
-FRONTEND_URL=https://loopync-social-3.preview.emergentagent.com
+FRONTEND_URL=https://socialsync-app-2.preview.emergentagent.com
 AGORA_APP_ID=9d727260580f40d2ae8c131dbfd8ba08
 AGORA_APP_CERTIFICATE=59fd8e967f754664b3aa994c9b356e12
 EMERGENT_LLM_KEY=sk-emergent-2A08f0464C83fA2299
@@ -240,7 +240,7 @@ EMERGENT_LLM_KEY=sk-emergent-2A08f0464C83fA2299
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://loopync-social-3.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://socialsync-app-2.preview.emergentagent.com
 REACT_APP_AGORA_APP_ID=9d727260580f40d2ae8c131dbfd8ba08
 ```
 
@@ -256,7 +256,7 @@ REACT_APP_AGORA_APP_ID=9d727260580f40d2ae8c131dbfd8ba08
 ### Option 2: API Demo
 ```bash
 # Live API call during presentation
-curl -s "https://loopync-social-3.preview.emergentagent.com/api/analytics/admin?adminUserId=YOUR_ADMIN_ID" | jq
+curl -s "https://socialsync-app-2.preview.emergentagent.com/api/analytics/admin?adminUserId=YOUR_ADMIN_ID" | jq
 ```
 
 ### Option 3: MongoDB Direct (for technical investors)
