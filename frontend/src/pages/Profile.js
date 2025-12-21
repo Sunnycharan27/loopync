@@ -520,7 +520,18 @@ const SettingsModal = ({ currentUser, onClose, onSave }) => {
         status: error.response?.status
       });
       
-      const errorMsg = error.response?.data?.detail || error.message || "Failed to update profile";
+      // Safely extract error message - handle object or array
+      let errorMsg = "Failed to update profile";
+      const detail = error.response?.data?.detail;
+      if (typeof detail === 'string') {
+        errorMsg = detail;
+      } else if (Array.isArray(detail) && detail[0]?.msg) {
+        errorMsg = detail[0].msg;
+      } else if (detail?.msg) {
+        errorMsg = detail.msg;
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
       toast.error(`Update failed: ${errorMsg}`);
     } finally {
       setSaving(false);

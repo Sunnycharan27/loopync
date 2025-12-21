@@ -85,7 +85,10 @@ const UserProfile = () => {
       toast.success("Friend request sent!");
       fetchUserProfile(); // Refetch to update relationship status
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to send request");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to send request");
+      toast.error(errorMsg);
     }
   };
 
@@ -115,7 +118,10 @@ const UserProfile = () => {
       const res = await axios.post(`${API}/dm/thread?userId=${currentUser.id}&peerUserId=${userId}`);
       navigate(`/messenger/${res.data.threadId}`);
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Cannot message this user");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Cannot message this user");
+      toast.error(errorMsg);
     }
   };
 
