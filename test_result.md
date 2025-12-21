@@ -417,6 +417,18 @@ frontend:
         agent: "testing"
         comment: "✅ FREE DIGITAL PRODUCTS FEATURE FULLY FUNCTIONAL - Comprehensive testing completed successfully with test@test.com credentials. ALL TEST SCENARIOS PASSED: (1) Access from Discover: Login successful, navigate to /discover, 'Free Resources' button visible with green gradient styling, click navigation to /digital-products working ✅. (2) Digital Products Listing Page: Header shows 'Free Resources', '+ Upload' button visible for logged-in users, search bar functional, category filters displayed (9 categories), sort dropdown with Newest/Most Viewed/Most Downloads options, empty state message displayed correctly ✅. (3) Upload Digital Product Page: Navigation to /digital-products/upload successful, all form fields present (Cover Image upload, Title input required, Description textarea, Category selection with 9 categories and icons, File upload area required, Tags input with add/remove functionality), 'This resource will be FREE' info box, 'Upload Resource' button, form validation working (button disabled without file), test data filled successfully ✅. (4) API Integration: /api/digital-products endpoint returns valid response with products array, /api/digital-products/categories returns category list (9 categories) ✅. No React crashes or console errors detected. All pages render correctly without errors. Navigation between pages working. Form renders correctly with proper styling. Feature is production-ready and fully functional."
 
+  - task: "Follow/Unfollow Real-Time State Synchronization"
+    implemented: false
+    working: false
+    file: "Discover.js, InstagramProfile.js, FollowersModal.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL SYNCHRONIZATION ISSUES FOUND - Follow/unfollow functionality has backend API working correctly but frontend state management is not synchronized across components. ISSUES: (1) Follow button changes to 'Following' in People tab but shows 'Follow' on user's profile page, (2) Profile page follow status inconsistency after following from People tab, (3) Hover effect missing on Following button (should show 'Unfollow' with red styling), (4) Real-time UI updates not working across different components. Backend APIs confirmed working (toast notifications appear), but frontend components don't share follow state properly. Requires global state management implementation for follow status synchronization."
+
 test_plan:
   current_focus: 
     - "Vibe Capsule Highlights on Profile"
