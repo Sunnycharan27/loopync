@@ -90,42 +90,15 @@ const UserProfile = () => {
   };
 
   const handleLike = async (postId) => {
-      toast.error("Failed to cancel request");
+    if (!currentUser) {
+      toast.error("Please login to like");
+      return;
     }
-  };
-
-  const handleAcceptRequest = async () => {
     try {
-      await axios.post(`${API}/friend-requests/${requestId}/accept`);
-      toast.success("Friend request accepted!");
-      fetchUserProfile(); // Refetch to update relationship status and counts
+      const res = await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`);
+      setPosts(posts.map(p => p.id === postId ? { ...p, ...res.data, likeCount: res.data.likeCount } : p));
     } catch (error) {
-      toast.error("Failed to accept request");
-    }
-  };
-
-  const handleMessage = async () => {
-    try {
-      // Create or get DM thread
-      const res = await axios.post(`${API}/dm/thread?userId=${currentUser.id}&peerUserId=${userId}`);
-      navigate(`/messenger/${res.data.threadId}`);
-    } catch (error) {
-      // Safely extract error message
-      const detail = error.response?.data?.detail;
-      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Cannot message this user");
-      toast.error(errorMsg);
-    }
-  };
-
-  const handleUnfriend = async () => {
-    if (!window.confirm("Are you sure you want to unfriend this user?")) return;
-    
-    try {
-      await axios.delete(`${API}/friends/${userId}?userId=${currentUser.id}`);
-      toast.success("Unfriended");
-      fetchUserProfile(); // Refetch to update relationship status and counts
-    } catch (error) {
-      toast.error("Failed to unfriend");
+      toast.error("Failed to like post");
     }
   };
 
