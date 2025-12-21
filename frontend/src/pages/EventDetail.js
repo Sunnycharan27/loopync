@@ -113,7 +113,10 @@ const EventDetail = () => {
         navigate('/profile');
       }, 2000);
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to book tickets");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to book tickets");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
