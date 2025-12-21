@@ -212,7 +212,10 @@ const MessengerNew = () => {
       }
     } catch (error) {
       console.error('Error starting chat:', error);
-      toast.error(error.response?.data?.detail || 'Failed to start conversation');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to start conversation');
+      toast.error(errorMsg);
     }
   };
 
