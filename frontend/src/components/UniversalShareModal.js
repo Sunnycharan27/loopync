@@ -294,6 +294,22 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
 
           {/* Social Media Grid */}
           <div className="grid grid-cols-4 gap-3 pt-2">
+            {/* Instagram Stories - Featured */}
+            <button
+              onClick={handleInstagramStory}
+              disabled={generatingStory}
+              className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-gradient-to-br from-purple-600/20 via-pink-500/20 to-orange-400/20 hover:from-purple-600/30 hover:via-pink-500/30 hover:to-orange-400/30 border border-pink-500/30 transition col-span-2"
+            >
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center">
+                {generatingStory ? (
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Instagram size={28} className="text-white" />
+                )}
+              </div>
+              <span className="text-xs text-white font-medium">Instagram Stories</span>
+            </button>
+
             <button
               onClick={() => handleShare('whatsapp')}
               className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-gray-800 hover:bg-gray-700 transition"
@@ -321,6 +337,8 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
               <div className="w-14 h-14 rounded-full bg-sky-500/20 flex items-center justify-center">
                 <Twitter size={28} className="text-sky-400" />
               </div>
+              <span className="text-xs text-gray-400">Twitter</span>
+            </button>
               <span className="text-xs text-gray-400">Twitter</span>
             </button>
 
