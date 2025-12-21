@@ -454,7 +454,7 @@ const Discover = () => {
                               </button>
                               
                               {/* Message Button */}
-                              {(user.isFriend || currentUser.friends?.includes(user.id)) && (
+                              {user.id !== currentUser?.id && currentUser && (
                                 <button
                                   onClick={() => startConversation(user)}
                                   className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-all text-xs"
