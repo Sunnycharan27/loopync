@@ -79,7 +79,10 @@ const SellerDashboard = () => {
         images: []
       });
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to list product');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to list product');
+      toast.error(errorMsg);
     }
   };
 

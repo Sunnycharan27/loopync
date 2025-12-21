@@ -120,7 +120,10 @@ const CreateTribe = () => {
       navigate(`/tribes/${res.data.id}`);
     } catch (error) {
       console.error('Create tribe error:', error);
-      toast.error(error.response?.data?.detail || 'Failed to create tribe');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to create tribe');
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

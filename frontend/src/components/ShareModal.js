@@ -82,7 +82,10 @@ const ShareModal = ({ isOpen, onClose, item, type = "post", contentPreview }) =>
       }
     } catch (error) {
       console.error("Share error:", error);
-      toast.error(error.response?.data?.detail || "Failed to share");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to share");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -114,7 +117,10 @@ const ShareModal = ({ isOpen, onClose, item, type = "post", contentPreview }) =>
       }
     } catch (error) {
       console.error("Share to timeline error:", error);
-      toast.error(error.response?.data?.detail || "Failed to share to timeline");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to share to timeline");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
