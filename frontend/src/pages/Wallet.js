@@ -79,7 +79,10 @@ const Wallet = () => {
       setPaymentDescription("");
       fetchWalletData();
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Payment failed");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Payment failed");
+      toast.error(errorMsg);
     }
   };
 

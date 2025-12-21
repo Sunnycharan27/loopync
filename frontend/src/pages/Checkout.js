@@ -67,7 +67,10 @@ const Checkout = () => {
       toast.success('Order placed successfully! 🎉');
       navigate(`/orders`);
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to place order');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to place order');
+      toast.error(errorMsg);
     } finally {
       setProcessing(false);
     }

@@ -81,7 +81,10 @@ const VideoUpload = () => {
       toast.success('Video published successfully! 🎉');
       navigate('/videos');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to publish video');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to publish video');
+      toast.error(errorMsg);
     }
   };
 
