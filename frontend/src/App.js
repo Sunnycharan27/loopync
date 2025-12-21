@@ -226,6 +226,42 @@ function App() {
               }
             />
             <Route
+              path="/digital-products"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <DigitalProducts />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
+              path="/digital-products/upload"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <UploadDigitalProduct />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
+              path="/digital-products/:productId"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <DigitalProductDetail />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
+            <Route
               path="/admin/verifications"
               element={
                 !authLoaded ? (
