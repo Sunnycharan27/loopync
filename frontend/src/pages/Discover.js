@@ -808,8 +808,8 @@ const Discover = () => {
                                       {user.isFollowing || currentUser.following?.includes(user.id) ? 'Following' : 'Follow'}
                                     </button>
                                     
-                                    {/* Message Button - Show if friends */}
-                                    {(user.isFriend || currentUser.friends?.includes(user.id)) && (
+                                    {/* Message Button */}
+                                    {!isOwnUser && (
                                       <button
                                         onClick={() => startConversation(user)}
                                         className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-all text-sm"
@@ -818,24 +818,10 @@ const Discover = () => {
                                         Message
                                       </button>
                                     )}
-                                    
-                                    {/* Add Friend Button - Show if not friends */}
-                                    {!user.isFriend && !currentUser.friends?.includes(user.id) && !user.requestSent && (
-                                      <button
-                                        onClick={() => sendFriendRequest(user.id)}
-                                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all text-sm"
-                                      >
-                                        <UserPlus size={16} />
-                                        Add Friend
-                                      </button>
-                                    )}
-                                    {user.requestSent && (
-                                      <span className="px-4 py-2 rounded-full bg-gray-700 text-gray-400 text-sm">Friend Request Sent</span>
-                                    )}
                                   </>
                                 )}
                                 <button
-                                  onClick={() => navigate(`/u/${user.handle}`)}
+                                  onClick={() => navigate(`/@${user.handle}`)}
                                   className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition text-sm"
                                 >
                                   View Profile
