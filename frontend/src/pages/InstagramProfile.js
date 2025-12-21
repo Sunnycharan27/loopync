@@ -962,6 +962,18 @@ const InstagramProfile = () => {
           type={followModalType}
           onClose={() => setShowFollowersModal(false)}
           currentUser={currentUser}
+          onFollowUpdate={(targetUserId, nowFollowing, responseData) => {
+            // If we followed/unfollowed the profile user, update the profile stats
+            if (targetUserId === profileUser.id) {
+              setIsFollowing(nowFollowing);
+              if (responseData) {
+                setStats(prev => ({
+                  ...prev,
+                  followers: responseData.followersCount
+                }));
+              }
+            }
+          }}
         />
       )}
 
