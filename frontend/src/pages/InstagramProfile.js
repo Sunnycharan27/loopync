@@ -188,23 +188,42 @@ const InstagramProfile = () => {
   };
 
   const handleFollow = async () => {
+    if (!currentUser || !profileUser) return;
+    
+    const wasFollowing = isFollowing;
+    
+    // Optimistically update UI immediately
+    setIsFollowing(!wasFollowing);
+    setStats(prev => ({
+      ...prev,
+      followers: wasFollowing ? prev.followers - 1 : prev.followers + 1
+    }));
+    
     try {
       const token = localStorage.getItem('loopync_token');
-      await axios.post(
+      const response = await axios.post(
         `${API}/users/${currentUser.id}/follow`,
         { targetUserId: profileUser.id },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
       
-      setIsFollowing(!isFollowing);
+      // Use server response to ensure accuracy
       setStats(prev => ({
         ...prev,
-        followers: isFollowing ? prev.followers - 1 : prev.followers + 1
+        followers: response.data.followersCount
       }));
       
-      toast.success(isFollowing ? 'Unfollowed' : 'Following');
+      toast.success(wasFollowing ? 'Unfollowed' : 'Following');
+      
+      // Refresh user data to sync following list globally
       await refreshUserData();
     } catch (error) {
+      // Revert on error
+      setIsFollowing(wasFollowing);
+      setStats(prev => ({
+        ...prev,
+        followers: wasFollowing ? prev.followers + 1 : prev.followers - 1
+      }));
       console.error('Error following user:', error);
       toast.error('Failed to follow user');
     }
