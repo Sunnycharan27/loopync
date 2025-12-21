@@ -402,6 +402,7 @@ test_plan:
     - "VibeZone View Tracking"
     - "Analytics Dashboard Frontend"
     - "VibeZone View Count Display"
+    - "Objects are not valid as a React child - Critical Bug Fix"
   failed_features:
     - "Vibe Capsule Highlights on Profile"
     - "Enhanced Messaging - Share Post to DM"
