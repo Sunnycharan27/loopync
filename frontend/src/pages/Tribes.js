@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
-import { useContext } from "react";
+import { Users, Plus, Search } from "lucide-react";
 import BottomNav from "../components/BottomNav";
-import CreateFAB from "../components/CreateFAB";
 import TribeCard from "../components/TribeCard";
 import CreateTribeModal from "../components/CreateTribeModal";
 import { toast } from "sonner";
+
+// Helper to extract error message
+const getErrorMsg = (error) => {
+  const detail = error?.response?.data?.detail;
+  if (typeof detail === 'string') return detail;
+  if (Array.isArray(detail) && detail[0]?.msg) return detail[0].msg;
+  if (detail?.msg) return detail.msg;
+  return error?.message || "An error occurred";
+};
 
 const Tribes = () => {
   const { currentUser } = useContext(AuthContext);
   const [tribes, setTribes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchTribes();
@@ -20,22 +29,24 @@ const Tribes = () => {
 
   const fetchTribes = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`${API}/tribes`);
-      // Ensure tribes is always an array
       const tribesData = Array.isArray(res.data) ? res.data : [];
       setTribes(tribesData);
     } catch (error) {
       console.error("Failed to load tribes:", error);
-      const errorMsg = error?.response?.data?.detail || error?.message || "Failed to load tribes";
-      toast.error(typeof errorMsg === 'string' ? errorMsg : "Failed to load tribes");
+      toast.error(getErrorMsg(error) || "Failed to load tribes");
     } finally {
       setLoading(false);
     }
   };
 
   const handleTribeCreated = (newTribe) => {
-    setTribes([newTribe, ...tribes]);
+    if (newTribe && newTribe.id) {
+      setTribes([newTribe, ...tribes]);
+    }
     setShowCreateModal(false);
+    toast.success("Tribe created successfully!");
   };
 
   const handleJoinLeave = async (tribeId, isMember) => {
@@ -43,6 +54,7 @@ const Tribes = () => {
       toast.error("Please login to join tribes");
       return;
     }
+
     try {
       const endpoint = isMember ? "leave" : "join";
       const res = await axios.post(`${API}/tribes/${tribeId}/${endpoint}?userId=${currentUser.id}`);
@@ -52,44 +64,75 @@ const Tribes = () => {
           const newMembers = isMember
             ? (t.members || []).filter(m => m !== currentUser.id)
             : [...(t.members || []), currentUser.id];
-          return { ...t, members: newMembers, memberCount: res.data?.memberCount || newMembers.length };
+          return { 
+            ...t, 
+            members: newMembers, 
+            memberCount: res.data?.memberCount || newMembers.length 
+          };
         }
         return t;
       }));
       
-      toast.success(isMember ? "Left tribe" : "Joined tribe!");
+      toast.success(isMember ? "Left tribe successfully" : "Joined tribe successfully!");
     } catch (error) {
       console.error("Join/Leave failed:", error);
-      const errorMsg = error?.response?.data?.detail || error?.message || "Action failed";
-      toast.error(typeof errorMsg === 'string' ? errorMsg : "Action failed");
+      toast.error(getErrorMsg(error) || "Action failed");
     }
   };
 
+  // Filter tribes by search query
+  const filteredTribes = tribes.filter(tribe => 
+    tribe.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tribe.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tribe.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   return (
-    <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
+    <div className="min-h-screen pb-20" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="sticky top-0 z-10 glass-surface p-4 mb-6">
-          <h1 className="text-2xl font-bold neon-text">Tribes</h1>
-          <p className="text-sm text-gray-400">Find your community</p>
+        <div className="sticky top-0 z-10 glass-surface p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-2xl font-bold neon-text flex items-center gap-2">
+                <Users className="text-cyan-400" />
+                Tribes
+              </h1>
+              <p className="text-gray-400 text-sm">Find your community</p>
+            </div>
+            {currentUser && (
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-xl hover:shadow-lg hover:shadow-cyan-400/30 transition-all"
+              >
+                <Plus size={20} />
+                Create
+              </button>
+            )}
+          </div>
+
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+            <input
+              type="text"
+              placeholder="Search tribes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400"
+            />
+          </div>
         </div>
 
-        {/* Tribes Grid */}
-        <div className="px-4">
+        {/* Content */}
+        <div className="p-4">
           {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full mx-auto"></div>
+            <div className="flex justify-center py-12">
+              <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
             </div>
-          ) : tribes.length === 0 ? (
-            <div className="text-center py-12 glass-card p-8">
-              <p className="text-gray-400 mb-4">No tribes yet. Create one!</p>
-              <button onClick={() => setShowCreateModal(true)} className="btn-primary">
-                Create Tribe
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {tribes.map(tribe => (
+          ) : filteredTribes.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredTribes.map(tribe => (
                 <TribeCard
                   key={tribe.id}
                   tribe={tribe}
@@ -98,13 +141,31 @@ const Tribes = () => {
                 />
               ))}
             </div>
+          ) : (
+            <div className="text-center py-12">
+              <Users size={64} className="mx-auto mb-4 text-gray-600" />
+              <h3 className="text-xl font-semibold text-white mb-2">
+                {searchQuery ? "No tribes found" : "No tribes yet"}
+              </h3>
+              <p className="text-gray-400 mb-6">
+                {searchQuery 
+                  ? "Try a different search term" 
+                  : "Be the first to create a community!"}
+              </p>
+              {currentUser && !searchQuery && (
+                <button
+                  onClick={() => setShowCreateModal(true)}
+                  className="px-6 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-xl hover:shadow-lg hover:shadow-cyan-400/30 transition-all"
+                >
+                  Create a Tribe
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>
 
-      <CreateFAB onClick={() => setShowCreateModal(true)} type="tribe" />
-      <BottomNav active="tribes" />
-
+      {/* Create Modal */}
       {showCreateModal && (
         <CreateTribeModal
           currentUser={currentUser}
@@ -112,6 +173,8 @@ const Tribes = () => {
           onTribeCreated={handleTribeCreated}
         />
       )}
+
+      <BottomNav active="discover" />
     </div>
   );
 };
