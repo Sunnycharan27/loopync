@@ -777,7 +777,7 @@ const Discover = () => {
                               src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.handle}`}
                               alt={user.name}
                               className="w-16 h-16 rounded-full cursor-pointer"
-                              onClick={() => navigate(`/u/${user.handle}`)}
+                              onClick={() => navigate(`/@${user.handle}`)}
                             />
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
