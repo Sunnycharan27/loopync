@@ -116,7 +116,10 @@ const FriendsList = ({ currentUser, onStartChat, onStartCall }) => {
       toast.success('Friend request sent!');
       loadData();
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to send request');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to send request');
+      toast.error(errorMsg);
     }
   };
 
@@ -157,7 +160,10 @@ const FriendsList = ({ currentUser, onStartChat, onStartCall }) => {
         navigate('/messenger', { state: { selectedThread: res.data.thread } });
       }
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to start conversation');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to start conversation');
+      toast.error(errorMsg);
     }
   };
 

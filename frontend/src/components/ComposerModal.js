@@ -195,7 +195,10 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated }) => {
       onClose();
     } catch (error) {
       console.error("Failed to create post:", error);
-      toast.error(error.response?.data?.detail || "Failed to create post");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to create post");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
