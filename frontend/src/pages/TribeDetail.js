@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import PostCard from "../components/PostCard";
 import { getMediaUrl } from "../utils/mediaUtils";
 import BottomNav from "../components/BottomNav";
+import TribeSettingsModal from "../components/TribeSettingsModal";
 
 // Helper to extract error message
 const getErrorMsg = (error) => {
@@ -24,11 +25,14 @@ const TribeDetail = () => {
   
   const [tribe, setTribe] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newPostText, setNewPostText] = useState("");
   const [newPostMedia, setNewPostMedia] = useState(null);
   const [posting, setPosting] = useState(false);
   const [joining, setJoining] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [activeTab, setActiveTab] = useState("posts"); // posts, members
 
   useEffect(() => {
     if (tribeId) {
@@ -42,9 +46,17 @@ const TribeDetail = () => {
       const tribeRes = await axios.get(`${API}/tribes/${tribeId}`);
       setTribe(tribeRes.data);
       
+      // Fetch members
+      try {
+        const membersRes = await axios.get(`${API}/tribes/${tribeId}/members`);
+        setMembers(Array.isArray(membersRes.data) ? membersRes.data : []);
+      } catch (err) {
+        console.error("Failed to fetch members:", err);
+      }
+      
       // Fetch posts only if user is a member
-      const members = tribeRes.data?.members || [];
-      if (currentUser && members.includes(currentUser.id)) {
+      const membersList = tribeRes.data?.members || [];
+      if (currentUser && membersList.includes(currentUser.id)) {
         try {
           const postsRes = await axios.get(`${API}/tribes/${tribeId}/posts`);
           setPosts(Array.isArray(postsRes.data) ? postsRes.data : []);
@@ -72,12 +84,6 @@ const TribeDetail = () => {
     try {
       await axios.post(`${API}/tribes/${tribeId}/join?userId=${currentUser.id}`);
       toast.success("Joined tribe!");
-      setTribe({
-        ...tribe,
-        members: [...(tribe.members || []), currentUser.id],
-        memberCount: (tribe.memberCount || 0) + 1
-      });
-      // Fetch posts after joining
       fetchTribeDetails();
     } catch (error) {
       console.error("Failed to join:", error);
@@ -130,7 +136,6 @@ const TribeDetail = () => {
     try {
       let mediaUrl = null;
       
-      // Upload media if present
       if (newPostMedia) {
         const formData = new FormData();
         formData.append('file', newPostMedia);
@@ -142,7 +147,6 @@ const TribeDetail = () => {
         mediaUrl = uploadRes.data.url;
       }
 
-      // Create post in tribe
       const postData = {
         text: newPostText.trim(),
         authorId: currentUser.id,
@@ -152,14 +156,12 @@ const TribeDetail = () => {
 
       const postRes = await axios.post(`${API}/tribes/${tribeId}/posts`, postData);
       
-      // Add to posts list
       const newPost = {
         ...postRes.data,
         author: currentUser
       };
       setPosts([newPost, ...posts]);
       
-      // Clear form
       setNewPostText("");
       setNewPostMedia(null);
       
@@ -213,8 +215,16 @@ const TribeDetail = () => {
     }
   };
 
-  const members = tribe?.members || [];
-  const isMember = currentUser?.id && members.includes(currentUser.id);
+  const handleTribeUpdate = (updatedTribe) => {
+    setTribe(updatedTribe);
+  };
+
+  const handleTribeDelete = () => {
+    navigate('/tribes');
+  };
+
+  const tribeMembers = tribe?.members || [];
+  const isMember = currentUser?.id && tribeMembers.includes(currentUser.id);
   const isOwner = currentUser?.id === tribe?.ownerId;
 
   if (loading) {
@@ -243,242 +253,306 @@ const TribeDetail = () => {
     );
   }
 
+  const defaultCover = `https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=400&fit=crop`;
+
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="sticky top-0 z-10 glass-surface p-4 mb-6">
-          <div className="flex items-center justify-between mb-4">
+      {/* Cover Image */}
+      <div className="relative h-48 sm:h-64 w-full">
+        <img
+          src={tribe.coverImage || defaultCover}
+          alt="Cover"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f021e] via-transparent to-transparent" />
+        
+        {/* Back Button */}
+        <button 
+          onClick={() => navigate('/tribes')} 
+          className="absolute top-4 left-4 p-2 bg-black/50 hover:bg-black/70 rounded-full transition"
+        >
+          <ArrowLeft size={24} className="text-white" />
+        </button>
+
+        {/* Settings & Share Buttons */}
+        <div className="absolute top-4 right-4 flex gap-2">
+          {isOwner && (
             <button 
-              onClick={() => navigate('/tribes')} 
-              className="p-2 hover:bg-gray-800 rounded-full transition"
+              onClick={() => setShowSettings(true)}
+              className="p-2 bg-black/50 hover:bg-black/70 rounded-full transition"
             >
-              <ArrowLeft size={24} className="text-white" />
+              <Settings size={20} className="text-white" />
             </button>
-            <div className="flex items-center gap-2">
-              {isOwner && (
-                <button className="p-2 hover:bg-gray-800 rounded-full transition">
-                  <Settings size={24} className="text-cyan-400" />
-                </button>
-              )}
-              <button className="p-2 hover:bg-gray-800 rounded-full transition">
-                <MoreHorizontal size={24} className="text-white" />
-              </button>
+          )}
+          <button className="p-2 bg-black/50 hover:bg-black/70 rounded-full transition">
+            <Share2 size={20} className="text-white" />
+          </button>
+        </div>
+
+        {/* Tribe Avatar */}
+        <div className="absolute -bottom-12 left-6">
+          <img
+            src={tribe.avatar || `https://api.dicebear.com/7.x/shapes/svg?seed=${tribe.id}`}
+            alt={tribe.name}
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-4 border-[#0f021e] bg-gray-800"
+          />
+        </div>
+      </div>
+
+      {/* Tribe Info */}
+      <div className="max-w-4xl mx-auto px-4 pt-16">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{tribe.name}</h1>
+            <p className="text-gray-400 mb-3">{tribe.description || 'No description'}</p>
+            
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <span className="flex items-center gap-1 text-gray-400">
+                <Users size={16} className="text-cyan-400" />
+                {tribe.memberCount || tribeMembers.length} members
+              </span>
+              <span className={`px-3 py-1 rounded-full text-xs ${
+                tribe.type === 'private' 
+                  ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' 
+                  : 'bg-green-500/10 text-green-400 border border-green-500/20'
+              }`}>
+                {tribe.type === 'private' ? '🔒 Private' : '🌐 Public'}
+              </span>
             </div>
+
+            {/* Tags */}
+            {Array.isArray(tribe.tags) && tribe.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-3">
+                {tribe.tags.map((tag, idx) => (
+                  <span key={idx} className="px-2 py-1 rounded-full text-xs bg-cyan-400/10 text-cyan-400">
+                    #{typeof tag === 'string' ? tag : ''}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Tribe Info */}
-          <div className="flex items-start gap-4">
-            <img
-              src={tribe.avatar || `https://api.dicebear.com/7.x/shapes/svg?seed=${tribe.id}`}
-              alt={tribe.name}
-              className="w-20 h-20 rounded-2xl object-cover bg-gray-800 flex-shrink-0"
-            />
-            <div className="flex-1 min-w-0">
-              <h1 className="text-2xl font-bold text-white mb-1 truncate">{tribe.name}</h1>
-              <p className="text-gray-400 text-sm mb-3 line-clamp-2">{tribe.description || 'No description'}</p>
-              
-              <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                <span className="flex items-center gap-1">
-                  <Users size={16} className="text-cyan-400" />
-                  {tribe.memberCount || members.length} members
-                </span>
-                {tribe.type && (
-                  <span className={`px-3 py-1 rounded-full text-xs ${
-                    tribe.type === 'private' 
-                      ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' 
-                      : 'bg-green-500/10 text-green-400 border border-green-500/20'
-                  }`}>
-                    {tribe.type === 'private' ? '🔒 Private' : '🌐 Public'}
-                  </span>
-                )}
-              </div>
-              
-              {/* Tags */}
-              {Array.isArray(tribe.tags) && tribe.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {tribe.tags.map((tag, idx) => (
-                    <span key={idx} className="px-2 py-1 rounded-full text-xs bg-cyan-400/10 text-cyan-400">
-                      #{typeof tag === 'string' ? tag : ''}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              {/* Action Buttons */}
-              {currentUser && (
-                <div className="flex gap-2">
-                  {isOwner ? (
-                    <span className="px-4 py-2 rounded-full bg-purple-500/20 text-purple-400 text-sm font-semibold border border-purple-500/30">
-                      👑 You own this tribe
-                    </span>
-                  ) : isMember ? (
-                    <button
-                      onClick={leaveTribe}
-                      disabled={joining}
-                      className="flex items-center gap-2 px-6 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition disabled:opacity-50"
-                    >
-                      {joining ? (
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <UserMinus size={18} />
-                      )}
-                      Leave Tribe
-                    </button>
-                  ) : (
-                    <button
-                      onClick={joinTribe}
-                      disabled={joining}
-                      className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50"
-                    >
-                      {joining ? (
-                        <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <UserPlus size={18} />
-                      )}
-                      Join Tribe
-                    </button>
-                  )}
-                </div>
-              )}
-
-              {!currentUser && (
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            {currentUser && (
+              isOwner ? (
                 <button
-                  onClick={() => navigate('/auth')}
-                  className="px-6 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition"
+                  onClick={() => setShowSettings(true)}
+                  className="px-6 py-2.5 rounded-xl bg-purple-500/20 text-purple-400 font-semibold border border-purple-500/30 flex items-center gap-2"
                 >
-                  Login to Join
+                  <Settings size={18} />
+                  Manage
                 </button>
-              )}
-            </div>
+              ) : isMember ? (
+                <button
+                  onClick={leaveTribe}
+                  disabled={joining}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition disabled:opacity-50"
+                >
+                  {joining ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <UserMinus size={18} />
+                  )}
+                  Leave
+                </button>
+              ) : (
+                <button
+                  onClick={joinTribe}
+                  disabled={joining}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50"
+                >
+                  {joining ? (
+                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <UserPlus size={18} />
+                  )}
+                  Join
+                </button>
+              )
+            )}
+
+            {!currentUser && (
+              <button
+                onClick={() => navigate('/auth')}
+                className="px-6 py-2.5 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition"
+              >
+                Login to Join
+              </button>
+            )}
           </div>
         </div>
 
-        <div className="px-4 space-y-6">
-          {/* Post Creation (Only for members) */}
-          {isMember && (
-            <div className="glass-card p-4">
-              <div className="flex gap-3">
+        {/* Member Avatars Preview */}
+        {members.length > 0 && (
+          <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-800">
+            <div className="flex -space-x-2">
+              {members.slice(0, 8).map((member, idx) => (
                 <img
-                  src={getMediaUrl(currentUser?.avatar) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser?.handle}`}
-                  alt="You"
-                  className="w-12 h-12 rounded-full object-cover"
+                  key={member.id || idx}
+                  src={member.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${member.handle || idx}`}
+                  alt={member.name}
+                  className="w-8 h-8 rounded-full border-2 border-gray-900 object-cover cursor-pointer hover:z-10 hover:scale-110 transition-transform"
+                  title={member.name}
+                  onClick={() => navigate(`/@${member.handle}`)}
                 />
-                <div className="flex-1">
-                  <textarea
-                    value={newPostText}
-                    onChange={(e) => setNewPostText(e.target.value)}
-                    placeholder={`Share something with ${tribe.name}...`}
-                    className="w-full bg-gray-800 text-white rounded-xl p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-none border border-gray-700"
-                    rows="3"
+              ))}
+              {members.length > 8 && (
+                <div className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-700 flex items-center justify-center">
+                  <span className="text-xs text-white font-medium">+{members.length - 8}</span>
+                </div>
+              )}
+            </div>
+            <span className="text-sm text-gray-400">
+              {members.slice(0, 2).map(m => m.name).join(", ")}
+              {members.length > 2 && ` and ${members.length - 2} others`}
+            </span>
+          </div>
+        )}
+
+        {/* Tabs */}
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={() => setActiveTab("posts")}
+            className={`px-4 py-2 rounded-lg font-medium transition ${
+              activeTab === "posts" 
+                ? "bg-cyan-400 text-black" 
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            Posts ({posts.length})
+          </button>
+          <button
+            onClick={() => setActiveTab("members")}
+            className={`px-4 py-2 rounded-lg font-medium transition ${
+              activeTab === "members" 
+                ? "bg-cyan-400 text-black" 
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            Members ({members.length})
+          </button>
+        </div>
+
+        {/* Content based on tab */}
+        {activeTab === "posts" && (
+          <div className="space-y-6">
+            {/* Post Creation (Only for members) */}
+            {isMember && (
+              <div className="rounded-2xl p-4 border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+                <div className="flex gap-3">
+                  <img
+                    src={getMediaUrl(currentUser?.avatar) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser?.handle}`}
+                    alt="You"
+                    className="w-10 h-10 rounded-full object-cover"
                   />
-                  
-                  {newPostMedia && (
-                    <div className="mb-3 relative">
-                      {newPostMedia.type.startsWith('video/') ? (
-                        <video
-                          src={URL.createObjectURL(newPostMedia)}
-                          className="w-full max-h-64 object-cover rounded-xl"
-                          controls
-                        />
-                      ) : (
-                        <img
-                          src={URL.createObjectURL(newPostMedia)}
-                          alt="Preview"
-                          className="w-full max-h-64 object-cover rounded-xl"
-                        />
-                      )}
+                  <div className="flex-1">
+                    <textarea
+                      value={newPostText}
+                      onChange={(e) => setNewPostText(e.target.value)}
+                      placeholder={`Share something with ${tribe.name}...`}
+                      className="w-full bg-gray-800/50 text-white rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-none border border-gray-700"
+                      rows="2"
+                    />
+                    
+                    {newPostMedia && (
+                      <div className="mt-2 relative">
+                        {newPostMedia.type.startsWith('video/') ? (
+                          <video
+                            src={URL.createObjectURL(newPostMedia)}
+                            className="w-full max-h-48 object-cover rounded-xl"
+                            controls
+                          />
+                        ) : (
+                          <img
+                            src={URL.createObjectURL(newPostMedia)}
+                            alt="Preview"
+                            className="w-full max-h-48 object-cover rounded-xl"
+                          />
+                        )}
+                        <button
+                          onClick={() => setNewPostMedia(null)}
+                          className="absolute top-2 right-2 px-2 py-1 bg-black/70 text-white rounded-lg text-xs hover:bg-black transition"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
+                    
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex gap-1">
+                        <label className="p-2 hover:bg-gray-800 rounded-lg cursor-pointer transition">
+                          <Image size={18} className="text-cyan-400" />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleMediaSelect}
+                          />
+                        </label>
+                        <label className="p-2 hover:bg-gray-800 rounded-lg cursor-pointer transition">
+                          <Video size={18} className="text-cyan-400" />
+                          <input
+                            type="file"
+                            accept="video/*"
+                            className="hidden"
+                            onChange={handleMediaSelect}
+                          />
+                        </label>
+                      </div>
+                      
                       <button
-                        onClick={() => setNewPostMedia(null)}
-                        className="absolute top-2 right-2 px-3 py-1 bg-black/70 text-white rounded-lg text-sm hover:bg-black transition"
+                        onClick={createPost}
+                        disabled={posting || (!newPostText.trim() && !newPostMedia)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black text-sm font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Remove
+                        {posting ? (
+                          <div className="animate-spin w-4 h-4 border-2 border-black border-t-transparent rounded-full"></div>
+                        ) : (
+                          <Send size={16} />
+                        )}
+                        Post
                       </button>
                     </div>
-                  )}
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-2">
-                      <label className="p-2 hover:bg-gray-800 rounded-full cursor-pointer transition">
-                        <Image size={20} className="text-cyan-400" />
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={handleMediaSelect}
-                        />
-                      </label>
-                      <label className="p-2 hover:bg-gray-800 rounded-full cursor-pointer transition">
-                        <Video size={20} className="text-cyan-400" />
-                        <input
-                          type="file"
-                          accept="video/*"
-                          className="hidden"
-                          onChange={handleMediaSelect}
-                        />
-                      </label>
-                    </div>
-                    
-                    <button
-                      onClick={createPost}
-                      disabled={posting || (!newPostText.trim() && !newPostMedia)}
-                      className="flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {posting ? (
-                        <div className="animate-spin w-5 h-5 border-2 border-black border-t-transparent rounded-full"></div>
-                      ) : (
-                        <>
-                          <Send size={18} />
-                          Post
-                        </>
-                      )}
-                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Members-only message */}
-          {!isMember && currentUser && (
-            <div className="glass-card p-8 text-center">
-              <Users size={48} className="mx-auto mb-3 text-gray-600" />
-              <h3 className="text-xl font-semibold text-white mb-2">Members Only</h3>
-              <p className="text-gray-400 mb-4">Join this tribe to see posts and participate in discussions</p>
-              <button
-                onClick={joinTribe}
-                disabled={joining}
-                className="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50"
-              >
-                {joining ? 'Joining...' : 'Join Tribe'}
-              </button>
-            </div>
-          )}
+            {/* Non-member message */}
+            {!isMember && currentUser && (
+              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+                <Users size={48} className="mx-auto mb-3 text-gray-600" />
+                <h3 className="text-xl font-semibold text-white mb-2">Members Only</h3>
+                <p className="text-gray-400 mb-4">Join this tribe to see posts and participate</p>
+                <button
+                  onClick={joinTribe}
+                  disabled={joining}
+                  className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50"
+                >
+                  {joining ? 'Joining...' : 'Join Tribe'}
+                </button>
+              </div>
+            )}
 
-          {/* Not logged in message */}
-          {!currentUser && (
-            <div className="glass-card p-8 text-center">
-              <Users size={48} className="mx-auto mb-3 text-gray-600" />
-              <h3 className="text-xl font-semibold text-white mb-2">Login Required</h3>
-              <p className="text-gray-400 mb-4">Login or create an account to join tribes and see posts</p>
-              <button
-                onClick={() => navigate('/auth')}
-                className="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition"
-              >
-                Login / Sign Up
-              </button>
-            </div>
-          )}
+            {/* Not logged in */}
+            {!currentUser && (
+              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+                <Users size={48} className="mx-auto mb-3 text-gray-600" />
+                <h3 className="text-xl font-semibold text-white mb-2">Login Required</h3>
+                <p className="text-gray-400 mb-4">Login to join tribes and see posts</p>
+                <button
+                  onClick={() => navigate('/auth')}
+                  className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition"
+                >
+                  Login / Sign Up
+                </button>
+              </div>
+            )}
 
-          {/* Posts Feed */}
-          {isMember && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                📝 Tribe Posts
-                <span className="text-sm font-normal text-gray-500">({posts.length})</span>
-              </h2>
-              
-              {posts.length > 0 ? (
+            {/* Posts Feed */}
+            {isMember && (
+              posts.length > 0 ? (
                 posts.map(post => (
                   <PostCard
                     key={post.id}
@@ -490,15 +564,58 @@ const TribeDetail = () => {
                   />
                 ))
               ) : (
-                <div className="glass-card p-8 text-center">
+                <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
                   <p className="text-gray-400 mb-2">No posts yet</p>
                   <p className="text-sm text-gray-500">Be the first to post in this tribe!</p>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
+              )
+            )}
+          </div>
+        )}
+
+        {/* Members Tab */}
+        {activeTab === "members" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {members.map((member) => (
+              <div
+                key={member.id}
+                className="flex items-center gap-3 p-4 rounded-xl border border-gray-800 hover:border-cyan-400/30 cursor-pointer transition"
+                style={{ background: 'rgba(26, 11, 46, 0.5)' }}
+                onClick={() => navigate(`/@${member.handle}`)}
+              >
+                <img
+                  src={member.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${member.handle}`}
+                  alt={member.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-semibold text-white truncate">{member.name}</h4>
+                    {member.id === tribe.ownerId && (
+                      <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Owner</span>
+                    )}
+                    {member.isVerified && (
+                      <span className="text-cyan-400">✓</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-400">@{member.handle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <TribeSettingsModal
+          tribe={tribe}
+          currentUser={currentUser}
+          onClose={() => setShowSettings(false)}
+          onUpdate={handleTribeUpdate}
+          onDelete={handleTribeDelete}
+        />
+      )}
       
       <BottomNav active="discover" />
     </div>
