@@ -302,6 +302,51 @@ class TribeUpdate(BaseModel):
     avatar: Optional[str] = None
     coverImage: Optional[str] = None
 
+# Digital Products Models
+class DigitalProduct(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: str = ""
+    category: str = "other"  # courses, ebooks, templates, software, graphics, audio, video, other
+    coverImage: str = ""
+    fileUrl: str = ""  # URL to the actual file
+    fileType: str = ""  # pdf, zip, mp4, etc.
+    fileSize: str = ""  # Human readable size
+    price: float = 0.0  # 0 for free
+    isFree: bool = True
+    tags: List[str] = Field(default_factory=list)
+    authorId: str
+    downloadCount: int = 0
+    viewCount: int = 0
+    likes: List[str] = Field(default_factory=list)
+    likeCount: int = 0
+    rating: float = 0.0
+    ratingCount: int = 0
+    featured: bool = False
+    createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updatedAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class DigitalProductCreate(BaseModel):
+    title: str
+    description: str = ""
+    category: str = "other"
+    coverImage: str = ""
+    fileUrl: str = ""
+    fileType: str = ""
+    fileSize: str = ""
+    price: float = 0.0
+    tags: List[str] = []
+
+class DigitalProductUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    category: Optional[str] = None
+    coverImage: Optional[str] = None
+    fileUrl: Optional[str] = None
+    tags: Optional[List[str]] = None
+    price: Optional[float] = None
+
 class Comment(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
