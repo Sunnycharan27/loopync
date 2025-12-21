@@ -453,7 +453,7 @@ const Discover = () => {
                                 {user.isFollowing || currentUser.following?.includes(user.id) ? 'Following' : 'Follow'}
                               </button>
                               
-                              {/* Message Button - Show if friends */}
+                              {/* Message Button */}
                               {(user.isFriend || currentUser.friends?.includes(user.id)) && (
                                 <button
                                   onClick={() => startConversation(user)}
