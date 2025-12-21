@@ -809,7 +809,7 @@ const Discover = () => {
                                     </button>
                                     
                                     {/* Message Button */}
-                                    {!isOwnUser && (
+                                    {user.id !== currentUser.id && (
                                       <button
                                         onClick={() => startConversation(user)}
                                         className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-all text-sm"
