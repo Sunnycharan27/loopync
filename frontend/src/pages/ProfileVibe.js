@@ -74,7 +74,10 @@ const ProfileVibe = () => {
       toast.success("Name updated!");
     } catch (error) {
       console.error("Failed to update name:", error);
-      toast.error(error.response?.data?.detail || "Failed to update name");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to update name");
+      toast.error(errorMsg);
     }
   };
 
