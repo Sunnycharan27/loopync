@@ -431,6 +431,7 @@ test_plan:
     - "VibeZone View Count Display"
     - "Objects are not valid as a React child - Critical Bug Fix"
     - "Loopync Tribes Functionality"
+    - "Enhanced Loopync Tribes UI/UX Design Features"
   failed_features:
     - "Vibe Capsule Highlights on Profile"
     - "Enhanced Messaging - Share Post to DM"
