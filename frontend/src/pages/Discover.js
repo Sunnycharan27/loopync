@@ -658,7 +658,10 @@ const Discover = () => {
                             if (error.response?.status === 403) {
                               toast.error("You can only delete your own posts");
                             } else {
-                              toast.error(error.response?.data?.detail || "Failed to delete post");
+                              // Safely extract error message
+                              const detail = error.response?.data?.detail;
+                              const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to delete post");
+                              toast.error(errorMsg);
                             }
                           }
                         }}

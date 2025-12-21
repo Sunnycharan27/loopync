@@ -127,7 +127,10 @@ const AuthComplete = () => {
       login(loginRes.data.token, loginRes.data.user);
       navigate("/");
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Invalid code");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Invalid code");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -208,7 +211,10 @@ const AuthComplete = () => {
       setMode("login");
       setPassword("");
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to reset password");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to reset password");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
