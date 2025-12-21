@@ -188,13 +188,14 @@ const Discover = () => {
       const action = response.data.action;
       toast.success(action === 'followed' ? 'Following!' : 'Unfollowed');
       
-      // Refresh current user data
-      const userRes = await axios.get(`${API}/auth/me`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      // Refresh global user data to sync everywhere
+      await refreshUserData();
       
-      // Update people and search results
-      const updatedFollowing = userRes.data.following || [];
+      // Update people and search results with the updated following state
+      const updatedFollowing = action === 'followed' 
+        ? [...(currentUser.following || []), targetUserId]
+        : (currentUser.following || []).filter(id => id !== targetUserId);
+        
       setPeople(people.map(p => ({
         ...p,
         isFollowing: updatedFollowing.includes(p.id)
