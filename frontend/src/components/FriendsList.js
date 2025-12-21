@@ -313,7 +313,7 @@ const FriendsList = ({ currentUser, onStartChat, onStartCall }) => {
         </div>
       )}
 
-      {/* Suggestions Tab */}
+      {/* Suggestions Tab - Changed to Follow suggestions */}
       {activeTab === 'suggestions' && (
         <div className="space-y-4">
           {suggestions.length === 0 ? (
@@ -336,11 +336,10 @@ const FriendsList = ({ currentUser, onStartChat, onStartCall }) => {
                   <p className="text-sm text-gray-400">@{user.handle || 'user'}</p>
                 </div>
                 <button
-                  onClick={() => sendFriendRequest(user.id)}
-                  className="px-4 py-2 rounded-full bg-cyan-400 text-black hover:bg-cyan-500 transition font-semibold flex items-center gap-2"
+                  onClick={() => navigate(`/@${user.handle}`)}
+                  className="px-4 py-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition font-semibold"
                 >
-                  <UserPlus size={18} />
-                  Add Friend
+                  View Profile
                 </button>
               </div>
             ))
