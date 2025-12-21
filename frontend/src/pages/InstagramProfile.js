@@ -119,7 +119,15 @@ const InstagramProfile = () => {
     if (profileUser && currentUser && !isOwnProfile) {
       checkFollowStatus();
     }
-  }, [profileUser, currentUser, isOwnProfile]);
+  }, [profileUser, currentUser, currentUser?.following, isOwnProfile]);
+
+  // Also re-check follow status whenever currentUser.following changes
+  useEffect(() => {
+    if (currentUser?.following && profileUser && !isOwnProfile) {
+      const following = Array.isArray(currentUser.following) ? currentUser.following : [];
+      setIsFollowing(following.includes(profileUser.id));
+    }
+  }, [currentUser?.following]);
 
   const fetchUserByUsername = async (username) => {
     try {
