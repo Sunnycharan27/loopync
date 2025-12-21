@@ -125,7 +125,10 @@ const Settings = () => {
       setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
       setActiveSection("main");
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to change password");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to change password");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

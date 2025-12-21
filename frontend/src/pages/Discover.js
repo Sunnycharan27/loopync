@@ -162,7 +162,10 @@ const Discover = () => {
         }));
       }
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to send request");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to send request");
+      toast.error(errorMsg);
     }
   };
 
@@ -255,7 +258,10 @@ const Discover = () => {
       if (error.response?.status === 403) {
         toast.error("Send a friend request first to message this user");
       } else {
-        toast.error(error.response?.data?.detail || "Failed to start conversation");
+        // Safely extract error message
+        const detail = error.response?.data?.detail;
+        const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to start conversation");
+        toast.error(errorMsg);
       }
     }
   };
@@ -290,7 +296,10 @@ const Discover = () => {
         });
       }
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to join tribe");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to join tribe");
+      toast.error(errorMsg);
     }
   };
 
