@@ -12,10 +12,14 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState({});
 
+  // Check if current user is admin (loopyncpvt@gmail.com)
+  const isAdmin = currentUser?.email === 'loopyncpvt@gmail.com';
+
   const tabs = [
     { id: "user", name: "My Analytics", icon: <Activity size={16} /> },
     { id: "creator", name: "Creator", icon: <TrendingUp size={16} /> },
-    { id: "admin", name: "Platform", icon: <Shield size={16} /> },
+    // Only show Platform tab for admin
+    ...(isAdmin ? [{ id: "admin", name: "Platform", icon: <Shield size={16} /> }] : []),
   ];
 
   useEffect(() => {
