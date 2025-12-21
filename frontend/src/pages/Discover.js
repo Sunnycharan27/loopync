@@ -11,7 +11,7 @@ import PostCard from "../components/PostCard";
 import ShareModal from "../components/ShareModal";
 
 const Discover = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, refreshUserData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("posts");
   const [loading, setLoading] = useState(true);
