@@ -105,14 +105,17 @@ const CreateTribe = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('loopync_token');
+      
+      // Convert formData to match backend TribeCreate model
       const tribeData = {
-        ...formData,
-        creatorId: currentUser.id,
-        members: [currentUser.id],
-        admins: [currentUser.id]
+        name: formData.name.trim(),
+        description: formData.description.trim(),
+        tags: formData.category ? [formData.category.toLowerCase()] : [],
+        type: formData.privacy // 'public' or 'private'
       };
 
-      const res = await axios.post(`${API}/tribes`, tribeData, {
+      // Backend expects ownerId as query param
+      const res = await axios.post(`${API}/tribes?ownerId=${currentUser.id}`, tribeData, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
