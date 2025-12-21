@@ -431,9 +431,11 @@ frontend:
 
 test_plan:
   current_focus: 
+    - "Follow/Unfollow Real-Time State Synchronization"
     - "Vibe Capsule Highlights on Profile"
     - "Enhanced Messaging - Share Post to DM"
-  stuck_tasks: []
+  stuck_tasks: 
+    - "Follow/Unfollow Real-Time State Synchronization"
   test_all: false
   test_priority: "high"
   completed_features:
@@ -458,6 +460,7 @@ test_plan:
     - "Enhanced Loopync Tribes UI/UX Design Features"
     - "Free Digital Products Feature"
   failed_features:
+    - "Follow/Unfollow Real-Time State Synchronization"
     - "Vibe Capsule Highlights on Profile"
     - "Enhanced Messaging - Share Post to DM"
 
