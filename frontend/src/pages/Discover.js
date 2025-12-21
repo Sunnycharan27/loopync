@@ -428,7 +428,7 @@ const Discover = () => {
                           <div className="flex items-center gap-2">
                             <h3 
                               className="font-semibold text-white cursor-pointer hover:underline"
-                              onClick={() => navigate(`/u/${user.handle}`)}
+                              onClick={() => navigate(`/@${user.handle}`)}
                             >
                               {user.name}
                             </h3>
