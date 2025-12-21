@@ -179,55 +179,35 @@ const UserProfile = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* Action Buttons - Follow/Message */}
             {userId !== currentUser.id && (
               <div className="flex gap-2">
-                {relationshipStatus === null && (
+                {/* Follow/Following Button */}
+                {currentUser.following?.includes(userId) ? (
                   <button
-                    onClick={handleSendFriendRequest}
+                    onClick={handleFollow}
+                    className="flex-1 py-2 px-4 rounded-full bg-gray-700 text-white font-semibold hover:bg-red-500/20 hover:text-red-400 transition-all"
+                  >
+                    Following
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleFollow}
                     className="flex-1 py-2 px-4 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-500 transition-all flex items-center justify-center gap-2"
                   >
                     <UserPlus size={18} />
-                    Add Friend
+                    Follow
                   </button>
                 )}
 
-                {relationshipStatus === 'pending_sent' && (
-                  <button
-                    onClick={handleCancelRequest}
-                    className="flex-1 py-2 px-4 rounded-full bg-gray-700 text-gray-300 font-semibold hover:bg-gray-600 transition-all"
-                  >
-                    Request Sent
-                  </button>
-                )}
-
-                {relationshipStatus === 'pending_received' && (
-                  <button
-                    onClick={handleAcceptRequest}
-                    className="flex-1 py-2 px-4 rounded-full bg-green-500 text-white font-semibold hover:bg-green-600 transition-all flex items-center justify-center gap-2"
-                  >
-                    <UserCheck size={18} />
-                    Accept Request
-                  </button>
-                )}
-
-                {relationshipStatus === 'friends' && (
-                  <>
-                    <button
-                      onClick={handleMessage}
-                      className="flex-1 py-2 px-4 rounded-full bg-cyan-400 text-black font-semibold hover:bg-cyan-500 transition-all flex items-center justify-center gap-2"
-                    >
-                      <MessageCircle size={18} />
-                      Message
-                    </button>
-                    <button
-                      onClick={handleUnfriend}
-                      className="py-2 px-4 rounded-full border-2 border-gray-700 text-gray-400 font-semibold hover:bg-red-500/20 hover:border-red-500 hover:text-red-400 transition-all"
-                    >
-                      <UserX size={18} />
-                    </button>
-                  </>
-                )}
+                {/* Message Button */}
+                <button
+                  onClick={handleMessage}
+                  className="flex-1 py-2 px-4 rounded-full bg-purple-500 text-white font-semibold hover:bg-purple-600 transition-all flex items-center justify-center gap-2"
+                >
+                  <MessageCircle size={18} />
+                  Message
+                </button>
               </div>
             )}
 
