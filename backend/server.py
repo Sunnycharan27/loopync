@@ -278,6 +278,7 @@ class Tribe(BaseModel):
     type: str = "public"
     description: str = ""
     avatar: str = "https://api.dicebear.com/7.x/shapes/svg?seed=tribe"
+    coverImage: str = ""  # Cover image URL
     ownerId: str
     members: List[str] = Field(default_factory=list)
     memberCount: int = 0
@@ -290,6 +291,16 @@ class TribeCreate(BaseModel):
     tags: List[str] = []
     type: str = "public"
     description: str = ""
+    avatar: str = ""
+    coverImage: str = ""
+
+class TribeUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    tags: Optional[List[str]] = None
+    type: Optional[str] = None
+    avatar: Optional[str] = None
+    coverImage: Optional[str] = None
 
 class Comment(BaseModel):
     model_config = ConfigDict(extra="ignore")
