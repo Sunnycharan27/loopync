@@ -45,59 +45,51 @@ const UserProfile = () => {
     }
   };
 
-  const checkRelationship = async () => {
-    try {
-      // Check if friends
-      const friendsRes = await axios.get(`${API}/friends/list?userId=${currentUser.id}`);
-      const isFriend = friendsRes.data.items?.some(f => f.user.id === userId);
-      
-      if (isFriend) {
-        setRelationshipStatus('friends');
-        return;
-      }
-
-      // Check friend requests
-      const requestsRes = await axios.get(`${API}/friend-requests?userId=${currentUser.id}`);
-      const sentRequest = requestsRes.data.find(r => 
-        r.fromUserId === currentUser.id && r.toUserId === userId && r.status === 'pending'
-      );
-      const receivedRequest = requestsRes.data.find(r => 
-        r.fromUserId === userId && r.toUserId === currentUser.id && r.status === 'pending'
-      );
-
-      if (sentRequest) {
-        setRelationshipStatus('pending_sent');
-        setRequestId(sentRequest.id);
-      } else if (receivedRequest) {
-        setRelationshipStatus('pending_received');
-        setRequestId(receivedRequest.id);
-      } else {
-        setRelationshipStatus(null);
-      }
-    } catch (error) {
-      console.error("Failed to check relationship");
+  // Handle Follow/Unfollow
+  const handleFollow = async () => {
+    if (!currentUser) {
+      toast.error("Please login to follow");
+      return;
     }
-  };
-
-  const handleSendFriendRequest = async () => {
+    
     try {
-      await axios.post(`${API}/friend-requests?fromUserId=${currentUser.id}&toUserId=${userId}`);
-      toast.success("Friend request sent!");
-      fetchUserProfile(); // Refetch to update relationship status
+      const token = localStorage.getItem('loopync_token');
+      const response = await axios.post(
+        `${API}/users/${currentUser.id}/follow`,
+        { targetUserId: userId },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      
+      toast.success(response.data.action === 'followed' ? 'Following!' : 'Unfollowed');
+      // Reload profile to update follower count
+      fetchUserProfile();
     } catch (error) {
       // Safely extract error message
       const detail = error.response?.data?.detail;
-      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to send request");
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to follow user");
       toast.error(errorMsg);
     }
   };
 
-  const handleCancelRequest = async () => {
+  const handleMessage = async () => {
     try {
-      await axios.post(`${API}/friend-requests/${requestId}/cancel`);
-      toast.success("Friend request cancelled");
-      fetchUserProfile(); // Refetch to update relationship status
+      const token = localStorage.getItem('loopync_token');
+      // Start conversation with the user
+      await axios.post(
+        `${API}/messenger/conversations`,
+        { participantIds: [currentUser.id, userId] },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+      navigate('/messenger');
     } catch (error) {
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Cannot message this user");
+      toast.error(errorMsg);
+    }
+  };
+
+  const handleLike = async (postId) => {
       toast.error("Failed to cancel request");
     }
   };
