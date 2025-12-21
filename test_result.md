@@ -395,6 +395,8 @@ test_plan:
     - "Enhanced Messaging - Share Post to DM"
 
 agent_communication:
+  - agent: "main"
+    message: "Applied global fix for 'Objects are not valid as a React child' crash. Updated 30+ frontend files to safely extract error messages from API responses (handling both string and object/array validation error formats). Error handling now uses pattern: const detail = error.response?.data?.detail; const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'fallback message'). All toast.error calls now receive string messages instead of objects."
   - agent: "testing"
     message: "✅ COMPREHENSIVE NOTIFICATION SYSTEM TESTING COMPLETE - All backend notification functionality verified and working correctly. Tested follow, like, and comment notifications with proper user enrichment, navigation links, and message formatting. All APIs responding correctly with proper data structure. System ready for production use."
   - agent: "testing"
