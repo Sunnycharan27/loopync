@@ -174,7 +174,10 @@ const VerificationRequest = () => {
       setStep(4); // Success step
     } catch (error) {
       console.error('Submit error:', error);
-      toast.error(error.response?.data?.detail || 'Failed to submit verification request');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to submit verification request');
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
