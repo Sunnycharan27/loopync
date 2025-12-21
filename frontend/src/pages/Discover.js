@@ -463,20 +463,6 @@ const Discover = () => {
                                   Message
                                 </button>
                               )}
-                              
-                              {/* Add Friend / Request Sent */}
-                              {!user.isFriend && !currentUser.friends?.includes(user.id) && !user.requestSent && (
-                                <button
-                                  onClick={() => sendFriendRequest(user.id)}
-                                  className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all text-xs"
-                                >
-                                  <UserPlus size={14} />
-                                  Add
-                                </button>
-                              )}
-                              {user.requestSent && (
-                                <span className="px-3 py-2 rounded-full bg-gray-700 text-gray-400 text-xs">Requested</span>
-                              )}
                             </>
                           )}
                         </div>
