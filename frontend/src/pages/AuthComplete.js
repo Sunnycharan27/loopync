@@ -48,7 +48,9 @@ const AuthComplete = () => {
       navigate("/");
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
-      const errorMsg = error.response?.data?.detail || "Invalid email or password";
+      // Safely extract error message - handle object/array validation errors
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Invalid email or password");
       toast.error(errorMsg);
     } finally {
       setLoading(false);
@@ -94,7 +96,10 @@ const AuthComplete = () => {
       navigate("/");
       
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Signup failed");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Signup failed");
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

@@ -241,7 +241,10 @@ const RoomDetailClubhouse = () => {
       toast.success("Invited to stage!");
       fetchRoom();
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to invite");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to invite");
+      toast.error(errorMsg);
     }
   };
 
@@ -251,7 +254,10 @@ const RoomDetailClubhouse = () => {
       toast.success("Removed from stage");
       fetchRoom();
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to remove");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to remove");
+      toast.error(errorMsg);
     }
   };
 
@@ -261,7 +267,10 @@ const RoomDetailClubhouse = () => {
       toast.success("Made moderator!");
       fetchRoom();
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Failed to make moderator");
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to make moderator");
+      toast.error(errorMsg);
     }
   };
 

@@ -48,7 +48,10 @@ const ProductDetail = () => {
       toast.success('Added to cart!');
       navigate('/cart');
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to add to cart');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to add to cart');
+      toast.error(errorMsg);
     }
   };
 

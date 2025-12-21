@@ -21,7 +21,10 @@ const People = () => {
       });
       toast.success(`${callType === 'video' ? 'Video' : 'Voice'} call initiated!`);
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to initiate call');
+      // Safely extract error message
+      const detail = error.response?.data?.detail;
+      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || 'Failed to initiate call');
+      toast.error(errorMsg);
     }
   };
 
