@@ -47,6 +47,11 @@ import VideoUpload from "./pages/VideoUpload";
 import { WebSocketProvider } from "./context/WebSocketContext";
 import CallManager from "./components/CallManager";
 
+// Digital Products Pages
+import DigitalProducts from "./pages/DigitalProducts";
+import DigitalProductDetail from "./pages/DigitalProductDetail";
+import UploadDigitalProduct from "./pages/UploadDigitalProduct";
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
 
