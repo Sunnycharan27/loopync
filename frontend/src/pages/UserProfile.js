@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
-import { ArrowLeft, MapPin, Calendar, Link as LinkIcon, UserPlus, UserCheck, MessageCircle, UserX } from "lucide-react";
+import { ArrowLeft, UserPlus, MessageCircle } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import PostCard from "../components/PostCard";
 
 const UserProfile = () => {
   const { userId } = useParams();
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, refreshUserData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [relationshipStatus, setRelationshipStatus] = useState(null); // null, 'friends', 'pending_sent', 'pending_received', 'blocked'
-  const [requestId, setRequestId] = useState(null);
 
   useEffect(() => {
     fetchUserProfile();
