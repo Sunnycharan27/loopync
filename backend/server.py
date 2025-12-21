@@ -3090,6 +3090,58 @@ async def create_tribe(tribe: TribeCreate, ownerId: str):
     doc.pop('_id', None)
     return doc
 
+@api_router.put("/tribes/{tribeId}")
+async def update_tribe(tribeId: str, updates: TribeUpdate, userId: str):
+    """Update tribe settings - only owner can update"""
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    if tribe.get("ownerId") != userId:
+        raise HTTPException(status_code=403, detail="Only the tribe owner can update settings")
+    
+    # Build update dict with only non-None values
+    update_dict = {}
+    for field, value in updates.model_dump().items():
+        if value is not None:
+            update_dict[field] = value
+    
+    if update_dict:
+        await db.tribes.update_one({"id": tribeId}, {"$set": update_dict})
+    
+    # Return updated tribe
+    updated_tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    return updated_tribe
+
+@api_router.delete("/tribes/{tribeId}")
+async def delete_tribe(tribeId: str, userId: str):
+    """Delete a tribe - only owner can delete"""
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    if tribe.get("ownerId") != userId:
+        raise HTTPException(status_code=403, detail="Only the tribe owner can delete the tribe")
+    
+    # Delete all tribe posts
+    await db.posts.delete_many({"tribeId": tribeId})
+    
+    # Delete the tribe
+    await db.tribes.delete_one({"id": tribeId})
+    
+    return {"message": "Tribe deleted successfully"}
+
+@api_router.get("/tribes/{tribeId}/members")
+async def get_tribe_members(tribeId: str):
+    """Get tribe members with their profiles"""
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    member_ids = tribe.get("members", [])
+    members = await db.users.find({"id": {"$in": member_ids}}, {"_id": 0, "password": 0}).to_list(100)
+    return members
+
 @api_router.post("/tribes/{tribeId}/join")
 async def join_tribe(tribeId: str, userId: str):
     tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
