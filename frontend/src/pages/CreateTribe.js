@@ -111,7 +111,9 @@ const CreateTribe = () => {
         name: formData.name.trim(),
         description: formData.description.trim(),
         tags: formData.category ? [formData.category.toLowerCase()] : [],
-        type: formData.privacy // 'public' or 'private'
+        type: formData.privacy, // 'public' or 'private'
+        avatar: formData.icon || '',
+        coverImage: formData.coverImage || ''
       };
 
       // Backend expects ownerId as query param
