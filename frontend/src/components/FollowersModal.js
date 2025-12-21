@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { X, UserPlus, UserCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import VerifiedBadge from './VerifiedBadge';
 import { getMediaUrl } from '../utils/mediaUtils';
+import { AuthContext } from '../App';
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
-const FollowersModal = ({ userId, type = 'followers', onClose, currentUser }) => {
+const FollowersModal = ({ userId, type = 'followers', onClose, currentUser, onFollowUpdate }) => {
   const navigate = useNavigate();
+  const { refreshUserData } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [followingSet, setFollowingSet] = useState(new Set(currentUser?.following || []));
 
   useEffect(() => {
     fetchUsers();
   }, [userId, type]);
+
+  useEffect(() => {
+    // Keep followingSet in sync with currentUser
+    setFollowingSet(new Set(currentUser?.following || []));
+  }, [currentUser?.following]);
 
   const fetchUsers = async () => {
     try {
@@ -39,23 +47,34 @@ const FollowersModal = ({ userId, type = 'followers', onClose, currentUser }) =>
       return;
     }
 
+    const wasFollowing = followingSet.has(targetUserId);
+
     try {
       const token = localStorage.getItem('loopync_token');
-      await axios.post(
+      const response = await axios.post(
         `${API}/api/users/${currentUser.id}/follow`,
         { targetUserId },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
 
-      const isFollowing = currentUser.following?.includes(targetUserId);
-      toast.success(isFollowing ? 'Unfollowed' : 'Following!');
+      // Update local following set immediately for instant UI feedback
+      const newFollowingSet = new Set(followingSet);
+      if (wasFollowing) {
+        newFollowingSet.delete(targetUserId);
+      } else {
+        newFollowingSet.add(targetUserId);
+      }
+      setFollowingSet(newFollowingSet);
+
+      toast.success(wasFollowing ? 'Unfollowed' : 'Following!');
       
-      // Update local state
-      setUsers(users.map(u => 
-        u.id === targetUserId 
-          ? { ...u, isFollowing: !isFollowing }
-          : u
-      ));
+      // Refresh global user data to sync everywhere
+      await refreshUserData();
+      
+      // Notify parent component about the follow update
+      if (onFollowUpdate) {
+        onFollowUpdate(targetUserId, !wasFollowing, response.data);
+      }
     } catch (error) {
       console.error('Error following user:', error);
       toast.error('Failed to follow user');
@@ -63,7 +82,7 @@ const FollowersModal = ({ userId, type = 'followers', onClose, currentUser }) =>
   };
 
   const isFollowing = (targetUserId) => {
-    return currentUser?.following?.includes(targetUserId);
+    return followingSet.has(targetUserId);
   };
 
   return (
