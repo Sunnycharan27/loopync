@@ -140,7 +140,8 @@ const InstagramProfile = () => {
 
   const checkFollowStatus = () => {
     if (currentUser && profileUser) {
-      const following = currentUser.following || [];
+      // Use fresh following array from currentUser
+      const following = Array.isArray(currentUser.following) ? currentUser.following : [];
       setIsFollowing(following.includes(profileUser.id));
     }
   };
