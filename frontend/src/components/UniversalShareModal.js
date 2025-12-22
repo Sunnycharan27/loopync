@@ -674,7 +674,7 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           <div className="w-full max-w-sm">
             {/* Preview Header */}
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-white font-bold text-lg">Instagram Story Ready!</h3>
+              <h3 className="text-white font-bold text-lg">Instagram Story Ready! 🎉</h3>
               <button
                 onClick={() => setShowStoryPreview(false)}
                 className="text-gray-400 hover:text-white"
@@ -696,12 +696,11 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
             {/* Instructions */}
             <div className="bg-gray-800/80 rounded-xl p-4 mb-4">
               <p className="text-white text-sm font-semibold mb-2">📱 How to share:</p>
-              <ol className="text-gray-300 text-sm space-y-2">
-                <li>1. Download the story image below</li>
-                <li>2. Open Instagram → Create Story</li>
-                <li>3. Upload this image</li>
-                <li>4. Add a <span className="text-cyan-400">Link Sticker</span> with the copied URL</li>
-                <li>5. Share your story! 🎉</li>
+              <ol className="text-gray-300 text-sm space-y-1">
+                <li>1. Tap "Download & Open Instagram" below</li>
+                <li>2. Create a new Story with this image</li>
+                <li>3. Add a <span className="text-cyan-400 font-semibold">Link Sticker</span> with the copied URL</li>
+                <li>4. Share your story! 🎉</li>
               </ol>
             </div>
 
@@ -718,20 +717,32 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
+            <div className="space-y-3">
+              {/* Main CTA - Download & Open Instagram */}
               <button
                 onClick={downloadStoryImage}
-                className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold rounded-xl hover:opacity-90 transition"
+                className="w-full flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold rounded-xl hover:opacity-90 transition shadow-lg"
               >
-                <Download size={20} />
-                Download Story
+                <Instagram size={22} />
+                Download & Open Instagram
               </button>
-              <button
-                onClick={() => setShowStoryPreview(false)}
-                className="px-4 py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition"
-              >
-                Close
-              </button>
+              
+              {/* Secondary - Download Only */}
+              <div className="flex gap-3">
+                <button
+                  onClick={downloadOnly}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 transition"
+                >
+                  <Download size={18} />
+                  Download Only
+                </button>
+                <button
+                  onClick={() => setShowStoryPreview(false)}
+                  className="px-6 py-3 bg-gray-800 text-gray-300 rounded-xl hover:bg-gray-700 transition"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
