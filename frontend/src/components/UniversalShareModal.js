@@ -339,8 +339,6 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
               </div>
               <span className="text-xs text-gray-400">Twitter</span>
             </button>
-              <span className="text-xs text-gray-400">Twitter</span>
-            </button>
 
             <button
               onClick={() => handleShare('email')}
