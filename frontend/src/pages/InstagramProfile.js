@@ -70,6 +70,9 @@ const InstagramProfile = () => {
   // Followers/Following modal
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [followModalType, setFollowModalType] = useState('followers');
+  
+  // Profile share modal
+  const [showProfileShare, setShowProfileShare] = useState(false);
 
   // Fetch fresh user data from server
   const fetchFreshUserData = async (userId) => {
