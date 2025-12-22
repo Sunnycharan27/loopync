@@ -519,6 +519,11 @@ test_plan:
     - "Loopync Tribes Functionality"
     - "Enhanced Loopync Tribes UI/UX Design Features"
     - "Free Digital Products Feature"
+    - "Loopync Recent Changes - Add Friend Removal"
+    - "Loopync Recent Changes - View Profile Navigation"
+    - "Loopync Recent Changes - Platform Dashboard Admin-Only"
+    - "Loopync Recent Changes - Share to Instagram Stories"
+    - "Loopync Recent Changes - Delete Post Functionality"
   failed_features:
     - "Follow/Unfollow Real-Time State Synchronization"
     - "Vibe Capsule Highlights on Profile"
