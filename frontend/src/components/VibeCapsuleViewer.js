@@ -151,7 +151,13 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
 
       {/* Header */}
       <div className="absolute top-8 left-4 right-4 flex items-center justify-between" style={{ zIndex: 10001 }}>
-        <div className="flex items-center gap-3">
+        <div 
+          className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => {
+            onClose();
+            navigate(`/profile/${currentStory.author?.id}`);
+          }}
+        >
           <img
             src={currentStory.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentStory.author?.name || 'user'}`}
             alt={currentStory.author?.name}
