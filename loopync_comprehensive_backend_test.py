@@ -758,20 +758,31 @@ class LoopyncBackendTester:
             return False
         
         if response and response.status_code == 200:
-            categories = response.json()
+            categories_data = response.json()
             expected_categories = {'courses', 'ebooks', 'pdfs'}
             
-            if isinstance(categories, list):
-                category_set = set(cat.lower() if isinstance(cat, str) else cat for cat in categories)
-                if expected_categories.issubset(category_set):
+            if isinstance(categories_data, list):
+                # Extract category names from the response format [{"name": "courses", "count": 0}, ...]
+                category_names = set()
+                for cat_obj in categories_data:
+                    if isinstance(cat_obj, dict) and "name" in cat_obj:
+                        category_names.add(cat_obj["name"])
+                
+                if expected_categories == category_names:
                     self.log_result("Digital Products Categories", True, 
-                                  f"Categories: {categories}, Contains required: {list(expected_categories)}", 
+                                  f"Categories: {list(category_names)}, All required categories present", 
                                   response_time=response_time)
                     return True
                 else:
-                    missing = expected_categories - category_set
+                    missing = expected_categories - category_names
+                    extra = category_names - expected_categories
+                    error_msg = f"Expected {list(expected_categories)}, got {list(category_names)}"
+                    if missing:
+                        error_msg += f", Missing: {list(missing)}"
+                    if extra:
+                        error_msg += f", Extra: {list(extra)}"
                     self.log_result("Digital Products Categories", False, 
-                                  error=f"Missing required categories: {list(missing)}", 
+                                  error=error_msg, 
                                   response_time=response_time)
                     return False
             else:
