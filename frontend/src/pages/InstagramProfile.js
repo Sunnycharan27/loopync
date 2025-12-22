@@ -15,6 +15,7 @@ import PostCard from '../components/PostCard';
 import FollowersModal from '../components/FollowersModal';
 import VibeCapsuleViewer from '../components/VibeCapsuleViewer';
 import VibeCapsuleUpload from '../components/VibeCapsuleUpload';
+import UniversalShareModal from '../components/UniversalShareModal';
 import { getMediaUrl } from '../utils/mediaUtils';
 
 const InstagramProfile = () => {
