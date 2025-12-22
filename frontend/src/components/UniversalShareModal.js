@@ -192,12 +192,13 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
       // Load Loopync logo
       try {
         const logo = new Image();
-        logo.crossOrigin = 'anonymous';
+        // Don't set crossOrigin for same-origin images
         await new Promise((resolve, reject) => {
           logo.onload = resolve;
           logo.onerror = reject;
           setTimeout(() => reject(new Error('Logo load timeout')), 3000);
-          logo.src = '/loopync-logo.jpg';
+          // Use absolute URL for logo
+          logo.src = `${window.location.origin}/loopync-logo.jpg`;
         });
         
         // Draw logo at top center
