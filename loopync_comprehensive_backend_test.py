@@ -89,8 +89,13 @@ class LoopyncBackendTester:
             
             response_time = (time.time() - start_time) * 1000
             return response, response_time
+        except requests.exceptions.Timeout:
+            response_time = (time.time() - start_time) * 1000
+            self.log(f"Request timeout for {method} {endpoint}", "WARNING")
+            return None, response_time
         except requests.exceptions.RequestException as e:
             response_time = (time.time() - start_time) * 1000
+            self.log(f"Request exception for {method} {endpoint}: {e}", "ERROR")
             return None, response_time
 
     def verify_json_response(self, response):
