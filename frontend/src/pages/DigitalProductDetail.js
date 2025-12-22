@@ -4,7 +4,7 @@ import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft, Download, Eye, Heart, Share2, Clock, User,
-  BookOpen, FileText, Palette, Music, Video, Code, Package,
+  BookOpen, FileText, Package,
   ExternalLink, Star, CheckCircle
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
