@@ -244,7 +244,6 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           await new Promise((resolve, reject) => {
             img.onload = resolve;
             img.onerror = reject;
-            // Timeout for image loading
             setTimeout(() => reject(new Error('Image load timeout')), 5000);
             img.src = mediaUrl;
           });
@@ -279,28 +278,11 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           console.log('Could not load image:', err);
         }
       }
-          const scaledHeight = img.height * scale;
-          const offsetX = imgX + (imgSize - scaledWidth) / 2;
-          const offsetY = imgY + (imgSize - scaledHeight) / 2;
-          ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
-          ctx.restore();
-          
-          // Add border glow
-          ctx.strokeStyle = 'rgba(0, 255, 255, 0.5)';
-          ctx.lineWidth = 4;
-          drawRoundedRect(ctx, imgX, imgY, imgSize, imgSize, 30);
-          ctx.stroke();
-          
-          imageLoaded = true;
-        } catch (err) {
-          console.log('Could not load image:', err);
-        }
-      }
       
       // If no image, show text content
       if (!imageLoaded) {
         ctx.fillStyle = 'rgba(26, 11, 46, 0.8)';
-        drawRoundedRect(ctx, 90, 500, 900, 600, 30);
+        drawRoundedRect(ctx, 90, 380, 900, 500, 30);
         ctx.fill();
         
         // Post text
@@ -325,58 +307,64 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
         }
         lines.push(currentLine);
         
-        // Draw text lines (max 6 lines)
-        lines.slice(0, 6).forEach((line, i) => {
-          ctx.fillText(line, canvas.width / 2, 650 + (i * 70));
+        // Draw text lines (max 5 lines)
+        lines.slice(0, 5).forEach((line, i) => {
+          ctx.fillText(line, canvas.width / 2, 550 + (i * 70));
         });
       }
       
-      // Author info
+      // Author info card
       const authorName = item.author?.name || currentUser?.name || 'Loopync User';
       const authorHandle = item.author?.handle || currentUser?.handle || 'loopync';
       
       ctx.fillStyle = 'rgba(26, 11, 46, 0.9)';
-      drawRoundedRect(ctx, 90, imageLoaded ? 1280 : 1180, 900, 140, 20);
+      drawRoundedRect(ctx, 90, imageLoaded ? 1150 : 950, 900, 140, 20);
       ctx.fill();
       
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 40px Arial, sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText(authorName, 140, imageLoaded ? 1350 : 1250);
+      ctx.fillText(authorName, 140, imageLoaded ? 1220 : 1020);
       
       ctx.fillStyle = '#00ffff';
       ctx.font = '32px Arial, sans-serif';
-      ctx.fillText(`@${authorHandle}`, 140, imageLoaded ? 1395 : 1295);
+      ctx.fillText(`@${authorHandle}`, 140, imageLoaded ? 1265 : 1065);
       
-      // Loopync branding at top
-      ctx.fillStyle = '#00ffff';
-      ctx.font = 'bold 64px Arial, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('LOOPYNC', canvas.width / 2, 150);
-      
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.font = '32px Arial, sans-serif';
-      ctx.fillText('Social Media Reimagined', canvas.width / 2, 210);
-      
-      // Call to action at bottom
-      ctx.fillStyle = 'rgba(0, 255, 255, 0.2)';
-      drawRoundedRect(ctx, 240, 1520, 600, 100, 50);
+      // Link box - prominent display
+      ctx.fillStyle = 'rgba(0, 255, 255, 0.15)';
+      drawRoundedRect(ctx, 90, imageLoaded ? 1320 : 1120, 900, 120, 20);
       ctx.fill();
       
       ctx.strokeStyle = '#00ffff';
-      ctx.lineWidth = 3;
-      drawRoundedRect(ctx, 240, 1520, 600, 100, 50);
+      ctx.lineWidth = 2;
+      drawRoundedRect(ctx, 90, imageLoaded ? 1320 : 1120, 900, 120, 20);
+      ctx.stroke();
+      
+      // Link icon and URL
+      ctx.fillStyle = '#00ffff';
+      ctx.font = 'bold 32px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🔗 ' + shareUrl.replace('https://', '').replace('http://', ''), canvas.width / 2, imageLoaded ? 1395 : 1195);
+      
+      // Call to action button at bottom
+      ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+      drawRoundedRect(ctx, 190, 1520, 700, 120, 60);
+      ctx.fill();
+      
+      ctx.strokeStyle = '#00ffff';
+      ctx.lineWidth = 4;
+      drawRoundedRect(ctx, 190, 1520, 700, 120, 60);
       ctx.stroke();
       
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 36px Arial, sans-serif';
+      ctx.font = 'bold 40px Arial, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('👆 Tap to view on Loopync', canvas.width / 2, 1585);
+      ctx.fillText('👆 Swipe Up to View', canvas.width / 2, 1595);
       
-      // Link hint
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      ctx.font = '28px Arial, sans-serif';
-      ctx.fillText(shareUrl.replace('https://', '').replace('http://', ''), canvas.width / 2, 1700);
+      // Bottom hint
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.font = '24px Arial, sans-serif';
+      ctx.fillText('Add link sticker with the copied URL!', canvas.width / 2, 1720);
       
       return canvas.toDataURL('image/png');
     } catch (error) {
