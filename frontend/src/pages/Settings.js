@@ -496,7 +496,13 @@ const Settings = () => {
   const renderHelp = () => (
     <div className="space-y-2">
       <MenuItem title="Help Center" onClick={() => toast.info("Opening help center...")} />
-      <MenuItem title="Contact Support" onClick={() => toast.info("Contact: support@loopync.com")} />
+      <MenuItem 
+        title="Contact Support" 
+        onClick={() => {
+          window.location.href = "mailto:loopyncpvt@gmail.com?subject=Loopync Support Request";
+          toast.success("Opening email client to contact loopyncpvt@gmail.com");
+        }} 
+      />
       <MenuItem title="Report a Problem" onClick={() => toast.info("Report feature coming soon")} />
       <MenuItem title="Terms of Service" onClick={() => setActiveSection("terms")} />
       <MenuItem title="Privacy Policy" onClick={() => setActiveSection("privacy-policy")} />
