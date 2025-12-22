@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
@@ -33,6 +33,26 @@ const Discover = () => {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [shareItem, setShareItem] = useState(null);
   const [shareType, setShareType] = useState('post');
+
+  // Restore scroll position when component mounts
+  useLayoutEffect(() => {
+    const savedScrollPos = sessionStorage.getItem('discoverScrollPosition');
+    if (savedScrollPos && !loading) {
+      window.scrollTo(0, parseInt(savedScrollPos, 10));
+    }
+  }, [loading]);
+
+  // Save scroll position before navigating away
+  useEffect(() => {
+    const handleScroll = () => {
+      sessionStorage.setItem('discoverScrollPosition', window.scrollY.toString());
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleShare = (item, type) => {
     if (!currentUser) {
