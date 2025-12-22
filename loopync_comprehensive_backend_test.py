@@ -721,22 +721,26 @@ class LoopyncBackendTester:
             return False
         
         if response and response.status_code == 200:
-            products = response.json()
-            if isinstance(products, list):
-                # Check for products from the 3 required categories
-                categories_found = set()
-                for product in products:
-                    category = product.get('category', '').lower()
-                    if category in ['courses', 'ebooks', 'pdfs']:
-                        categories_found.add(category)
+            data = response.json()
+            if isinstance(data, dict) and "products" in data and "categories" in data:
+                products = data["products"]
+                categories = data["categories"]
                 
-                self.log_result("Digital Products List", True, 
-                              f"Retrieved {len(products)} products, Categories found: {list(categories_found)}", 
-                              response_time=response_time)
-                return True
+                # Verify the 3 required categories are present
+                expected_categories = {'courses', 'ebooks', 'pdfs'}
+                if set(categories) == expected_categories:
+                    self.log_result("Digital Products List", True, 
+                                  f"Retrieved {len(products)} products, Categories: {categories}", 
+                                  response_time=response_time)
+                    return True
+                else:
+                    self.log_result("Digital Products List", False, 
+                                  error=f"Expected categories {list(expected_categories)}, got {categories}", 
+                                  response_time=response_time)
+                    return False
             else:
                 self.log_result("Digital Products List", False, 
-                              error="Response is not a list", 
+                              error="Response missing products or categories fields", 
                               response_time=response_time)
                 return False
         else:
