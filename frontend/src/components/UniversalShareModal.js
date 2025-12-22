@@ -697,7 +697,7 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
             <div className="bg-gray-800/80 rounded-xl p-4 mb-4">
               <p className="text-white text-sm font-semibold mb-2">📱 How to share:</p>
               <ol className="text-gray-300 text-sm space-y-1">
-                <li>1. Tap "Download & Open Instagram" below</li>
+                <li>1. Tap &quot;Download &amp; Open Instagram&quot; below</li>
                 <li>2. Create a new Story with this image</li>
                 <li>3. Add a <span className="text-cyan-400 font-semibold">Link Sticker</span> with the copied URL</li>
                 <li>4. Share your story! 🎉</li>
