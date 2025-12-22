@@ -189,6 +189,50 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
       ctx.arc(980, 1600, 250, 0, Math.PI * 2);
       ctx.fill();
       
+      // Load Loopync logo
+      try {
+        const logo = new Image();
+        logo.crossOrigin = 'anonymous';
+        await new Promise((resolve, reject) => {
+          logo.onload = resolve;
+          logo.onerror = reject;
+          setTimeout(() => reject(new Error('Logo load timeout')), 3000);
+          logo.src = '/loopync-logo.jpg';
+        });
+        
+        // Draw logo at top center
+        const logoSize = 120;
+        const logoX = (canvas.width - logoSize) / 2;
+        const logoY = 60;
+        
+        // Draw circular logo
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(logoX + logoSize/2, logoY + logoSize/2, logoSize/2, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+        ctx.restore();
+        
+        // Add glow effect around logo
+        ctx.strokeStyle = 'rgba(0, 255, 255, 0.6)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(logoX + logoSize/2, logoY + logoSize/2, logoSize/2 + 4, 0, Math.PI * 2);
+        ctx.stroke();
+      } catch (logoErr) {
+        console.log('Could not load logo:', logoErr);
+      }
+      
+      // Loopync branding text below logo
+      ctx.fillStyle = '#00ffff';
+      ctx.font = 'bold 56px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('LOOPYNC', canvas.width / 2, 240);
+      
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.font = '28px Arial, sans-serif';
+      ctx.fillText('Social Media Reimagined', canvas.width / 2, 285);
+      
       // Load and draw post image if available
       const mediaUrl = item.mediaUrl || item.image || item.coverImage;
       let imageLoaded = false;
@@ -206,9 +250,9 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           });
           
           // Draw image in center with rounded corners effect
-          const imgSize = 800;
+          const imgSize = 700;
           const imgX = (canvas.width - imgSize) / 2;
-          const imgY = 400;
+          const imgY = 380;
           
           // Create rounded rectangle clip using compatible method
           ctx.save();
@@ -218,6 +262,23 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           // Draw image maintaining aspect ratio
           const scale = Math.max(imgSize / img.width, imgSize / img.height);
           const scaledWidth = img.width * scale;
+          const scaledHeight = img.height * scale;
+          const offsetX = imgX + (imgSize - scaledWidth) / 2;
+          const offsetY = imgY + (imgSize - scaledHeight) / 2;
+          ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
+          ctx.restore();
+          
+          // Add border glow
+          ctx.strokeStyle = 'rgba(0, 255, 255, 0.5)';
+          ctx.lineWidth = 4;
+          drawRoundedRect(ctx, imgX, imgY, imgSize, imgSize, 30);
+          ctx.stroke();
+          
+          imageLoaded = true;
+        } catch (err) {
+          console.log('Could not load image:', err);
+        }
+      }
           const scaledHeight = img.height * scale;
           const offsetX = imgX + (imgSize - scaledWidth) / 2;
           const offsetY = imgY + (imgSize - scaledHeight) / 2;
