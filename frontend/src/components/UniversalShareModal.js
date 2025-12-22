@@ -570,7 +570,7 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
               <Link2 size={16} className="text-cyan-400 flex-shrink-0" />
               <p className="text-cyan-400 text-sm truncate flex-1">{shareUrl}</p>
               <button
-                onClick={copyToClipboard}
+                onClick={handleCopy}
                 className="text-xs bg-cyan-400/20 text-cyan-400 px-2 py-1 rounded"
               >
                 {copied ? 'Copied!' : 'Copy'}
