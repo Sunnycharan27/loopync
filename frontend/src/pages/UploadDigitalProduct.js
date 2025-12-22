@@ -4,7 +4,7 @@ import { API, AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft, Upload, Image, FileText, X, Plus, Package,
-  BookOpen, Palette, Music, Video, Code
+  BookOpen
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
 import { toast } from "sonner";
