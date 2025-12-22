@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef, useLayoutEffect } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
@@ -16,6 +16,27 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
+  const scrollContainerRef = useRef(null);
+
+  // Restore scroll position when component mounts
+  useLayoutEffect(() => {
+    const savedScrollPos = sessionStorage.getItem('homeScrollPosition');
+    if (savedScrollPos && !loading) {
+      window.scrollTo(0, parseInt(savedScrollPos, 10));
+    }
+  }, [loading]);
+
+  // Save scroll position before navigating away
+  useEffect(() => {
+    const handleScroll = () => {
+      sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     fetchPosts();
