@@ -13,12 +13,12 @@
 
 ### Login Page
 ```
-https://socialsync-app-2.preview.emergentagent.com/auth
+https://social-prelaunch.preview.emergentagent.com/auth
 ```
 
 ### Admin Verification Dashboard
 ```
-https://socialsync-app-2.preview.emergentagent.com/admin/verification
+https://social-prelaunch.preview.emergentagent.com/admin/verification
 ```
 
 ---
@@ -89,12 +89,12 @@ Regular users (without admin role):
 ## 🧪 Testing Verification Flow
 
 ### Step 1: Login
-1. Go to: https://socialsync-app-2.preview.emergentagent.com/auth
+1. Go to: https://social-prelaunch.preview.emergentagent.com/auth
 2. Enter your credentials
 3. Click Login
 
 ### Step 2: Access Dashboard
-1. Navigate to: https://socialsync-app-2.preview.emergentagent.com/admin/verification
+1. Navigate to: https://social-prelaunch.preview.emergentagent.com/admin/verification
 2. You should see 3 pending requests from backend testing
 
 ### Step 3: Review & Approve

@@ -11,7 +11,7 @@
 
 ### STEP 1: Open the Application
 ```
-URL: https://socialsync-app-2.preview.emergentagent.com
+URL: https://social-prelaunch.preview.emergentagent.com
 ```
 
 **What you'll see:**
@@ -22,7 +22,7 @@ URL: https://socialsync-app-2.preview.emergentagent.com
 
 ### STEP 2: Go to Login Page
 ```
-Direct Login URL: https://socialsync-app-2.preview.emergentagent.com/auth
+Direct Login URL: https://social-prelaunch.preview.emergentagent.com/auth
 ```
 
 **Actions:**
@@ -68,7 +68,7 @@ Ramcharan
 
 **Option A: Direct URL (Easiest)**
 ```
-https://socialsync-app-2.preview.emergentagent.com/admin/verification
+https://social-prelaunch.preview.emergentagent.com/admin/verification
 ```
 
 **Actions:**
@@ -152,7 +152,7 @@ Each request shows:
 - [ ] Password: `Ramcharan`
 
 ✅ **Direct dashboard URL:**
-- [ ] `https://socialsync-app-2.preview.emergentagent.com/admin/verification`
+- [ ] `https://social-prelaunch.preview.emergentagent.com/admin/verification`
 
 ---
 
@@ -160,22 +160,22 @@ Each request shows:
 
 **1. Main App:**
 ```
-https://socialsync-app-2.preview.emergentagent.com
+https://social-prelaunch.preview.emergentagent.com
 ```
 
 **2. Login Page:**
 ```
-https://socialsync-app-2.preview.emergentagent.com/auth
+https://social-prelaunch.preview.emergentagent.com/auth
 ```
 
 **3. Admin Dashboard:**
 ```
-https://socialsync-app-2.preview.emergentagent.com/admin/verification
+https://social-prelaunch.preview.emergentagent.com/admin/verification
 ```
 
 **4. Your Profile (after login):**
 ```
-https://socialsync-app-2.preview.emergentagent.com/profile
+https://social-prelaunch.preview.emergentagent.com/profile
 ```
 
 ---
@@ -184,9 +184,9 @@ https://socialsync-app-2.preview.emergentagent.com/profile
 
 Same steps work on mobile:
 1. Open mobile browser (Chrome, Safari)
-2. Go to: `https://socialsync-app-2.preview.emergentagent.com/auth`
+2. Go to: `https://social-prelaunch.preview.emergentagent.com/auth`
 3. Enter credentials
-4. Navigate to: `https://socialsync-app-2.preview.emergentagent.com/admin/verification`
+4. Navigate to: `https://social-prelaunch.preview.emergentagent.com/admin/verification`
 
 ---
 

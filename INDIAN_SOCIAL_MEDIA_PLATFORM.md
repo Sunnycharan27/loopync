@@ -457,7 +457,7 @@ On other users' profiles:
 
 ## 📱 Platform URLs
 
-**Main App**: `https://socialsync-app-2.preview.emergentagent.com`
+**Main App**: `https://social-prelaunch.preview.emergentagent.com`
 
 **Key Routes**:
 - Home: `/`

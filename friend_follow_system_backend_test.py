@@ -21,7 +21,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://socialsync-app-2.preview.emergentagent.com/api"
+BACKEND_URL = "https://social-prelaunch.preview.emergentagent.com/api"
 
 # Test accounts
 TEST_ACCOUNTS = {

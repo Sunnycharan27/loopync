@@ -13,7 +13,7 @@ from datetime import datetime
 from motor.motor_asyncio import AsyncIOMotorClient
 
 # Configuration
-BACKEND_URL = "https://socialsync-app-2.preview.emergentagent.com/api"
+BACKEND_URL = "https://social-prelaunch.preview.emergentagent.com/api"
 
 class ImprovedVerificationTester:
     def __init__(self):
