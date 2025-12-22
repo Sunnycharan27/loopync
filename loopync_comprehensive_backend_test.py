@@ -303,8 +303,10 @@ class LoopyncBackendTester:
             self.log_result("Users Follow", False, error="No test user available to follow")
             return False
         
-        response, response_time = self.make_request("POST", f"/users/{self.test_user_id}/follow", 
-                                                  {"targetUserId": self.test_user_id})
+        follow_data = {"targetUserId": self.test_user_id}
+        
+        response, response_time = self.make_request("POST", f"/users/{self.user_id}/follow", 
+                                                  follow_data)
         
         is_json, json_msg = self.verify_json_response(response)
         if not is_json:
@@ -312,10 +314,18 @@ class LoopyncBackendTester:
             return False
         
         if response and response.status_code in [200, 201]:
-            self.log_result("Users Follow", True, 
-                          "Follow action completed", 
-                          response_time=response_time)
-            return True
+            result = response.json()
+            if "action" in result:
+                action = result["action"]
+                self.log_result("Users Follow", True, 
+                              f"Follow action: {action}", 
+                              response_time=response_time)
+                return True
+            else:
+                self.log_result("Users Follow", False, 
+                              error="Missing action in response", 
+                              response_time=response_time)
+                return False
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
             if response:
