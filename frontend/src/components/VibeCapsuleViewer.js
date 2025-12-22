@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { X, Heart, MessageCircle, Eye, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 import { API } from "../App";
 
 const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
+  const navigate = useNavigate();
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
   const [currentCapsuleIndex, setCurrentCapsuleIndex] = useState(0);
   const [progress, setProgress] = useState(0);
