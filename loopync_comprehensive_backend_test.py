@@ -159,18 +159,41 @@ class LoopyncBackendTester:
             "password": "wrongpassword"
         })
         
+        if not response:
+            self.log_result("Auth Login Invalid", False, error="No response received", response_time=response_time)
+            return False
+        
         is_json, json_msg = self.verify_json_response(response)
         if not is_json:
             self.log_result("Auth Login Invalid", False, error=json_msg, response_time=response_time)
             return False
         
-        if response and response.status_code == 401:
-            self.log_result("Auth Login Invalid", True, 
-                          "Correctly rejected invalid credentials", 
-                          response_time=response_time)
-            return True
+        if response.status_code == 401:
+            try:
+                error_response = response.json()
+                if "detail" in error_response:
+                    self.log_result("Auth Login Invalid", True, 
+                                  f"Correctly rejected invalid credentials: {error_response['detail']}", 
+                                  response_time=response_time)
+                    return True
+                else:
+                    self.log_result("Auth Login Invalid", True, 
+                                  "Correctly rejected invalid credentials", 
+                                  response_time=response_time)
+                    return True
+            except:
+                self.log_result("Auth Login Invalid", True, 
+                              "Correctly rejected invalid credentials (401)", 
+                              response_time=response_time)
+                return True
         else:
-            error_msg = f"Expected 401, got {response.status_code if response else 'No response'}"
+            error_msg = f"Expected 401, got {response.status_code}"
+            if response:
+                try:
+                    error_detail = response.json().get('detail', response.text)
+                    error_msg += f", Detail: {error_detail}"
+                except:
+                    error_msg += f", Response: {response.text[:200]}"
             self.log_result("Auth Login Invalid", False, error=error_msg, response_time=response_time)
             return False
     
