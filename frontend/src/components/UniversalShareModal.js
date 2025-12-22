@@ -3,6 +3,46 @@ import { X, Copy, Check, Link2, Facebook, Twitter, MessageCircle, Mail, Users, I
 import { toast } from "sonner";
 import ShareToFriendsModal from "./ShareToFriendsModal";
 
+// Helper function to draw rounded rectangles (for browser compatibility)
+const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+};
+
+// Helper function for clipboard with fallback
+const copyToClipboardFallback = async (text) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } else {
+      // Fallback for non-secure contexts
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const result = document.execCommand('copy');
+      textArea.remove();
+      return result;
+    }
+  } catch (e) {
+    console.error('Clipboard copy failed:', e);
+    return false;
+  }
+};
+
 const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
   const [copied, setCopied] = useState(false);
   const [showFriendsModal, setShowFriendsModal] = useState(false);
