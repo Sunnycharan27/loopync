@@ -5,6 +5,7 @@ import BottomNav from "../components/BottomNav";
 import TopHeader from "../components/TopHeader";
 import CreateFAB from "../components/CreateFAB";
 import PostCard from "../components/PostCard";
+import FeedReelCard from "../components/FeedReelCard";
 import ComposerModal from "../components/ComposerModal";
 import VibeCapsules from "../components/VibeCapsules";
 import { toast } from "sonner";
