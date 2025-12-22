@@ -13,25 +13,13 @@ import { toast } from "sonner";
 const categoryIcons = {
   courses: BookOpen,
   ebooks: FileText,
-  templates: Palette,
-  software: Code,
-  graphics: Palette,
-  audio: Music,
-  video: Video,
-  documents: FileText,
-  other: Package
+  pdfs: FileText,
 };
 
 const categoryColors = {
   courses: "from-blue-500 to-cyan-500",
   ebooks: "from-purple-500 to-pink-500",
-  templates: "from-green-500 to-teal-500",
-  software: "from-orange-500 to-red-500",
-  graphics: "from-pink-500 to-rose-500",
-  audio: "from-yellow-500 to-orange-500",
-  video: "from-red-500 to-pink-500",
-  documents: "from-gray-500 to-slate-500",
-  other: "from-indigo-500 to-purple-500"
+  pdfs: "from-green-500 to-teal-500",
 };
 
 const DigitalProductDetail = () => {
