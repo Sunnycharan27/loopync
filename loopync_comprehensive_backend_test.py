@@ -341,15 +341,17 @@ class LoopyncBackendTester:
             return False
         
         if response and response.status_code == 200:
-            followers = response.json()
-            if isinstance(followers, list):
+            data = response.json()
+            if isinstance(data, dict) and "users" in data and "count" in data:
+                followers = data["users"]
+                count = data["count"]
                 self.log_result("Users Followers", True, 
-                              f"Retrieved {len(followers)} followers", 
+                              f"Retrieved {len(followers)} followers (total: {count})", 
                               response_time=response_time)
                 return True
             else:
                 self.log_result("Users Followers", False, 
-                              error="Response is not a list", 
+                              error="Response missing users or count fields", 
                               response_time=response_time)
                 return False
         else:
