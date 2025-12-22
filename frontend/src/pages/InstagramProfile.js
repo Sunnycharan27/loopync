@@ -541,8 +541,12 @@ const InstagramProfile = () => {
                     <MessageCircle size={18} />
                     Message
                   </button>
-                  <button className="p-2.5 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-700">
-                    <MoreHorizontal size={20} />
+                  <button 
+                    onClick={() => setShowProfileShare(true)}
+                    className="p-2.5 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors border border-gray-700"
+                    title="Share Profile"
+                  >
+                    <Share2 size={20} />
                   </button>
                 </>
               )}
