@@ -1023,6 +1023,22 @@ const InstagramProfile = () => {
         />
       )}
 
+      {/* Profile Share Modal */}
+      {showProfileShare && profileUser && (
+        <UniversalShareModal
+          item={{
+            id: profileUser.id,
+            name: profileUser.name,
+            handle: profileUser.handle,
+            avatar: profileUser.avatar,
+            bio: profileUser.bio
+          }}
+          type="profile"
+          currentUser={currentUser}
+          onClose={() => setShowProfileShare(false)}
+        />
+      )}
+
       <BottomNav active="profile" />
     </div>
   );
