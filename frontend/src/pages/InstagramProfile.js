@@ -494,7 +494,10 @@ const InstagramProfile = () => {
                       Verified
                     </div>
                   )}
-                  <button className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors">
+                  <button 
+                    onClick={() => setShowProfileShare(true)}
+                    className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors"
+                  >
                     <Share2 size={20} />
                   </button>
                 </>
