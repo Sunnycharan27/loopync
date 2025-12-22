@@ -263,7 +263,7 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
             </div>
             <div className="flex-1 text-left">
               <p className="text-white font-semibold">Share via...</p>
-              <p className="text-sm text-gray-400">Use your device's share menu</p>
+              <p className="text-sm text-gray-400">Use your device&apos;s share menu</p>
             </div>
           </button>
         )}
