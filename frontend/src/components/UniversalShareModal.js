@@ -160,163 +160,168 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
 
   // Generate story card as image using canvas
   const generateStoryImage = async () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Instagram Story dimensions (9:16 aspect ratio)
-    canvas.width = 1080;
-    canvas.height = 1920;
-    
-    // Background gradient
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, '#0f021e');
-    gradient.addColorStop(0.5, '#1a0b2e');
-    gradient.addColorStop(1, '#0f021e');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Add decorative elements
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.1)';
-    ctx.beginPath();
-    ctx.arc(100, 300, 200, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(980, 1600, 250, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Load and draw post image if available
-    const mediaUrl = item.mediaUrl || item.image || item.coverImage;
-    let imageLoaded = false;
-    
-    if (mediaUrl) {
-      try {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        await new Promise((resolve, reject) => {
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = mediaUrl;
-        });
-        
-        // Draw image in center with rounded corners effect
-        const imgSize = 800;
-        const imgX = (canvas.width - imgSize) / 2;
-        const imgY = 400;
-        
-        // Create rounded rectangle clip
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(imgX, imgY, imgSize, imgSize, 30);
-        ctx.clip();
-        
-        // Draw image maintaining aspect ratio
-        const scale = Math.max(imgSize / img.width, imgSize / img.height);
-        const scaledWidth = img.width * scale;
-        const scaledHeight = img.height * scale;
-        const offsetX = imgX + (imgSize - scaledWidth) / 2;
-        const offsetY = imgY + (imgSize - scaledHeight) / 2;
-        ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
-        ctx.restore();
-        
-        // Add border glow
-        ctx.strokeStyle = 'rgba(0, 255, 255, 0.5)';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.roundRect(imgX, imgY, imgSize, imgSize, 30);
-        ctx.stroke();
-        
-        imageLoaded = true;
-      } catch (err) {
-        console.log('Could not load image:', err);
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) {
+        throw new Error('Canvas not supported');
       }
-    }
-    
-    // If no image, show text content
-    if (!imageLoaded) {
-      ctx.fillStyle = 'rgba(26, 11, 46, 0.8)';
+      
+      // Instagram Story dimensions (9:16 aspect ratio)
+      canvas.width = 1080;
+      canvas.height = 1920;
+      
+      // Background gradient
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#0f021e');
+      gradient.addColorStop(0.5, '#1a0b2e');
+      gradient.addColorStop(1, '#0f021e');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Add decorative elements
+      ctx.fillStyle = 'rgba(0, 255, 255, 0.1)';
       ctx.beginPath();
-      ctx.roundRect(90, 500, 900, 600, 30);
+      ctx.arc(100, 300, 200, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(980, 1600, 250, 0, Math.PI * 2);
       ctx.fill();
       
-      // Post text
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 48px Arial, sans-serif';
-      ctx.textAlign = 'center';
+      // Load and draw post image if available
+      const mediaUrl = item.mediaUrl || item.image || item.coverImage;
+      let imageLoaded = false;
       
-      const postText = item.caption || item.text || item.description || 'Check out this post!';
-      const words = postText.split(' ');
-      let lines = [];
-      let currentLine = '';
-      
-      for (const word of words) {
-        const testLine = currentLine + (currentLine ? ' ' : '') + word;
-        const metrics = ctx.measureText(testLine);
-        if (metrics.width > 800) {
-          lines.push(currentLine);
-          currentLine = word;
-        } else {
-          currentLine = testLine;
+      if (mediaUrl) {
+        try {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+            // Timeout for image loading
+            setTimeout(() => reject(new Error('Image load timeout')), 5000);
+            img.src = mediaUrl;
+          });
+          
+          // Draw image in center with rounded corners effect
+          const imgSize = 800;
+          const imgX = (canvas.width - imgSize) / 2;
+          const imgY = 400;
+          
+          // Create rounded rectangle clip using compatible method
+          ctx.save();
+          drawRoundedRect(ctx, imgX, imgY, imgSize, imgSize, 30);
+          ctx.clip();
+          
+          // Draw image maintaining aspect ratio
+          const scale = Math.max(imgSize / img.width, imgSize / img.height);
+          const scaledWidth = img.width * scale;
+          const scaledHeight = img.height * scale;
+          const offsetX = imgX + (imgSize - scaledWidth) / 2;
+          const offsetY = imgY + (imgSize - scaledHeight) / 2;
+          ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
+          ctx.restore();
+          
+          // Add border glow
+          ctx.strokeStyle = 'rgba(0, 255, 255, 0.5)';
+          ctx.lineWidth = 4;
+          drawRoundedRect(ctx, imgX, imgY, imgSize, imgSize, 30);
+          ctx.stroke();
+          
+          imageLoaded = true;
+        } catch (err) {
+          console.log('Could not load image:', err);
         }
       }
-      lines.push(currentLine);
       
-      // Draw text lines (max 6 lines)
-      lines.slice(0, 6).forEach((line, i) => {
-        ctx.fillText(line, canvas.width / 2, 650 + (i * 70));
-      });
+      // If no image, show text content
+      if (!imageLoaded) {
+        ctx.fillStyle = 'rgba(26, 11, 46, 0.8)';
+        drawRoundedRect(ctx, 90, 500, 900, 600, 30);
+        ctx.fill();
+        
+        // Post text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 48px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        
+        const postText = item.caption || item.text || item.description || 'Check out this post!';
+        const words = postText.split(' ');
+        let lines = [];
+        let currentLine = '';
+        
+        for (const word of words) {
+          const testLine = currentLine + (currentLine ? ' ' : '') + word;
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > 800) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
+        }
+        lines.push(currentLine);
+        
+        // Draw text lines (max 6 lines)
+        lines.slice(0, 6).forEach((line, i) => {
+          ctx.fillText(line, canvas.width / 2, 650 + (i * 70));
+        });
+      }
+      
+      // Author info
+      const authorName = item.author?.name || currentUser?.name || 'Loopync User';
+      const authorHandle = item.author?.handle || currentUser?.handle || 'loopync';
+      
+      ctx.fillStyle = 'rgba(26, 11, 46, 0.9)';
+      drawRoundedRect(ctx, 90, imageLoaded ? 1280 : 1180, 900, 140, 20);
+      ctx.fill();
+      
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 40px Arial, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(authorName, 140, imageLoaded ? 1350 : 1250);
+      
+      ctx.fillStyle = '#00ffff';
+      ctx.font = '32px Arial, sans-serif';
+      ctx.fillText(`@${authorHandle}`, 140, imageLoaded ? 1395 : 1295);
+      
+      // Loopync branding at top
+      ctx.fillStyle = '#00ffff';
+      ctx.font = 'bold 64px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('LOOPYNC', canvas.width / 2, 150);
+      
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.font = '32px Arial, sans-serif';
+      ctx.fillText('Social Media Reimagined', canvas.width / 2, 210);
+      
+      // Call to action at bottom
+      ctx.fillStyle = 'rgba(0, 255, 255, 0.2)';
+      drawRoundedRect(ctx, 240, 1520, 600, 100, 50);
+      ctx.fill();
+      
+      ctx.strokeStyle = '#00ffff';
+      ctx.lineWidth = 3;
+      drawRoundedRect(ctx, 240, 1520, 600, 100, 50);
+      ctx.stroke();
+      
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 36px Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('👆 Tap to view on Loopync', canvas.width / 2, 1585);
+      
+      // Link hint
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      ctx.font = '28px Arial, sans-serif';
+      ctx.fillText(shareUrl.replace('https://', '').replace('http://', ''), canvas.width / 2, 1700);
+      
+      return canvas.toDataURL('image/png');
+    } catch (error) {
+      console.error('Error generating story image:', error);
+      throw error;
     }
-    
-    // Author info
-    const authorName = item.author?.name || currentUser?.name || 'Loopync User';
-    const authorHandle = item.author?.handle || currentUser?.handle || 'loopync';
-    
-    ctx.fillStyle = 'rgba(26, 11, 46, 0.9)';
-    ctx.beginPath();
-    ctx.roundRect(90, imageLoaded ? 1280 : 1180, 900, 140, 20);
-    ctx.fill();
-    
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 40px Arial, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(authorName, 140, imageLoaded ? 1350 : 1250);
-    
-    ctx.fillStyle = '#00ffff';
-    ctx.font = '32px Arial, sans-serif';
-    ctx.fillText(`@${authorHandle}`, 140, imageLoaded ? 1395 : 1295);
-    
-    // Loopync branding at top
-    ctx.fillStyle = '#00ffff';
-    ctx.font = 'bold 64px Arial, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('LOOPYNC', canvas.width / 2, 150);
-    
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.font = '32px Arial, sans-serif';
-    ctx.fillText('Social Media Reimagined', canvas.width / 2, 210);
-    
-    // Call to action at bottom
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.2)';
-    ctx.beginPath();
-    ctx.roundRect(240, 1520, 600, 100, 50);
-    ctx.fill();
-    
-    ctx.strokeStyle = '#00ffff';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.roundRect(240, 1520, 600, 100, 50);
-    ctx.stroke();
-    
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 36px Arial, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('👆 Tap to view on Loopync', canvas.width / 2, 1585);
-    
-    // Link hint
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.font = '28px Arial, sans-serif';
-    ctx.fillText(shareUrl.replace('https://', '').replace('http://', ''), canvas.width / 2, 1700);
-    
-    return canvas.toDataURL('image/png');
   };
 
   // Share to Instagram Stories
