@@ -248,8 +248,11 @@ metadata:
 test_plan:
   current_focus: 
     - "Instagram Stories Sharing Feature"
-    - "Authentication System"
-    - "Posts Management"
+    - "Help & Support"
+    - "Profile Share"
+    - "Feed Scroll Position"
+    - "VibeZone Reels in Feed"
+    - "Story Profile Access"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
