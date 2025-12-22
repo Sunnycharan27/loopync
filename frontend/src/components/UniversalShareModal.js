@@ -336,8 +336,8 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
       const blob = await response.blob();
       const file = new File([blob], 'loopync-story.png', { type: 'image/png' });
       
-      // Copy link to clipboard first
-      await navigator.clipboard.writeText(shareUrl);
+      // Copy link to clipboard first (using fallback)
+      await copyToClipboardFallback(shareUrl);
       
       // Check if we can use Web Share API with files (mobile)
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -351,6 +351,7 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           return;
         } catch (err) {
           if (err.name === 'AbortError') {
+            setGeneratingStory(false);
             return;
           }
           console.log('Share cancelled or failed:', err);
@@ -363,12 +364,14 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
       
     } catch (error) {
       console.error('Instagram share error:', error);
-      // Final fallback - just copy link
-      try {
-        await navigator.clipboard.writeText(`${getShareText()}\n\n${shareUrl}\n\n#Loopync`);
+      // Final fallback - just copy link and show message
+      const shareText = `${getShareText()}\n\n${shareUrl}\n\n#Loopync`;
+      const copied = await copyToClipboardFallback(shareText);
+      if (copied) {
         toast.success('Link copied! Share it on Instagram Stories');
-      } catch (e) {
-        toast.error('Failed to generate story');
+      } else {
+        // Ultimate fallback - show the link in a toast
+        toast.info(`Share this link: ${shareUrl}`, { duration: 10000 });
       }
     } finally {
       setGeneratingStory(false);
