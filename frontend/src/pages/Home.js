@@ -144,6 +144,34 @@ const Home = () => {
     }
   };
 
+  // Handle reel like
+  const handleReelLike = async (reelId) => {
+    if (!currentUser) {
+      toast.error("Please login to like");
+      return;
+    }
+    try {
+      const res = await axios.post(`${API}/reels/${reelId}/like?userId=${currentUser.id}`);
+      setReels(reels.map(r => {
+        if (r.id === reelId) {
+          const liked = res.data.action === "liked";
+          return {
+            ...r,
+            stats: { ...r.stats, likes: res.data.likes },
+            likedBy: liked 
+              ? [...(r.likedBy || []), currentUser.id]
+              : (r.likedBy || []).filter(id => id !== currentUser.id)
+          };
+        }
+        return r;
+      }));
+    } catch (error) {
+      toast.error("Failed to like reel");
+    }
+  };
+
+  const feed = getFeed();
+
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       <div className="max-w-2xl mx-auto">
@@ -152,26 +180,35 @@ const Home = () => {
         {/* Vibe Capsules (Stories) */}
         <VibeCapsules currentUser={currentUser} />
 
-        {/* Posts Feed */}
+        {/* Combined Feed (Posts + Reels) */}
         <div className="space-y-4 px-4 mt-4">
           {loading ? (
             <div className="text-center py-12">
               <div className="animate-spin w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full mx-auto"></div>
             </div>
-          ) : posts.length === 0 ? (
+          ) : feed.length === 0 ? (
             <div className="text-center py-12 glass-card p-8">
-              <p className="text-gray-400">No posts yet. Be the first to post!</p>
+              <p className="text-gray-400">No content yet. Be the first to post!</p>
             </div>
           ) : (
-            posts.map(post => (
-              <PostCard
-                key={post.id}
-                post={post}
-                currentUser={currentUser}
-                onLike={handleLike}
-                onRepost={handleRepost}
-                onDelete={handleDelete}
-              />
+            feed.map(item => (
+              item.itemType === 'reel' ? (
+                <FeedReelCard
+                  key={`reel-${item.id}`}
+                  reel={item}
+                  currentUser={currentUser}
+                  onLike={handleReelLike}
+                />
+              ) : (
+                <PostCard
+                  key={`post-${item.id}`}
+                  post={item}
+                  currentUser={currentUser}
+                  onLike={handleLike}
+                  onRepost={handleRepost}
+                  onDelete={handleDelete}
+                />
+              )
             ))
           )}
         </div>
