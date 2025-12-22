@@ -454,14 +454,30 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
     }
   };
 
-  // Download story image
+  // Download story image and open Instagram
   const downloadStoryImage = () => {
     if (showStoryPreview) {
       const link = document.createElement('a');
       link.download = 'loopync-story.png';
       link.href = showStoryPreview;
       link.click();
-      toast.success('Image downloaded! Share it on Instagram Stories and add the link sticker 📎');
+      toast.success('Image downloaded! Opening Instagram... 📸');
+      
+      // Open Instagram after download
+      setTimeout(() => {
+        openInstagram();
+      }, 1000);
+    }
+  };
+
+  // Just download without opening Instagram
+  const downloadOnly = () => {
+    if (showStoryPreview) {
+      const link = document.createElement('a');
+      link.download = 'loopync-story.png';
+      link.href = showStoryPreview;
+      link.click();
+      toast.success('Image downloaded! Add the link sticker when posting 📎');
     }
   };
 
