@@ -14,6 +14,7 @@ import { emergentApi } from "../services/emergentApi";
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
+  const [reels, setReels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
   const scrollContainerRef = useRef(null);
@@ -39,18 +40,34 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    fetchPosts();
+    fetchContent();
   }, []);
 
-  const fetchPosts = async () => {
+  const fetchContent = async () => {
     try {
-      const res = await axios.get(`${API}/posts`);
-      setPosts(res.data);
+      const [postsRes, reelsRes] = await Promise.all([
+        axios.get(`${API}/posts`),
+        axios.get(`${API}/reels`)
+      ]);
+      setPosts(postsRes.data);
+      setReels(reelsRes.data);
     } catch (error) {
-      toast.error("Failed to load posts");
+      toast.error("Failed to load content");
     } finally {
       setLoading(false);
     }
+  };
+
+  // Combine posts and reels into a single feed, sorted by creation date
+  const getFeed = () => {
+    const feedItems = [
+      ...posts.map(p => ({ ...p, itemType: 'post' })),
+      ...reels.map(r => ({ ...r, itemType: 'reel' }))
+    ];
+    // Sort by creation date, most recent first
+    return feedItems.sort((a, b) => 
+      new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+    );
   };
 
   const handlePostCreated = (newPost) => {
