@@ -373,6 +373,26 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
     }
   };
 
+  // Open Instagram app or web
+  const openInstagram = () => {
+    // Try to open Instagram app first using deep link
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    
+    if (isIOS || isAndroid) {
+      // Try to open Instagram app
+      window.location.href = 'instagram://story-camera';
+      
+      // Fallback to Instagram web after a short delay if app doesn't open
+      setTimeout(() => {
+        window.open('https://www.instagram.com/', '_blank');
+      }, 1500);
+    } else {
+      // Desktop - open Instagram web
+      window.open('https://www.instagram.com/', '_blank');
+    }
+  };
+
   // Share to Instagram Stories
   const handleInstagramStory = async () => {
     setGeneratingStory(true);
@@ -397,6 +417,11 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
             text: `Check this out on Loopync! ${shareUrl}`,
           });
           toast.success('Link copied! Add it as a sticker in your story 📎');
+          
+          // After sharing, redirect to Instagram Stories
+          setTimeout(() => {
+            openInstagram();
+          }, 500);
           return;
         } catch (err) {
           if (err.name === 'AbortError') {
@@ -407,9 +432,9 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
         }
       }
       
-      // Fallback: Show preview and download option
+      // Fallback: Show preview, download, and redirect option
       setShowStoryPreview(storyImageDataUrl);
-      toast.success('Story image ready! Link copied to clipboard 📋');
+      toast.success('Story image ready! Download and share on Instagram 📸');
       
     } catch (error) {
       console.error('Instagram share error:', error);
@@ -418,6 +443,8 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
       const copied = await copyToClipboardFallback(shareText);
       if (copied) {
         toast.success('Link copied! Share it on Instagram Stories');
+        // Still try to open Instagram
+        setTimeout(() => openInstagram(), 500);
       } else {
         // Ultimate fallback - show the link in a toast
         toast.info(`Share this link: ${shareUrl}`, { duration: 10000 });
