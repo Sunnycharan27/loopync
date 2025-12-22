@@ -10,15 +10,9 @@ import BottomNav from "../components/BottomNav";
 import { toast } from "sonner";
 
 const categories = [
-  { value: "courses", label: "Courses", icon: BookOpen, description: "Educational content, tutorials" },
-  { value: "ebooks", label: "E-Books & PDFs", icon: FileText, description: "Digital books, guides, manuals" },
-  { value: "templates", label: "Templates", icon: Palette, description: "Design templates, presets" },
-  { value: "software", label: "Software & Tools", icon: Code, description: "Apps, plugins, scripts" },
-  { value: "graphics", label: "Graphics", icon: Palette, description: "Images, icons, illustrations" },
-  { value: "audio", label: "Audio", icon: Music, description: "Music, sounds, podcasts" },
-  { value: "video", label: "Video", icon: Video, description: "Video content, clips" },
-  { value: "documents", label: "Documents", icon: FileText, description: "Spreadsheets, presentations" },
-  { value: "other", label: "Other", icon: Package, description: "Miscellaneous resources" }
+  { value: "courses", label: "Courses", icon: BookOpen, description: "Educational content, tutorials, video courses" },
+  { value: "ebooks", label: "E-Books", icon: FileText, description: "Digital books, guides, manuals" },
+  { value: "pdfs", label: "PDFs", icon: FileText, description: "Documents, notes, study materials" },
 ];
 
 const UploadDigitalProduct = () => {
