@@ -527,6 +527,75 @@ const UniversalShareModal = ({ item, type, onClose, currentUser }) => {
           </div>
         </div>
       )}
+
+      {/* Story Preview Modal */}
+      {showStoryPreview && (
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+          <div className="w-full max-w-sm">
+            {/* Preview Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-white font-bold text-lg">Instagram Story Ready!</h3>
+              <button
+                onClick={() => setShowStoryPreview(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Story Preview Image */}
+            <div className="relative rounded-2xl overflow-hidden mb-4 shadow-2xl shadow-cyan-500/20">
+              <img
+                src={showStoryPreview}
+                alt="Story Preview"
+                className="w-full"
+                style={{ aspectRatio: '9/16' }}
+              />
+            </div>
+
+            {/* Instructions */}
+            <div className="bg-gray-800/80 rounded-xl p-4 mb-4">
+              <p className="text-white text-sm font-semibold mb-2">📱 How to share:</p>
+              <ol className="text-gray-300 text-sm space-y-2">
+                <li>1. Download the story image below</li>
+                <li>2. Open Instagram → Create Story</li>
+                <li>3. Upload this image</li>
+                <li>4. Add a <span className="text-cyan-400">Link Sticker</span> with the copied URL</li>
+                <li>5. Share your story! 🎉</li>
+              </ol>
+            </div>
+
+            {/* Link Display */}
+            <div className="bg-gray-800/50 rounded-xl p-3 mb-4 flex items-center gap-2">
+              <Link2 size={16} className="text-cyan-400 flex-shrink-0" />
+              <p className="text-cyan-400 text-sm truncate flex-1">{shareUrl}</p>
+              <button
+                onClick={copyToClipboard}
+                className="text-xs bg-cyan-400/20 text-cyan-400 px-2 py-1 rounded"
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={downloadStoryImage}
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold rounded-xl hover:opacity-90 transition"
+              >
+                <Download size={20} />
+                Download Story
+              </button>
+              <button
+                onClick={() => setShowStoryPreview(false)}
+                className="px-4 py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
