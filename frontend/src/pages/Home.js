@@ -76,6 +76,11 @@ const Home = () => {
     setShowComposer(false);
   };
 
+  const handleReelCreated = (newReel) => {
+    setReels([newReel, ...reels]);
+    setShowComposer(false);
+  };
+
   const handleLike = async (postId) => {
     try {
       const res = await axios.post(`${API}/posts/${postId}/like?userId=${currentUser.id}`);
