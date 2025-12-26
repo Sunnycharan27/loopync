@@ -431,10 +431,10 @@ class LoopyncTribeContentTester:
         # Create a review
         review_data = {
             "rating": 5,
-            "comment": "Excellent food and service! Created via API testing.",
+            "text": "Excellent food and service! Created via API testing.",
             "tribeId": self.created_food_tribe_id,
-            "reviewType": "tribe",
-            "tags": ["excellent", "recommended", "great_service"]
+            "title": "Great Experience",
+            "recommend": True
         }
         
         response = self.make_request("POST", "/reviews", review_data, params={"userId": self.user_id})
