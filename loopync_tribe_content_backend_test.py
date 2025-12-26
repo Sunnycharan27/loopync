@@ -562,15 +562,15 @@ class LoopyncTribeContentTester:
             "company": "Test Tech Company",
             "description": "A software engineering internship created via API testing",
             "location": "Mumbai, India",
-            "type": "remote",
+            "locationType": "remote",
             "duration": "3 months",
             "stipend": 25000,
             "requirements": ["Python", "React", "MongoDB"],
             "skills": ["Backend Development", "Frontend Development", "Database Design"],
+            "responsibilities": ["Develop APIs", "Build UI components", "Write tests"],
             "applicationDeadline": (datetime.now().replace(month=12, day=31)).isoformat(),
             "startDate": (datetime.now().replace(month=12, day=31)).isoformat(),
-            "contactEmail": "hr@testtech.com",
-            "isActive": True
+            "type": "internship"
         }
         
         response = self.make_request("POST", "/internships", internship_data, params={"userId": self.user_id})
