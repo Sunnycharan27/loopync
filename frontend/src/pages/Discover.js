@@ -68,6 +68,13 @@ const Discover = () => {
     setShareModalOpen(true);
   };
 
+  // Auto-switch to people tab when skill filter is active
+  useEffect(() => {
+    if (skillFilter && activeTab !== 'people') {
+      setActiveTab('people');
+    }
+  }, [skillFilter]);
+
   useEffect(() => {
     fetchContent();
   }, [activeTab, skillFilter]);
