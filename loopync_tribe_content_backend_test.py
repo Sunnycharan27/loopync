@@ -494,7 +494,7 @@ class LoopyncTribeContentTester:
             "duration": 15
         }
         
-        response = self.make_request("POST", "/vibe-capsules", story_data)
+        response = self.make_request("POST", "/capsules", story_data, params={"authorId": self.user_id})
         if response and response.status_code == 200:
             story_result = response.json()
             self.created_story_id = story_result.get("id")
