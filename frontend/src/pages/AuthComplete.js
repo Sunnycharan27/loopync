@@ -136,31 +136,29 @@ const AuthComplete = () => {
     }
   };
 
-  const handleSignup = async (e) => {
+  const handleSignupStep1 = (e) => {
     e.preventDefault();
-    
-    if (!name || !handle || !email || !phone || !password) {
-      toast.error("Please fill in all fields");
-      return;
+    if (canProceedStep1()) {
+      setSignupStep(2);
+    } else {
+      if (!handle || handle.length < 3) toast.error("Username must be at least 3 characters");
+      else if (!handleAvailable) toast.error("Username is not available");
+      else if (!name.trim()) toast.error("Please enter your name");
+      else if (!email.includes("@")) toast.error("Please enter a valid email");
+      else if (!phone || phone.length < 10) toast.error("Please enter a valid phone number");
+      else if (password.length < 8) toast.error("Password must be at least 8 characters");
     }
+  };
 
-    if (password.length < 8) {
-      toast.error("Password must be at least 8 characters");
-      return;
-    }
-
-    if (!email.includes("@")) {
-      toast.error("Please enter a valid email");
-      return;
-    }
-
-    if (phone.length < 10) {
-      toast.error("Please enter a valid phone number");
+  const handleSignupFinal = async () => {
+    if (!canProceedStep3()) {
+      toast.error("Please select at least 3 interests");
       return;
     }
 
     setLoading(true);
     try {
+      // Create user account
       const res = await axios.post(`${API}/auth/signup`, {
         name,
         handle,
@@ -168,6 +166,19 @@ const AuthComplete = () => {
         phone,
         password
       });
+      
+      // Create student profile with selected category and interests
+      try {
+        await axios.post(`${API}/student/profile?userId=${res.data.user.id}`, {
+          userCategory,
+          interests: selectedInterests,
+          skills: [],
+          isPublic: true
+        });
+      } catch (profileError) {
+        console.error("Failed to create student profile:", profileError);
+        // Don't block signup if profile creation fails
+      }
       
       // Login immediately with returned token
       login(res.data.token, res.data.user);
