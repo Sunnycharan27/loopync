@@ -225,34 +225,51 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
             const mediaSource = post.mediaUrl || post.media;
             const mediaUrl = getMediaUrl(mediaSource);
             
-            return isVideoUrl(mediaSource) ? (
-              <video
-                src={mediaUrl}
-                controls
-                preload="metadata"
-                playsInline
-                className="rounded-2xl w-full mb-3 bg-gray-900"
-                onClick={() => setShowReactions(true)}
-                onError={(e) => {
-                  console.error('Video load error:', mediaUrl);
-                  e.target.style.display = 'none';
-                }}
-              />
-            ) : (
-              <img
-                src={mediaUrl}
-                alt="Post media"
-                loading="lazy"
-                decoding="async"
-                className="rounded-2xl w-full mb-3 hover:scale-[1.01] transition-transform cursor-pointer bg-gray-900"
-                onClick={() => setShowReactions(true)}
-                onError={(e) => {
-                  console.error('Image load error:', mediaUrl);
-                  e.target.style.display = 'none';
-                }}
-              />
+            return (
+              <div className="relative mb-3">
+                {isVideoUrl(mediaSource) ? (
+                  <video
+                    src={mediaUrl}
+                    controls
+                    preload="metadata"
+                    playsInline
+                    className="rounded-2xl w-full bg-gray-900"
+                    onClick={() => setShowReactions(true)}
+                    onError={(e) => {
+                      console.error('Video load error:', mediaUrl);
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={mediaUrl}
+                    alt="Post media"
+                    loading="lazy"
+                    decoding="async"
+                    className="rounded-2xl w-full hover:scale-[1.01] transition-transform cursor-pointer bg-gray-900"
+                    onClick={() => setShowReactions(true)}
+                    onError={(e) => {
+                      console.error('Image load error:', mediaUrl);
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                )}
+                {/* Music badge overlay on media */}
+                {post.music && (
+                  <div className="absolute bottom-3 left-3">
+                    <MusicBadge track={post.music} size="sm" showPlay={true} />
+                  </div>
+                )}
+              </div>
             );
           })()}
+
+          {/* Music badge when no media but has music */}
+          {post.music && !(post.media || post.mediaUrl) && (
+            <div className="mb-3">
+              <MusicBadge track={post.music} size="md" showPlay={true} />
+            </div>
+          )}
 
           {/* Selected Reaction Display */}
           {selectedReaction && (
