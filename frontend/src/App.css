@@ -101,10 +101,40 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes shimmer {
   0% {
-    background-position: -1000px 0;
+    transform: translateX(-100%);
   }
   100% {
-    background-position: 1000px 0;
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* Performance optimizations */
+img, video {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+}
+
+/* Hardware acceleration for smooth animations */
+.glass-card, .btn-primary, .btn-secondary {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize text rendering */
+body {
+  text-rendering: optimizeLegibility;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
