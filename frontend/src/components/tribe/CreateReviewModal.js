@@ -1,8 +1,48 @@
 import React, { useState } from 'react';
-import { X, Star, MessageSquare } from 'lucide-react';
+import { X, Star } from 'lucide-react';
 import axios from 'axios';
 import { API } from '../../App';
 import { toast } from 'sonner';
+
+// Move helper components outside to avoid re-creation on each render
+const StarRating = ({ value, onChange, size = 'lg' }) => (
+  <div className="flex gap-1">
+    {[1, 2, 3, 4, 5].map((star) => (
+      <button
+        key={star}
+        type="button"
+        onClick={() => onChange(star)}
+        className="transition hover:scale-110"
+      >
+        <Star
+          size={size === 'lg' ? 32 : 20}
+          className={star <= value ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}
+        />
+      </button>
+    ))}
+  </div>
+);
+
+const AspectRating = ({ label, value, onChange }) => (
+  <div className="flex items-center justify-between">
+    <span className="text-sm text-gray-400">{label}</span>
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          type="button"
+          onClick={() => onChange(star)}
+          className="transition hover:scale-110"
+        >
+          <Star
+            size={16}
+            className={star <= value ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}
+          />
+        </button>
+      ))}
+    </div>
+  </div>
+);
 
 const CreateReviewModal = ({ tribeId, currentUser, onClose, onCreated }) => {
   const [loading, setLoading] = useState(false);
@@ -54,45 +94,6 @@ const CreateReviewModal = ({ tribeId, currentUser, onClose, onCreated }) => {
       setLoading(false);
     }
   };
-
-  const StarRating = ({ value, onChange, size = 'lg' }) => (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <button
-          key={star}
-          type="button"
-          onClick={() => onChange(star)}
-          className="transition hover:scale-110"
-        >
-          <Star
-            size={size === 'lg' ? 32 : 20}
-            className={star <= value ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}
-          />
-        </button>
-      ))}
-    </div>
-  );
-
-  const AspectRating = ({ label, value, onChange }) => (
-    <div className="flex items-center justify-between">
-      <span className="text-sm text-gray-400">{label}</span>
-      <div className="flex gap-0.5">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            type="button"
-            onClick={() => onChange(star)}
-            className="transition hover:scale-110"
-          >
-            <Star
-              size={16}
-              className={star <= value ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}
-            />
-          </button>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
