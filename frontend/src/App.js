@@ -597,6 +597,18 @@ function App() {
                 )
               }
             />
+            <Route
+              path="/team-posts/create"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <CreateTeamPost />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
             
             {/* Catch-all route for @username - MUST be last! */}
             <Route
