@@ -268,7 +268,8 @@ class VibeCapsule(BaseModel):
     mediaUrl: str
     thumbnailUrl: Optional[str] = None
     caption: str = ""
-    music: Optional[dict] = None  # Spotify track data
+    music: Optional[dict] = None  # Spotify track data with startTime, clipDuration
+    location: Optional[dict] = None  # {name, lat, lng}
     duration: int = 15  # seconds for video
     views: List[str] = Field(default_factory=list)  # List of user IDs who viewed
     reactions: dict = Field(default_factory=dict)  # {userId: reaction_emoji}
@@ -281,6 +282,7 @@ class VibeCapsuleCreate(BaseModel):
     thumbnailUrl: Optional[str] = None
     caption: str = ""
     music: Optional[dict] = None
+    location: Optional[dict] = None
     duration: int = 15
 
 class Tribe(BaseModel):
