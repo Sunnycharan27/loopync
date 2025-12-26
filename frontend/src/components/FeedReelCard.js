@@ -182,6 +182,6 @@ const FeedReelCard = memo(({ reel, currentUser, onLike }) => {
       )}
     </div>
   );
-};
+});
 
 export default FeedReelCard;
