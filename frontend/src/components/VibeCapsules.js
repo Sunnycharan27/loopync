@@ -69,7 +69,7 @@ const VibeCapsules = ({ currentUser, onCreateStory }) => {
           {/* ALWAYS show Upload Button first - for adding new stories */}
           {currentUser && (
             <button
-              onClick={() => setShowUploadModal(true)}
+              onClick={() => onCreateStory ? onCreateStory() : setShowUploadModal(true)}
               className="flex flex-col items-center gap-2 flex-shrink-0"
             >
               <div className="relative">
