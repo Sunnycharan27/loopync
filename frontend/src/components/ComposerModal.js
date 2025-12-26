@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { API } from "../App";
-import { X, Image as ImageIcon, Upload, Cloud, Film, FileText, Video } from "lucide-react";
+import { X, Image as ImageIcon, Upload, Cloud, Film, FileText, Video, Music } from "lucide-react";
 import { toast } from "sonner";
+import MusicPicker from "./MusicPicker";
+import MusicBadge from "./MusicBadge";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const CLOUDINARY_CLOUD = process.env.REACT_APP_CLOUDINARY_CLOUD;
 const CLOUDINARY_PRESET = process.env.REACT_APP_CLOUDINARY_UNSIGNED || 'loopync_unsigned';
 
@@ -17,6 +18,8 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadMethod, setUploadMethod] = useState("local");
+  const [showMusicPicker, setShowMusicPicker] = useState(false);
+  const [selectedMusic, setSelectedMusic] = useState(null);
   const fileInputRef = useRef(null);
   const widgetRef = useRef(null);
 
@@ -132,7 +135,7 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
     try {
       const res = await axios.post(`${API}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
-        timeout: 120000 // 2 min timeout for large video files
+        timeout: 120000
       });
       
       toast.success("Media uploaded successfully!");
@@ -157,8 +160,8 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
     }
     
     // For posts, text is required
-    if (contentType === 'post' && !text.trim()) {
-      toast.error("Post text cannot be empty");
+    if (contentType === 'post' && !text.trim() && !selectedFile && !media) {
+      toast.error("Please add text or media");
       return;
     }
 
@@ -177,22 +180,34 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
         }
       }
 
+      // Prepare music data
+      const musicData = selectedMusic ? {
+        trackId: selectedMusic.id,
+        name: selectedMusic.name,
+        artist: selectedMusic.artist,
+        albumArt: selectedMusic.albumArt,
+        albumArtSmall: selectedMusic.albumArtSmall,
+        previewUrl: selectedMusic.previewUrl,
+        spotifyUrl: selectedMusic.spotifyUrl
+      } : null;
+
       if (contentType === 'reel') {
-        // Create reel
+        // Create reel with music
         const res = await axios.post(`${API}/reels?authorId=${currentUser.id}`, {
           caption: text || "",
           videoUrl: mediaUrl,
-          thumbnailUrl: "", // Could generate from video
-          audio: null
+          thumbnailUrl: "",
+          audio: musicData
         });
         
         toast.success("Reel posted! 🎬");
         if (onReelCreated) onReelCreated(res.data);
       } else {
-        // Create post
+        // Create post with music
         const res = await axios.post(`${API}/posts?authorId=${currentUser.id}`, {
           text,
           media: mediaUrl || null,
+          music: musicData,
           audience: "public"
         });
         
@@ -205,6 +220,7 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
       setMedia("");
       setSelectedFile(null);
       setPreviewUrl("");
+      setSelectedMusic(null);
       onClose();
     } catch (error) {
       console.error("Failed to create content:", error);
@@ -229,11 +245,7 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
           <h2 className="text-xl font-bold neon-text">
             {contentType === 'reel' ? 'Create Reel' : 'Create Post'}
           </h2>
-          <button
-            data-testid="composer-close-btn"
-            onClick={onClose}
-            className="text-gray-400 hover:text-white"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-white">
             <X size={24} />
           </button>
         </div>
@@ -269,13 +281,46 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
         <form onSubmit={handleSubmit}>
           {/* Text Input */}
           <textarea
-            data-testid="composer-text-input"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder={contentType === 'reel' ? "Add a caption for your reel..." : "What's on your mind?"}
             className="w-full h-24 resize-none mb-4"
             autoFocus={contentType === 'post'}
           />
+
+          {/* Music Selection */}
+          <div className="mb-4">
+            {selectedMusic ? (
+              <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-xl border border-green-500/30">
+                <MusicBadge track={selectedMusic} size="md" showPlay={true} />
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowMusicPicker(true)}
+                    className="text-xs text-green-400 hover:text-green-300"
+                  >
+                    Change
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMusic(null)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowMusicPicker(true)}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-green-500/30 text-green-400 hover:bg-green-500/10 transition"
+              >
+                <Music size={20} />
+                Add Music from Spotify
+              </button>
+            )}
+          </div>
 
           {/* File Upload Section */}
           <div className="mb-4">
@@ -299,13 +344,12 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
                     ? 'border-pink-500/50 text-pink-400 hover:bg-pink-500/10'
                     : 'border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/10'
                 }`}
-                data-testid="composer-file-btn"
               >
                 {contentType === 'reel' ? <Video size={20} /> : <Upload size={20} />}
                 {selectedFile 
                   ? "Change Media" 
                   : contentType === 'reel' 
-                    ? "Upload Video for Reel" 
+                    ? "Upload Video" 
                     : "Upload Photo/Video"
                 }
               </button>
@@ -315,7 +359,6 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
                   type="button"
                   onClick={openCloudinaryWidget}
                   className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-purple-400/10 text-purple-400 hover:bg-purple-400/20"
-                  data-testid="composer-cloudinary-btn"
                 >
                   <Cloud size={18} />
                 </button>
@@ -345,13 +388,27 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
                       Reel
                     </div>
                   )}
+                  {/* Music badge on video preview */}
+                  {selectedMusic && (
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <MusicBadge track={selectedMusic} size="sm" showPlay={false} />
+                    </div>
+                  )}
                 </div>
               ) : (
-                <img 
-                  src={previewUrl} 
-                  alt="Preview" 
-                  className="rounded-2xl w-full max-h-64 object-cover" 
-                />
+                <div className="relative">
+                  <img 
+                    src={previewUrl} 
+                    alt="Preview" 
+                    className="rounded-2xl w-full max-h-64 object-cover" 
+                  />
+                  {/* Music badge on image preview */}
+                  {selectedMusic && (
+                    <div className="absolute bottom-2 left-2">
+                      <MusicBadge track={selectedMusic} size="sm" showPlay={false} />
+                    </div>
+                  )}
+                </div>
               )}
               <button
                 type="button"
@@ -363,7 +420,7 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
             </div>
           )}
 
-          {/* URL Input (only for posts) */}
+          {/* URL Input (only for posts without selected file) */}
           {!selectedFile && contentType === 'post' && (
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2 text-gray-400">
@@ -371,7 +428,6 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
                 Or paste image URL (optional)
               </label>
               <input
-                data-testid="composer-media-input"
                 type="url"
                 value={media}
                 onChange={(e) => setMedia(e.target.value)}
@@ -382,8 +438,13 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
           )}
 
           {media && !selectedFile && contentType === 'post' && (
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <img src={media} alt="Preview" className="rounded-2xl w-full max-h-64 object-cover" onError={() => setMedia("")} />
+              {selectedMusic && (
+                <div className="absolute bottom-2 left-2">
+                  <MusicBadge track={selectedMusic} size="sm" showPlay={false} />
+                </div>
+              )}
             </div>
           )}
 
@@ -396,9 +457,8 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
               Cancel
             </button>
             <button
-              data-testid="composer-submit-btn"
               type="submit"
-              disabled={loading || uploading || (contentType === 'post' && !text.trim()) || (contentType === 'reel' && !selectedFile && !media)}
+              disabled={loading || uploading || (contentType === 'post' && !text.trim() && !selectedFile && !media) || (contentType === 'reel' && !selectedFile && !media)}
               className={`flex-1 py-3 rounded-full font-semibold transition-all disabled:opacity-50 ${
                 contentType === 'reel'
                   ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:opacity-90'
@@ -410,6 +470,18 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
           </div>
         </form>
       </div>
+
+      {/* Music Picker Modal */}
+      {showMusicPicker && (
+        <MusicPicker
+          onSelect={(track) => {
+            setSelectedMusic(track);
+            setShowMusicPicker(false);
+          }}
+          onClose={() => setShowMusicPicker(false)}
+          selectedTrack={selectedMusic}
+        />
+      )}
     </div>
   );
 };
