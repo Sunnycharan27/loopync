@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, memo } from "react";
 import { Heart, MessageCircle, Share2, Play, Volume2, VolumeX, Film } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,14 @@ import UniversalShareModal from "./UniversalShareModal";
 import VerifiedBadge from "./VerifiedBadge";
 import { getMediaUrl } from "../utils/mediaUtils";
 
-const FeedReelCard = ({ reel, currentUser, onLike }) => {
+// Memoized FeedReelCard for better performance
+const FeedReelCard = memo(({ reel, currentUser, onLike }) => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [showShare, setShowShare] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   
   const isLiked = reel.likedBy?.includes(currentUser?.id);
 
