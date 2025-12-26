@@ -5,7 +5,7 @@ import VibeCapsuleUpload from "./VibeCapsuleUpload";
 import VibeCapsuleViewer from "./VibeCapsuleViewer";
 import { Plus } from "lucide-react";
 
-const VibeCapsules = ({ currentUser }) => {
+const VibeCapsules = ({ currentUser, onCreateStory }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(null);
