@@ -285,6 +285,23 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
             </p>
           </div>
         )}
+
+        {/* Music Badge Overlay */}
+        {currentCapsule.music && !mediaError && (
+          <div className="absolute bottom-44 left-4">
+            <MusicBadge track={currentCapsule.music} size="md" showPlay={true} autoPlay={!isPaused} />
+          </div>
+        )}
+
+        {/* Location Badge Overlay */}
+        {currentCapsule.location && !mediaError && (
+          <div className="absolute top-20 left-4">
+            <div className="flex items-center gap-2 px-3 py-2 bg-black/60 backdrop-blur-sm rounded-full">
+              <MapPin size={16} className="text-red-400" />
+              <span className="text-white text-sm font-medium">{currentCapsule.location.name}</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Story indicator dots */}
