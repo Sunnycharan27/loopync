@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { API } from '../App';
-import { Search, X, Music, Play, Pause, TrendingUp, Clock, ExternalLink } from 'lucide-react';
+import { Search, X, Music, Play, Pause, TrendingUp, Clock, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
+const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = true }) => {
   const [query, setQuery] = useState('');
   const [tracks, setTracks] = useState([]);
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('trending');
   const [playingId, setPlayingId] = useState(null);
+  const [currentTrack, setCurrentTrack] = useState(selectedTrack || null);
+  const [step, setStep] = useState('browse'); // 'browse' or 'duration'
+  const [startTime, setStartTime] = useState(0);
+  const [duration, setDuration] = useState(15); // 15, 30, 45, or 60 seconds
   const audioRef = useRef(null);
   const searchTimeoutRef = useRef(null);
+  const progressRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
     fetchTrending();
@@ -23,7 +29,6 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
   }, []);
 
   useEffect(() => {
-    // Debounced search
     if (query.trim()) {
       clearTimeout(searchTimeoutRef.current);
       searchTimeoutRef.current = setTimeout(() => {
@@ -58,33 +63,61 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     }
   };
 
-  const playPreview = (track) => {
+  const playPreview = (track, fromTime = 0) => {
     if (!track.previewUrl) return;
     
-    if (playingId === track.id) {
-      // Stop playing
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
+    if (playingId === track.id && audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
       setPlayingId(null);
     } else {
-      // Play new track
       if (audioRef.current) {
         audioRef.current.pause();
       }
       audioRef.current = new Audio(track.previewUrl);
       audioRef.current.volume = 0.5;
+      audioRef.current.currentTime = fromTime;
       audioRef.current.play();
       audioRef.current.onended = () => setPlayingId(null);
+      audioRef.current.ontimeupdate = () => {
+        setCurrentTime(audioRef.current.currentTime);
+        // Stop at duration limit
+        if (step === 'duration' && audioRef.current.currentTime >= startTime + duration) {
+          audioRef.current.currentTime = startTime;
+        }
+      };
       setPlayingId(track.id);
     }
   };
 
-  const handleSelect = (track) => {
+  const handleTrackSelect = (track) => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setPlayingId(null);
+    }
+    setCurrentTrack(track);
+    if (showDurationPicker && track.previewUrl) {
+      setStep('duration');
+      setStartTime(0);
+    } else {
+      onSelect({ ...track, startTime: 0, clipDuration: 30 });
+    }
+  };
+
+  const handleConfirm = () => {
     if (audioRef.current) {
       audioRef.current.pause();
     }
-    onSelect(track);
+    onSelect({
+      ...currentTrack,
+      startTime,
+      clipDuration: duration
+    });
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const formatDuration = (ms) => {
@@ -93,8 +126,163 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Max time for preview (usually 30 sec)
+  const maxPreviewTime = 30;
+
   const displayTracks = activeTab === 'search' ? tracks : trending;
 
+  // Duration Selection Step
+  if (step === 'duration' && currentTrack) {
+    return (
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center">
+        <div className="w-full max-w-lg bg-[#1a0b2e] rounded-t-3xl sm:rounded-3xl max-h-[85vh] flex flex-col">
+          {/* Header */}
+          <div className="p-4 border-b border-gray-800">
+            <div className="flex items-center gap-3">
+              <button onClick={() => setStep('browse')} className="p-2 hover:bg-gray-800 rounded-full">
+                <ChevronLeft size={24} className="text-white" />
+              </button>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-white">Select Clip</h2>
+                <p className="text-xs text-gray-400">Choose which part to play</p>
+              </div>
+              <button onClick={onClose} className="p-2 hover:bg-gray-800 rounded-full">
+                <X size={24} className="text-gray-400" />
+              </button>
+            </div>
+          </div>
+
+          {/* Track Info */}
+          <div className="p-4">
+            <div className="flex items-center gap-4 p-4 bg-gray-800/50 rounded-2xl">
+              <img
+                src={currentTrack.albumArt || currentTrack.albumArtSmall}
+                alt={currentTrack.album}
+                className="w-20 h-20 rounded-xl object-cover"
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-bold text-lg truncate">{currentTrack.name}</p>
+                <p className="text-gray-400 truncate">{currentTrack.artist}</p>
+              </div>
+              <button
+                onClick={() => playPreview(currentTrack, startTime)}
+                className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center"
+              >
+                {playingId === currentTrack.id ? (
+                  <Pause size={24} className="text-black" />
+                ) : (
+                  <Play size={24} className="text-black ml-1" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Duration Selector */}
+          <div className="px-4 pb-4">
+            <p className="text-sm text-gray-400 mb-3">Clip Duration</p>
+            <div className="flex gap-2">
+              {[15, 30, 45, 60].map((d) => (
+                <button
+                  key={d}
+                  onClick={() => setDuration(d)}
+                  className={`flex-1 py-3 rounded-xl font-semibold transition ${
+                    duration === d
+                      ? 'bg-green-500 text-black'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
+                >
+                  {d}s
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Start Time Slider */}
+          <div className="px-4 pb-4">
+            <p className="text-sm text-gray-400 mb-3">Start Point</p>
+            <div className="relative">
+              {/* Waveform visual (simplified) */}
+              <div className="h-16 bg-gray-800 rounded-xl relative overflow-hidden">
+                {/* Progress bars to simulate waveform */}
+                <div className="absolute inset-0 flex items-center gap-[2px] px-2">
+                  {[...Array(50)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`flex-1 rounded-full transition-all ${
+                        i / 50 * maxPreviewTime >= startTime && i / 50 * maxPreviewTime < startTime + duration
+                          ? 'bg-green-500'
+                          : 'bg-gray-600'
+                      }`}
+                      style={{ height: `${20 + Math.random() * 60}%` }}
+                    />
+                  ))}
+                </div>
+                {/* Selected range indicator */}
+                <div
+                  className="absolute top-0 bottom-0 border-2 border-green-400 rounded-lg pointer-events-none"
+                  style={{
+                    left: `${(startTime / maxPreviewTime) * 100}%`,
+                    width: `${(duration / maxPreviewTime) * 100}%`
+                  }}
+                />
+              </div>
+              
+              {/* Slider */}
+              <input
+                type="range"
+                min="0"
+                max={Math.max(0, maxPreviewTime - duration)}
+                value={startTime}
+                onChange={(e) => {
+                  setStartTime(Number(e.target.value));
+                  if (playingId === currentTrack.id && audioRef.current) {
+                    audioRef.current.currentTime = Number(e.target.value);
+                  }
+                }}
+                className="w-full mt-3 accent-green-500"
+              />
+              
+              {/* Time labels */}
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>{formatTime(startTime)}</span>
+                <span className="text-green-400 font-medium">
+                  Playing: {formatTime(startTime)} - {formatTime(startTime + duration)}
+                </span>
+                <span>{formatTime(maxPreviewTime)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Preview Info */}
+          <div className="px-4 pb-4">
+            <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+              <p className="text-yellow-400 text-sm text-center">
+                🎵 Preview plays {duration} seconds starting at {formatTime(startTime)}
+              </p>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="p-4 border-t border-gray-800 flex gap-3">
+            <button
+              onClick={() => setStep('browse')}
+              className="flex-1 py-3 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition"
+            >
+              Change Song
+            </button>
+            <button
+              onClick={handleConfirm}
+              className="flex-1 py-3 rounded-xl bg-green-500 text-black font-semibold hover:bg-green-400 transition"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Browse Songs Step
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center">
       <div className="w-full max-w-lg bg-[#1a0b2e] rounded-t-3xl sm:rounded-3xl max-h-[85vh] flex flex-col">
@@ -135,13 +323,13 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
         </div>
 
         {/* Selected Track Preview */}
-        {selectedTrack && (
+        {currentTrack && (
           <div className="px-4 py-3 bg-green-500/10 border-b border-green-500/20">
             <div className="flex items-center gap-3">
-              <img src={selectedTrack.albumArtSmall || selectedTrack.albumArt} alt="" className="w-10 h-10 rounded-lg" />
+              <img src={currentTrack.albumArtSmall || currentTrack.albumArt} alt="" className="w-10 h-10 rounded-lg" />
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm truncate">{selectedTrack.name}</p>
-                <p className="text-green-400 text-xs truncate">{selectedTrack.artist}</p>
+                <p className="text-white font-semibold text-sm truncate">{currentTrack.name}</p>
+                <p className="text-green-400 text-xs truncate">{currentTrack.artist}</p>
               </div>
               <span className="text-green-400 text-xs font-semibold">✓ Selected</span>
             </div>
@@ -174,11 +362,11 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
               <div
                 key={track.id}
                 className={`flex items-center gap-3 p-3 rounded-xl transition cursor-pointer ${
-                  selectedTrack?.id === track.id
+                  currentTrack?.id === track.id
                     ? 'bg-green-500/20 border border-green-500/30'
                     : 'bg-gray-800/50 hover:bg-gray-800 border border-transparent'
                 }`}
-                onClick={() => handleSelect(track)}
+                onClick={() => handleTrackSelect(track)}
               >
                 {/* Album Art with Play Button */}
                 <div className="relative flex-shrink-0">
@@ -227,12 +415,12 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
                     <Clock size={12} />
                     {formatDuration(track.duration)}
                   </span>
-                  {selectedTrack?.id === track.id ? (
+                  {currentTrack?.id === track.id ? (
                     <span className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
                       <span className="text-black text-xs">✓</span>
                     </span>
                   ) : (
-                    <span className="w-6 h-6 rounded-full border border-gray-600" />
+                    <ChevronRight size={18} className="text-gray-500" />
                   )}
                 </div>
               </div>
@@ -247,19 +435,12 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-gray-800 flex gap-3">
+        <div className="p-4 border-t border-gray-800">
           <button
             onClick={onClose}
-            className="flex-1 py-3 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition"
+            className="w-full py-3 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition"
           >
             Cancel
-          </button>
-          <button
-            onClick={() => selectedTrack && onClose()}
-            disabled={!selectedTrack}
-            className="flex-1 py-3 rounded-xl bg-green-500 text-black font-semibold hover:bg-green-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {selectedTrack ? 'Done' : 'Select a Song'}
           </button>
         </div>
 
