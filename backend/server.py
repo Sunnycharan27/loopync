@@ -2930,20 +2930,111 @@ async def get_reels(limit: int = 50):
     return reels
 
 @api_router.get("/music/search")
-async def search_music(q: str, limit: int = 10):
-    """Mock JioSaavn-like search returning preview streams only (no downloads)."""
-    sample = [
-        {
-            "id": f"mock-{i}",
-            "title": f"{q.title()} Track {i+1}",
-            "artists": ["Mock Artist"],
-            "artwork": f"https://picsum.photos/seed/{q}{i}/200/200",
-            "duration": 30,
-            "previewUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-        }
-        for i in range(min(limit, 10))
-    ]
-    return {"items": sample}
+async def search_music_api(q: str, limit: int = 20):
+    """Search for music using Deezer API - FREE previews for all songs"""
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(
+                "https://api.deezer.com/search",
+                params={"q": q, "limit": limit}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(status_code=response.status_code, detail="Music search failed")
+            
+            data = response.json()
+            tracks = []
+            
+            for track in data.get("data", []):
+                tracks.append({
+                    "id": str(track["id"]),
+                    "name": track["title"],
+                    "artist": track["artist"]["name"],
+                    "artistId": str(track["artist"]["id"]),
+                    "album": track["album"]["title"],
+                    "albumArt": track["album"]["cover_big"],
+                    "albumArtSmall": track["album"]["cover_small"],
+                    "previewUrl": track["preview"],  # 30-second preview - ALWAYS AVAILABLE!
+                    "duration": track["duration"] * 1000,  # Convert to ms
+                    "externalUrl": track["link"],
+                    "explicit": track.get("explicit_lyrics", False)
+                })
+            
+            return {"tracks": tracks}
+        except Exception as e:
+            print(f"Deezer search error: {e}")
+            raise HTTPException(status_code=500, detail="Music search failed")
+
+@api_router.get("/music/trending")
+async def get_trending_music_api(limit: int = 20):
+    """Get trending music from Deezer charts - FREE previews"""
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(
+                "https://api.deezer.com/chart/0/tracks",
+                params={"limit": limit}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(status_code=response.status_code, detail="Failed to get trending")
+            
+            data = response.json()
+            tracks = []
+            
+            for track in data.get("data", []):
+                tracks.append({
+                    "id": str(track["id"]),
+                    "name": track["title"],
+                    "artist": track["artist"]["name"],
+                    "artistId": str(track["artist"]["id"]),
+                    "album": track["album"]["title"],
+                    "albumArt": track["album"]["cover_big"],
+                    "albumArtSmall": track["album"]["cover_small"],
+                    "previewUrl": track["preview"],
+                    "duration": track["duration"] * 1000,
+                    "externalUrl": track["link"],
+                    "explicit": track.get("explicit_lyrics", False),
+                    "position": track.get("position", 0)
+                })
+            
+            return {"tracks": tracks}
+        except Exception as e:
+            print(f"Deezer trending error: {e}")
+            raise HTTPException(status_code=500, detail="Failed to get trending")
+
+@api_router.get("/music/lyrics/{trackId}")
+async def get_lyrics_api(trackId: str, artist: str = "", title: str = ""):
+    """Get lyrics for a track"""
+    lyrics_text = None
+    
+    # Try lyrics.ovh API
+    async with httpx.AsyncClient() as client:
+        if artist and title:
+            try:
+                response = await client.get(
+                    f"https://api.lyrics.ovh/v1/{artist}/{title}",
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    data = response.json()
+                    lyrics_text = data.get("lyrics")
+            except:
+                pass
+    
+    if not lyrics_text:
+        lyrics_text = f"""🎵 Lyrics not available
+
+Drag the waveform to select your favorite part.
+Use 15s or 30s to choose clip duration."""
+    
+    lines = [line.strip() for line in lyrics_text.split('\n') if line.strip()]
+    
+    return {
+        "trackId": trackId,
+        "lyrics": lyrics_text,
+        "lines": lines,
+        "synced": False
+    }
 
 @api_router.post("/reels")
 async def create_reel(reel: ReelCreate, authorId: str):
