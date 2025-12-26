@@ -10030,6 +10030,212 @@ async def endorse_user(userId: str, endorserId: str, skill: str, message: str = 
     
     return {"message": "Endorsement added", "action": "endorsed"}
 
+# ===== FITNESS TRIBE APIS =====
+
+@api_router.get("/workouts")
+async def get_workouts(tribeId: str = None, difficulty: str = None, skip: int = 0, limit: int = 20):
+    """Get workouts for fitness tribes"""
+    query = {}
+    if tribeId:
+        query["tribeId"] = tribeId
+    if difficulty:
+        query["difficulty"] = difficulty
+    
+    workouts = await db.workouts.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    
+    for w in workouts:
+        author = await db.users.find_one({"id": w.get("authorId")}, {"_id": 0, "name": 1, "avatar": 1, "handle": 1})
+        w["author"] = author
+    
+    return workouts
+
+@api_router.post("/workouts")
+async def create_workout(userId: str, data: dict):
+    """Create a workout plan"""
+    workout = {
+        "id": str(uuid.uuid4()),
+        "authorId": userId,
+        "tribeId": data.get("tribeId"),
+        "title": data.get("title"),
+        "description": data.get("description"),
+        "duration": data.get("duration"),
+        "difficulty": data.get("difficulty", "intermediate"),
+        "exercises": data.get("exercises", []),
+        "targetMuscles": data.get("targetMuscles", []),
+        "equipment": data.get("equipment", []),
+        "videoUrl": data.get("videoUrl"),
+        "imageUrl": data.get("imageUrl"),
+        "likes": [],
+        "saves": [],
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.workouts.insert_one(workout)
+    workout.pop("_id", None)
+    return workout
+
+@api_router.get("/challenges")
+async def get_challenges(tribeId: str = None, status: str = None, skip: int = 0, limit: int = 20):
+    """Get fitness challenges"""
+    query = {}
+    if tribeId:
+        query["tribeId"] = tribeId
+    if status:
+        query["status"] = status
+    
+    challenges = await db.challenges.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    return challenges
+
+@api_router.post("/challenges")
+async def create_challenge(userId: str, data: dict):
+    """Create a fitness challenge"""
+    challenge = {
+        "id": str(uuid.uuid4()),
+        "authorId": userId,
+        "tribeId": data.get("tribeId"),
+        "title": data.get("title"),
+        "description": data.get("description"),
+        "type": data.get("type", "daily"),
+        "goal": data.get("goal"),
+        "duration": data.get("duration"),
+        "startDate": data.get("startDate"),
+        "endDate": data.get("endDate"),
+        "prize": data.get("prize"),
+        "participants": [userId],
+        "status": "active",
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.challenges.insert_one(challenge)
+    challenge.pop("_id", None)
+    return challenge
+
+@api_router.post("/challenges/{challengeId}/join")
+async def join_challenge(challengeId: str, userId: str):
+    """Join a fitness challenge"""
+    result = await db.challenges.update_one(
+        {"id": challengeId},
+        {"$addToSet": {"participants": userId}}
+    )
+    return {"message": "Joined challenge", "action": "joined"}
+
+# ===== FOOD TRIBE APIS =====
+
+@api_router.get("/menu-items")
+async def get_menu_items(tribeId: str = None, category: str = None, skip: int = 0, limit: int = 50):
+    """Get menu items for food tribes"""
+    query = {}
+    if tribeId:
+        query["tribeId"] = tribeId
+    if category:
+        query["category"] = category
+    
+    items = await db.menu_items.find(query, {"_id": 0}).sort("name", 1).skip(skip).limit(limit).to_list(limit)
+    return items
+
+@api_router.post("/menu-items")
+async def create_menu_item(userId: str, data: dict):
+    """Add a menu item"""
+    item = {
+        "id": str(uuid.uuid4()),
+        "authorId": userId,
+        "tribeId": data.get("tribeId"),
+        "name": data.get("name"),
+        "description": data.get("description"),
+        "price": data.get("price"),
+        "category": data.get("category"),
+        "image": data.get("image"),
+        "isVeg": data.get("isVeg", True),
+        "isAvailable": data.get("isAvailable", True),
+        "rating": 0,
+        "ratingCount": 0,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.menu_items.insert_one(item)
+    item.pop("_id", None)
+    return item
+
+# ===== DEALS & OFFERS APIS =====
+
+@api_router.get("/deals")
+async def get_deals(tribeId: str = None, active: bool = True, skip: int = 0, limit: int = 20):
+    """Get deals and offers"""
+    query = {}
+    if tribeId:
+        query["tribeId"] = tribeId
+    if active:
+        query["status"] = "active"
+    
+    deals = await db.deals.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    return deals
+
+@api_router.post("/deals")
+async def create_deal(userId: str, data: dict):
+    """Create a deal/offer"""
+    deal = {
+        "id": str(uuid.uuid4()),
+        "authorId": userId,
+        "tribeId": data.get("tribeId"),
+        "title": data.get("title"),
+        "description": data.get("description"),
+        "discount": data.get("discount"),
+        "discountType": data.get("discountType", "percentage"),
+        "code": data.get("code"),
+        "validFrom": data.get("validFrom"),
+        "validTill": data.get("validTill"),
+        "terms": data.get("terms"),
+        "status": "active",
+        "usageCount": 0,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.deals.insert_one(deal)
+    deal.pop("_id", None)
+    return deal
+
+# ===== REVIEWS APIS =====
+
+@api_router.get("/reviews")
+async def get_reviews(tribeId: str = None, rating: int = None, skip: int = 0, limit: int = 20):
+    """Get reviews"""
+    query = {}
+    if tribeId:
+        query["tribeId"] = tribeId
+    if rating:
+        query["rating"] = rating
+    
+    reviews = await db.reviews.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    
+    for r in reviews:
+        author = await db.users.find_one({"id": r.get("authorId")}, {"_id": 0, "name": 1, "avatar": 1, "handle": 1})
+        r["author"] = author
+    
+    return reviews
+
+@api_router.post("/reviews")
+async def create_review(userId: str, data: dict):
+    """Create a review"""
+    review = {
+        "id": str(uuid.uuid4()),
+        "authorId": userId,
+        "tribeId": data.get("tribeId"),
+        "rating": data.get("rating", 5),
+        "text": data.get("text"),
+        "images": data.get("images", []),
+        "helpful": 0,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.reviews.insert_one(review)
+    review.pop("_id", None)
+    
+    # Update tribe average rating
+    tribe_reviews = await db.reviews.find({"tribeId": data.get("tribeId")}, {"rating": 1}).to_list(1000)
+    if tribe_reviews:
+        avg_rating = sum(r["rating"] for r in tribe_reviews) / len(tribe_reviews)
+        await db.tribes.update_one(
+            {"id": data.get("tribeId")},
+            {"$set": {"averageRating": round(avg_rating, 1), "reviewCount": len(tribe_reviews)}}
+        )
+    
+    return review
+
 # Include router
 app.include_router(api_router)
 
