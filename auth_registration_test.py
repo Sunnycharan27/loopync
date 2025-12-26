@@ -18,7 +18,7 @@ from datetime import datetime
 import time
 
 # Configuration
-BACKEND_URL = "https://social-prelaunch.preview.emergentagent.com/api"
+BACKEND_URL = "https://student-tribes.preview.emergentagent.com/api"
 
 class AuthRegistrationTester:
     def __init__(self):

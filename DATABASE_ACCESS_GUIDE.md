@@ -223,7 +223,7 @@ db.vibe_rooms.deleteMany({})
 
 ### Base URL
 ```
-https://social-prelaunch.preview.emergentagent.com/api
+https://student-tribes.preview.emergentagent.com/api
 ```
 
 ### Key Endpoints

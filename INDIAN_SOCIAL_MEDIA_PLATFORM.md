@@ -457,7 +457,7 @@ On other users' profiles:
 
 ## 📱 Platform URLs
 
-**Main App**: `https://social-prelaunch.preview.emergentagent.com`
+**Main App**: `https://student-tribes.preview.emergentagent.com`
 
 **Key Routes**:
 - Home: `/`

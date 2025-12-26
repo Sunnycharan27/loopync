@@ -12,7 +12,7 @@ Comprehensive Discover/People Section Backend Testing
 - Edge cases & error handling
 
 **Test Environment:**
-- Backend URL: https://social-prelaunch.preview.emergentagent.com/api
+- Backend URL: https://student-tribes.preview.emergentagent.com/api
 - Create 2 test users (User A and User B)
 - Test all social interactions between users
 """
@@ -25,7 +25,7 @@ import uuid
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://social-prelaunch.preview.emergentagent.com/api"
+BASE_URL = "https://student-tribes.preview.emergentagent.com/api"
 TEST_EMAIL_A = f"usera_{int(time.time())}@loopync.com"
 TEST_EMAIL_B = f"userb_{int(time.time())}@loopync.com"
 TEST_PASSWORD = "testpassword123"

@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Base URL from frontend .env
-BASE_URL = "https://social-prelaunch.preview.emergentagent.com"
+BASE_URL = "https://student-tribes.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 # Test credentials from review request

@@ -12,7 +12,7 @@ from datetime import datetime
 import time
 
 # Configuration
-BACKEND_URL = "https://social-prelaunch.preview.emergentagent.com/api"
+BACKEND_URL = "https://student-tribes.preview.emergentagent.com/api"
 
 # Test user credentials as specified in the review request
 TEST_USERS = {
