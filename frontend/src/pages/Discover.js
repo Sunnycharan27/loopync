@@ -346,6 +346,23 @@ const Discover = () => {
               </div>
             )}
           </div>
+
+          {/* Skill Filter Badge */}
+          {skillFilter && (
+            <div className="flex items-center gap-2 mt-3">
+              <div className="flex items-center gap-2 px-3 py-2 bg-cyan-500/20 border border-cyan-500/30 rounded-full">
+                <Tag size={16} className="text-cyan-400" />
+                <span className="text-cyan-400 font-medium">#{skillFilter}</span>
+                <button
+                  onClick={() => setSearchParams({})}
+                  className="p-0.5 hover:bg-cyan-500/30 rounded-full transition"
+                >
+                  <X size={14} className="text-cyan-400" />
+                </button>
+              </div>
+              <span className="text-gray-400 text-sm">Showing users with this skill</span>
+            </div>
+          )}
         </div>
 
         {/* Search Results */}
