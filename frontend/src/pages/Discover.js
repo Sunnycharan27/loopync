@@ -82,7 +82,12 @@ const Discover = () => {
         const res = await axios.get(`${API}/reels`);
         setReels(res.data);
       } else if (activeTab === "people") {
-        const res = await axios.get(`${API}/users`);
+        // If skill filter is active, fetch users with that skill
+        let endpoint = skillFilter 
+          ? `${API}/students/discover?skill=${encodeURIComponent(skillFilter)}`
+          : `${API}/users`;
+        
+        const res = await axios.get(endpoint);
         // Filter out current user only (keep friends to show Message button)
         let filtered = res.data.filter(u => {
           if (!currentUser) return true;
