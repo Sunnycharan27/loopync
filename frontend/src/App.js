@@ -62,7 +62,6 @@ import TeamPosts from "./pages/TeamPosts";
 import CreateTeamPost from "./pages/CreateTeamPost";
 import CompanyDiscovery from "./pages/CompanyDiscovery";
 import CreateInternship from "./pages/CreateInternship";
-import CreateTribe from "./pages/CreateTribe";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
