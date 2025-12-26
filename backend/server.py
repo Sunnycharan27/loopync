@@ -9810,6 +9810,223 @@ async def discover_students(skill: str = None, college: str = None, year: str = 
     
     return result
 
+# ===== STUDENTS DISCOVERY FOR COMPANIES =====
+
+@api_router.get("/students/discover")
+async def discover_students_for_companies(
+    skill: str = None,
+    category: str = None,
+    location: str = None,
+    isPublic: bool = True,
+    skip: int = 0,
+    limit: int = 50
+):
+    """Company discovery endpoint - browse public student profiles"""
+    query = {}
+    if isPublic:
+        query["isPublic"] = True
+    if skill:
+        query["skills"] = {"$in": [skill]}
+    if category:
+        query["userCategory"] = category
+    
+    profiles = await db.student_profiles.find(query, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
+    
+    result = []
+    for profile in profiles:
+        user = await db.users.find_one({"id": profile["userId"]}, {"_id": 0, "password": 0})
+        if user:
+            # Get stats
+            projects_count = await db.projects.count_documents({"userId": profile["userId"]})
+            certs_count = await db.certifications.count_documents({"userId": profile["userId"]})
+            
+            # Get reputation
+            reputation = await db.reputation.find_one({"userId": profile["userId"]}, {"_id": 0})
+            
+            result.append({
+                **user,
+                "category": profile.get("userCategory"),
+                "skills": profile.get("skills", []),
+                "interests": profile.get("interests", []),
+                "education": profile.get("education"),
+                "location": profile.get("location") or user.get("location"),
+                "projectsCount": projects_count,
+                "certificationsCount": certs_count,
+                "reputation": reputation or {"score": 0, "endorsements": 0}
+            })
+    
+    return result
+
+# ===== INTERNSHIPS API =====
+
+@api_router.get("/internships")
+async def get_internships(
+    tribeId: str = None,
+    skill: str = None,
+    type: str = None,
+    location: str = None,
+    skip: int = 0,
+    limit: int = 20
+):
+    """Get internships with filters"""
+    query = {"status": {"$ne": "closed"}}
+    
+    if tribeId:
+        query["tribeId"] = tribeId
+    if skill:
+        query["skills"] = {"$in": [skill]}
+    if type:
+        query["type"] = type
+    if location:
+        query["location"] = {"$regex": location, "$options": "i"}
+    
+    internships = await db.internships.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    
+    # Enrich with poster info
+    for job in internships:
+        poster = await db.users.find_one({"id": job.get("posterId")}, {"_id": 0, "name": 1, "avatar": 1, "handle": 1})
+        job["poster"] = poster
+    
+    return internships
+
+@api_router.get("/internships/{internshipId}")
+async def get_internship(internshipId: str):
+    """Get single internship details"""
+    job = await db.internships.find_one({"id": internshipId}, {"_id": 0})
+    if not job:
+        raise HTTPException(status_code=404, detail="Internship not found")
+    
+    poster = await db.users.find_one({"id": job.get("posterId")}, {"_id": 0, "name": 1, "avatar": 1, "handle": 1, "isVerified": 1})
+    job["poster"] = poster
+    
+    return job
+
+@api_router.post("/internships")
+async def create_internship(userId: str, data: dict):
+    """Create new internship posting"""
+    job_data = {
+        "id": str(uuid.uuid4()),
+        "posterId": userId,
+        "title": data.get("title"),
+        "company": data.get("company"),
+        "description": data.get("description"),
+        "type": data.get("type", "internship"),
+        "location": data.get("location"),
+        "locationType": data.get("locationType", "remote"),
+        "stipend": data.get("stipend"),
+        "duration": data.get("duration"),
+        "skills": data.get("skills", []),
+        "responsibilities": data.get("responsibilities", []),
+        "requirements": data.get("requirements", []),
+        "applicationDeadline": data.get("applicationDeadline"),
+        "startDate": data.get("startDate"),
+        "tribeId": data.get("tribeId"),
+        "status": "open",
+        "applicants": [],
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.internships.insert_one(job_data)
+    del job_data["_id"] if "_id" in job_data else None
+    
+    return job_data
+
+@api_router.post("/internships/{internshipId}/apply")
+async def apply_to_internship(internshipId: str, userId: str):
+    """Apply to an internship"""
+    job = await db.internships.find_one({"id": internshipId}, {"_id": 0})
+    if not job:
+        raise HTTPException(status_code=404, detail="Internship not found")
+    
+    if userId in job.get("applicants", []):
+        return {"message": "Already applied", "action": "none"}
+    
+    await db.internships.update_one(
+        {"id": internshipId},
+        {"$addToSet": {"applicants": userId}}
+    )
+    
+    # Create application record
+    application = {
+        "id": str(uuid.uuid4()),
+        "internshipId": internshipId,
+        "applicantId": userId,
+        "status": "pending",
+        "appliedAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.internship_applications.insert_one(application)
+    
+    return {"message": "Application submitted", "action": "applied"}
+
+# ===== REPUTATION SYSTEM =====
+
+@api_router.get("/users/{userId}/reputation")
+async def get_user_reputation(userId: str):
+    """Get user's reputation score and endorsements"""
+    reputation = await db.reputation.find_one({"userId": userId}, {"_id": 0})
+    
+    if not reputation:
+        reputation = {
+            "userId": userId,
+            "score": 0,
+            "endorsements": 0,
+            "badges": [],
+            "endorsedSkills": {}
+        }
+    
+    # Get recent endorsements
+    endorsements = await db.endorsements.find(
+        {"endorsedUserId": userId},
+        {"_id": 0}
+    ).sort("createdAt", -1).limit(10).to_list(10)
+    
+    # Enrich with endorser info
+    for e in endorsements:
+        endorser = await db.users.find_one({"id": e.get("endorserId")}, {"_id": 0, "name": 1, "avatar": 1, "handle": 1})
+        e["endorser"] = endorser
+    
+    reputation["recentEndorsements"] = endorsements
+    return reputation
+
+@api_router.post("/users/{userId}/endorse")
+async def endorse_user(userId: str, endorserId: str, skill: str, message: str = None):
+    """Endorse a user for a skill"""
+    if userId == endorserId:
+        raise HTTPException(status_code=400, detail="Cannot endorse yourself")
+    
+    # Check if already endorsed for this skill
+    existing = await db.endorsements.find_one({
+        "endorsedUserId": userId,
+        "endorserId": endorserId,
+        "skill": skill
+    })
+    
+    if existing:
+        return {"message": "Already endorsed for this skill", "action": "none"}
+    
+    # Create endorsement
+    endorsement = {
+        "id": str(uuid.uuid4()),
+        "endorsedUserId": userId,
+        "endorserId": endorserId,
+        "skill": skill,
+        "message": message,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.endorsements.insert_one(endorsement)
+    
+    # Update reputation score
+    await db.reputation.update_one(
+        {"userId": userId},
+        {
+            "$inc": {"score": 5, "endorsements": 1},
+            "$set": {f"endorsedSkills.{skill}": {"$inc": 1}}
+        },
+        upsert=True
+    )
+    
+    return {"message": "Endorsement added", "action": "endorsed"}
+
 # Include router
 app.include_router(api_router)
 
