@@ -12,6 +12,11 @@ import ProjectCard from "../components/ProjectCard";
 import CertificationCard from "../components/CertificationCard";
 import TeamPostCard from "../components/TeamPostCard";
 import SkillTag from "../components/SkillTag";
+import CreateWorkoutModal from "../components/tribe/CreateWorkoutModal";
+import CreateChallengeModal from "../components/tribe/CreateChallengeModal";
+import CreateMenuItemModal from "../components/tribe/CreateMenuItemModal";
+import CreateDealModal from "../components/tribe/CreateDealModal";
+import CreateReviewModal from "../components/tribe/CreateReviewModal";
 
 const getErrorMsg = (error) => {
   const detail = error?.response?.data?.detail;
