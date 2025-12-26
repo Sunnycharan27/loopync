@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Heart, MessageCircle, Repeat2, Share2, MoreHorizontal, Trash2, Bookmark, Flag, UserPlus, Copy, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,8 @@ import VerifiedBadge from "./VerifiedBadge";
 import { getMediaUrl, isVideoUrl } from "../utils/mediaUtils";
 import { highlightHashtags } from "../utils/hashtagUtils";
 
-const PostCard = ({ post, currentUser, onLike, onRepost, onDelete }) => {
+// Memoized PostCard for better performance
+const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
   const navigate = useNavigate();
   const [showQuickActions, setShowQuickActions] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
