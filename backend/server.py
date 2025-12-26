@@ -10223,9 +10223,13 @@ async def create_review(userId: str, data: dict):
     review = {
         "id": str(uuid.uuid4()),
         "authorId": userId,
+        "author": data.get("author"),
         "tribeId": data.get("tribeId"),
         "rating": data.get("rating", 5),
+        "title": data.get("title", ""),
         "text": data.get("text"),
+        "aspects": data.get("aspects", {}),
+        "recommend": data.get("recommend", True),
         "images": data.get("images", []),
         "helpful": 0,
         "createdAt": datetime.now(timezone.utc).isoformat()
