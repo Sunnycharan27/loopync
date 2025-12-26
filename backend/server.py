@@ -10295,6 +10295,153 @@ async def get_spotify_token():
     
     return None
 
+# ============= DEEZER API (Free, has previews for ALL songs) =============
+
+@app.get("/api/music/search")
+async def search_music(q: str, limit: int = 20):
+    """Search for music using Deezer API - FREE previews for all songs"""
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(
+                "https://api.deezer.com/search",
+                params={"q": q, "limit": limit}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(status_code=response.status_code, detail="Music search failed")
+            
+            data = response.json()
+            tracks = []
+            
+            for track in data.get("data", []):
+                tracks.append({
+                    "id": str(track["id"]),
+                    "name": track["title"],
+                    "artist": track["artist"]["name"],
+                    "artistId": str(track["artist"]["id"]),
+                    "album": track["album"]["title"],
+                    "albumArt": track["album"]["cover_big"],
+                    "albumArtSmall": track["album"]["cover_small"],
+                    "previewUrl": track["preview"],  # 30-second preview - ALWAYS AVAILABLE!
+                    "duration": track["duration"] * 1000,  # Convert to ms
+                    "externalUrl": track["link"],
+                    "explicit": track.get("explicit_lyrics", False)
+                })
+            
+            return {"tracks": tracks}
+        except Exception as e:
+            print(f"Deezer search error: {e}")
+            raise HTTPException(status_code=500, detail="Music search failed")
+
+@app.get("/api/music/trending")
+async def get_trending_music(limit: int = 20):
+    """Get trending music from Deezer charts - FREE previews"""
+    async with httpx.AsyncClient() as client:
+        try:
+            # Get Deezer top charts
+            response = await client.get(
+                "https://api.deezer.com/chart/0/tracks",
+                params={"limit": limit}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(status_code=response.status_code, detail="Failed to get trending")
+            
+            data = response.json()
+            tracks = []
+            
+            for track in data.get("data", []):
+                tracks.append({
+                    "id": str(track["id"]),
+                    "name": track["title"],
+                    "artist": track["artist"]["name"],
+                    "artistId": str(track["artist"]["id"]),
+                    "album": track["album"]["title"],
+                    "albumArt": track["album"]["cover_big"],
+                    "albumArtSmall": track["album"]["cover_small"],
+                    "previewUrl": track["preview"],  # 30-second preview
+                    "duration": track["duration"] * 1000,
+                    "externalUrl": track["link"],
+                    "explicit": track.get("explicit_lyrics", False),
+                    "position": track.get("position", 0)
+                })
+            
+            return {"tracks": tracks}
+        except Exception as e:
+            print(f"Deezer trending error: {e}")
+            raise HTTPException(status_code=500, detail="Failed to get trending")
+
+@app.get("/api/music/track/{trackId}")
+async def get_track_details(trackId: str):
+    """Get single track details from Deezer"""
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(f"https://api.deezer.com/track/{trackId}")
+            
+            if response.status_code != 200:
+                raise HTTPException(status_code=404, detail="Track not found")
+            
+            track = response.json()
+            
+            return {
+                "id": str(track["id"]),
+                "name": track["title"],
+                "artist": track["artist"]["name"],
+                "artistId": str(track["artist"]["id"]),
+                "album": track["album"]["title"],
+                "albumArt": track["album"]["cover_big"],
+                "albumArtSmall": track["album"]["cover_small"],
+                "previewUrl": track["preview"],
+                "duration": track["duration"] * 1000,
+                "externalUrl": track["link"],
+                "explicit": track.get("explicit_lyrics", False),
+                "releaseDate": track.get("release_date"),
+                "bpm": track.get("bpm")
+            }
+        except Exception as e:
+            print(f"Deezer track error: {e}")
+            raise HTTPException(status_code=500, detail="Failed to get track")
+
+@app.get("/api/music/lyrics/{trackId}")
+async def get_lyrics(trackId: str, artist: str = "", title: str = ""):
+    """Get lyrics for a track - uses multiple sources"""
+    # Try to get lyrics from various free sources
+    lyrics_text = None
+    
+    # Method 1: Try lyrics.ovh (free API)
+    async with httpx.AsyncClient() as client:
+        if artist and title:
+            try:
+                response = await client.get(
+                    f"https://api.lyrics.ovh/v1/{artist}/{title}",
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    data = response.json()
+                    lyrics_text = data.get("lyrics")
+            except:
+                pass
+    
+    # Method 2: Return placeholder if no lyrics found
+    if not lyrics_text:
+        lyrics_text = f"""🎵 Lyrics not available for this track
+
+Tap and drag the waveform to select your favorite part of the song.
+
+Use the 15s or 30s buttons to choose clip duration.
+
+The preview will play from your selected start point."""
+    
+    # Split lyrics into lines for display
+    lines = [line.strip() for line in lyrics_text.split('\n') if line.strip()]
+    
+    return {
+        "trackId": trackId,
+        "lyrics": lyrics_text,
+        "lines": lines,
+        "synced": False  # Would be True if we had timestamp data
+    }
+
 @app.get("/api/spotify/search")
 async def search_spotify_tracks(q: str, limit: int = 20):
     """Search Spotify for tracks"""
