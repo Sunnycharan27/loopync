@@ -385,7 +385,7 @@ class LoopyncTribeContentTester:
             "discountType": "percentage",
             "tribeId": self.created_food_tribe_id,
             "validFrom": datetime.now().isoformat(),
-            "validUntil": (datetime.now().replace(day=datetime.now().day + 7)).isoformat(),
+            "validUntil": (datetime.now().replace(month=12, day=31)).isoformat(),
             "terms": "Valid only on weekends",
             "maxUses": 100
         }
