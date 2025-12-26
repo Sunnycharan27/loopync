@@ -96,6 +96,12 @@ const TribeDetail = () => {
   const [joining, setJoining] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState("posts");
+  // Modal states for tribe content creation
+  const [showWorkoutModal, setShowWorkoutModal] = useState(false);
+  const [showChallengeModal, setShowChallengeModal] = useState(false);
+  const [showMenuItemModal, setShowMenuItemModal] = useState(false);
+  const [showDealModal, setShowDealModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [skillFilter, setSkillFilter] = useState("");
 
   const tribeCategory = tribe?.category || 'default';
