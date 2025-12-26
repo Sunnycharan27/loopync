@@ -570,8 +570,8 @@ class LoopyncTribeContentTester:
             "stipend": 25000,
             "requirements": ["Python", "React", "MongoDB"],
             "skills": ["Backend Development", "Frontend Development", "Database Design"],
-            "applicationDeadline": (datetime.now().replace(day=datetime.now().day + 30)).isoformat(),
-            "startDate": (datetime.now().replace(day=datetime.now().day + 45)).isoformat(),
+            "applicationDeadline": (datetime.now().replace(month=12, day=31)).isoformat(),
+            "startDate": (datetime.now().replace(month=12, day=31)).isoformat(),
             "contactEmail": "hr@testtech.com",
             "isActive": True
         }
