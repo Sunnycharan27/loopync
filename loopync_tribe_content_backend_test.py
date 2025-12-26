@@ -339,7 +339,7 @@ class LoopyncTribeContentTester:
             "spiceLevel": "Medium"
         }
         
-        response = self.make_request("POST", "/menu-items", menu_item_data, params={"authorId": self.user_id})
+        response = self.make_request("POST", "/menu-items", menu_item_data, params={"userId": self.user_id})
         if response and response.status_code == 200:
             menu_item_result = response.json()
             self.created_menu_item_id = menu_item_result.get("id")
