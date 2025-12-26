@@ -283,6 +283,7 @@ class Tribe(BaseModel):
     name: str
     tags: List[str] = Field(default_factory=list)
     type: str = "public"
+    category: str = "default"  # college, tech, fitness, food, business, creative, default
     description: str = ""
     avatar: str = "https://api.dicebear.com/7.x/shapes/svg?seed=tribe"
     coverImage: str = ""  # Cover image URL
@@ -297,6 +298,7 @@ class TribeCreate(BaseModel):
     name: str
     tags: List[str] = []
     type: str = "public"
+    category: str = "default"
     description: str = ""
     avatar: str = ""
     coverImage: str = ""
@@ -306,6 +308,7 @@ class TribeUpdate(BaseModel):
     description: Optional[str] = None
     tags: Optional[List[str]] = None
     type: Optional[str] = None
+    category: Optional[str] = None
     avatar: Optional[str] = None
     coverImage: Optional[str] = None
 
