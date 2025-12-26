@@ -437,7 +437,7 @@ class LoopyncTribeContentTester:
             "tags": ["excellent", "recommended", "great_service"]
         }
         
-        response = self.make_request("POST", "/reviews", review_data, params={"authorId": self.user_id})
+        response = self.make_request("POST", "/reviews", review_data, params={"userId": self.user_id})
         if response and response.status_code == 200:
             review_result = response.json()
             review_id = review_result.get("id")
