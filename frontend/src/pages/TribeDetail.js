@@ -505,7 +505,7 @@ const TribeDetail = () => {
     // Fitness: Workouts
     if (activeTab === "workouts") return (
       <div className="space-y-4">
-        <TabHeader title="Workouts" buttonText="Add Workout" buttonIcon={Dumbbell} onClick={() => toast.info('Coming soon!')} />
+        <TabHeader title="Workouts" buttonText="Add Workout" buttonIcon={Dumbbell} onClick={() => setShowWorkoutModal(true)} />
         {workouts.length > 0 ? workouts.map(w => <WorkoutCard key={w.id} workout={w} />) : <EmptyState icon={Dumbbell} message="No workouts shared yet" />}
       </div>
     );
@@ -513,7 +513,7 @@ const TribeDetail = () => {
     // Fitness: Challenges
     if (activeTab === "challenges") return (
       <div className="space-y-4">
-        <TabHeader title="Fitness Challenges" buttonText="Create Challenge" buttonIcon={Trophy} onClick={() => toast.info('Coming soon!')} />
+        <TabHeader title="Fitness Challenges" buttonText="Create Challenge" buttonIcon={Trophy} onClick={() => setShowChallengeModal(true)} />
         {challenges.length > 0 ? challenges.map(c => <ChallengeCard key={c.id} challenge={c} />) : <EmptyState icon={Trophy} message="No active challenges" />}
       </div>
     );
@@ -521,7 +521,7 @@ const TribeDetail = () => {
     // Food: Menu
     if (activeTab === "menu") return (
       <div className="space-y-4">
-        <TabHeader title="Menu Items" buttonText="Add Item" buttonIcon={Utensils} onClick={() => toast.info('Coming soon!')} />
+        <TabHeader title="Menu Items" buttonText="Add Item" buttonIcon={Utensils} onClick={() => setShowMenuItemModal(true)} />
         {menuItems.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{menuItems.map(m => <MenuItemCard key={m.id} item={m} />)}</div> : <EmptyState icon={Utensils} message="No menu items yet" />}
       </div>
     );
@@ -529,7 +529,7 @@ const TribeDetail = () => {
     // Food/Business: Deals
     if (activeTab === "deals") return (
       <div className="space-y-4">
-        <TabHeader title="Deals & Offers" buttonText="Add Deal" buttonIcon={Tag} onClick={() => toast.info('Coming soon!')} />
+        <TabHeader title="Deals & Offers" buttonText="Add Deal" buttonIcon={Tag} onClick={() => setShowDealModal(true)} />
         {deals.length > 0 ? deals.map(d => <DealCard key={d.id} deal={d} />) : <EmptyState icon={Tag} message="No deals available" />}
       </div>
     );
@@ -537,7 +537,7 @@ const TribeDetail = () => {
     // Food/Business: Reviews
     if (activeTab === "reviews") return (
       <div className="space-y-4">
-        <TabHeader title="Reviews" buttonText="Write Review" buttonIcon={Star} onClick={() => toast.info('Coming soon!')} />
+        <TabHeader title="Reviews" buttonText="Write Review" buttonIcon={Star} onClick={() => setShowReviewModal(true)} />
         {reviews.length > 0 ? reviews.map(r => <ReviewCard key={r.id} review={r} />) : <EmptyState icon={Star} message="No reviews yet" />}
       </div>
     );
