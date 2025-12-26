@@ -430,6 +430,49 @@ const TribeDetail = () => {
       </div>
 
       {showSettings && <TribeSettingsModal tribe={tribe} currentUser={currentUser} onClose={() => setShowSettings(false)} onUpdate={(t) => setTribe(t)} onDelete={() => navigate('/tribes')} />}
+      
+      {/* Tribe Content Creation Modals */}
+      {showWorkoutModal && (
+        <CreateWorkoutModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowWorkoutModal(false)} 
+          onCreated={() => fetchWorkouts()} 
+        />
+      )}
+      {showChallengeModal && (
+        <CreateChallengeModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowChallengeModal(false)} 
+          onCreated={() => fetchChallenges()} 
+        />
+      )}
+      {showMenuItemModal && (
+        <CreateMenuItemModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowMenuItemModal(false)} 
+          onCreated={() => fetchMenuItems()} 
+        />
+      )}
+      {showDealModal && (
+        <CreateDealModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowDealModal(false)} 
+          onCreated={() => fetchDeals()} 
+        />
+      )}
+      {showReviewModal && (
+        <CreateReviewModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowReviewModal(false)} 
+          onCreated={() => fetchReviews()} 
+        />
+      )}
+      
       <BottomNav active="tribes" />
     </div>
   );
