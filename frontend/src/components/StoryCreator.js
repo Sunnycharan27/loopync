@@ -154,7 +154,6 @@ const StoryCreator = ({ onClose, onStoryCreated }) => {
       } : null;
 
       const storyData = {
-        authorId: currentUser.id,
         mediaUrl,
         mediaType,
         caption,
