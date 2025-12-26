@@ -390,7 +390,7 @@ class LoopyncTribeContentTester:
             "maxUses": 100
         }
         
-        response = self.make_request("POST", "/deals", deal_data, params={"authorId": self.user_id})
+        response = self.make_request("POST", "/deals", deal_data, params={"userId": self.user_id})
         if response and response.status_code == 200:
             deal_result = response.json()
             self.created_deal_id = deal_result.get("id")
