@@ -52,6 +52,14 @@ import DigitalProducts from "./pages/DigitalProducts";
 import DigitalProductDetail from "./pages/DigitalProductDetail";
 import UploadDigitalProduct from "./pages/UploadDigitalProduct";
 
+// Student Features Pages
+import StudentOnboarding from "./pages/StudentOnboarding";
+import Projects from "./pages/Projects";
+import CreateProject from "./pages/CreateProject";
+import Certifications from "./pages/Certifications";
+import CreateCertification from "./pages/CreateCertification";
+import TeamPosts from "./pages/TeamPosts";
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
 
