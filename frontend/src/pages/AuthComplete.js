@@ -375,87 +375,240 @@ const AuthComplete = () => {
             </form>
           )}
 
-          {/* Signup Form */}
+          {/* Signup Form - Multi Step */}
           {mode === "signup" && (
-            <form onSubmit={handleSignup} className="space-y-4">
-              <div>
-                <div className="relative">
-                  <User size={20} className="absolute left-3 top-3 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
-                  />
+            <div className="space-y-4">
+              {/* Progress indicator */}
+              <div className="mb-6">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  {[1, 2, 3].map(step => (
+                    <div
+                      key={step}
+                      className={`w-2.5 h-2.5 rounded-full transition-all ${
+                        step <= signupStep ? 'bg-cyan-400' : 'bg-gray-700'
+                      }`}
+                    />
+                  ))}
                 </div>
+                <p className="text-center text-xs text-gray-500">
+                  Step {signupStep} of 3: {signupStep === 1 ? 'Account Info' : signupStep === 2 ? 'Who are you?' : 'Your Interests'}
+                </p>
               </div>
 
-              <div>
-                <div className="relative">
-                  <span className="absolute left-3 top-3 text-gray-400">@</span>
-                  <input
-                    type="text"
-                    placeholder="username"
-                    value={handle}
-                    onChange={(e) => setHandle(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
-                  />
-                </div>
-              </div>
+              {/* Step 1: Basic Info */}
+              {signupStep === 1 && (
+                <form onSubmit={handleSignupStep1} className="space-y-4">
+                  <div>
+                    <div className="relative">
+                      <User size={20} className="absolute left-3 top-3 text-gray-400" />
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <div className="relative">
-                  <Mail size={20} className="absolute left-3 top-3 text-gray-400" />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
-                  />
-                </div>
-              </div>
+                  <div>
+                    <div className="relative">
+                      <span className="absolute left-3 top-3 text-gray-400">@</span>
+                      <input
+                        type="text"
+                        placeholder="username"
+                        value={handle}
+                        onChange={(e) => setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
+                        className="w-full pl-12 pr-12 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
+                      />
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        {checkingHandle && <Loader size={18} className="text-gray-400 animate-spin" />}
+                        {!checkingHandle && handleAvailable === true && handle.length >= 3 && (
+                          <CheckCircle size={18} className="text-green-400" />
+                        )}
+                        {!checkingHandle && handleAvailable === false && (
+                          <span className="text-red-400 text-xs">Taken</span>
+                        )}
+                      </div>
+                    </div>
+                    {handle.length >= 3 && handleAvailable === true && (
+                      <p className="text-green-400 text-xs mt-1">@{handle} is available!</p>
+                    )}
+                  </div>
 
-              <div>
-                <PhoneInput
-                  international
-                  defaultCountry="IN"
-                  placeholder="Phone Number"
-                  value={phone}
-                  onChange={setPhone}
-                  className="phone-input-auth w-full py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
-                />
-              </div>
+                  <div>
+                    <div className="relative">
+                      <Mail size={20} className="absolute left-3 top-3 text-gray-400" />
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <div className="relative">
-                  <Lock size={20} className="absolute left-3 top-3 text-gray-400" />
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password (min 8 characters)"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-12 pr-12 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
-                  />
+                  <div>
+                    <PhoneInput
+                      international
+                      defaultCountry="IN"
+                      placeholder="Phone Number"
+                      value={phone}
+                      onChange={setPhone}
+                      className="phone-input-auth w-full py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="relative">
+                      <Lock size={20} className="absolute left-3 top-3 text-gray-400" />
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password (min 8 characters)"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full pl-12 pr-12 py-3 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:border-cyan-400"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
+                    {password.length > 0 && password.length < 8 && (
+                      <p className="text-red-400 text-xs mt-1">Password must be at least 8 characters</p>
+                    )}
+                  </div>
+
                   <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                    type="submit"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2"
                   >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    Continue
+                    <ChevronRight size={20} />
                   </button>
-                </div>
-              </div>
+                </form>
+              )}
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-semibold hover:opacity-90 transition-all disabled:opacity-50"
-              >
-                {loading ? "Creating Account..." : "Sign Up"}
-              </button>
-            </form>
+              {/* Step 2: Category Selection */}
+              {signupStep === 2 && (
+                <div className="space-y-4">
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl font-bold text-white mb-1">Who are you?</h2>
+                    <p className="text-gray-400 text-sm">Select the category that best describes you</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 max-h-[320px] overflow-y-auto px-1">
+                    {constants.categories?.map(category => {
+                      const IconComponent = categoryIcons[category.id] || User;
+                      const isSelected = userCategory === category.id;
+                      
+                      return (
+                        <button
+                          key={category.id}
+                          onClick={() => setUserCategory(category.id)}
+                          className={`p-3 rounded-xl border-2 transition-all text-left ${
+                            isSelected
+                              ? 'border-cyan-400 bg-cyan-400/10'
+                              : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                              isSelected ? 'bg-cyan-400/20' : 'bg-gray-700'
+                            }`}>
+                              <IconComponent size={16} className={isSelected ? 'text-cyan-400' : 'text-gray-400'} />
+                            </div>
+                            <div>
+                              <p className={`font-semibold text-sm ${isSelected ? 'text-cyan-400' : 'text-white'}`}>
+                                {category.icon} {category.label}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      onClick={() => setSignupStep(1)}
+                      className="flex-1 py-3 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all flex items-center justify-center gap-2"
+                    >
+                      <ChevronLeft size={20} />
+                      Back
+                    </button>
+                    <button
+                      onClick={() => setSignupStep(3)}
+                      disabled={!canProceedStep2()}
+                      className="flex-1 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      Continue
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3: Interest Selection */}
+              {signupStep === 3 && (
+                <div className="space-y-4">
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl font-bold text-white mb-1">What are your interests?</h2>
+                    <p className="text-gray-400 text-sm">Select at least 3 interests ({selectedInterests.length} selected)</p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 max-h-[280px] overflow-y-auto p-1">
+                    {constants.interests?.map(interest => {
+                      const isSelected = selectedInterests.includes(interest.id);
+                      return (
+                        <button
+                          key={interest.id}
+                          onClick={() => handleInterestToggle(interest.id)}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                            isSelected
+                              ? 'bg-cyan-400 text-black'
+                              : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                          }`}
+                        >
+                          {interest.icon} {interest.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      onClick={() => setSignupStep(2)}
+                      className="flex-1 py-3 rounded-xl bg-gray-700 text-white font-semibold hover:bg-gray-600 transition-all flex items-center justify-center gap-2"
+                    >
+                      <ChevronLeft size={20} />
+                      Back
+                    </button>
+                    <button
+                      onClick={handleSignupFinal}
+                      disabled={!canProceedStep3() || loading}
+                      className="flex-1 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {loading ? (
+                        <>
+                          <Loader size={18} className="animate-spin" />
+                          Creating...
+                        </>
+                      ) : (
+                        <>
+                          Create Account
+                          <CheckCircle size={20} />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
 
           {/* Email Verification */}
