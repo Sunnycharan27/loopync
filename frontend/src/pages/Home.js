@@ -244,6 +244,7 @@ const Home = () => {
           currentUser={currentUser}
           onClose={() => setShowComposer(false)}
           onPostCreated={handlePostCreated}
+          onReelCreated={handleReelCreated}
         />
       )}
     </div>
