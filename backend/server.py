@@ -215,6 +215,7 @@ class Post(BaseModel):
     authorId: str
     text: str
     media: Optional[str] = None
+    music: Optional[dict] = None  # Spotify track data {trackId, name, artist, albumArt, previewUrl, spotifyUrl}
     audience: str = "public"
     hashtags: List[str] = Field(default_factory=list)
     stats: dict = Field(default_factory=lambda: {"likes": 0, "quotes": 0, "reposts": 0, "replies": 0, "shares": 0})
@@ -235,6 +236,7 @@ class Post(BaseModel):
 class PostCreate(BaseModel):
     text: str
     media: Optional[str] = None
+    music: Optional[dict] = None
     audience: str = "public"
     hashtags: List[str] = []
 
@@ -245,6 +247,7 @@ class Reel(BaseModel):
     videoUrl: str
     thumb: str
     caption: str = ""
+    audio: Optional[dict] = None  # Spotify track or audio {trackId, name, artist, albumArt, previewUrl, spotifyUrl}
     stats: dict = Field(default_factory=lambda: {"views": 0, "likes": 0, "comments": 0, "shares": 0})
     likedBy: List[str] = Field(default_factory=list)
     sharedBy: List[str] = Field(default_factory=list)  # Users who shared this reel
@@ -252,8 +255,9 @@ class Reel(BaseModel):
 
 class ReelCreate(BaseModel):
     videoUrl: str
-    thumb: str
     caption: str = ""
+    audio: Optional[dict] = None
+    thumbnailUrl: str = ""
 
 class VibeCapsule(BaseModel):
     """Vibe Capsules (Stories) - 24-hour expiring content"""
