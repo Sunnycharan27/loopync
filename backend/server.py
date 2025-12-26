@@ -36,6 +36,13 @@ from verification_models import (
     TwoFactorRequest, TwoFactorVerify, AdminAssignRole, UserRole
 )
 from verification_service import VerificationService, TwoFactorAuthService
+from student_models import (
+    StudentProfile, StudentProfileCreate, StudentProfileUpdate,
+    Certification, CertificationCreate,
+    Project, ProjectCreate, ProjectUpdate,
+    TeamPost, TeamPostCreate, TeamApplication,
+    USER_CATEGORIES, INTERESTS, SKILLS, PROJECT_STATUS, TEAM_ROLES
+)
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
