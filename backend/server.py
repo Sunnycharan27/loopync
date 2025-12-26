@@ -9927,7 +9927,7 @@ async def create_internship(userId: str, data: dict):
     }
     
     await db.internships.insert_one(job_data)
-    del job_data["_id"] if "_id" in job_data else None
+    job_data.pop("_id", None)
     
     return job_data
 
