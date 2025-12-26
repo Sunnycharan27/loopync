@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { X, Heart, MessageCircle, Eye, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { X, Heart, MessageCircle, Eye, ChevronLeft, ChevronRight, Pause, Play, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 import { API } from "../App";
+import MusicBadge from "./MusicBadge";
 
 const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [mediaError, setMediaError] = useState(false);
+  const audioRef = useRef(null);
 
   const currentStory = stories[currentStoryIndex];
   const currentCapsule = currentStory?.capsules[currentCapsuleIndex];
