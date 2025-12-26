@@ -284,7 +284,7 @@ class LoopyncTribeContentTester:
             "duration": "30 Days",
             "reward": 500,  # Loop credits
             "startDate": datetime.now().isoformat(),
-            "endDate": (datetime.now().replace(day=datetime.now().day + 30)).isoformat()
+            "endDate": (datetime.now().replace(month=12, day=31)).isoformat()
         }
         
         response = self.make_request("POST", "/challenges", challenge_data, params={"authorId": self.user_id})
