@@ -279,12 +279,12 @@ class LoopyncTribeContentTester:
             "title": "API Test Challenge",
             "description": "30-day fitness challenge created via API testing",
             "tribeId": self.created_fitness_tribe_id,
-            "type": "fitness",
+            "type": "daily",
             "goal": "Complete 100 push-ups daily for 30 days",
             "duration": "30 Days",
-            "reward": 500,  # Loop credits
             "startDate": datetime.now().isoformat(),
-            "endDate": (datetime.now().replace(month=12, day=31)).isoformat()
+            "endDate": (datetime.now().replace(month=12, day=31)).isoformat(),
+            "prize": "500 Loop Credits"
         }
         
         response = self.make_request("POST", "/challenges", challenge_data, params={"userId": self.user_id})
