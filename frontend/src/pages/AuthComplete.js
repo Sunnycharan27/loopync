@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
-import { Mail, Lock, User, Eye, EyeOff, CheckCircle, ArrowLeft, Phone } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff, CheckCircle, ArrowLeft, Phone, ChevronRight, ChevronLeft, GraduationCap, Briefcase, Palette, Star, Rocket, Laptop, Brain, Search, BookOpen, Loader } from "lucide-react";
 import { toast } from "sonner";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -12,6 +12,7 @@ const AuthComplete = () => {
   const navigate = useNavigate();
   
   const [mode, setMode] = useState("login"); // login, signup, verify, forgot, reset
+  const [signupStep, setSignupStep] = useState(1); // 1: Basic info, 2: Category, 3: Interests
   const [loading, setLoading] = useState(false);
   
   // Form states
@@ -22,6 +23,13 @@ const AuthComplete = () => {
   const [phone, setPhone] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
+  // Multi-step signup states
+  const [userCategory, setUserCategory] = useState("");
+  const [selectedInterests, setSelectedInterests] = useState([]);
+  const [constants, setConstants] = useState({ categories: [], interests: [] });
+  const [checkingHandle, setCheckingHandle] = useState(false);
+  const [handleAvailable, setHandleAvailable] = useState(null);
+  
   // Verification
   const [verificationCode, setVerificationCode] = useState("");
   const [serverCode, setServerCode] = useState(""); // For testing
@@ -30,6 +38,77 @@ const AuthComplete = () => {
   const [resetCode, setResetCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Category icons mapping
+  const categoryIcons = {
+    student: GraduationCap,
+    graduate: BookOpen,
+    working_professional: Briefcase,
+    creator: Palette,
+    influencer: Star,
+    entrepreneur: Rocket,
+    freelancer: Laptop,
+    mentor: Brain,
+    recruiter: Search,
+    other: User
+  };
+
+  // Fetch constants for categories and interests
+  useEffect(() => {
+    const fetchConstants = async () => {
+      try {
+        const res = await axios.get(`${API}/student/constants`);
+        setConstants(res.data);
+      } catch (error) {
+        console.error("Failed to fetch constants:", error);
+      }
+    };
+    fetchConstants();
+  }, []);
+
+  // Debounced handle availability check
+  useEffect(() => {
+    if (mode === "signup" && signupStep === 1 && handle.length >= 3) {
+      const timer = setTimeout(() => {
+        checkHandleAvailability(handle);
+      }, 500);
+      return () => clearTimeout(timer);
+    } else {
+      setHandleAvailable(null);
+    }
+  }, [handle, mode, signupStep]);
+
+  const checkHandleAvailability = async (handleToCheck) => {
+    setCheckingHandle(true);
+    try {
+      const res = await axios.get(`${API}/auth/check-handle/${handleToCheck}`);
+      setHandleAvailable(res.data.available);
+    } catch (error) {
+      console.error("Failed to check handle:", error);
+    } finally {
+      setCheckingHandle(false);
+    }
+  };
+
+  const handleInterestToggle = (interestId) => {
+    setSelectedInterests(prev =>
+      prev.includes(interestId)
+        ? prev.filter(i => i !== interestId)
+        : [...prev, interestId]
+    );
+  };
+
+  const canProceedStep1 = () => {
+    return handle.length >= 3 && handleAvailable && name.trim() && email.includes("@") && phone && phone.length >= 10 && password.length >= 8;
+  };
+
+  const canProceedStep2 = () => {
+    return userCategory !== "";
+  };
+
+  const canProceedStep3 = () => {
+    return selectedInterests.length >= 3;
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
