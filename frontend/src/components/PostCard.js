@@ -329,6 +329,6 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
       )}
     </div>
   );
-};
+});
 
 export default PostCard;
