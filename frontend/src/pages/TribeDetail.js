@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2, Rocket, Award, UsersRound, Briefcase, Star, Code, Building2, Filter, Search } from "lucide-react";
+import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2, Rocket, Award, UsersRound, Briefcase, Star, Code, Building2, Filter, Dumbbell, Utensils, Tag, Calendar, Trophy, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import PostCard from "../components/PostCard";
 import { getMediaUrl } from "../utils/mediaUtils";
@@ -21,6 +21,52 @@ const getErrorMsg = (error) => {
   return error?.message || "An error occurred";
 };
 
+// Category-based tab configurations
+const CATEGORY_TABS = {
+  college: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "projects", label: "Projects", icon: Rocket },
+    { id: "certifications", label: "Certs", icon: Award },
+    { id: "teamPosts", label: "Teams", icon: UsersRound },
+    { id: "internships", label: "Jobs", icon: Briefcase },
+    { id: "members", label: "Members", icon: Users }
+  ],
+  tech: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "projects", label: "Projects", icon: Rocket },
+    { id: "certifications", label: "Certs", icon: Award },
+    { id: "teamPosts", label: "Teams", icon: UsersRound },
+    { id: "internships", label: "Jobs", icon: Briefcase },
+    { id: "members", label: "Members", icon: Users }
+  ],
+  fitness: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "workouts", label: "Workouts", icon: Dumbbell },
+    { id: "challenges", label: "Challenges", icon: Trophy },
+    { id: "trainers", label: "Trainers", icon: Users },
+    { id: "members", label: "Members", icon: Users }
+  ],
+  food: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "menu", label: "Menu", icon: Utensils },
+    { id: "deals", label: "Deals", icon: Tag },
+    { id: "events", label: "Events", icon: Calendar },
+    { id: "reviews", label: "Reviews", icon: Star },
+    { id: "members", label: "Members", icon: Users }
+  ],
+  business: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "services", label: "Services", icon: Briefcase },
+    { id: "deals", label: "Deals", icon: Tag },
+    { id: "reviews", label: "Reviews", icon: Star },
+    { id: "members", label: "Members", icon: Users }
+  ],
+  default: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "members", label: "Members", icon: Users }
+  ]
+};
+
 const TribeDetail = () => {
   const { tribeId } = useParams();
   const { currentUser } = useContext(AuthContext);
@@ -33,6 +79,11 @@ const TribeDetail = () => {
   const [certifications, setCertifications] = useState([]);
   const [teamPosts, setTeamPosts] = useState([]);
   const [internships, setInternships] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
+  const [challenges, setChallenges] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [deals, setDeals] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newPostText, setNewPostText] = useState("");
   const [newPostMedia, setNewPostMedia] = useState(null);
@@ -42,18 +93,33 @@ const TribeDetail = () => {
   const [activeTab, setActiveTab] = useState("posts");
   const [skillFilter, setSkillFilter] = useState("");
 
+  const tribeCategory = tribe?.category || 'default';
+  const tabs = CATEGORY_TABS[tribeCategory] || CATEGORY_TABS.default;
+
   useEffect(() => {
     if (tribeId) fetchTribeDetails();
   }, [tribeId]);
 
   useEffect(() => {
     if (tribe && isMember) {
-      if (activeTab === "projects") fetchProjects();
-      else if (activeTab === "certifications") fetchCertifications();
-      else if (activeTab === "teamPosts") fetchTeamPosts();
-      else if (activeTab === "internships") fetchInternships();
+      fetchTabContent();
     }
   }, [activeTab, tribe, skillFilter]);
+
+  const fetchTabContent = async () => {
+    switch(activeTab) {
+      case "projects": await fetchProjects(); break;
+      case "certifications": await fetchCertifications(); break;
+      case "teamPosts": await fetchTeamPosts(); break;
+      case "internships": await fetchInternships(); break;
+      case "workouts": await fetchWorkouts(); break;
+      case "challenges": await fetchChallenges(); break;
+      case "menu": await fetchMenuItems(); break;
+      case "deals": await fetchDeals(); break;
+      case "reviews": await fetchReviews(); break;
+      default: break;
+    }
+  };
 
   const fetchTribeDetails = async () => {
     setLoading(true);
@@ -83,7 +149,7 @@ const TribeDetail = () => {
   const fetchProjects = async () => {
     try {
       const memberIds = members.map(m => m.id).join(',');
-      const params = skillFilter ? `?skill=${skillFilter}&memberIds=${memberIds}` : `?memberIds=${memberIds}`;
+      const params = skillFilter ? `?skill=${skillFilter}&tribeId=${tribeId}` : `?tribeId=${tribeId}`;
       const res = await axios.get(`${API}/projects${params}`);
       setProjects(res.data || []);
     } catch (error) { console.error("Failed to fetch projects"); }
@@ -91,8 +157,7 @@ const TribeDetail = () => {
 
   const fetchCertifications = async () => {
     try {
-      const memberIds = members.map(m => m.id).join(',');
-      const params = skillFilter ? `?skill=${skillFilter}&memberIds=${memberIds}` : `?memberIds=${memberIds}`;
+      const params = skillFilter ? `?skill=${skillFilter}&tribeId=${tribeId}` : `?tribeId=${tribeId}`;
       const res = await axios.get(`${API}/certifications${params}`);
       setCertifications(res.data || []);
     } catch (error) { console.error("Failed to fetch certifications"); }
@@ -110,6 +175,41 @@ const TribeDetail = () => {
       const res = await axios.get(`${API}/internships?tribeId=${tribeId}`);
       setInternships(res.data || []);
     } catch (error) { console.error("Failed to fetch internships"); }
+  };
+
+  const fetchWorkouts = async () => {
+    try {
+      const res = await axios.get(`${API}/workouts?tribeId=${tribeId}`);
+      setWorkouts(res.data || []);
+    } catch (error) { console.error("Failed to fetch workouts"); }
+  };
+
+  const fetchChallenges = async () => {
+    try {
+      const res = await axios.get(`${API}/challenges?tribeId=${tribeId}`);
+      setChallenges(res.data || []);
+    } catch (error) { console.error("Failed to fetch challenges"); }
+  };
+
+  const fetchMenuItems = async () => {
+    try {
+      const res = await axios.get(`${API}/menu-items?tribeId=${tribeId}`);
+      setMenuItems(res.data || []);
+    } catch (error) { console.error("Failed to fetch menu"); }
+  };
+
+  const fetchDeals = async () => {
+    try {
+      const res = await axios.get(`${API}/deals?tribeId=${tribeId}`);
+      setDeals(res.data || []);
+    } catch (error) { console.error("Failed to fetch deals"); }
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const res = await axios.get(`${API}/reviews?tribeId=${tribeId}`);
+      setReviews(res.data || []);
+    } catch (error) { console.error("Failed to fetch reviews"); }
   };
 
   const joinTribe = async () => {
@@ -173,7 +273,7 @@ const TribeDetail = () => {
   };
 
   const handleDelete = async (postId) => {
-    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    if (!window.confirm("Delete this post?")) return;
     try {
       await axios.delete(`${API}/posts/${postId}`);
       setPosts(posts.filter(p => p.id !== postId));
@@ -188,9 +288,6 @@ const TribeDetail = () => {
       toast.success("Reposted!");
     } catch (error) { toast.error(getErrorMsg(error) || "Failed to repost"); }
   };
-
-  const handleTribeUpdate = (updatedTribe) => setTribe(updatedTribe);
-  const handleTribeDelete = () => navigate('/tribes');
 
   const tribeMembers = tribe?.members || [];
   const isMember = currentUser?.id && tribeMembers.includes(currentUser.id);
@@ -213,14 +310,13 @@ const TribeDetail = () => {
   );
 
   const defaultCover = `https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=400&fit=crop`;
-  const tabs = [
-    { id: "posts", label: "Posts", icon: Image, count: posts.length },
-    { id: "projects", label: "Projects", icon: Rocket, count: projects.length },
-    { id: "certifications", label: "Certs", icon: Award, count: certifications.length },
-    { id: "teamPosts", label: "Teams", icon: UsersRound, count: teamPosts.length },
-    { id: "internships", label: "Jobs", icon: Briefcase, count: internships.length },
-    { id: "members", label: "Members", icon: Users, count: members.length }
-  ];
+  const categoryColors = {
+    college: 'from-blue-500 to-purple-500',
+    tech: 'from-cyan-400 to-blue-500',
+    fitness: 'from-orange-500 to-red-500',
+    food: 'from-yellow-500 to-orange-500',
+    business: 'from-green-500 to-teal-500'
+  };
 
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
@@ -244,7 +340,14 @@ const TribeDetail = () => {
       <div className="max-w-4xl mx-auto px-4 pt-16">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
           <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{tribe.name}</h1>
+            <div className="flex items-center gap-2 mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">{tribe.name}</h1>
+              {tribe.category && (
+                <span className={`px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${categoryColors[tribe.category] || 'from-gray-500 to-gray-600'} text-white capitalize`}>
+                  {tribe.category}
+                </span>
+              )}
+            </div>
             <p className="text-gray-400 mb-3">{tribe.description || 'No description'}</p>
             <div className="flex flex-wrap items-center gap-4 text-sm">
               <span className="flex items-center gap-1 text-gray-400"><Users size={16} className="text-cyan-400" />{tribe.memberCount || tribeMembers.length} members</span>
@@ -289,7 +392,7 @@ const TribeDetail = () => {
           </div>
         )}
 
-        {/* Tabs */}
+        {/* Category-based Tabs */}
         <div className="flex gap-1 mb-6 overflow-x-auto pb-2 scrollbar-hide">
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
@@ -299,8 +402,8 @@ const TribeDetail = () => {
           ))}
         </div>
 
-        {/* Skill Filter for Projects/Certs */}
-        {(activeTab === "projects" || activeTab === "certifications") && isMember && (
+        {/* Skill Filter for relevant tabs */}
+        {["projects", "certifications", "workouts"].includes(activeTab) && isMember && (
           <div className="mb-4 flex gap-2">
             <div className="relative flex-1">
               <Filter size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
@@ -311,137 +414,166 @@ const TribeDetail = () => {
           </div>
         )}
 
-        {/* Posts Tab */}
-        {activeTab === "posts" && (
-          <div className="space-y-6">
-            {isMember && (
-              <div className="rounded-2xl p-4 border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <div className="flex gap-3">
-                  <img src={getMediaUrl(currentUser?.avatar) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser?.handle}`} alt="You" className="w-10 h-10 rounded-full object-cover" />
-                  <div className="flex-1">
-                    <textarea value={newPostText} onChange={(e) => setNewPostText(e.target.value)} placeholder={`Share something with ${tribe.name}...`}
-                      className="w-full bg-gray-800/50 text-white rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-none border border-gray-700" rows="2" />
-                    {newPostMedia && (
-                      <div className="mt-2 relative">
-                        {newPostMedia.type.startsWith('video/') ? <video src={URL.createObjectURL(newPostMedia)} className="w-full max-h-48 object-cover rounded-xl" controls /> : <img src={URL.createObjectURL(newPostMedia)} alt="Preview" className="w-full max-h-48 object-cover rounded-xl" />}
-                        <button onClick={() => setNewPostMedia(null)} className="absolute top-2 right-2 px-2 py-1 bg-black/70 text-white rounded-lg text-xs hover:bg-black transition">Remove</button>
-                      </div>
-                    )}
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex gap-1">
-                        <label className="p-2 hover:bg-gray-800 rounded-lg cursor-pointer transition"><Image size={18} className="text-cyan-400" /><input type="file" accept="image/*" className="hidden" onChange={handleMediaSelect} /></label>
-                        <label className="p-2 hover:bg-gray-800 rounded-lg cursor-pointer transition"><Video size={18} className="text-cyan-400" /><input type="file" accept="video/*" className="hidden" onChange={handleMediaSelect} /></label>
-                      </div>
-                      <button onClick={createPost} disabled={posting || (!newPostText.trim() && !newPostMedia)} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black text-sm font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                        {posting ? <div className="animate-spin w-4 h-4 border-2 border-black border-t-transparent rounded-full"></div> : <Send size={16} />}Post
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {!isMember && currentUser && (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <Users size={48} className="mx-auto mb-3 text-gray-600" />
-                <h3 className="text-xl font-semibold text-white mb-2">Members Only</h3>
-                <p className="text-gray-400 mb-4">Join this tribe to see posts and participate</p>
-                <button onClick={joinTribe} disabled={joining} className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50">{joining ? 'Joining...' : 'Join Tribe'}</button>
-              </div>
-            )}
-            {!currentUser && (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <Users size={48} className="mx-auto mb-3 text-gray-600" />
-                <h3 className="text-xl font-semibold text-white mb-2">Login Required</h3>
-                <button onClick={() => navigate('/auth')} className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold">Login / Sign Up</button>
-              </div>
-            )}
-            {isMember && (posts.length > 0 ? posts.map(post => <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} onDelete={handleDelete} onRepost={handleRepost} />) : (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <p className="text-gray-400 mb-2">No posts yet</p><p className="text-sm text-gray-500">Be the first to post in this tribe!</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Projects Tab */}
-        {activeTab === "projects" && isMember && (
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-white">Member Projects</h3>
-              <button onClick={() => navigate('/projects/create')} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><Rocket size={16} />Add Project</button>
-            </div>
-            {projects.length > 0 ? projects.map(project => <ProjectCard key={project.id} project={project} currentUser={currentUser} onSkillClick={setSkillFilter} />) : (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <Code size={48} className="mx-auto mb-3 text-gray-600" />
-                <p className="text-gray-400">No projects shared yet</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Certifications Tab */}
-        {activeTab === "certifications" && isMember && (
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-white">Member Certifications</h3>
-              <button onClick={() => navigate('/certifications/create')} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><Award size={16} />Add Cert</button>
-            </div>
-            {certifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{certifications.map(cert => <CertificationCard key={cert.id} cert={cert} onSkillClick={setSkillFilter} />)}</div> : (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <Award size={48} className="mx-auto mb-3 text-gray-600" />
-                <p className="text-gray-400">No certifications shared yet</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Team Posts Tab */}
-        {activeTab === "teamPosts" && isMember && (
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-white">Looking for Team</h3>
-              <button onClick={() => navigate('/team-posts/create')} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><UsersRound size={16} />Find Team</button>
-            </div>
-            {teamPosts.length > 0 ? teamPosts.map(post => <TeamPostCard key={post.id} post={post} currentUser={currentUser} />) : (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <UsersRound size={48} className="mx-auto mb-3 text-gray-600" />
-                <p className="text-gray-400">No team posts yet</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Internships Tab */}
-        {activeTab === "internships" && isMember && (
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-white">Internships & Jobs</h3>
-              <button onClick={() => navigate('/internships/create')} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><Briefcase size={16} />Post Job</button>
-            </div>
-            {internships.length > 0 ? internships.map(job => <InternshipCard key={job.id} job={job} currentUser={currentUser} />) : (
-              <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-                <Briefcase size={48} className="mx-auto mb-3 text-gray-600" />
-                <p className="text-gray-400">No internships posted yet</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Members Tab */}
-        {activeTab === "members" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {members.map((member) => <MemberCard key={member.id} member={member} tribe={tribe} navigate={navigate} />)}
-          </div>
-        )}
+        {/* Tab Content */}
+        {renderTabContent()}
       </div>
 
-      {showSettings && <TribeSettingsModal tribe={tribe} currentUser={currentUser} onClose={() => setShowSettings(false)} onUpdate={handleTribeUpdate} onDelete={handleTribeDelete} />}
+      {showSettings && <TribeSettingsModal tribe={tribe} currentUser={currentUser} onClose={() => setShowSettings(false)} onUpdate={(t) => setTribe(t)} onDelete={() => navigate('/tribes')} />}
       <BottomNav active="tribes" />
     </div>
   );
+
+  function renderTabContent() {
+    // Posts Tab (All categories)
+    if (activeTab === "posts") return (
+      <div className="space-y-6">
+        {isMember && (
+          <div className="rounded-2xl p-4 border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+            <div className="flex gap-3">
+              <img src={getMediaUrl(currentUser?.avatar) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser?.handle}`} alt="You" className="w-10 h-10 rounded-full object-cover" />
+              <div className="flex-1">
+                <textarea value={newPostText} onChange={(e) => setNewPostText(e.target.value)} placeholder={`Share something with ${tribe.name}...`}
+                  className="w-full bg-gray-800/50 text-white rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-none border border-gray-700" rows="2" />
+                {newPostMedia && (
+                  <div className="mt-2 relative">
+                    {newPostMedia.type.startsWith('video/') ? <video src={URL.createObjectURL(newPostMedia)} className="w-full max-h-48 object-cover rounded-xl" controls /> : <img src={URL.createObjectURL(newPostMedia)} alt="Preview" className="w-full max-h-48 object-cover rounded-xl" />}
+                    <button onClick={() => setNewPostMedia(null)} className="absolute top-2 right-2 px-2 py-1 bg-black/70 text-white rounded-lg text-xs">Remove</button>
+                  </div>
+                )}
+                <div className="flex items-center justify-between mt-3">
+                  <div className="flex gap-1">
+                    <label className="p-2 hover:bg-gray-800 rounded-lg cursor-pointer"><Image size={18} className="text-cyan-400" /><input type="file" accept="image/*" className="hidden" onChange={handleMediaSelect} /></label>
+                    <label className="p-2 hover:bg-gray-800 rounded-lg cursor-pointer"><Video size={18} className="text-cyan-400" /><input type="file" accept="video/*" className="hidden" onChange={handleMediaSelect} /></label>
+                  </div>
+                  <button onClick={createPost} disabled={posting || (!newPostText.trim() && !newPostMedia)} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black text-sm font-semibold disabled:opacity-50">
+                    {posting ? <div className="animate-spin w-4 h-4 border-2 border-black border-t-transparent rounded-full"></div> : <Send size={16} />}Post
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (posts.length > 0 ? posts.map(post => <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} onDelete={handleDelete} onRepost={handleRepost} />) : <EmptyState icon={Image} message="No posts yet" />)}
+      </div>
+    );
+
+    // College/Tech: Projects
+    if (activeTab === "projects") return (
+      <div className="space-y-4">
+        <TabHeader title="Member Projects" buttonText="Add Project" buttonIcon={Rocket} onClick={() => navigate('/projects/create')} />
+        {projects.length > 0 ? projects.map(p => <ProjectCard key={p.id} project={p} currentUser={currentUser} onSkillClick={setSkillFilter} />) : <EmptyState icon={Code} message="No projects yet" />}
+      </div>
+    );
+
+    // College/Tech: Certifications
+    if (activeTab === "certifications") return (
+      <div className="space-y-4">
+        <TabHeader title="Member Certifications" buttonText="Add Cert" buttonIcon={Award} onClick={() => navigate('/certifications/create')} />
+        {certifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{certifications.map(c => <CertificationCard key={c.id} cert={c} onSkillClick={setSkillFilter} />)}</div> : <EmptyState icon={Award} message="No certifications yet" />}
+      </div>
+    );
+
+    // College/Tech: Team Posts
+    if (activeTab === "teamPosts") return (
+      <div className="space-y-4">
+        <TabHeader title="Looking for Team" buttonText="Find Team" buttonIcon={UsersRound} onClick={() => navigate('/team-posts/create')} />
+        {teamPosts.length > 0 ? teamPosts.map(p => <TeamPostCard key={p.id} post={p} currentUser={currentUser} />) : <EmptyState icon={UsersRound} message="No team posts yet" />}
+      </div>
+    );
+
+    // College/Tech: Internships
+    if (activeTab === "internships") return (
+      <div className="space-y-4">
+        <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => navigate('/internships/create')} />
+        {internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />}
+      </div>
+    );
+
+    // Fitness: Workouts
+    if (activeTab === "workouts") return (
+      <div className="space-y-4">
+        <TabHeader title="Workouts" buttonText="Add Workout" buttonIcon={Dumbbell} onClick={() => toast.info('Coming soon!')} />
+        {workouts.length > 0 ? workouts.map(w => <WorkoutCard key={w.id} workout={w} />) : <EmptyState icon={Dumbbell} message="No workouts shared yet" />}
+      </div>
+    );
+
+    // Fitness: Challenges
+    if (activeTab === "challenges") return (
+      <div className="space-y-4">
+        <TabHeader title="Fitness Challenges" buttonText="Create Challenge" buttonIcon={Trophy} onClick={() => toast.info('Coming soon!')} />
+        {challenges.length > 0 ? challenges.map(c => <ChallengeCard key={c.id} challenge={c} />) : <EmptyState icon={Trophy} message="No active challenges" />}
+      </div>
+    );
+
+    // Food: Menu
+    if (activeTab === "menu") return (
+      <div className="space-y-4">
+        <TabHeader title="Menu Items" buttonText="Add Item" buttonIcon={Utensils} onClick={() => toast.info('Coming soon!')} />
+        {menuItems.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{menuItems.map(m => <MenuItemCard key={m.id} item={m} />)}</div> : <EmptyState icon={Utensils} message="No menu items yet" />}
+      </div>
+    );
+
+    // Food/Business: Deals
+    if (activeTab === "deals") return (
+      <div className="space-y-4">
+        <TabHeader title="Deals & Offers" buttonText="Add Deal" buttonIcon={Tag} onClick={() => toast.info('Coming soon!')} />
+        {deals.length > 0 ? deals.map(d => <DealCard key={d.id} deal={d} />) : <EmptyState icon={Tag} message="No deals available" />}
+      </div>
+    );
+
+    // Food/Business: Reviews
+    if (activeTab === "reviews") return (
+      <div className="space-y-4">
+        <TabHeader title="Reviews" buttonText="Write Review" buttonIcon={Star} onClick={() => toast.info('Coming soon!')} />
+        {reviews.length > 0 ? reviews.map(r => <ReviewCard key={r.id} review={r} />) : <EmptyState icon={Star} message="No reviews yet" />}
+      </div>
+    );
+
+    // Members Tab (All categories)
+    if (activeTab === "members") return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {members.map(m => <MemberCard key={m.id} member={m} tribe={tribe} navigate={navigate} />)}
+      </div>
+    );
+
+    return null;
+  }
 };
 
-// Member Card with Reputation
+// Helper Components
+const TabHeader = ({ title, buttonText, buttonIcon: Icon, onClick }) => (
+  <div className="flex justify-between items-center">
+    <h3 className="text-lg font-semibold text-white">{title}</h3>
+    <button onClick={onClick} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><Icon size={16} />{buttonText}</button>
+  </div>
+);
+
+const EmptyState = ({ icon: Icon, message }) => (
+  <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <Icon size={48} className="mx-auto mb-3 text-gray-600" />
+    <p className="text-gray-400">{message}</p>
+  </div>
+);
+
+const JoinPrompt = ({ onJoin, joining }) => (
+  <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <Users size={48} className="mx-auto mb-3 text-gray-600" />
+    <h3 className="text-xl font-semibold text-white mb-2">Members Only</h3>
+    <p className="text-gray-400 mb-4">Join this tribe to participate</p>
+    <button onClick={onJoin} disabled={joining} className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold">{joining ? 'Joining...' : 'Join Tribe'}</button>
+  </div>
+);
+
+const LoginPrompt = ({ navigate }) => (
+  <div className="rounded-2xl p-8 text-center border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <Users size={48} className="mx-auto mb-3 text-gray-600" />
+    <h3 className="text-xl font-semibold text-white mb-2">Login Required</h3>
+    <button onClick={() => navigate('/auth')} className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold">Login / Sign Up</button>
+  </div>
+);
+
 const MemberCard = ({ member, tribe, navigate }) => (
   <div onClick={() => navigate(`/@${member.handle}`)} className="flex items-center gap-3 p-4 rounded-xl border border-gray-800 hover:border-cyan-400/30 cursor-pointer transition" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
     <img src={member.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${member.handle}`} alt={member.name} className="w-12 h-12 rounded-full object-cover" />
@@ -449,22 +581,13 @@ const MemberCard = ({ member, tribe, navigate }) => (
       <div className="flex items-center gap-2">
         <h4 className="font-semibold text-white truncate">{member.name}</h4>
         {member.id === tribe.ownerId && <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Owner</span>}
-        {member.isVerified && <span className="text-cyan-400">✓</span>}
       </div>
       <p className="text-sm text-gray-400">@{member.handle}</p>
-      {member.reputation && (
-        <div className="flex items-center gap-1 mt-1">
-          <Star size={12} className="text-yellow-400 fill-yellow-400" />
-          <span className="text-xs text-yellow-400">{member.reputation.score || 0}</span>
-          <span className="text-xs text-gray-500">• {member.reputation.endorsements || 0} endorsements</span>
-        </div>
-      )}
     </div>
   </div>
 );
 
-// Internship Card
-const InternshipCard = ({ job, currentUser }) => {
+const InternshipCard = ({ job }) => {
   const navigate = useNavigate();
   return (
     <div className="p-4 rounded-xl border border-gray-800 hover:border-cyan-400/30 transition" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
@@ -476,17 +599,74 @@ const InternshipCard = ({ job, currentUser }) => {
         <span className={`px-2 py-1 rounded-full text-xs ${job.type === 'internship' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'}`}>{job.type}</span>
       </div>
       <p className="text-gray-400 text-sm mb-3 line-clamp-2">{job.description}</p>
-      <div className="flex flex-wrap gap-1 mb-3">
-        {job.skills?.slice(0, 4).map(skill => <SkillTag key={skill} skill={skill} size="sm" />)}
-      </div>
       <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-500">
-          <span>{job.location}</span> • <span>{job.stipend || 'Unpaid'}</span>
-        </div>
+        <span className="text-sm text-gray-500">{job.location} • {job.stipend || 'Unpaid'}</span>
         <button onClick={() => navigate(`/internships/${job.id}/apply`)} className="px-4 py-1.5 bg-cyan-400 text-black rounded-lg text-sm font-semibold">Apply</button>
       </div>
     </div>
   );
 };
+
+const WorkoutCard = ({ workout }) => (
+  <div className="p-4 rounded-xl border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <div className="flex items-center gap-3">
+      <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center"><Dumbbell size={24} className="text-orange-400" /></div>
+      <div>
+        <h4 className="font-bold text-white">{workout.title}</h4>
+        <p className="text-sm text-gray-400">{workout.duration} • {workout.difficulty}</p>
+      </div>
+    </div>
+  </div>
+);
+
+const ChallengeCard = ({ challenge }) => (
+  <div className="p-4 rounded-xl border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <div className="flex items-center gap-3">
+      <div className="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center"><Trophy size={24} className="text-yellow-400" /></div>
+      <div className="flex-1">
+        <h4 className="font-bold text-white">{challenge.title}</h4>
+        <p className="text-sm text-gray-400">{challenge.participants} participants</p>
+      </div>
+      <button className="px-3 py-1 bg-yellow-500 text-black rounded-lg text-sm font-semibold">Join</button>
+    </div>
+  </div>
+);
+
+const MenuItemCard = ({ item }) => (
+  <div className="p-4 rounded-xl border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    {item.image && <img src={item.image} alt={item.name} className="w-full h-32 object-cover rounded-lg mb-3" />}
+    <h4 className="font-bold text-white">{item.name}</h4>
+    <p className="text-sm text-gray-400 mb-2">{item.description}</p>
+    <div className="flex justify-between items-center">
+      <span className="text-cyan-400 font-semibold">₹{item.price}</span>
+      {item.isVeg !== undefined && <span className={`text-xs ${item.isVeg ? 'text-green-400' : 'text-red-400'}`}>{item.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}</span>}
+    </div>
+  </div>
+);
+
+const DealCard = ({ deal }) => (
+  <div className="p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/5">
+    <div className="flex items-center gap-2 mb-2">
+      <Tag size={16} className="text-yellow-400" />
+      <span className="text-yellow-400 font-bold">{deal.discount}% OFF</span>
+    </div>
+    <h4 className="font-bold text-white">{deal.title}</h4>
+    <p className="text-sm text-gray-400">{deal.description}</p>
+    <p className="text-xs text-gray-500 mt-2">Valid till: {deal.validTill}</p>
+  </div>
+);
+
+const ReviewCard = ({ review }) => (
+  <div className="p-4 rounded-xl border border-gray-800" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <div className="flex items-center gap-3 mb-2">
+      <img src={review.author?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=user'} className="w-8 h-8 rounded-full" alt="" />
+      <div>
+        <p className="text-white font-semibold">{review.author?.name}</p>
+        <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} size={12} className={i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'} />)}</div>
+      </div>
+    </div>
+    <p className="text-gray-400 text-sm">{review.text}</p>
+  </div>
+);
 
 export default TribeDetail;
