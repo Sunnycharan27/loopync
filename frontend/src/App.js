@@ -611,6 +611,22 @@ function App() {
                 )
               }
             />
+            <Route
+              path="/talent-discovery"
+              element={<CompanyDiscovery />}
+            />
+            <Route
+              path="/internships/create"
+              element={
+                !authLoaded ? (
+                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
+                ) : isAuthenticated ? (
+                  <CreateInternship />
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              }
+            />
             
             {/* Catch-all route for @username - MUST be last! */}
             <Route
