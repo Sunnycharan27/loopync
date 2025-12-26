@@ -283,43 +283,6 @@ const Discover = () => {
     }
   };
 
-  const joinTribe = async (tribeId) => {
-    if (!currentUser) {
-      toast.error("Please login to join tribes");
-      navigate('/auth');
-      return;
-    }
-    
-    try {
-      await axios.post(`${API}/tribes/${tribeId}/join?userId=${currentUser.id}`);
-      toast.success("Joined tribe successfully!");
-      
-      // Update tribes list
-      setTribes(tribes.map(t => t.id === tribeId ? { 
-        ...t, 
-        members: [...(t.members || []), currentUser.id],
-        isMember: true 
-      } : t));
-      
-      // Update search results if active
-      if (searchResults?.tribes) {
-        setSearchResults({
-          ...searchResults,
-          tribes: searchResults.tribes.map(t => t.id === tribeId ? { 
-            ...t, 
-            members: [...(t.members || []), currentUser.id],
-            isMember: true 
-          } : t)
-        });
-      }
-    } catch (error) {
-      // Safely extract error message
-      const detail = error.response?.data?.detail;
-      const errorMsg = typeof detail === 'string' ? detail : (detail?.msg || detail?.[0]?.msg || "Failed to join tribe");
-      toast.error(errorMsg);
-    }
-  };
-
   if (loading && !searchResults) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0f021e' }}>
