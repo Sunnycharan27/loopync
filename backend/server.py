@@ -9199,6 +9199,617 @@ async def get_user_downloads(userId: str):
     
     return {"downloads": downloads, "products": products}
 
+# ===== STUDENT FEATURES API =====
+
+# Get available categories, interests, skills
+@api_router.get("/student/constants")
+async def get_student_constants():
+    """Get all constants for student features"""
+    return {
+        "categories": USER_CATEGORIES,
+        "interests": INTERESTS,
+        "skills": SKILLS,
+        "projectStatus": PROJECT_STATUS,
+        "teamRoles": TEAM_ROLES
+    }
+
+# ===== STUDENT PROFILES =====
+
+@api_router.get("/student/profile/{userId}")
+async def get_student_profile(userId: str):
+    """Get student profile by user ID"""
+    profile = await db.student_profiles.find_one({"userId": userId}, {"_id": 0})
+    if not profile:
+        return None
+    
+    # Get counts
+    certs_count = await db.certifications.count_documents({"userId": userId})
+    projects_count = await db.projects.count_documents({"userId": userId})
+    team_count = await db.team_posts.count_documents({
+        "$or": [
+            {"userId": userId},
+            {"teamMembers.userId": userId}
+        ]
+    })
+    
+    profile["certificationsCount"] = certs_count
+    profile["projectsCount"] = projects_count
+    profile["teamParticipations"] = team_count
+    
+    return profile
+
+@api_router.post("/student/profile")
+async def create_student_profile(userId: str, profile: StudentProfileCreate):
+    """Create or update student profile"""
+    existing = await db.student_profiles.find_one({"userId": userId})
+    
+    profile_data = {
+        "userId": userId,
+        **profile.model_dump(),
+        "updatedAt": datetime.now(timezone.utc).isoformat()
+    }
+    
+    if existing:
+        await db.student_profiles.update_one(
+            {"userId": userId},
+            {"$set": profile_data}
+        )
+    else:
+        profile_data["createdAt"] = datetime.now(timezone.utc).isoformat()
+        await db.student_profiles.insert_one(profile_data)
+    
+    # Also update user's category in main user collection
+    await db.users.update_one(
+        {"id": userId},
+        {"$set": {"category": profile.userCategory}}
+    )
+    
+    result = await db.student_profiles.find_one({"userId": userId}, {"_id": 0})
+    return result
+
+@api_router.put("/student/profile/{userId}")
+async def update_student_profile(userId: str, update: StudentProfileUpdate):
+    """Update student profile"""
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    update_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.student_profiles.update_one(
+        {"userId": userId},
+        {"$set": update_data}
+    )
+    
+    result = await db.student_profiles.find_one({"userId": userId}, {"_id": 0})
+    return result
+
+# ===== CERTIFICATIONS =====
+
+@api_router.get("/certifications")
+async def get_all_certifications(skip: int = 0, limit: int = 20, skill: str = None):
+    """Get all public certifications"""
+    query = {"isPublic": True}
+    if skill:
+        query["skills"] = skill
+    
+    certs = await db.certifications.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    
+    # Add author info
+    for cert in certs:
+        author = await db.users.find_one({"id": cert["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+        cert["author"] = author
+    
+    return certs
+
+@api_router.get("/certifications/user/{userId}")
+async def get_user_certifications(userId: str):
+    """Get certifications for a specific user"""
+    certs = await db.certifications.find({"userId": userId}, {"_id": 0}).sort("createdAt", -1).to_list(100)
+    return certs
+
+@api_router.get("/certifications/{certId}")
+async def get_certification(certId: str):
+    """Get a specific certification"""
+    cert = await db.certifications.find_one({"id": certId}, {"_id": 0})
+    if not cert:
+        raise HTTPException(status_code=404, detail="Certification not found")
+    
+    author = await db.users.find_one({"id": cert["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+    cert["author"] = author
+    
+    return cert
+
+@api_router.post("/certifications")
+async def create_certification(userId: str, cert: CertificationCreate):
+    """Create a new certification"""
+    cert_data = Certification(
+        userId=userId,
+        **cert.model_dump()
+    ).model_dump()
+    
+    await db.certifications.insert_one(cert_data)
+    
+    # Update student profile count
+    await db.student_profiles.update_one(
+        {"userId": userId},
+        {"$inc": {"certificationsCount": 1}}
+    )
+    
+    cert_data.pop("_id", None)
+    return cert_data
+
+@api_router.delete("/certifications/{certId}")
+async def delete_certification(certId: str, userId: str):
+    """Delete a certification"""
+    cert = await db.certifications.find_one({"id": certId}, {"_id": 0})
+    if not cert:
+        raise HTTPException(status_code=404, detail="Certification not found")
+    if cert["userId"] != userId:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    await db.certifications.delete_one({"id": certId})
+    
+    # Update count
+    await db.student_profiles.update_one(
+        {"userId": userId},
+        {"$inc": {"certificationsCount": -1}}
+    )
+    
+    return {"success": True}
+
+@api_router.post("/certifications/{certId}/like")
+async def like_certification(certId: str, userId: str):
+    """Like/unlike a certification"""
+    cert = await db.certifications.find_one({"id": certId}, {"_id": 0})
+    if not cert:
+        raise HTTPException(status_code=404, detail="Certification not found")
+    
+    likes = cert.get("likes", [])
+    if userId in likes:
+        likes.remove(userId)
+        action = "unliked"
+    else:
+        likes.append(userId)
+        action = "liked"
+    
+    await db.certifications.update_one(
+        {"id": certId},
+        {"$set": {"likes": likes, "likeCount": len(likes)}}
+    )
+    
+    return {"action": action, "likeCount": len(likes)}
+
+# ===== PROJECTS =====
+
+@api_router.get("/projects")
+async def get_all_projects(skip: int = 0, limit: int = 20, skill: str = None, status: str = None, startup: bool = None):
+    """Get all public projects"""
+    query = {"isPublic": True}
+    if skill:
+        query["skills"] = skill
+    if status:
+        query["status"] = status
+    if startup is not None:
+        query["isStartup"] = startup
+    
+    projects = await db.projects.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    
+    # Add author info
+    for proj in projects:
+        author = await db.users.find_one({"id": proj["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+        proj["author"] = author
+    
+    return projects
+
+@api_router.get("/projects/user/{userId}")
+async def get_user_projects(userId: str):
+    """Get projects for a specific user"""
+    projects = await db.projects.find({"userId": userId}, {"_id": 0}).sort("createdAt", -1).to_list(100)
+    return projects
+
+@api_router.get("/projects/{projectId}")
+async def get_project(projectId: str):
+    """Get a specific project"""
+    project = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    author = await db.users.find_one({"id": project["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+    project["author"] = author
+    
+    # Get team member info
+    if project.get("teamMembers"):
+        team_info = []
+        for member_id in project["teamMembers"]:
+            member = await db.users.find_one({"id": member_id}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1})
+            if member:
+                team_info.append(member)
+        project["teamMemberInfo"] = team_info
+    
+    # Increment view count
+    await db.projects.update_one({"id": projectId}, {"$inc": {"views": 1}})
+    
+    return project
+
+@api_router.post("/projects")
+async def create_project(userId: str, project: ProjectCreate):
+    """Create a new project"""
+    project_data = Project(
+        userId=userId,
+        **project.model_dump()
+    ).model_dump()
+    
+    await db.projects.insert_one(project_data)
+    
+    # Update student profile count
+    await db.student_profiles.update_one(
+        {"userId": userId},
+        {"$inc": {"projectsCount": 1}}
+    )
+    
+    project_data.pop("_id", None)
+    return project_data
+
+@api_router.put("/projects/{projectId}")
+async def update_project(projectId: str, userId: str, update: ProjectUpdate):
+    """Update a project"""
+    project = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    if project["userId"] != userId:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    update_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.projects.update_one({"id": projectId}, {"$set": update_data})
+    
+    result = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    return result
+
+@api_router.delete("/projects/{projectId}")
+async def delete_project(projectId: str, userId: str):
+    """Delete a project"""
+    project = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    if project["userId"] != userId:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    await db.projects.delete_one({"id": projectId})
+    
+    # Update count
+    await db.student_profiles.update_one(
+        {"userId": userId},
+        {"$inc": {"projectsCount": -1}}
+    )
+    
+    return {"success": True}
+
+@api_router.post("/projects/{projectId}/like")
+async def like_project(projectId: str, userId: str):
+    """Like/unlike a project"""
+    project = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    likes = project.get("likes", [])
+    if userId in likes:
+        likes.remove(userId)
+        action = "unliked"
+    else:
+        likes.append(userId)
+        action = "liked"
+    
+    await db.projects.update_one(
+        {"id": projectId},
+        {"$set": {"likes": likes, "likeCount": len(likes)}}
+    )
+    
+    return {"action": action, "likeCount": len(likes)}
+
+@api_router.post("/projects/{projectId}/interest")
+async def express_interest(projectId: str, userId: str):
+    """Express interest in a project"""
+    project = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    interested = project.get("interestedUsers", [])
+    if userId in interested:
+        interested.remove(userId)
+        action = "removed"
+    else:
+        interested.append(userId)
+        action = "added"
+    
+    await db.projects.update_one(
+        {"id": projectId},
+        {"$set": {"interestedUsers": interested}}
+    )
+    
+    return {"action": action, "interestedCount": len(interested)}
+
+@api_router.post("/projects/{projectId}/save")
+async def save_project(projectId: str, userId: str):
+    """Save/bookmark a project"""
+    # Check if already saved
+    existing = await db.saved_projects.find_one({"userId": userId, "projectId": projectId})
+    
+    if existing:
+        await db.saved_projects.delete_one({"userId": userId, "projectId": projectId})
+        await db.projects.update_one({"id": projectId}, {"$inc": {"saves": -1}})
+        return {"action": "unsaved"}
+    else:
+        await db.saved_projects.insert_one({
+            "userId": userId,
+            "projectId": projectId,
+            "savedAt": datetime.now(timezone.utc).isoformat()
+        })
+        await db.projects.update_one({"id": projectId}, {"$inc": {"saves": 1}})
+        return {"action": "saved"}
+
+@api_router.get("/projects/saved/{userId}")
+async def get_saved_projects(userId: str):
+    """Get saved projects for a user"""
+    saved = await db.saved_projects.find({"userId": userId}, {"_id": 0}).to_list(100)
+    project_ids = [s["projectId"] for s in saved]
+    projects = await db.projects.find({"id": {"$in": project_ids}}, {"_id": 0}).to_list(100)
+    
+    for proj in projects:
+        author = await db.users.find_one({"id": proj["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1})
+        proj["author"] = author
+    
+    return projects
+
+# ===== TEAM POSTS =====
+
+@api_router.get("/team-posts")
+async def get_all_team_posts(skip: int = 0, limit: int = 20, skill: str = None, role: str = None):
+    """Get all open team posts"""
+    query = {"status": "open"}
+    if skill:
+        query["requiredSkills"] = skill
+    if role:
+        query["requiredRoles.roleId"] = role
+    
+    posts = await db.team_posts.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    
+    # Add author info
+    for post in posts:
+        author = await db.users.find_one({"id": post["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+        post["author"] = author
+    
+    return posts
+
+@api_router.get("/team-posts/{postId}")
+async def get_team_post(postId: str):
+    """Get a specific team post"""
+    post = await db.team_posts.find_one({"id": postId}, {"_id": 0})
+    if not post:
+        raise HTTPException(status_code=404, detail="Team post not found")
+    
+    author = await db.users.find_one({"id": post["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+    post["author"] = author
+    
+    # Get team member info
+    team_info = []
+    for member in post.get("teamMembers", []):
+        user = await db.users.find_one({"id": member["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1})
+        if user:
+            team_info.append({**user, "roleId": member.get("roleId"), "joinedAt": member.get("joinedAt")})
+    post["teamMemberInfo"] = team_info
+    
+    # Increment view count
+    await db.team_posts.update_one({"id": postId}, {"$inc": {"views": 1}})
+    
+    return post
+
+@api_router.post("/team-posts")
+async def create_team_post(userId: str, post: TeamPostCreate):
+    """Create a new team post"""
+    post_data = TeamPost(
+        userId=userId,
+        **post.model_dump()
+    ).model_dump()
+    
+    await db.team_posts.insert_one(post_data)
+    post_data.pop("_id", None)
+    return post_data
+
+@api_router.put("/team-posts/{postId}/status")
+async def update_team_post_status(postId: str, userId: str, status: str):
+    """Update team post status (open/closed/filled)"""
+    post = await db.team_posts.find_one({"id": postId}, {"_id": 0})
+    if not post:
+        raise HTTPException(status_code=404, detail="Team post not found")
+    if post["userId"] != userId:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    await db.team_posts.update_one(
+        {"id": postId},
+        {"$set": {"status": status, "updatedAt": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    return {"success": True, "status": status}
+
+@api_router.post("/team-posts/{postId}/apply")
+async def apply_to_team(postId: str, userId: str, roleId: str, message: str = ""):
+    """Apply to join a team"""
+    post = await db.team_posts.find_one({"id": postId}, {"_id": 0})
+    if not post:
+        raise HTTPException(status_code=404, detail="Team post not found")
+    if post["status"] != "open":
+        raise HTTPException(status_code=400, detail="This team is no longer accepting applications")
+    if post["userId"] == userId:
+        raise HTTPException(status_code=400, detail="Cannot apply to your own team post")
+    
+    # Check if already applied
+    existing_apps = post.get("applications", [])
+    for app in existing_apps:
+        if app["userId"] == userId:
+            raise HTTPException(status_code=400, detail="Already applied to this team")
+    
+    application = {
+        "userId": userId,
+        "roleId": roleId,
+        "message": message,
+        "status": "pending",
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.team_posts.update_one(
+        {"id": postId},
+        {
+            "$push": {"applications": application},
+            "$inc": {"applicationCount": 1}
+        }
+    )
+    
+    # Send notification to team owner
+    user = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "avatar": 1})
+    await db.notifications.insert_one({
+        "id": str(uuid.uuid4()),
+        "userId": post["userId"],
+        "type": "team_application",
+        "message": f"{user['name']} applied to join your team",
+        "link": f"/team-posts/{postId}",
+        "fromUserId": userId,
+        "fromUserName": user["name"],
+        "fromUserAvatar": user.get("avatar", ""),
+        "read": False,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {"success": True, "message": "Application submitted"}
+
+@api_router.post("/team-posts/{postId}/applications/{applicantId}/respond")
+async def respond_to_application(postId: str, applicantId: str, userId: str, action: str):
+    """Accept or reject a team application"""
+    post = await db.team_posts.find_one({"id": postId}, {"_id": 0})
+    if not post:
+        raise HTTPException(status_code=404, detail="Team post not found")
+    if post["userId"] != userId:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    if action not in ["accept", "reject"]:
+        raise HTTPException(status_code=400, detail="Invalid action")
+    
+    applications = post.get("applications", [])
+    application = None
+    for i, app in enumerate(applications):
+        if app["userId"] == applicantId:
+            application = app
+            applications[i]["status"] = "accepted" if action == "accept" else "rejected"
+            break
+    
+    if not application:
+        raise HTTPException(status_code=404, detail="Application not found")
+    
+    update_data = {"applications": applications, "updatedAt": datetime.now(timezone.utc).isoformat()}
+    
+    if action == "accept":
+        # Add to team members
+        team_member = {
+            "userId": applicantId,
+            "roleId": application["roleId"],
+            "joinedAt": datetime.now(timezone.utc).isoformat()
+        }
+        update_data["$push"] = {"teamMembers": team_member}
+    
+    await db.team_posts.update_one({"id": postId}, {"$set": update_data})
+    
+    if action == "accept" and "$push" in update_data:
+        await db.team_posts.update_one({"id": postId}, {"$push": update_data["$push"]})
+    
+    # Send notification to applicant
+    owner = await db.users.find_one({"id": userId}, {"_id": 0, "name": 1, "avatar": 1})
+    notification_message = f"Your application was {'accepted' if action == 'accept' else 'rejected'} by {owner['name']}"
+    
+    await db.notifications.insert_one({
+        "id": str(uuid.uuid4()),
+        "userId": applicantId,
+        "type": "team_application_response",
+        "message": notification_message,
+        "link": f"/team-posts/{postId}",
+        "fromUserId": userId,
+        "fromUserName": owner["name"],
+        "fromUserAvatar": owner.get("avatar", ""),
+        "read": False,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {"success": True, "action": action}
+
+# ===== SKILL DISCOVERY =====
+
+@api_router.get("/discover/skills/{skillId}")
+async def discover_by_skill(skillId: str, contentType: str = "all"):
+    """Discover students, projects, certifications by skill"""
+    result = {
+        "skill": skillId,
+        "students": [],
+        "projects": [],
+        "certifications": []
+    }
+    
+    if contentType in ["all", "students"]:
+        profiles = await db.student_profiles.find(
+            {"skills": skillId, "isPublic": True},
+            {"_id": 0}
+        ).limit(20).to_list(20)
+        
+        for profile in profiles:
+            user = await db.users.find_one({"id": profile["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+            if user:
+                result["students"].append({**user, "studentProfile": profile})
+    
+    if contentType in ["all", "projects"]:
+        projects = await db.projects.find(
+            {"skills": skillId, "isPublic": True},
+            {"_id": 0}
+        ).sort("createdAt", -1).limit(20).to_list(20)
+        
+        for proj in projects:
+            author = await db.users.find_one({"id": proj["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1})
+            proj["author"] = author
+        result["projects"] = projects
+    
+    if contentType in ["all", "certifications"]:
+        certs = await db.certifications.find(
+            {"skills": skillId, "isPublic": True},
+            {"_id": 0}
+        ).sort("createdAt", -1).limit(20).to_list(20)
+        
+        for cert in certs:
+            author = await db.users.find_one({"id": cert["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1})
+            cert["author"] = author
+        result["certifications"] = certs
+    
+    return result
+
+@api_router.get("/discover/students")
+async def discover_students(skill: str = None, college: str = None, year: str = None, category: str = None, skip: int = 0, limit: int = 20):
+    """Discover students with filters"""
+    query = {"isPublic": True}
+    
+    if skill:
+        query["skills"] = skill
+    if college:
+        query["collegeName"] = {"$regex": college, "$options": "i"}
+    if year:
+        query["graduationYear"] = year
+    if category:
+        query["userCategory"] = category
+    
+    profiles = await db.student_profiles.find(query, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
+    
+    result = []
+    for profile in profiles:
+        user = await db.users.find_one({"id": profile["userId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1, "bio": 1})
+        if user:
+            result.append({**user, "studentProfile": profile})
+    
+    return result
+
 # Include router
 app.include_router(api_router)
 
