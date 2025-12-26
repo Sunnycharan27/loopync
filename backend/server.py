@@ -10240,7 +10240,6 @@ async def create_review(userId: str, data: dict):
 app.include_router(api_router)
 
 # ===== SPOTIFY MUSIC API =====
-import base64
 import httpx
 
 SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "")
