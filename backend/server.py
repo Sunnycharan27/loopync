@@ -10239,6 +10239,153 @@ async def create_review(userId: str, data: dict):
 # Include router
 app.include_router(api_router)
 
+# ===== SPOTIFY MUSIC API =====
+import base64
+import httpx
+
+SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "")
+SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "")
+spotify_token_cache = {"token": None, "expires_at": 0}
+
+async def get_spotify_token():
+    """Get Spotify access token using Client Credentials flow"""
+    global spotify_token_cache
+    
+    # Check if we have a valid cached token
+    if spotify_token_cache["token"] and spotify_token_cache["expires_at"] > datetime.now(timezone.utc).timestamp():
+        return spotify_token_cache["token"]
+    
+    if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
+        return None
+    
+    # Get new token
+    auth_string = f"{SPOTIFY_CLIENT_ID}:{SPOTIFY_CLIENT_SECRET}"
+    auth_bytes = base64.b64encode(auth_string.encode()).decode()
+    
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "https://accounts.spotify.com/api/token",
+            headers={
+                "Authorization": f"Basic {auth_bytes}",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data={"grant_type": "client_credentials"}
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            spotify_token_cache["token"] = data["access_token"]
+            spotify_token_cache["expires_at"] = datetime.now(timezone.utc).timestamp() + data["expires_in"] - 60
+            return data["access_token"]
+    
+    return None
+
+@app.get("/api/spotify/search")
+async def search_spotify_tracks(q: str, limit: int = 20):
+    """Search Spotify for tracks"""
+    token = await get_spotify_token()
+    if not token:
+        raise HTTPException(status_code=500, detail="Spotify not configured")
+    
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            "https://api.spotify.com/v1/search",
+            headers={"Authorization": f"Bearer {token}"},
+            params={"q": q, "type": "track", "limit": limit}
+        )
+        
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail="Spotify search failed")
+        
+        data = response.json()
+        tracks = []
+        
+        for track in data.get("tracks", {}).get("items", []):
+            # Only include tracks with preview URLs
+            tracks.append({
+                "id": track["id"],
+                "name": track["name"],
+                "artist": ", ".join([a["name"] for a in track["artists"]]),
+                "artistId": track["artists"][0]["id"] if track["artists"] else None,
+                "album": track["album"]["name"],
+                "albumArt": track["album"]["images"][0]["url"] if track["album"]["images"] else None,
+                "albumArtSmall": track["album"]["images"][-1]["url"] if track["album"]["images"] else None,
+                "previewUrl": track["preview_url"],
+                "duration": track["duration_ms"],
+                "spotifyUrl": track["external_urls"]["spotify"],
+                "uri": track["uri"]
+            })
+        
+        return {"tracks": tracks}
+
+@app.get("/api/spotify/track/{trackId}")
+async def get_spotify_track(trackId: str):
+    """Get a single track details"""
+    token = await get_spotify_token()
+    if not token:
+        raise HTTPException(status_code=500, detail="Spotify not configured")
+    
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"https://api.spotify.com/v1/tracks/{trackId}",
+            headers={"Authorization": f"Bearer {token}"}
+        )
+        
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail="Track not found")
+        
+        track = response.json()
+        return {
+            "id": track["id"],
+            "name": track["name"],
+            "artist": ", ".join([a["name"] for a in track["artists"]]),
+            "album": track["album"]["name"],
+            "albumArt": track["album"]["images"][0]["url"] if track["album"]["images"] else None,
+            "albumArtSmall": track["album"]["images"][-1]["url"] if track["album"]["images"] else None,
+            "previewUrl": track["preview_url"],
+            "duration": track["duration_ms"],
+            "spotifyUrl": track["external_urls"]["spotify"]
+        }
+
+@app.get("/api/spotify/trending")
+async def get_trending_tracks(limit: int = 20):
+    """Get trending/popular tracks"""
+    token = await get_spotify_token()
+    if not token:
+        raise HTTPException(status_code=500, detail="Spotify not configured")
+    
+    async with httpx.AsyncClient() as client:
+        # Get tracks from a popular playlist (Today's Top Hits)
+        response = await client.get(
+            "https://api.spotify.com/v1/playlists/37i9dQZF1DXcBWIGoYBM5M/tracks",
+            headers={"Authorization": f"Bearer {token}"},
+            params={"limit": limit}
+        )
+        
+        if response.status_code != 200:
+            # Fallback to search for popular songs
+            return await search_spotify_tracks("top hits 2024", limit)
+        
+        data = response.json()
+        tracks = []
+        
+        for item in data.get("items", []):
+            track = item.get("track")
+            if track and track.get("preview_url"):
+                tracks.append({
+                    "id": track["id"],
+                    "name": track["name"],
+                    "artist": ", ".join([a["name"] for a in track["artists"]]),
+                    "album": track["album"]["name"],
+                    "albumArt": track["album"]["images"][0]["url"] if track["album"]["images"] else None,
+                    "albumArtSmall": track["album"]["images"][-1]["url"] if track["album"]["images"] else None,
+                    "previewUrl": track["preview_url"],
+                    "duration": track["duration_ms"],
+                    "spotifyUrl": track["external_urls"]["spotify"]
+                })
+        
+        return {"tracks": tracks}
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
