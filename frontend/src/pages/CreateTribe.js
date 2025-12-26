@@ -367,7 +367,7 @@ const CreateTribe = () => {
         </button>
       </form>
 
-      <BottomNav active="discover" />
+      <BottomNav active="tribes" />
     </div>
   );
 };
