@@ -236,7 +236,7 @@ class LoopyncTribeContentTester:
             ]
         }
         
-        response = self.make_request("POST", "/workouts", workout_data)
+        response = self.make_request("POST", "/workouts", workout_data, params={"authorId": self.user_id})
         if response and response.status_code == 200:
             workout_result = response.json()
             self.created_workout_id = workout_result.get("id")
