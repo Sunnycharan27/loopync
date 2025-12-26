@@ -10306,7 +10306,7 @@ async def search_spotify_tracks(q: str, limit: int = 20):
         response = await client.get(
             "https://api.spotify.com/v1/search",
             headers={"Authorization": f"Bearer {token}"},
-            params={"q": q, "type": "track", "limit": limit}
+            params={"q": q, "type": "track", "limit": limit, "market": "US"}
         )
         
         if response.status_code != 200:
@@ -10316,7 +10316,7 @@ async def search_spotify_tracks(q: str, limit: int = 20):
         tracks = []
         
         for track in data.get("tracks", {}).get("items", []):
-            # Only include tracks with preview URLs
+            # Include all tracks - preview_url might be null due to Spotify restrictions
             tracks.append({
                 "id": track["id"],
                 "name": track["name"],
