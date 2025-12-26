@@ -185,7 +185,7 @@ const Home = () => {
         <TopHeader title="Feed" subtitle="What's happening now" />
 
         {/* Vibe Capsules (Stories) */}
-        <VibeCapsules currentUser={currentUser} />
+        <VibeCapsules currentUser={currentUser} onCreateStory={() => setShowStoryCreator(true)} />
 
         {/* Combined Feed (Posts + Reels) */}
         <div className="space-y-4 px-4 mt-4">
@@ -247,6 +247,16 @@ const Home = () => {
           onClose={() => setShowComposer(false)}
           onPostCreated={handlePostCreated}
           onReelCreated={handleReelCreated}
+        />
+      )}
+
+      {currentUser && showStoryCreator && (
+        <StoryCreator
+          onClose={() => setShowStoryCreator(false)}
+          onStoryCreated={() => {
+            setShowStoryCreator(false);
+            // Could refresh stories here
+          }}
         />
       )}
     </div>
