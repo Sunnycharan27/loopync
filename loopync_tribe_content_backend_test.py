@@ -148,7 +148,7 @@ class LoopyncTribeContentTester:
             "tags": ["fitness", "gym", "workout"]
         }
         
-        response = self.make_request("POST", "/tribes", fitness_tribe_data)
+        response = self.make_request("POST", "/tribes", fitness_tribe_data, params={"ownerId": self.user_id})
         if response and response.status_code == 200:
             tribe_result = response.json()
             self.created_fitness_tribe_id = tribe_result.get("id")
