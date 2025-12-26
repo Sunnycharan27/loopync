@@ -2993,9 +2993,13 @@ async def get_active_capsules(userId: Optional[str] = None):
     return {"stories": list(capsules_by_author.values())}
 
 @api_router.post("/capsules")
-async def create_capsule(capsule: VibeCapsuleCreate, authorId: str):
+async def create_capsule(capsule: VibeCapsuleCreate, userId: str = None, authorId: str = None):
     """Create a new Vibe Capsule (Story)"""
-    capsule_obj = VibeCapsule(authorId=authorId, **capsule.model_dump())
+    # Support both userId and authorId query params
+    author_id = userId or authorId
+    if not author_id:
+        raise HTTPException(status_code=400, detail="userId or authorId is required")
+    capsule_obj = VibeCapsule(authorId=author_id, **capsule.model_dump())
     doc = capsule_obj.model_dump()
     
     # Insert into MongoDB (with TTL index on expiresAt)
