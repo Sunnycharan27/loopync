@@ -219,7 +219,7 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
             })}
           </p>
 
-          {/* Media Rendering */}
+          {/* Media Rendering - Optimized with native lazy loading */}
           {(post.media || post.mediaUrl) && (post.media?.trim() !== '' || post.mediaUrl?.trim() !== '') && (() => {
             const mediaSource = post.mediaUrl || post.media;
             const mediaUrl = getMediaUrl(mediaSource);
@@ -228,7 +228,9 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
               <video
                 src={mediaUrl}
                 controls
-                className="rounded-2xl w-full mb-3"
+                preload="metadata"
+                playsInline
+                className="rounded-2xl w-full mb-3 bg-gray-900"
                 onClick={() => setShowReactions(true)}
                 onError={(e) => {
                   console.error('Video load error:', mediaUrl);
@@ -239,7 +241,9 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
               <img
                 src={mediaUrl}
                 alt="Post media"
-                className="rounded-2xl w-full mb-3 hover:scale-[1.01] transition-transform cursor-pointer"
+                loading="lazy"
+                decoding="async"
+                className="rounded-2xl w-full mb-3 hover:scale-[1.01] transition-transform cursor-pointer bg-gray-900"
                 onClick={() => setShowReactions(true)}
                 onError={(e) => {
                   console.error('Image load error:', mediaUrl);
