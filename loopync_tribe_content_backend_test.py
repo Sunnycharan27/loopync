@@ -576,7 +576,7 @@ class LoopyncTribeContentTester:
             "isActive": True
         }
         
-        response = self.make_request("POST", "/internships", internship_data)
+        response = self.make_request("POST", "/internships", internship_data, params={"authorId": self.user_id})
         if response and response.status_code == 200:
             internship_result = response.json()
             self.created_internship_id = internship_result.get("id")
