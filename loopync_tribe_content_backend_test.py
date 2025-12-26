@@ -173,7 +173,7 @@ class LoopyncTribeContentTester:
             "tags": ["food", "restaurant", "cuisine"]
         }
         
-        response = self.make_request("POST", "/tribes", food_tribe_data)
+        response = self.make_request("POST", "/tribes", food_tribe_data, params={"ownerId": self.user_id})
         if response and response.status_code == 200:
             tribe_result = response.json()
             self.created_food_tribe_id = tribe_result.get("id")
