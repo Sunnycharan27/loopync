@@ -70,7 +70,7 @@ const Discover = () => {
 
   useEffect(() => {
     fetchContent();
-  }, [activeTab]);
+  }, [activeTab, skillFilter]);
 
   const fetchContent = async () => {
     setLoading(true);
