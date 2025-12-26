@@ -93,12 +93,11 @@ const CreateTribe = () => {
         category: formData.category,
         type: formData.type,
         tags: formData.tags,
-        avatar: avatarUrl,
-        coverImage: coverUrl,
-        ownerId: currentUser.id
+        avatar: avatarUrl || "",
+        coverImage: coverUrl || ""
       };
 
-      const res = await axios.post(`${API}/tribes`, tribeData);
+      const res = await axios.post(`${API}/tribes?ownerId=${currentUser.id}`, tribeData);
       toast.success('Tribe created!');
       navigate(`/tribes/${res.data.id}`);
     } catch (error) {
