@@ -527,47 +527,10 @@ const Discover = () => {
               </div>
             )}
 
-            {/* Tribes Results */}
-            {searchResults.tribes && searchResults.tribes.length > 0 && (
-              <div>
-                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                  <UsersRound size={20} className="text-cyan-400" />
-                  Tribes ({searchResults.tribes.length})
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {searchResults.tribes.map(tribe => (
-                    <div key={tribe.id} className="glass-card p-4">
-                      <div className="flex items-start gap-3">
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center flex-shrink-0">
-                          <UsersRound size={24} className="text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-white mb-1">{tribe.name}</h3>
-                          <p className="text-sm text-gray-400 mb-2 line-clamp-1">{tribe.description}</p>
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <span>{tribe.members?.length || 0} members</span>
-                            {!tribe.isMember && !tribe.members?.includes(currentUser?.id) && (
-                              <button
-                                onClick={() => joinTribe(tribe.id)}
-                                className="ml-auto px-3 py-1 rounded-full bg-cyan-400 text-black text-xs font-semibold hover:bg-cyan-300"
-                              >
-                                Join
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* No Results */}
             {(!searchResults.posts || searchResults.posts.length === 0) && 
              (!searchResults.reels || searchResults.reels.length === 0) &&
-             (!searchResults.users || searchResults.users.length === 0) &&
-             (!searchResults.tribes || searchResults.tribes.length === 0) && (
+             (!searchResults.users || searchResults.users.length === 0) && (
               <div className="glass-card p-8 text-center">
                 <p className="text-gray-400">No results found for &quot;{searchQuery}&quot;</p>
                 <p className="text-sm text-gray-500 mt-2">Try searching with different keywords</p>
