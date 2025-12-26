@@ -9892,6 +9892,37 @@ async def startup_db_indexes():
         await db.vibe_capsules.create_index([("createdAt", -1)])
         await db.vibe_capsules.create_index("expiresAt", expireAfterSeconds=0)  # TTL index for auto-deletion
         
+        # Student Profile indexes
+        await db.student_profiles.create_index("userId", unique=True)
+        await db.student_profiles.create_index("skills")
+        await db.student_profiles.create_index("collegeName")
+        await db.student_profiles.create_index("graduationYear")
+        await db.student_profiles.create_index("userCategory")
+        
+        # Certifications indexes
+        await db.certifications.create_index("id", unique=True)
+        await db.certifications.create_index("userId")
+        await db.certifications.create_index("skills")
+        await db.certifications.create_index([("createdAt", -1)])
+        
+        # Projects indexes
+        await db.projects.create_index("id", unique=True)
+        await db.projects.create_index("userId")
+        await db.projects.create_index("skills")
+        await db.projects.create_index("status")
+        await db.projects.create_index("isStartup")
+        await db.projects.create_index([("createdAt", -1)])
+        
+        # Team Posts indexes
+        await db.team_posts.create_index("id", unique=True)
+        await db.team_posts.create_index("userId")
+        await db.team_posts.create_index("status")
+        await db.team_posts.create_index("requiredSkills")
+        await db.team_posts.create_index([("createdAt", -1)])
+        
+        # Saved Projects indexes
+        await db.saved_projects.create_index([("userId", 1), ("projectId", 1)], unique=True)
+        
         logger.info("✅ Database indexes created successfully - Ready for 100k+ users")
     except Exception as e:
         logger.warning(f"⚠️ Some indexes already exist or had issues: {str(e)}")
