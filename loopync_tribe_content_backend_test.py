@@ -287,7 +287,7 @@ class LoopyncTribeContentTester:
             "endDate": (datetime.now().replace(day=datetime.now().day + 30)).isoformat()
         }
         
-        response = self.make_request("POST", "/challenges", challenge_data)
+        response = self.make_request("POST", "/challenges", challenge_data, params={"authorId": self.user_id})
         if response and response.status_code == 200:
             challenge_result = response.json()
             self.created_challenge_id = challenge_result.get("id")
