@@ -332,11 +332,8 @@ class LoopyncTribeContentTester:
             "price": 299.0,
             "category": "Starters",
             "tribeId": self.created_food_tribe_id,
-            "isVegetarian": True,
-            "isVegan": False,
-            "allergens": ["Dairy"],
-            "preparationTime": 20,
-            "spiceLevel": "Medium"
+            "isVeg": True,
+            "isAvailable": True
         }
         
         response = self.make_request("POST", "/menu-items", menu_item_data, params={"userId": self.user_id})
