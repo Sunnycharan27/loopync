@@ -325,7 +325,7 @@ const Tribes = () => {
         />
       )}
 
-      <BottomNav active="discover" />
+      <BottomNav active="tribes" />
     </div>
   );
 };
