@@ -385,9 +385,9 @@ class LoopyncTribeContentTester:
             "discountType": "percentage",
             "tribeId": self.created_food_tribe_id,
             "validFrom": datetime.now().isoformat(),
-            "validUntil": (datetime.now().replace(month=12, day=31)).isoformat(),
+            "validTill": (datetime.now().replace(month=12, day=31)).isoformat(),
             "terms": "Valid only on weekends",
-            "maxUses": 100
+            "code": "WEEKEND20"
         }
         
         response = self.make_request("POST", "/deals", deal_data, params={"userId": self.user_id})
