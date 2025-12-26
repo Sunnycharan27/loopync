@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UniversalShareModal from "./UniversalShareModal";
 import CommentsSection from "./CommentsSection";
 import VerifiedBadge from "./VerifiedBadge";
+import MusicBadge from "./MusicBadge";
 import { getMediaUrl, isVideoUrl } from "../utils/mediaUtils";
 import { highlightHashtags } from "../utils/hashtagUtils";
 
