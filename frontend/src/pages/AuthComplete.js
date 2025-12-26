@@ -773,7 +773,10 @@ const AuthComplete = () => {
             </span>
             {" "}
             <button
-              onClick={() => setMode(mode === "login" ? "signup" : "login")}
+              onClick={() => {
+                setMode(mode === "login" ? "signup" : "login");
+                setSignupStep(1); // Reset to step 1 when toggling
+              }}
               className="text-cyan-400 font-semibold hover:text-cyan-300"
             >
               {mode === "login" ? "Sign Up" : "Log In"}
