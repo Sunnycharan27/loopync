@@ -13,9 +13,13 @@ import ShareModal from "../components/ShareModal";
 const Discover = () => {
   const { currentUser, refreshUserData } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("posts");
   const [loading, setLoading] = useState(true);
   const [showParallels, setShowParallels] = useState(false);
+  
+  // Skill filter from URL
+  const skillFilter = searchParams.get('skill') || '';
   
   // Content states
   const [posts, setPosts] = useState([]);
