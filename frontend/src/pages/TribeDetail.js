@@ -617,7 +617,7 @@ const TribeDetail = () => {
         />
       )}
       
-      <BottomNav active="discover" />
+      <BottomNav active="tribes" />
     </div>
   );
 };
