@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
-import { Search, X, Sparkles, Video, FileText, Users, UserPlus, MessageCircle, UsersRound, Shield, Plus, Share2, Package } from "lucide-react";
+import { Search, X, Sparkles, Video, FileText, Users, UserPlus, MessageCircle, Shield, Share2, Package } from "lucide-react";
 import VerifiedBadge from "../components/VerifiedBadge";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
