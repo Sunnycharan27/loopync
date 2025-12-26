@@ -59,6 +59,7 @@ import CreateProject from "./pages/CreateProject";
 import Certifications from "./pages/Certifications";
 import CreateCertification from "./pages/CreateCertification";
 import TeamPosts from "./pages/TeamPosts";
+import CreateTeamPost from "./pages/CreateTeamPost";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
