@@ -8,6 +8,7 @@ import PostCard from "../components/PostCard";
 import FeedReelCard from "../components/FeedReelCard";
 import ComposerModal from "../components/ComposerModal";
 import VibeCapsules from "../components/VibeCapsules";
+import StoryCreator from "../components/StoryCreator";
 import { toast } from "sonner";
 import { emergentApi } from "../services/emergentApi";
 // import GuidedTours from "../components/GuidedTours";
@@ -18,6 +19,7 @@ const Home = () => {
   const [reels, setReels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
+  const [showStoryCreator, setShowStoryCreator] = useState(false);
   const scrollContainerRef = useRef(null);
 
   // Restore scroll position when component mounts
