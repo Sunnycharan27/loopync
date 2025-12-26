@@ -87,17 +87,26 @@ const FeedReelCard = memo(({ reel, currentUser, onLike }) => {
         <video
           ref={videoRef}
           src={getMediaUrl(reel.videoUrl)}
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
           loop
           muted={isMuted}
           playsInline
+          preload="metadata"
           poster={reel.thumbnail || undefined}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
+          onLoadedData={() => setIsLoaded(true)}
         />
         
+        {/* Loading state */}
+        {!isLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+            <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+          </div>
+        )}
+        
         {/* Play/Pause Overlay */}
-        {!isPlaying && (
+        {!isPlaying && isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/30">
             <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Play size={32} className="text-white ml-1" />
