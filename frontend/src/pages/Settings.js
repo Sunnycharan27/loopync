@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { 
   ArrowLeft, User, Lock, Shield, Bell, EyeOff, UserX, 
   HelpCircle, Info, ChevronRight, Camera, Mail, Globe,
-  Smartphone, Moon, LogOut
+  Smartphone, Moon, LogOut, MessageCircle, Send, X, Lightbulb, AlertTriangle, Bug, Zap
 } from "lucide-react";
 import { toast } from "sonner";
 
