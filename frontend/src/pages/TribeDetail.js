@@ -771,4 +771,63 @@ const ReviewCard = ({ review }) => (
   </div>
 );
 
+const TrainerCard = ({ trainer, isAdmin, onRemove, navigate }) => (
+  <div className="p-4 rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/5 relative">
+    {/* Admin Remove Button */}
+    {isAdmin && (
+      <button 
+        onClick={(e) => { e.stopPropagation(); onRemove(); }}
+        className="absolute top-2 right-2 p-1.5 bg-red-500/20 hover:bg-red-500/40 rounded-full transition"
+      >
+        <Trash2 size={14} className="text-red-400" />
+      </button>
+    )}
+    
+    <div className="flex items-start gap-3">
+      <img 
+        src={trainer.avatar || trainer.user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${trainer.name}`} 
+        alt={trainer.name || trainer.user?.name}
+        className="w-16 h-16 rounded-xl object-cover border-2 border-orange-500/30 cursor-pointer"
+        onClick={() => navigate(`/profile/${trainer.userId}`)}
+      />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <h4 className="font-bold text-white truncate">{trainer.name || trainer.user?.name}</h4>
+          {trainer.isVerified && (
+            <span className="px-1.5 py-0.5 bg-yellow-500/20 text-yellow-400 text-xs rounded-full flex items-center gap-1">
+              <Award size={10} /> Verified
+            </span>
+          )}
+        </div>
+        <p className="text-orange-400 text-sm">{trainer.specialization}</p>
+        {trainer.experience && (
+          <p className="text-gray-400 text-xs mt-1">{trainer.experience}</p>
+        )}
+      </div>
+    </div>
+    
+    {trainer.bio && (
+      <p className="text-gray-400 text-sm mt-3 line-clamp-2">{trainer.bio}</p>
+    )}
+    
+    <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-800">
+      <span className={`text-xs px-2 py-1 rounded-full ${
+        trainer.availability === 'Available' 
+          ? 'bg-green-500/20 text-green-400' 
+          : trainer.availability === 'Currently Unavailable'
+            ? 'bg-red-500/20 text-red-400'
+            : 'bg-yellow-500/20 text-yellow-400'
+      }`}>
+        {trainer.availability}
+      </span>
+      <button 
+        onClick={() => navigate(`/profile/${trainer.userId}`)}
+        className="text-sm text-cyan-400 hover:text-cyan-300 transition"
+      >
+        View Profile →
+      </button>
+    </div>
+  </div>
+);
+
 export default TribeDetail;
