@@ -654,7 +654,7 @@ const TribeDetail = () => {
     // College/Tech: Projects
     if (activeTab === "projects") return (
       <div className="space-y-4">
-        <TabHeader title="Member Projects" buttonText="Add Project" buttonIcon={Rocket} onClick={() => navigate('/projects/create')} />
+        <TabHeader title="Member Projects" buttonText="Add Project" buttonIcon={Rocket} onClick={() => setShowProjectModal(true)} />
         {projects.length > 0 ? projects.map(p => <ProjectCard key={p.id} project={p} currentUser={currentUser} onSkillClick={setSkillFilter} />) : <EmptyState icon={Code} message="No projects yet" />}
       </div>
     );
@@ -662,7 +662,7 @@ const TribeDetail = () => {
     // College/Tech: Certifications
     if (activeTab === "certifications") return (
       <div className="space-y-4">
-        <TabHeader title="Member Certifications" buttonText="Add Cert" buttonIcon={Award} onClick={() => navigate('/certifications/create')} />
+        <TabHeader title="Member Certifications" buttonText="Add Cert" buttonIcon={Award} onClick={() => setShowCertificationModal(true)} />
         {certifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{certifications.map(c => <CertificationCard key={c.id} cert={c} onSkillClick={setSkillFilter} />)}</div> : <EmptyState icon={Award} message="No certifications yet" />}
       </div>
     );
@@ -670,7 +670,7 @@ const TribeDetail = () => {
     // College/Tech: Team Posts
     if (activeTab === "teamPosts") return (
       <div className="space-y-4">
-        <TabHeader title="Looking for Team" buttonText="Find Team" buttonIcon={UsersRound} onClick={() => navigate('/team-posts/create')} />
+        <TabHeader title="Looking for Team" buttonText="Find Team" buttonIcon={UsersRound} onClick={() => setShowTeamPostModal(true)} />
         {teamPosts.length > 0 ? teamPosts.map(p => <TeamPostCard key={p.id} post={p} currentUser={currentUser} />) : <EmptyState icon={UsersRound} message="No team posts yet" />}
       </div>
     );
@@ -678,7 +678,7 @@ const TribeDetail = () => {
     // College/Tech: Internships
     if (activeTab === "internships") return (
       <div className="space-y-4">
-        <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => navigate('/internships/create')} />
+        <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => setShowJobModal(true)} />
         {internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />}
       </div>
     );
