@@ -10470,6 +10470,466 @@ async def create_review(userId: str, data: dict):
     
     return review
 
+# ============= SERVICES API (Business Tribes) =============
+
+@api_router.get("/services")
+async def get_services(tribeId: str = None, category: str = None, skip: int = 0, limit: int = 20):
+    """Get services for business tribes"""
+    query = {}
+    if tribeId: query["tribeId"] = tribeId
+    if category: query["category"] = category
+    services = await db.services.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    for s in services:
+        provider = await db.users.find_one({"id": s.get("providerId")}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if provider: s["provider"] = provider
+    return services
+
+@api_router.post("/services")
+async def create_service(data: dict = Body(...), userId: str = ""):
+    """Create a new service listing"""
+    service = {
+        "id": str(uuid.uuid4()),
+        **data,
+        "providerId": userId,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.services.insert_one(service)
+    service.pop("_id", None)
+    return service
+
+@api_router.delete("/services/{serviceId}")
+async def delete_service(serviceId: str, userId: str = ""):
+    service = await db.services.find_one({"id": serviceId}, {"_id": 0})
+    if not service: raise HTTPException(status_code=404, detail="Service not found")
+    if service.get("providerId") != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    await db.services.delete_one({"id": serviceId})
+    return {"success": True}
+
+# ============= COLLABORATIONS API =============
+
+@api_router.get("/collaborations")
+async def get_collaborations(tribeId: str = None, type: str = None, status: str = "open", skip: int = 0, limit: int = 20):
+    """Get collaboration posts"""
+    query = {}
+    if tribeId: query["tribeId"] = tribeId
+    if type: query["type"] = type
+    if status: query["status"] = status
+    collabs = await db.collaborations.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    for c in collabs:
+        author = await db.users.find_one({"id": c.get("authorId")}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if author: c["author"] = author
+    return collabs
+
+@api_router.post("/collaborations")
+async def create_collaboration(data: dict = Body(...), userId: str = ""):
+    """Create a collaboration request"""
+    collab = {
+        "id": str(uuid.uuid4()),
+        **data,
+        "authorId": userId,
+        "applications": [],
+        "status": "open",
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.collaborations.insert_one(collab)
+    collab.pop("_id", None)
+    return collab
+
+@api_router.post("/collaborations/{collabId}/apply")
+async def apply_to_collaboration(collabId: str, userId: str, data: dict = Body(...)):
+    collab = await db.collaborations.find_one({"id": collabId}, {"_id": 0})
+    if not collab: raise HTTPException(status_code=404, detail="Collaboration not found")
+    application = {"userId": userId, "message": data.get("message", ""), "appliedAt": datetime.now(timezone.utc).isoformat()}
+    await db.collaborations.update_one({"id": collabId}, {"$push": {"applications": application}})
+    return {"success": True}
+
+@api_router.delete("/collaborations/{collabId}")
+async def delete_collaboration(collabId: str, userId: str = ""):
+    collab = await db.collaborations.find_one({"id": collabId}, {"_id": 0})
+    if not collab: raise HTTPException(status_code=404, detail="Not found")
+    if collab.get("authorId") != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    await db.collaborations.delete_one({"id": collabId})
+    return {"success": True}
+
+# ============= PORTFOLIOS API =============
+
+@api_router.get("/portfolios")
+async def get_portfolios(tribeId: str = None, category: str = None, skip: int = 0, limit: int = 20):
+    """Get portfolio items"""
+    query = {}
+    if tribeId: query["tribeId"] = tribeId
+    if category: query["category"] = category
+    portfolios = await db.portfolios.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    for p in portfolios:
+        author = await db.users.find_one({"id": p.get("authorId")}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if author: p["author"] = author
+    return portfolios
+
+@api_router.post("/portfolios")
+async def create_portfolio(data: dict = Body(...), userId: str = ""):
+    """Add a portfolio item"""
+    portfolio = {
+        "id": str(uuid.uuid4()),
+        **data,
+        "authorId": userId,
+        "views": 0,
+        "likes": 0,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.portfolios.insert_one(portfolio)
+    portfolio.pop("_id", None)
+    return portfolio
+
+@api_router.post("/portfolios/{portfolioId}/like")
+async def like_portfolio(portfolioId: str, userId: str):
+    await db.portfolios.update_one({"id": portfolioId}, {"$inc": {"likes": 1}})
+    return {"success": True}
+
+@api_router.delete("/portfolios/{portfolioId}")
+async def delete_portfolio(portfolioId: str, userId: str = ""):
+    portfolio = await db.portfolios.find_one({"id": portfolioId}, {"_id": 0})
+    if not portfolio: raise HTTPException(status_code=404, detail="Not found")
+    if portfolio.get("authorId") != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    await db.portfolios.delete_one({"id": portfolioId})
+    return {"success": True}
+
+# ============= IDEAS API =============
+
+@api_router.get("/ideas")
+async def get_ideas(tribeId: str = None, category: str = None, stage: str = None, skip: int = 0, limit: int = 20):
+    """Get startup/project ideas"""
+    query = {}
+    if tribeId: query["tribeId"] = tribeId
+    if category: query["category"] = category
+    if stage: query["stage"] = stage
+    ideas = await db.ideas.find(query, {"_id": 0}).sort("votes", -1).skip(skip).limit(limit).to_list(limit)
+    for idea in ideas:
+        author = await db.users.find_one({"id": idea.get("authorId")}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if author: idea["author"] = author
+    return ideas
+
+@api_router.post("/ideas")
+async def create_idea(data: dict = Body(...), userId: str = ""):
+    """Share a new idea"""
+    idea = {
+        "id": str(uuid.uuid4()),
+        **data,
+        "authorId": userId,
+        "votes": 0,
+        "supporters": [],
+        "comments": [],
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.ideas.insert_one(idea)
+    idea.pop("_id", None)
+    return idea
+
+@api_router.post("/ideas/{ideaId}/vote")
+async def vote_idea(ideaId: str, userId: str):
+    idea = await db.ideas.find_one({"id": ideaId}, {"_id": 0})
+    if not idea: raise HTTPException(status_code=404, detail="Idea not found")
+    supporters = idea.get("supporters", [])
+    if userId in supporters:
+        await db.ideas.update_one({"id": ideaId}, {"$pull": {"supporters": userId}, "$inc": {"votes": -1}})
+        return {"voted": False}
+    else:
+        await db.ideas.update_one({"id": ideaId}, {"$push": {"supporters": userId}, "$inc": {"votes": 1}})
+        return {"voted": True}
+
+@api_router.delete("/ideas/{ideaId}")
+async def delete_idea(ideaId: str, userId: str = ""):
+    idea = await db.ideas.find_one({"id": ideaId}, {"_id": 0})
+    if not idea: raise HTTPException(status_code=404, detail="Not found")
+    if idea.get("authorId") != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    await db.ideas.delete_one({"id": ideaId})
+    return {"success": True}
+
+# ============= SHOWCASES API (Startup Showcase) =============
+
+@api_router.get("/showcases")
+async def get_showcases(tribeId: str = None, category: str = None, stage: str = None, featured: bool = None, skip: int = 0, limit: int = 20):
+    """Get startup showcases"""
+    query = {}
+    if tribeId: query["tribeId"] = tribeId
+    if category: query["category"] = category
+    if stage: query["stage"] = stage
+    if featured is not None: query["featured"] = featured
+    showcases = await db.showcases.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    for s in showcases:
+        author = await db.users.find_one({"id": s.get("authorId")}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if author: s["author"] = author
+    return showcases
+
+@api_router.post("/showcases")
+async def create_showcase(data: dict = Body(...), userId: str = ""):
+    """Create a startup showcase"""
+    showcase = {
+        "id": str(uuid.uuid4()),
+        **data,
+        "authorId": userId,
+        "views": 0,
+        "likes": 0,
+        "featured": False,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.showcases.insert_one(showcase)
+    showcase.pop("_id", None)
+    return showcase
+
+@api_router.post("/showcases/{showcaseId}/like")
+async def like_showcase(showcaseId: str, userId: str):
+    await db.showcases.update_one({"id": showcaseId}, {"$inc": {"likes": 1}})
+    return {"success": True}
+
+@api_router.put("/showcases/{showcaseId}/feature")
+async def feature_showcase(showcaseId: str, userId: str, featured: bool = True):
+    """Feature/unfeature a startup showcase (admin only)"""
+    user = await db.users.find_one({"id": userId}, {"_id": 0})
+    if not user or user.get("role") not in ["admin", "super_admin"]:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    await db.showcases.update_one({"id": showcaseId}, {"$set": {"featured": featured}})
+    return {"success": True, "featured": featured}
+
+@api_router.delete("/showcases/{showcaseId}")
+async def delete_showcase(showcaseId: str, userId: str = ""):
+    showcase = await db.showcases.find_one({"id": showcaseId}, {"_id": 0})
+    if not showcase: raise HTTPException(status_code=404, detail="Not found")
+    if showcase.get("authorId") != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    await db.showcases.delete_one({"id": showcaseId})
+    return {"success": True}
+
+# ============= RESOURCES API =============
+
+@api_router.get("/resources")
+async def get_resources(tribeId: str = None, type: str = None, category: str = None, skip: int = 0, limit: int = 20):
+    """Get learning resources"""
+    query = {}
+    if tribeId: query["tribeId"] = tribeId
+    if type: query["type"] = type
+    if category: query["category"] = category
+    resources = await db.resources.find(query, {"_id": 0}).sort("downloads", -1).skip(skip).limit(limit).to_list(limit)
+    for r in resources:
+        author = await db.users.find_one({"id": r.get("authorId")}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if author: r["author"] = author
+    return resources
+
+@api_router.post("/resources")
+async def create_resource(data: dict = Body(...), userId: str = ""):
+    """Share a new resource"""
+    resource = {
+        "id": str(uuid.uuid4()),
+        **data,
+        "authorId": userId,
+        "downloads": 0,
+        "views": 0,
+        "likes": 0,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.resources.insert_one(resource)
+    resource.pop("_id", None)
+    return resource
+
+@api_router.post("/resources/{resourceId}/download")
+async def download_resource(resourceId: str, userId: str):
+    await db.resources.update_one({"id": resourceId}, {"$inc": {"downloads": 1}})
+    resource = await db.resources.find_one({"id": resourceId}, {"_id": 0})
+    return {"url": resource.get("fileUrl") or resource.get("resourceUrl")}
+
+@api_router.delete("/resources/{resourceId}")
+async def delete_resource(resourceId: str, userId: str = ""):
+    resource = await db.resources.find_one({"id": resourceId}, {"_id": 0})
+    if not resource: raise HTTPException(status_code=404, detail="Not found")
+    if resource.get("authorId") != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    await db.resources.delete_one({"id": resourceId})
+    return {"success": True}
+
+# ============= FOLLOW REQUEST SYSTEM =============
+
+@api_router.post("/users/{userId}/follow-request")
+async def send_follow_request(userId: str, fromUserId: str):
+    """Send a follow request to a user"""
+    target = await db.users.find_one({"id": userId}, {"_id": 0})
+    if not target: raise HTTPException(status_code=404, detail="User not found")
+    
+    # Check if already following
+    if fromUserId in target.get("followers", []):
+        return {"status": "already_following"}
+    
+    # Check if request already pending
+    existing = await db.follow_requests.find_one({"fromUserId": fromUserId, "toUserId": userId, "status": "pending"})
+    if existing:
+        return {"status": "already_requested"}
+    
+    # For non-private accounts, auto-accept
+    if not target.get("privateAccount", False):
+        await db.users.update_one({"id": userId}, {"$addToSet": {"followers": fromUserId}})
+        await db.users.update_one({"id": fromUserId}, {"$addToSet": {"following": userId}})
+        # Create notification
+        await db.notifications.insert_one({
+            "id": str(uuid.uuid4()),
+            "userId": userId,
+            "type": "new_follower",
+            "title": "New Follower",
+            "message": f"started following you",
+            "fromUserId": fromUserId,
+            "read": False,
+            "createdAt": datetime.now(timezone.utc).isoformat()
+        })
+        return {"status": "followed"}
+    
+    # Create follow request for private accounts
+    request = {
+        "id": str(uuid.uuid4()),
+        "fromUserId": fromUserId,
+        "toUserId": userId,
+        "status": "pending",
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.follow_requests.insert_one(request)
+    
+    # Create notification
+    await db.notifications.insert_one({
+        "id": str(uuid.uuid4()),
+        "userId": userId,
+        "type": "follow_request",
+        "title": "Follow Request",
+        "message": f"wants to follow you",
+        "fromUserId": fromUserId,
+        "read": False,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {"status": "requested"}
+
+@api_router.get("/users/{userId}/follow-requests")
+async def get_follow_requests(userId: str):
+    """Get pending follow requests for a user"""
+    requests = await db.follow_requests.find({"toUserId": userId, "status": "pending"}, {"_id": 0}).to_list(100)
+    for req in requests:
+        user = await db.users.find_one({"id": req["fromUserId"]}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1})
+        if user: req["fromUser"] = user
+    return requests
+
+@api_router.post("/follow-requests/{requestId}/accept")
+async def accept_follow_request(requestId: str, userId: str):
+    """Accept a follow request"""
+    request = await db.follow_requests.find_one({"id": requestId}, {"_id": 0})
+    if not request: raise HTTPException(status_code=404, detail="Request not found")
+    if request["toUserId"] != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Update follow relationships
+    await db.users.update_one({"id": userId}, {"$addToSet": {"followers": request["fromUserId"]}})
+    await db.users.update_one({"id": request["fromUserId"]}, {"$addToSet": {"following": userId}})
+    
+    # Update request status
+    await db.follow_requests.update_one({"id": requestId}, {"$set": {"status": "accepted"}})
+    
+    # Notify requester
+    await db.notifications.insert_one({
+        "id": str(uuid.uuid4()),
+        "userId": request["fromUserId"],
+        "type": "follow_accepted",
+        "title": "Follow Request Accepted",
+        "message": f"accepted your follow request",
+        "fromUserId": userId,
+        "read": False,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {"status": "accepted"}
+
+@api_router.post("/follow-requests/{requestId}/reject")
+async def reject_follow_request(requestId: str, userId: str):
+    """Reject a follow request"""
+    request = await db.follow_requests.find_one({"id": requestId}, {"_id": 0})
+    if not request: raise HTTPException(status_code=404, detail="Request not found")
+    if request["toUserId"] != userId: raise HTTPException(status_code=403, detail="Not authorized")
+    
+    await db.follow_requests.update_one({"id": requestId}, {"$set": {"status": "rejected"}})
+    return {"status": "rejected"}
+
+@api_router.delete("/users/{userId}/unfollow")
+async def unfollow_user(userId: str, fromUserId: str):
+    """Unfollow a user"""
+    await db.users.update_one({"id": userId}, {"$pull": {"followers": fromUserId}})
+    await db.users.update_one({"id": fromUserId}, {"$pull": {"following": userId}})
+    return {"status": "unfollowed"}
+
+# ============= ENHANCED REPUTATION SYSTEM =============
+
+@api_router.post("/users/{userId}/reputation/endorse")
+async def endorse_user(userId: str, fromUserId: str, data: dict = Body(...)):
+    """Endorse a user for a specific skill"""
+    if userId == fromUserId:
+        raise HTTPException(status_code=400, detail="Cannot endorse yourself")
+    
+    skill = data.get("skill", "")
+    if not skill: raise HTTPException(status_code=400, detail="Skill is required")
+    
+    endorsement = {
+        "id": str(uuid.uuid4()),
+        "userId": userId,
+        "fromUserId": fromUserId,
+        "skill": skill,
+        "message": data.get("message", ""),
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    
+    # Check if already endorsed for this skill
+    existing = await db.endorsements.find_one({"userId": userId, "fromUserId": fromUserId, "skill": skill})
+    if existing:
+        raise HTTPException(status_code=400, detail="Already endorsed for this skill")
+    
+    await db.endorsements.insert_one(endorsement)
+    
+    # Update reputation score
+    await db.reputation.update_one(
+        {"userId": userId},
+        {
+            "$inc": {"score": 10, "endorsements": 1},
+            "$setOnInsert": {"userId": userId, "level": "rising"}
+        },
+        upsert=True
+    )
+    
+    # Update level based on score
+    rep = await db.reputation.find_one({"userId": userId}, {"_id": 0})
+    if rep:
+        score = rep.get("score", 0)
+        level = "rising" if score < 100 else "established" if score < 500 else "expert" if score < 1000 else "leader"
+        await db.reputation.update_one({"userId": userId}, {"$set": {"level": level}})
+    
+    # Notify user
+    await db.notifications.insert_one({
+        "id": str(uuid.uuid4()),
+        "userId": userId,
+        "type": "endorsement",
+        "title": "New Endorsement",
+        "message": f"endorsed you for {skill}",
+        "fromUserId": fromUserId,
+        "read": False,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {"success": True}
+
+@api_router.get("/users/{userId}/endorsements")
+async def get_user_endorsements(userId: str):
+    """Get all endorsements for a user"""
+    endorsements = await db.endorsements.find({"userId": userId}, {"_id": 0}).to_list(100)
+    
+    # Group by skill
+    skills = {}
+    for e in endorsements:
+        skill = e.get("skill", "General")
+        if skill not in skills:
+            skills[skill] = {"skill": skill, "count": 0, "endorsers": []}
+        skills[skill]["count"] += 1
+        user = await db.users.find_one({"id": e["fromUserId"]}, {"_id": 0, "id": 1, "name": 1, "avatar": 1})
+        if user: skills[skill]["endorsers"].append(user)
+    
+    return list(skills.values())
+
 # Include router
 app.include_router(api_router)
 
