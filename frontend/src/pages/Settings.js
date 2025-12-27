@@ -651,7 +651,7 @@ const Settings = () => {
       <section>
         <h3 className="text-white font-bold text-lg mb-3">9. Limitation of Liability</h3>
         <ul className="list-disc pl-5 space-y-2">
-          <li>The Platform is provided "as is" without warranties of any kind.</li>
+          <li>The Platform is provided &quot;as is&quot; without warranties of any kind.</li>
           <li>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages.</li>
           <li>Our total liability shall not exceed the amount paid by you to us in the last 12 months.</li>
           <li>We do not guarantee uninterrupted or error-free service.</li>
