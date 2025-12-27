@@ -8488,6 +8488,10 @@ async def start_conversation(userId: str, friendId: str):
         # Get or create thread
         thread = await messenger_service.get_or_create_thread(userId, friendId)
         
+        # Ensure no ObjectId in response
+        if "_id" in thread:
+            del thread["_id"]
+        
         # Check if they follow each other - if not, mark as message request
         user = await db.users.find_one({"id": userId}, {"_id": 0})
         target = await db.users.find_one({"id": friendId}, {"_id": 0})
@@ -8498,9 +8502,9 @@ async def start_conversation(userId: str, friendId: str):
         # If target doesn't follow the user, it's a message request
         is_request = userId not in target_followers
         
-        # Update thread with request status if needed
+        # Update thread with request status if needed (use same collection as messenger_service)
         if is_request and not thread.get("isAccepted"):
-            await db.message_threads.update_one(
+            await db.threads.update_one(
                 {"id": thread["id"]},
                 {"$set": {"isRequest": True, "requestFromId": userId}}
             )
@@ -8530,7 +8534,7 @@ async def get_message_requests(userId: str):
     """Get pending message requests for a user"""
     try:
         # Find threads where this user is the recipient and isRequest is true
-        requests = await db.message_threads.find({
+        requests = await db.threads.find({
             "participants": userId,
             "isRequest": True,
             "requestFromId": {"$ne": userId},
