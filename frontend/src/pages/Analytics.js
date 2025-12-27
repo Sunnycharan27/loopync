@@ -297,6 +297,157 @@ const AdminDashboard = ({ data }) => (
   </div>
 );
 
+// Feedback Dashboard Component for Admin
+const FeedbackDashboard = ({ feedback, filter, setFilter, onUpdateStatus, totalCount, problemsCount, suggestionsCount }) => (
+  <div className="space-y-4">
+    {/* Stats Cards */}
+    <div className="grid grid-cols-3 gap-3">
+      <div className="p-4 rounded-xl bg-gradient-to-br from-cyan-400/10 to-cyan-400/5 border border-cyan-400/30">
+        <div className="flex items-center gap-2 mb-1">
+          <MessageCircle size={16} className="text-cyan-400" />
+          <span className="text-gray-400 text-xs">Total</span>
+        </div>
+        <p className="text-2xl font-bold text-white">{totalCount}</p>
+      </div>
+      <div className="p-4 rounded-xl bg-gradient-to-br from-red-400/10 to-red-400/5 border border-red-400/30">
+        <div className="flex items-center gap-2 mb-1">
+          <Bug size={16} className="text-red-400" />
+          <span className="text-gray-400 text-xs">Problems</span>
+        </div>
+        <p className="text-2xl font-bold text-white">{problemsCount}</p>
+      </div>
+      <div className="p-4 rounded-xl bg-gradient-to-br from-yellow-400/10 to-yellow-400/5 border border-yellow-400/30">
+        <div className="flex items-center gap-2 mb-1">
+          <Lightbulb size={16} className="text-yellow-400" />
+          <span className="text-gray-400 text-xs">Ideas</span>
+        </div>
+        <p className="text-2xl font-bold text-white">{suggestionsCount}</p>
+      </div>
+    </div>
+
+    {/* Filter Tabs */}
+    <div className="flex gap-2 overflow-x-auto pb-2">
+      {[
+        { id: "all", label: "All" },
+        { id: "problems", label: "Problems" },
+        { id: "suggestions", label: "Suggestions" },
+        { id: "new", label: "New" },
+        { id: "resolved", label: "Resolved" }
+      ].map(f => (
+        <button
+          key={f.id}
+          onClick={() => setFilter(f.id)}
+          className={`px-3 py-1.5 rounded-full text-sm font-medium transition ${
+            filter === f.id 
+              ? 'bg-cyan-500 text-black' 
+              : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+          }`}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+
+    {/* Feedback List */}
+    <div className="space-y-3">
+      {feedback.length === 0 ? (
+        <div className="text-center py-12">
+          <MessageCircle size={48} className="mx-auto text-gray-600 mb-4" />
+          <p className="text-gray-400">No feedback yet</p>
+        </div>
+      ) : (
+        feedback.map(item => (
+          <div 
+            key={item.id} 
+            className={`p-4 rounded-xl border ${
+              item.type === 'problem' 
+                ? 'bg-red-500/5 border-red-500/20' 
+                : 'bg-yellow-500/5 border-yellow-500/20'
+            }`}
+          >
+            <div className="flex items-start justify-between mb-2">
+              <div className="flex items-center gap-2">
+                {item.type === 'problem' ? (
+                  <Bug size={18} className="text-red-400" />
+                ) : (
+                  <Lightbulb size={18} className="text-yellow-400" />
+                )}
+                <span className={`text-sm font-semibold ${
+                  item.type === 'problem' ? 'text-red-400' : 'text-yellow-400'
+                }`}>
+                  {item.type === 'problem' ? 'Problem Report' : 'Suggestion'}
+                </span>
+                {item.category && (
+                  <span className="px-2 py-0.5 bg-gray-700 text-gray-300 rounded-full text-xs">
+                    {item.category}
+                  </span>
+                )}
+              </div>
+              <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                item.status === 'new' ? 'bg-blue-500/20 text-blue-400' :
+                item.status === 'in_progress' ? 'bg-orange-500/20 text-orange-400' :
+                item.status === 'resolved' ? 'bg-green-500/20 text-green-400' :
+                'bg-gray-500/20 text-gray-400'
+              }`}>
+                {item.status || 'new'}
+              </span>
+            </div>
+            
+            {item.title && (
+              <h4 className="text-white font-semibold mb-1">{item.title}</h4>
+            )}
+            
+            <p className="text-gray-300 text-sm mb-3">{item.description}</p>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 text-xs text-gray-500">
+                {item.email && (
+                  <a href={`mailto:${item.email}`} className="flex items-center gap-1 text-cyan-400 hover:underline">
+                    <Mail size={12} />
+                    {item.email}
+                  </a>
+                )}
+                <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                {item.status !== 'in_progress' && (
+                  <button
+                    onClick={() => onUpdateStatus(item.id, 'in_progress')}
+                    className="p-1.5 bg-orange-500/20 text-orange-400 rounded-lg hover:bg-orange-500/30 transition"
+                    title="Mark In Progress"
+                  >
+                    <Clock size={14} />
+                  </button>
+                )}
+                {item.status !== 'resolved' && (
+                  <button
+                    onClick={() => onUpdateStatus(item.id, 'resolved')}
+                    className="p-1.5 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition"
+                    title="Mark Resolved"
+                  >
+                    <CheckCircle size={14} />
+                  </button>
+                )}
+                {item.email && (
+                  <a
+                    href={`mailto:${item.email}?subject=Re: Your ${item.type} report on Loopync&body=Hi,%0D%0A%0D%0AThank you for your feedback regarding:%0D%0A"${item.description?.substring(0, 100)}..."%0D%0A%0D%0A`}
+                    className="p-1.5 bg-cyan-500/20 text-cyan-400 rounded-lg hover:bg-cyan-500/30 transition"
+                    title="Reply via Email"
+                  >
+                    <Mail size={14} />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  </div>
+);
+
 const StatCard = ({ icon, label, value, color, trend }) => {
   const colors = {
     cyan: "from-cyan-400/10 to-cyan-400/5 border-cyan-400/30 text-cyan-400",
