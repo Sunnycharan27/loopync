@@ -643,7 +643,7 @@ const MessengerNew = () => {
               {searchResults.map(friend => (
                 <div
                   key={friend.id}
-                  onClick={() => startChatWithFriend(friend)}
+                  onClick={() => startChatWithUser(friend)}
                   className="flex items-center gap-3 p-3 cursor-pointer rounded-lg transition hover:shadow-lg"
                   style={{ background: 'rgba(0, 224, 255, 0.05)' }}
                   onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0, 224, 255, 0.1)'}
