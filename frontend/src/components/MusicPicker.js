@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { API } from '../App';
-import { Search, X, Music, Play, Pause, TrendingUp, Clock, ChevronLeft, Volume2, VolumeX, FileText } from 'lucide-react';
+import { Search, X, Music, Play, Pause, TrendingUp, ChevronLeft, Volume2, VolumeX } from 'lucide-react';
 
-const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = true }) => {
+const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
   const [query, setQuery] = useState('');
   const [tracks, setTracks] = useState([]);
   const [trending, setTrending] = useState([]);
@@ -11,26 +11,12 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
   const [activeTab, setActiveTab] = useState('trending');
   const [playingId, setPlayingId] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(selectedTrack || null);
-  const [step, setStep] = useState('browse'); // 'browse' or 'duration'
-  const [startTime, setStartTime] = useState(0);
-  const [duration, setDuration] = useState(15);
+  const [step, setStep] = useState('browse'); // 'browse' or 'confirm'
   const [volume, setVolume] = useState(0.7);
   const [isMuted, setIsMuted] = useState(false);
   const [currentPlayTime, setCurrentPlayTime] = useState(0);
-  const [lyrics, setLyrics] = useState(null);
-  const [showLyrics, setShowLyrics] = useState(false);
   const audioRef = useRef(null);
   const searchTimeoutRef = useRef(null);
-
-  // Generate consistent waveform
-  const waveformData = useMemo(() => {
-    if (!currentTrack?.id) return [];
-    const seed = currentTrack.id.toString().split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return Array.from({ length: 60 }, (_, i) => {
-      const random = Math.sin(seed + i * 0.5) * 0.5 + 0.5;
-      return 20 + random * 60;
-    });
-  }, [currentTrack?.id]);
 
   useEffect(() => {
     fetchTrending();
