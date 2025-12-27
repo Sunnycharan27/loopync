@@ -868,7 +868,7 @@ const Settings = () => {
 
       <section>
         <h3 className="text-white font-bold text-lg mb-3">15. Changes to Privacy Policy</h3>
-        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically.</p>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the &quot;Last Updated&quot; date. You are advised to review this Privacy Policy periodically.</p>
       </section>
 
       <section>
