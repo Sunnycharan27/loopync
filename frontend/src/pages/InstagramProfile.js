@@ -28,6 +28,7 @@ const InstagramProfile = () => {
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followRequestPending, setFollowRequestPending] = useState(false);
   const [showUnfollowHover, setShowUnfollowHover] = useState(false);
   
   // Content states
@@ -71,6 +72,10 @@ const InstagramProfile = () => {
   // Followers/Following modal
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [followModalType, setFollowModalType] = useState('followers');
+  
+  // Follow Requests modal
+  const [showFollowRequestsModal, setShowFollowRequestsModal] = useState(false);
+  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
   
   // Profile share modal
   const [showProfileShare, setShowProfileShare] = useState(false);
