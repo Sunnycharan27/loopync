@@ -8564,14 +8564,14 @@ async def get_message_requests(userId: str):
 async def accept_message_request(threadId: str, userId: str):
     """Accept a message request"""
     try:
-        thread = await db.message_threads.find_one({"id": threadId}, {"_id": 0})
+        thread = await db.threads.find_one({"id": threadId}, {"_id": 0})
         if not thread:
             raise HTTPException(status_code=404, detail="Thread not found")
         
         if userId not in thread.get("participants", []):
             raise HTTPException(status_code=403, detail="Not authorized")
         
-        await db.message_threads.update_one(
+        await db.threads.update_one(
             {"id": threadId},
             {"$set": {"isRequest": False, "isAccepted": True}}
         )
@@ -8587,7 +8587,7 @@ async def accept_message_request(threadId: str, userId: str):
 async def reject_message_request(threadId: str, userId: str):
     """Reject/delete a message request"""
     try:
-        thread = await db.message_threads.find_one({"id": threadId}, {"_id": 0})
+        thread = await db.threads.find_one({"id": threadId}, {"_id": 0})
         if not thread:
             raise HTTPException(status_code=404, detail="Thread not found")
         
@@ -8595,7 +8595,7 @@ async def reject_message_request(threadId: str, userId: str):
             raise HTTPException(status_code=403, detail="Not authorized")
         
         # Delete the thread and its messages
-        await db.message_threads.delete_one({"id": threadId})
+        await db.threads.delete_one({"id": threadId})
         await db.messages.delete_many({"threadId": threadId})
         
         return {"success": True, "message": "Message request rejected"}
