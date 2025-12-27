@@ -524,7 +524,7 @@ const Settings = () => {
         }} 
       />
       <MenuItem 
-        icon={<Bug size={20} className="text-red-400" />}}
+        icon={<Bug size={20} className="text-red-400" />}
         title="Report a Problem" 
         onClick={() => {
           setShowReportBot(true);
