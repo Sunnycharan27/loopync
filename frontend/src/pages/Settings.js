@@ -558,6 +558,330 @@ const Settings = () => {
     </div>
   );
 
+  // Terms of Service - Indian Laws Compliant
+  const renderTermsOfService = () => (
+    <div className="space-y-6 text-gray-300 text-sm leading-relaxed max-h-[70vh] overflow-y-auto pr-2">
+      <div className="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20">
+        <p className="text-cyan-400 font-semibold">Last Updated: December 2025</p>
+        <p className="text-gray-400 text-xs mt-1">These terms are governed by the laws of India</p>
+      </div>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">1. Acceptance of Terms</h3>
+        <p>By accessing or using Loopync ("Platform"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Platform. These Terms constitute a legally binding agreement between you and Loopync Private Limited ("Company", "we", "us", or "our"), a company incorporated under the Companies Act, 2013, having its registered office in India.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">2. Eligibility</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>You must be at least 18 years of age, or the age of legal majority in your jurisdiction, to use this Platform.</li>
+          <li>If you are between 13-18 years old, you may use the Platform only with parental or guardian consent.</li>
+          <li>By using the Platform, you represent and warrant that you have the legal capacity to enter into these Terms.</li>
+          <li>Users from educational institutions must comply with their institution's policies regarding social media usage.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">3. User Account & Registration</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>You must provide accurate, current, and complete information during registration.</li>
+          <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
+          <li>You agree to notify us immediately of any unauthorized use of your account.</li>
+          <li>One person may not maintain more than one account without prior written permission.</li>
+          <li>We reserve the right to suspend or terminate accounts that violate these Terms.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">4. User Content & Conduct</h3>
+        <p className="mb-2">You agree NOT to post, upload, or share content that:</p>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Is unlawful, harmful, threatening, abusive, defamatory, or otherwise objectionable</li>
+          <li>Infringes any patent, trademark, copyright, or other intellectual property rights</li>
+          <li>Contains software viruses or any other malicious code</li>
+          <li>Violates the Information Technology Act, 2000 or any other applicable Indian law</li>
+          <li>Promotes discrimination based on race, gender, religion, nationality, disability, sexual orientation, or age</li>
+          <li>Contains sexually explicit material or promotes violence</li>
+          <li>Impersonates any person or entity or misrepresents your affiliation</li>
+          <li>Collects or stores personal data about other users without consent</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">5. Intellectual Property Rights</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>The Platform and its original content, features, and functionality are owned by Loopync Private Limited and are protected by Indian and international copyright, trademark, and other intellectual property laws.</li>
+          <li>You retain ownership of content you post but grant us a non-exclusive, worldwide, royalty-free license to use, modify, and display your content on the Platform.</li>
+          <li>You must not reproduce, distribute, or create derivative works from our Platform without explicit permission.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">6. Privacy & Data Protection</h3>
+        <p>Your use of the Platform is also governed by our Privacy Policy. We comply with:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Information Technology Act, 2000</li>
+          <li>Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011</li>
+          <li>Digital Personal Data Protection Act, 2023</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">7. Intermediary Status</h3>
+        <p>Loopync operates as an intermediary under the Information Technology Act, 2000 and Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021. As an intermediary:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>We do not initiate the transmission of user content</li>
+          <li>We do not select the receiver of the transmission</li>
+          <li>We do not modify the information contained in the transmission</li>
+          <li>We shall remove or disable access to unlawful content within 36 hours of receiving a valid complaint</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">8. Grievance Redressal</h3>
+        <p>In accordance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, we have appointed a Grievance Officer:</p>
+        <div className="mt-3 p-3 bg-gray-800 rounded-lg">
+          <p><strong className="text-white">Grievance Officer:</strong> Loopync Support Team</p>
+          <p><strong className="text-white">Email:</strong> <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+          <p><strong className="text-white">Response Time:</strong> Within 24 hours of receipt</p>
+          <p><strong className="text-white">Resolution Time:</strong> Within 15 days from receipt of complaint</p>
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">9. Limitation of Liability</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>The Platform is provided "as is" without warranties of any kind.</li>
+          <li>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages.</li>
+          <li>Our total liability shall not exceed the amount paid by you to us in the last 12 months.</li>
+          <li>We do not guarantee uninterrupted or error-free service.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">10. Indemnification</h3>
+        <p>You agree to indemnify and hold harmless Loopync, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your use of the Platform or violation of these Terms.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">11. Termination</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>We may terminate or suspend your account immediately, without prior notice, for any breach of these Terms.</li>
+          <li>You may delete your account at any time through the settings.</li>
+          <li>Upon termination, your right to use the Platform will immediately cease.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">12. Governing Law & Jurisdiction</h3>
+        <p>These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising from these Terms shall be subject to the exclusive jurisdiction of the courts in India.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">13. Changes to Terms</h3>
+        <p>We reserve the right to modify these Terms at any time. We will notify users of any material changes via email or through the Platform. Continued use of the Platform after changes constitutes acceptance of the modified Terms.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">14. Contact Us</h3>
+        <div className="p-4 bg-gray-800 rounded-xl">
+          <p className="text-white font-semibold mb-2">Loopync Private Limited</p>
+          <p>Email: <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+          <p className="text-gray-400 text-xs mt-2">For any questions about these Terms, please contact us.</p>
+        </div>
+      </section>
+    </div>
+  );
+
+  // Privacy Policy - Indian Laws Compliant (DPDP Act 2023, IT Act 2000)
+  const renderPrivacyPolicy = () => (
+    <div className="space-y-6 text-gray-300 text-sm leading-relaxed max-h-[70vh] overflow-y-auto pr-2">
+      <div className="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+        <p className="text-purple-400 font-semibold">Last Updated: December 2025</p>
+        <p className="text-gray-400 text-xs mt-1">Compliant with Digital Personal Data Protection Act, 2023 (DPDP Act)</p>
+      </div>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">1. Introduction</h3>
+        <p>Loopync Private Limited ("Company", "we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Platform. This policy complies with:</p>
+        <ul className="list-disc pl-5 space-y-1 mt-2">
+          <li>Digital Personal Data Protection Act, 2023</li>
+          <li>Information Technology Act, 2000</li>
+          <li>IT (Reasonable Security Practices) Rules, 2011</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">2. Data Fiduciary Information</h3>
+        <div className="p-3 bg-gray-800 rounded-lg">
+          <p><strong className="text-white">Data Fiduciary:</strong> Loopync Private Limited</p>
+          <p><strong className="text-white">Email:</strong> <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+          <p><strong className="text-white">Country:</strong> India</p>
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">3. Information We Collect</h3>
+        
+        <h4 className="text-white font-semibold mt-4 mb-2">3.1 Personal Data You Provide:</h4>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Name, email address, phone number</li>
+          <li>Profile information (bio, avatar, cover photo)</li>
+          <li>Educational details and certifications</li>
+          <li>Skills and professional information</li>
+          <li>Content you create (posts, stories, comments)</li>
+          <li>Messages and communications</li>
+        </ul>
+
+        <h4 className="text-white font-semibold mt-4 mb-2">3.2 Automatically Collected Data:</h4>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Device information (type, operating system)</li>
+          <li>IP address and location data</li>
+          <li>Browser type and version</li>
+          <li>Usage patterns and interactions</li>
+          <li>Cookies and similar technologies</li>
+        </ul>
+
+        <h4 className="text-white font-semibold mt-4 mb-2">3.3 Sensitive Personal Data:</h4>
+        <p>We may collect the following with explicit consent:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Financial information (for premium features)</li>
+          <li>Biometric data (if you enable face/fingerprint login)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">4. Purpose of Data Collection</h3>
+        <p>We process your data for the following lawful purposes:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li><strong className="text-white">Service Delivery:</strong> To provide and maintain the Platform</li>
+          <li><strong className="text-white">Account Management:</strong> To create and manage your account</li>
+          <li><strong className="text-white">Communication:</strong> To send notifications, updates, and respond to inquiries</li>
+          <li><strong className="text-white">Personalization:</strong> To customize your experience and show relevant content</li>
+          <li><strong className="text-white">Analytics:</strong> To understand how users interact with the Platform</li>
+          <li><strong className="text-white">Security:</strong> To detect, prevent, and address technical issues and fraud</li>
+          <li><strong className="text-white">Legal Compliance:</strong> To comply with applicable laws and regulations</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">5. Consent</h3>
+        <p>Under the DPDP Act 2023, we obtain your consent before processing personal data. You provide consent by:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Creating an account and accepting these terms</li>
+          <li>Enabling specific features that require additional data</li>
+          <li>Opting in to marketing communications</li>
+        </ul>
+        <p className="mt-2">You may withdraw consent at any time by contacting us at <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">6. Data Sharing & Disclosure</h3>
+        <p>We may share your information with:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li><strong className="text-white">Service Providers:</strong> Third parties who assist in operating the Platform (hosting, analytics, payment processing)</li>
+          <li><strong className="text-white">Legal Requirements:</strong> When required by law, court order, or government request</li>
+          <li><strong className="text-white">Business Transfers:</strong> In case of merger, acquisition, or sale of assets</li>
+          <li><strong className="text-white">Other Users:</strong> Information you choose to make public on your profile</li>
+        </ul>
+        <p className="mt-2 text-yellow-400">We do NOT sell your personal data to third parties.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">7. Data Retention</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Active account data: Retained as long as your account is active</li>
+          <li>Deleted account data: Permanently deleted within 90 days of account deletion</li>
+          <li>Legal/compliance data: Retained as required by law (typically 7 years for financial records)</li>
+          <li>Anonymized data: May be retained indefinitely for analytics</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">8. Your Rights Under DPDP Act 2023</h3>
+        <p>As a Data Principal, you have the following rights:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li><strong className="text-white">Right to Access:</strong> Request a summary of your personal data we hold</li>
+          <li><strong className="text-white">Right to Correction:</strong> Request correction of inaccurate or incomplete data</li>
+          <li><strong className="text-white">Right to Erasure:</strong> Request deletion of your personal data</li>
+          <li><strong className="text-white">Right to Withdraw Consent:</strong> Withdraw consent for data processing at any time</li>
+          <li><strong className="text-white">Right to Grievance Redressal:</strong> File a complaint with our Grievance Officer or the Data Protection Board of India</li>
+          <li><strong className="text-white">Right to Nominate:</strong> Nominate another person to exercise your rights in case of death or incapacity</li>
+        </ul>
+        <p className="mt-2">To exercise these rights, contact: <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">9. Data Security</h3>
+        <p>We implement appropriate security measures including:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Encryption of data in transit (SSL/TLS) and at rest</li>
+          <li>Secure password hashing (bcrypt)</li>
+          <li>Regular security audits and vulnerability assessments</li>
+          <li>Access controls and authentication mechanisms</li>
+          <li>Incident response procedures for data breaches</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">10. Data Breach Notification</h3>
+        <p>In the event of a personal data breach, we will:</p>
+        <ul className="list-disc pl-5 space-y-2 mt-2">
+          <li>Notify the Data Protection Board of India as required by law</li>
+          <li>Inform affected users within 72 hours of becoming aware of the breach</li>
+          <li>Take immediate steps to mitigate the breach and prevent future occurrences</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">11. Cross-Border Data Transfer</h3>
+        <p>Your data may be transferred to and processed in countries outside India. Such transfers are done in compliance with the DPDP Act 2023 and only to countries/organizations that provide adequate protection.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">12. Children's Privacy</h3>
+        <p>The Platform is not intended for children under 13 years of age. We do not knowingly collect personal data from children under 13. If you are a parent or guardian and believe your child has provided us with personal data, please contact us immediately.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">13. Cookies Policy</h3>
+        <p>We use cookies and similar technologies to:</p>
+        <ul className="list-disc pl-5 space-y-1 mt-2">
+          <li>Keep you logged in</li>
+          <li>Remember your preferences</li>
+          <li>Analyze Platform usage</li>
+          <li>Provide personalized content</li>
+        </ul>
+        <p className="mt-2">You can control cookies through your browser settings.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">14. Grievance Officer</h3>
+        <p>In accordance with the DPDP Act 2023 and IT Rules 2021:</p>
+        <div className="mt-3 p-4 bg-gray-800 rounded-xl">
+          <p><strong className="text-white">Grievance Officer / Data Protection Officer:</strong></p>
+          <p>Loopync Support Team</p>
+          <p>Email: <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+          <p className="mt-2 text-gray-400 text-xs">Response within 24 hours | Resolution within 30 days</p>
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">15. Changes to Privacy Policy</h3>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically.</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-3">16. Contact Us</h3>
+        <div className="p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl border border-purple-500/20">
+          <p className="text-white font-semibold mb-2">Loopync Private Limited</p>
+          <p>Email: <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a></p>
+          <p className="text-gray-400 text-xs mt-3">For privacy-related queries, data access requests, or to exercise your rights under the DPDP Act 2023, please contact us at the email above.</p>
+        </div>
+      </section>
+    </div>
+  );
+
   // Report Problem Bot Handler
   const handleReportOption = (option) => {
     const userMsg = { id: Date.now(), type: 'user', text: option };
