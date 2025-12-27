@@ -145,10 +145,10 @@ const CreateResourceModal = ({ tribeId, currentUser, onClose, onCreated }) => {
             <input type="url" value={formData.resourceUrl} onChange={(e) => setFormData(prev => ({ ...prev, resourceUrl: e.target.value }))} placeholder="https://..." className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Or Upload File</label>
-            <input ref={fileInputRef} type="file" onChange={handleFileSelect} className="hidden" />
+            <label className="block text-sm font-medium text-gray-300 mb-2">Or Upload File (PDF, DOC, ZIP, etc.)</label>
+            <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.md,.json" onChange={handleFileSelect} className="hidden" />
             <button type="button" onClick={() => fileInputRef.current?.click()} className={`w-full py-3 border border-dashed rounded-xl flex items-center justify-center gap-2 transition ${formData.fileUrl ? 'border-green-500 text-green-400 bg-green-500/10' : 'border-gray-700 text-gray-500 hover:border-blue-500 hover:text-blue-500'}`}>
-              {uploading ? <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /> : formData.fileUrl ? <><Download size={18} />File Uploaded</> : <><FileText size={18} />Upload File</>}
+              {uploading ? <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /> : formData.fileUrl ? <><Download size={18} />File Uploaded</> : <><FileText size={18} />Upload PDF, DOC, ZIP...</>}
             </button>
           </div>
           <div>
