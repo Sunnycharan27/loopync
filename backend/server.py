@@ -4338,15 +4338,33 @@ async def seed_data():
 
 @api_router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    """Upload image or video file - hybrid storage: MongoDB for small files, disk for large files"""
-    # Validate file type
+    """Upload image, video, or document file - hybrid storage: MongoDB for small files, disk for large files"""
+    # Validate file type - extended to support documents for resources
     allowed_types = {
+        # Images
         'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
-        'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/mpeg'
+        # Videos
+        'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/mpeg',
+        # Documents
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',  # .docx
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',  # .xlsx
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',  # .pptx
+        'text/plain',
+        'text/csv',
+        'application/zip',
+        'application/x-zip-compressed',
+        'application/x-rar-compressed',
+        'application/json',
+        'text/markdown',
+        'application/octet-stream'  # Generic binary for unknown types
     }
     
     if file.content_type not in allowed_types:
-        raise HTTPException(status_code=400, detail="File type not supported")
+        raise HTTPException(status_code=400, detail=f"File type '{file.content_type}' not supported. Supported: images, videos, PDFs, documents, spreadsheets, archives")
     
     # Read file content
     file_content = await file.read()
