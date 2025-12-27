@@ -701,6 +701,8 @@ const Settings = () => {
               {activeSection === "blocked" && "Blocked Users"}
               {activeSection === "help" && "Help & Support"}
               {activeSection === "about" && "About"}
+              {activeSection === "terms" && "Terms of Service"}
+              {activeSection === "privacy-policy" && "Privacy Policy"}
             </h1>
           </div>
         </div>
@@ -716,6 +718,8 @@ const Settings = () => {
           {activeSection === "blocked" && renderBlocked()}
           {activeSection === "help" && renderHelp()}
           {activeSection === "about" && renderAbout()}
+          {activeSection === "terms" && renderTermsOfService()}
+          {activeSection === "privacy-policy" && renderPrivacyPolicy()}
         </div>
       </div>
 
