@@ -144,7 +144,7 @@ const MessengerNew = () => {
     }
   };
 
-  const searchFriends = async (query) => {
+  const searchUsers = async (query) => {
     if (!query.trim()) {
       setSearchResults([]);
       setIsSearching(false);
@@ -153,18 +153,15 @@ const MessengerNew = () => {
 
     setIsSearching(true);
     try {
-      // Get user's friends
-      const friendsRes = await axios.get(`${API}/messenger/friends?userId=${currentUser.id}`);
-      const friends = friendsRes.data.friends || [];
-
-      // Filter friends by name
-      const filtered = friends.filter(friend => 
-        friend.name.toLowerCase().includes(query.toLowerCase())
-      );
-
+      // Search all users, not just friends
+      const res = await axios.get(`${API}/users/search?q=${encodeURIComponent(query)}&limit=15`);
+      const users = res.data || [];
+      
+      // Filter out current user
+      const filtered = users.filter(user => user.id !== currentUser.id);
       setSearchResults(filtered);
     } catch (error) {
-      console.error('Error searching friends:', error);
+      console.error('Error searching users:', error);
       setSearchResults([]);
     }
   };
@@ -172,10 +169,10 @@ const MessengerNew = () => {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    searchFriends(query);
+    searchUsers(query);
   };
 
-  const startChatWithFriend = async (friend) => {
+  const startChatWithUser = async (user) => {
     try {
       // Check if thread already exists
       const existingThread = threads.find(t => 
