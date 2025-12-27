@@ -8483,15 +8483,29 @@ async def get_friends_for_messaging(userId: str):
 
 @api_router.post("/messenger/start")
 async def start_conversation(userId: str, friendId: str):
-    """Start a conversation with a friend"""
+    """Start a conversation with anyone - non-followers will create a message request"""
     try:
-        # Check friendship
-        are_friends = await messenger_service.check_friendship(userId, friendId)
-        if not are_friends:
-            raise HTTPException(status_code=403, detail="You can only message friends")
-        
         # Get or create thread
         thread = await messenger_service.get_or_create_thread(userId, friendId)
+        
+        # Check if they follow each other - if not, mark as message request
+        user = await db.users.find_one({"id": userId}, {"_id": 0})
+        target = await db.users.find_one({"id": friendId}, {"_id": 0})
+        
+        user_followers = user.get("followers", []) if user else []
+        target_followers = target.get("followers", []) if target else []
+        
+        # If target doesn't follow the user, it's a message request
+        is_request = userId not in target_followers
+        
+        # Update thread with request status if needed
+        if is_request and not thread.get("isAccepted"):
+            await db.message_threads.update_one(
+                {"id": thread["id"]},
+                {"$set": {"isRequest": True, "requestFromId": userId}}
+            )
+            thread["isRequest"] = True
+            thread["requestFromId"] = userId
         
         # Get friend info
         friend = await db.users.find_one({"id": friendId}, {"_id": 0})
@@ -8500,14 +8514,91 @@ async def start_conversation(userId: str, friendId: str):
                 "id": friend["id"],
                 "name": friend.get("name", "Unknown"),
                 "avatar": friend.get("avatar", ""),
+                "handle": friend.get("handle", ""),
                 "online": friend.get("online", False)
             }
         
-        return {"success": True, "thread": thread}
+        return {"success": True, "thread": thread, "isRequest": is_request}
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Error starting conversation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/messenger/requests")
+async def get_message_requests(userId: str):
+    """Get pending message requests for a user"""
+    try:
+        # Find threads where this user is the recipient and isRequest is true
+        requests = await db.message_threads.find({
+            "participants": userId,
+            "isRequest": True,
+            "requestFromId": {"$ne": userId},
+            "isAccepted": {"$ne": True}
+        }, {"_id": 0}).to_list(100)
+        
+        # Enrich with requester info
+        for req in requests:
+            requester_id = req.get("requestFromId")
+            if requester_id:
+                requester = await db.users.find_one({"id": requester_id}, {"_id": 0, "name": 1, "avatar": 1, "handle": 1})
+                req["requester"] = requester
+            # Get last message
+            last_msg = await db.messages.find_one(
+                {"threadId": req["id"]},
+                {"_id": 0},
+                sort=[("createdAt", -1)]
+            )
+            req["lastMessage"] = last_msg
+        
+        return {"success": True, "requests": requests}
+    except Exception as e:
+        logger.error(f"Error getting message requests: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post("/messenger/requests/{threadId}/accept")
+async def accept_message_request(threadId: str, userId: str):
+    """Accept a message request"""
+    try:
+        thread = await db.message_threads.find_one({"id": threadId}, {"_id": 0})
+        if not thread:
+            raise HTTPException(status_code=404, detail="Thread not found")
+        
+        if userId not in thread.get("participants", []):
+            raise HTTPException(status_code=403, detail="Not authorized")
+        
+        await db.message_threads.update_one(
+            {"id": threadId},
+            {"$set": {"isRequest": False, "isAccepted": True}}
+        )
+        
+        return {"success": True, "message": "Message request accepted"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error accepting message request: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post("/messenger/requests/{threadId}/reject")
+async def reject_message_request(threadId: str, userId: str):
+    """Reject/delete a message request"""
+    try:
+        thread = await db.message_threads.find_one({"id": threadId}, {"_id": 0})
+        if not thread:
+            raise HTTPException(status_code=404, detail="Thread not found")
+        
+        if userId not in thread.get("participants", []):
+            raise HTTPException(status_code=403, detail="Not authorized")
+        
+        # Delete the thread and its messages
+        await db.message_threads.delete_one({"id": threadId})
+        await db.messages.delete_many({"threadId": threadId})
+        
+        return {"success": True, "message": "Message request rejected"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error rejecting message request: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.get("/messenger/search")
