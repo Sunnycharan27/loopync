@@ -247,8 +247,8 @@ class LoopyncAPITester:
                             message_data = {
                                 "text": "Hello! This is a test message from the backend testing suite.",
                                 "threadId": thread_id,
-                                "fromId": self.user_id,
-                                "toId": friend_id
+                                "senderId": self.user_id,
+                                "recipientId": friend_id
                             }
                             response, error = self.make_request('POST', '/messenger/send', message_data)
                             if error:
