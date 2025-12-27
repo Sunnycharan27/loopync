@@ -160,6 +160,8 @@ const Notifications = () => {
       case 'new_follower':
       case 'follow':
         return <UserPlus size={18} className="text-blue-400" />;
+      case 'follow_request':
+        return <UserPlus size={18} className="text-orange-400" />;
       case 'post_like':
       case 'like':
         return <Heart size={18} className="text-pink-400 fill-pink-400" />;
@@ -193,6 +195,8 @@ const Notifications = () => {
       case 'new_follower':
       case 'follow':
         return 'started following you';
+      case 'follow_request':
+        return 'wants to follow you';
       case 'post_like':
       case 'like':
         return 'liked your post';
