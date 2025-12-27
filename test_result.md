@@ -1391,3 +1391,24 @@ The messaging system requires immediate attention to resolve the implementation 
 - StartupShowcase.js - removed
 - ReputationBadge.js - removed
 - SharePostModal.js - removed
+
+---
+
+## Pre-Deployment Testing (December 27, 2025)
+
+### Features to Test
+1. User Authentication (Login/Signup)
+2. Music Picker (30-second clips)
+3. Messaging System (Anyone can message + Message Requests)
+4. Follow Request System
+5. Story/VibeCapsule Viewer (Mute button position)
+6. Tribes and Tribe Content
+7. VibeRooms
+8. Company Discovery / Internships
+9. Feed, Posts, Reels
+10. Notifications
+11. Settings and Profile
+
+### Test Credentials
+- User: test@test.com / testpassword123
+- Admin: admin@loopync.com / testpassword123
