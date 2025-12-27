@@ -6098,6 +6098,133 @@ async def complete_challenge(challengeId: str, userId: str):
     )
     
     # Award credits
+
+# ===== TRIBE TRAINERS ROUTES =====
+
+@api_router.get("/tribes/{tribeId}/trainers")
+async def get_tribe_trainers(tribeId: str):
+    """Get all trainers for a tribe"""
+    trainers = await db.tribe_trainers.find(
+        {"tribeId": tribeId},
+        {"_id": 0}
+    ).sort("createdAt", -1).to_list(100)
+    
+    # Enrich with user data
+    for trainer in trainers:
+        user = await db.users.find_one({"id": trainer.get("userId")}, {"_id": 0})
+        if user:
+            trainer["user"] = user
+    
+    return trainers
+
+@api_router.post("/tribes/{tribeId}/trainers")
+async def add_tribe_trainer(tribeId: str, userId: str, data: dict):
+    """Add a trainer to a tribe (admin only)"""
+    # Check if user is tribe admin
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    if tribe.get("creatorId") != userId and userId not in tribe.get("admins", []):
+        raise HTTPException(status_code=403, detail="Only admins can add trainers")
+    
+    # Check if trainer already exists
+    existing = await db.tribe_trainers.find_one({
+        "tribeId": tribeId, 
+        "userId": data.get("trainerId")
+    })
+    if existing:
+        raise HTTPException(status_code=400, detail="Trainer already added")
+    
+    # Get trainer user info
+    trainer_user = await db.users.find_one({"id": data.get("trainerId")}, {"_id": 0})
+    if not trainer_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    trainer = {
+        "id": str(uuid.uuid4()),
+        "tribeId": tribeId,
+        "userId": data.get("trainerId"),
+        "name": trainer_user.get("name"),
+        "avatar": trainer_user.get("avatar"),
+        "specialization": data.get("specialization", "General Fitness"),
+        "experience": data.get("experience", ""),
+        "certifications": data.get("certifications", []),
+        "bio": data.get("bio", ""),
+        "rating": 0,
+        "reviewCount": 0,
+        "isVerified": data.get("isVerified", False),
+        "availability": data.get("availability", "Available"),
+        "contactEmail": data.get("contactEmail", trainer_user.get("email", "")),
+        "socialLinks": data.get("socialLinks", {}),
+        "addedBy": userId,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.tribe_trainers.insert_one(trainer)
+    trainer.pop("_id", None)
+    trainer["user"] = trainer_user
+    
+    return trainer
+
+@api_router.put("/tribes/{tribeId}/trainers/{trainerId}")
+async def update_tribe_trainer(tribeId: str, trainerId: str, userId: str, data: dict):
+    """Update a trainer's info"""
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    if tribe.get("creatorId") != userId and userId not in tribe.get("admins", []):
+        raise HTTPException(status_code=403, detail="Only admins can update trainers")
+    
+    update_data = {
+        "specialization": data.get("specialization"),
+        "experience": data.get("experience"),
+        "bio": data.get("bio"),
+        "availability": data.get("availability"),
+        "isVerified": data.get("isVerified")
+    }
+    # Remove None values
+    update_data = {k: v for k, v in update_data.items() if v is not None}
+    
+    await db.tribe_trainers.update_one(
+        {"id": trainerId, "tribeId": tribeId},
+        {"$set": update_data}
+    )
+    
+    trainer = await db.tribe_trainers.find_one({"id": trainerId}, {"_id": 0})
+    return trainer
+
+@api_router.delete("/tribes/{tribeId}/trainers/{trainerId}")
+async def remove_tribe_trainer(tribeId: str, trainerId: str, userId: str):
+    """Remove a trainer from a tribe"""
+    tribe = await db.tribes.find_one({"id": tribeId}, {"_id": 0})
+    if not tribe:
+        raise HTTPException(status_code=404, detail="Tribe not found")
+    
+    if tribe.get("creatorId") != userId and userId not in tribe.get("admins", []):
+        raise HTTPException(status_code=403, detail="Only admins can remove trainers")
+    
+    result = await db.tribe_trainers.delete_one({"id": trainerId, "tribeId": tribeId})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Trainer not found")
+    
+    return {"success": True}
+
+@api_router.get("/trainers/search")
+async def search_trainers(q: str = "", limit: int = 20):
+    """Search for users to add as trainers"""
+    query = {}
+    if q:
+        query["$or"] = [
+            {"name": {"$regex": q, "$options": "i"}},
+            {"handle": {"$regex": q, "$options": "i"}},
+            {"email": {"$regex": q, "$options": "i"}}
+        ]
+    
+    users = await db.users.find(query, {"_id": 0}).limit(limit).to_list(limit)
+    return users
     await earn_credits(userId, challenge["reward"], "challenge", f"Completed challenge: {challenge['title']}")
     
     # Update analytics
