@@ -509,17 +509,145 @@ const Settings = () => {
     <div className="space-y-2">
       <MenuItem title="Help Center" onClick={() => toast.info("Opening help center...")} />
       <MenuItem 
+        icon={<Mail size={20} className="text-cyan-400" />}
         title="Contact Support" 
         onClick={() => {
           window.location.href = "mailto:loopyncpvt@gmail.com?subject=Loopync Support Request";
-          toast.success("Opening email client to contact loopyncpvt@gmail.com");
+          toast.success("Opening email client for loopyncpvt@gmail.com");
         }} 
       />
-      <MenuItem title="Report a Problem" onClick={() => toast.info("Report feature coming soon")} />
+      <MenuItem 
+        icon={<Bug size={20} className="text-red-400" />}
+        title="Report a Problem" 
+        onClick={() => {
+          setShowReportBot(true);
+          setReportMessages([{ id: 1, type: 'bot', text: "Hi! 👋 I'm here to help you report any problems. What type of issue are you experiencing?" }]);
+          setReportStep("type");
+          setReportData({ type: "", description: "", email: currentUser?.email || "" });
+        }} 
+      />
+      <MenuItem 
+        icon={<Lightbulb size={20} className="text-yellow-400" />}
+        title="Suggestions & Improvements" 
+        onClick={() => {
+          setShowSuggestionModal(true);
+          setSuggestionData({ category: "", title: "", description: "" });
+        }} 
+      />
       <MenuItem title="Terms of Service" onClick={() => setActiveSection("terms")} />
       <MenuItem title="Privacy Policy" onClick={() => setActiveSection("privacy-policy")} />
+      
+      {/* Support Info Card */}
+      <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+        <div className="flex items-center gap-3 mb-2">
+          <Mail size={20} className="text-cyan-400" />
+          <span className="text-white font-medium">Need Help?</span>
+        </div>
+        <p className="text-gray-400 text-sm mb-2">Email us at:</p>
+        <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400 font-semibold hover:underline">
+          loopyncpvt@gmail.com
+        </a>
+      </div>
     </div>
   );
+
+  // Report Problem Bot Handler
+  const handleReportOption = (option) => {
+    const userMsg = { id: Date.now(), type: 'user', text: option };
+    setReportMessages(prev => [...prev, userMsg]);
+    
+    setTimeout(() => {
+      let botResponse = "";
+      
+      if (reportStep === "type") {
+        setReportData(prev => ({ ...prev, type: option }));
+        botResponse = `Got it! You're reporting a ${option.toLowerCase()} issue. 📝\n\nPlease describe the problem in detail. What happened? What were you trying to do?`;
+        setReportStep("describe");
+      }
+      
+      setReportMessages(prev => [...prev, { id: Date.now(), type: 'bot', text: botResponse }]);
+    }, 500);
+  };
+
+  const handleReportSubmit = async () => {
+    if (reportStep === "describe" && reportInput.trim()) {
+      const userMsg = { id: Date.now(), type: 'user', text: reportInput };
+      setReportMessages(prev => [...prev, userMsg]);
+      setReportData(prev => ({ ...prev, description: reportInput }));
+      setReportInput("");
+      
+      setTimeout(async () => {
+        setSubmittingFeedback(true);
+        try {
+          await axios.post(`${API}/feedback`, {
+            userId: currentUser?.id,
+            type: "problem",
+            category: reportData.type,
+            description: reportInput,
+            email: reportData.email,
+            userAgent: navigator.userAgent,
+            createdAt: new Date().toISOString()
+          });
+          
+          const thankYouMsg = { 
+            id: Date.now(), 
+            type: 'bot', 
+            text: "Thank you for reporting this issue! 🙏\n\nYour report has been submitted to our team. We'll look into it and may contact you at your registered email if we need more details.\n\nIs there anything else I can help you with?" 
+          };
+          setReportMessages(prev => [...prev, thankYouMsg]);
+          setReportStep("done");
+          toast.success("Problem reported successfully!");
+        } catch (error) {
+          // Store locally if API fails
+          const reports = JSON.parse(localStorage.getItem('loopync_reports') || '[]');
+          reports.push({ ...reportData, description: reportInput, createdAt: new Date().toISOString() });
+          localStorage.setItem('loopync_reports', JSON.stringify(reports));
+          
+          const thankYouMsg = { 
+            id: Date.now(), 
+            type: 'bot', 
+            text: "Thank you for reporting! 🙏\n\nYour report has been saved. Our team will review it soon.\n\nFor urgent issues, please email us at loopyncpvt@gmail.com" 
+          };
+          setReportMessages(prev => [...prev, thankYouMsg]);
+          setReportStep("done");
+          toast.success("Report saved!");
+        } finally {
+          setSubmittingFeedback(false);
+        }
+      }, 500);
+    }
+  };
+
+  const handleSuggestionSubmit = async () => {
+    if (!suggestionData.title.trim() || !suggestionData.description.trim()) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    
+    setSubmittingFeedback(true);
+    try {
+      await axios.post(`${API}/feedback`, {
+        userId: currentUser?.id,
+        type: "suggestion",
+        category: suggestionData.category,
+        title: suggestionData.title,
+        description: suggestionData.description,
+        email: currentUser?.email,
+        createdAt: new Date().toISOString()
+      });
+      toast.success("Thank you for your suggestion! 💡");
+      setShowSuggestionModal(false);
+    } catch (error) {
+      // Store locally if API fails
+      const suggestions = JSON.parse(localStorage.getItem('loopync_suggestions') || '[]');
+      suggestions.push({ ...suggestionData, createdAt: new Date().toISOString() });
+      localStorage.setItem('loopync_suggestions', JSON.stringify(suggestions));
+      toast.success("Suggestion saved! Thank you! 💡");
+      setShowSuggestionModal(false);
+    } finally {
+      setSubmittingFeedback(false);
+    }
+  };
 
   // About Section
   const renderAbout = () => (
