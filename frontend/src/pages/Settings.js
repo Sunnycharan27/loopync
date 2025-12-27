@@ -1059,7 +1059,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-bold">Report a Problem</h3>
-                  <p className="text-gray-400 text-xs">We're here to help!</p>
+                  <p className="text-gray-400 text-xs">We&apos;re here to help!</p>
                 </div>
               </div>
               <button onClick={() => setShowReportBot(false)} className="p-2 hover:bg-gray-800 rounded-full">
