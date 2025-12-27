@@ -409,11 +409,13 @@ class ComprehensiveTribeFeaturesBackendTester:
             "message": "Excellent backend testing skills"
         }
         
-        response = self.make_request("POST", f"/users/{self.user_id}/reputation/endorse", endorse_data)
+        response = self.make_request("POST", f"/users/{self.user_id}/reputation/endorse", endorse_data, params={"fromUserId": self.user_id})
         if response and response.status_code == 200:
             self.log_result("Endorse User Skill", True, "Skill endorsed successfully")
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
             self.log_result("Endorse User Skill", False, error=error_msg)
         
         # Test GET /api/users/{userId}/endorsements
