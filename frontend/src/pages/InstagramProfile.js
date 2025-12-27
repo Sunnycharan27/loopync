@@ -139,6 +139,22 @@ const InstagramProfile = () => {
     }
   }, [currentUser?.following]);
 
+  // Fetch pending follow requests count for own profile
+  useEffect(() => {
+    if (isOwnProfile && currentUser?.id) {
+      fetchPendingRequestsCount();
+    }
+  }, [isOwnProfile, currentUser?.id]);
+
+  const fetchPendingRequestsCount = async () => {
+    try {
+      const res = await axios.get(`${API}/users/${currentUser.id}/follow-requests`);
+      setPendingRequestsCount(res.data?.length || 0);
+    } catch (error) {
+      console.error('Failed to fetch follow requests count:', error);
+    }
+  };
+
   const fetchUserByUsername = async (username) => {
     try {
       const cleanUsername = username.replace('@', '');
