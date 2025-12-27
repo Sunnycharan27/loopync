@@ -381,8 +381,22 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
 
           {/* Music badge when no media but has music */}
           {post.music && !(post.media || post.mediaUrl) && (
-            <div className="mb-3">
-              <MusicBadge track={post.music} size="md" showPlay={true} />
+            <div className="mb-3 flex items-center gap-3">
+              <MusicBadge track={post.music} size="md" showPlay={false} />
+              {isPlaying && !isMuted && (
+                <div className="flex items-center gap-1 px-2 py-1 bg-green-500/20 rounded-full">
+                  <div className="flex gap-0.5 items-end h-3">
+                    {[1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className="w-0.5 bg-green-400 rounded-full animate-bounce"
+                        style={{ animationDelay: `${i * 0.15}s`, height: '100%' }}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-green-400 text-xs ml-1">Playing</span>
+                </div>
+              )}
             </div>
           )}
 
