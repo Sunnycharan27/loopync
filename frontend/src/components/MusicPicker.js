@@ -410,45 +410,56 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
                 </span>
               </div>
 
-              {/* Waveform Visualization - represents full song */}
-              <div className="h-16 relative flex items-center gap-[2px]">
-                {Array.from({ length: 80 }, (_, i) => {
-                  const barPosition = (i / 80) * fullSongDuration;
+              {/* Waveform Visualization - Clickable to seek */}
+              <div 
+                className="h-20 relative flex items-center gap-[2px] cursor-pointer"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const clickX = e.clientX - rect.left;
+                  const percentage = clickX / rect.width;
+                  const newStartTime = Math.floor(percentage * fullSongDuration);
+                  // Ensure we don't exceed the song duration minus clip duration
+                  const maxStart = Math.max(0, fullSongDuration - duration);
+                  setStartTime(Math.min(newStartTime, maxStart));
+                }}
+              >
+                {Array.from({ length: 60 }, (_, i) => {
+                  const barPosition = (i / 60) * fullSongDuration;
                   const isInRange = barPosition >= startTime && barPosition < startTime + duration;
                   const seed = (currentTrack?.id?.toString() || 'default').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                  const height = 20 + (Math.sin(seed + i * 0.3) * 0.5 + 0.5) * 60;
+                  const height = 25 + (Math.sin(seed + i * 0.4) * 0.5 + 0.5) * 75;
                   
                   return (
                     <div
                       key={i}
-                      className={`flex-1 rounded-full transition-all duration-100 ${
+                      className={`flex-1 rounded-full transition-all duration-150 ${
                         isInRange
-                          ? 'bg-gradient-to-t from-purple-500 to-pink-500'
-                          : 'bg-gray-700'
+                          ? 'bg-gradient-to-t from-purple-500 to-pink-500 shadow-lg shadow-purple-500/30'
+                          : 'bg-gray-700 hover:bg-gray-600'
                       }`}
                       style={{ height: `${height}%` }}
                     />
                   );
                 })}
                 
-                {/* Selection Range Indicator */}
+                {/* Selection Range Overlay */}
                 <div 
-                  className="absolute top-0 bottom-0 border-2 border-purple-400 rounded-lg pointer-events-none"
+                  className="absolute top-0 bottom-0 border-2 border-white/50 rounded-lg pointer-events-none shadow-lg"
                   style={{ 
                     left: `${(startTime / fullSongDuration) * 100}%`,
                     width: `${(duration / fullSongDuration) * 100}%`,
-                    backgroundColor: 'rgba(168, 85, 247, 0.1)'
+                    backgroundColor: 'rgba(168, 85, 247, 0.15)'
                   }}
                 >
                   {/* Left Handle */}
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-8 bg-purple-500 rounded-full shadow-lg" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-10 bg-purple-500 rounded-full shadow-lg border-2 border-white" />
                   {/* Right Handle */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-8 bg-pink-500 rounded-full shadow-lg" />
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-10 bg-pink-500 rounded-full shadow-lg border-2 border-white" />
                 </div>
               </div>
               
               {/* Range Slider - Full Song Timeline */}
-              <div className="mt-4">
+              <div className="mt-4 px-2">
                 <input
                   type="range"
                   min="0"
@@ -456,45 +467,44 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
                   step="1"
                   value={startTime}
                   onChange={(e) => {
-                    const newStart = Number(e.target.value);
-                    setStartTime(newStart);
+                    setStartTime(Number(e.target.value));
                   }}
-                  className="w-full h-3 bg-gray-800 rounded-lg appearance-none cursor-pointer"
+                  className="w-full h-4 rounded-lg appearance-none cursor-pointer"
                   style={{
                     background: `linear-gradient(to right, 
                       #374151 0%, 
-                      #374151 ${(startTime / fullSongDuration) * 100}%, 
-                      #a855f7 ${(startTime / fullSongDuration) * 100}%, 
-                      #ec4899 ${((startTime + duration) / fullSongDuration) * 100}%, 
-                      #374151 ${((startTime + duration) / fullSongDuration) * 100}%, 
-                      #374151 100%)`
+                      #374151 ${(startTime / (fullSongDuration - duration || 1)) * 100}%, 
+                      linear-gradient(to right, #a855f7, #ec4899) ${(startTime / (fullSongDuration - duration || 1)) * 100}%, 
+                      #374151 100%)`,
+                    WebkitAppearance: 'none'
                   }}
                 />
               </div>
               
               {/* Time Labels */}
-              <div className="flex justify-between items-center mt-3">
-                <span className="text-xs text-gray-500 font-mono">0:00</span>
+              <div className="flex justify-between items-center mt-4">
+                <span className="text-sm text-gray-400 font-mono bg-gray-800 px-2 py-1 rounded">0:00</span>
                 <div className="flex-1 flex justify-center">
-                  <span className="text-sm text-white font-bold bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-full shadow-lg">
+                  <span className="text-lg text-white font-bold bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2 rounded-full shadow-lg">
                     {formatTime(startTime)} → {formatTime(startTime + duration)}
                   </span>
                 </div>
-                <span className="text-xs text-gray-500 font-mono">{formatTime(fullSongDuration)}</span>
+                <span className="text-sm text-gray-400 font-mono bg-gray-800 px-2 py-1 rounded">{formatTime(fullSongDuration)}</span>
               </div>
 
               {/* Selected Range Info */}
-              <div className="mt-3 p-3 bg-gray-800/50 rounded-xl">
-                <div className="flex items-center justify-between text-sm">
-                  <div className="text-gray-400">
-                    <span className="text-purple-400 font-semibold">Start:</span> {formatTime(startTime)}
-                  </div>
-                  <div className="text-gray-400">
-                    <span className="text-pink-400 font-semibold">End:</span> {formatTime(startTime + duration)}
-                  </div>
-                  <div className="text-gray-400">
-                    <span className="text-cyan-400 font-semibold">Duration:</span> {duration}s
-                  </div>
+              <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                <div className="p-2 bg-purple-500/10 rounded-lg border border-purple-500/30">
+                  <p className="text-xs text-gray-400">Start</p>
+                  <p className="text-purple-400 font-bold">{formatTime(startTime)}</p>
+                </div>
+                <div className="p-2 bg-pink-500/10 rounded-lg border border-pink-500/30">
+                  <p className="text-xs text-gray-400">End</p>
+                  <p className="text-pink-400 font-bold">{formatTime(startTime + duration)}</p>
+                </div>
+                <div className="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/30">
+                  <p className="text-xs text-gray-400">Duration</p>
+                  <p className="text-cyan-400 font-bold">{duration}s</p>
                 </div>
               </div>
             </div>
@@ -505,7 +515,7 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
             <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
               <p className="text-yellow-400 text-xs flex items-center gap-2">
                 <span>💡</span>
-                <span>Preview plays a sample. Your selected portion ({formatTime(startTime)} - {formatTime(startTime + duration)}) will be saved with the post.</span>
+                <span>Tap anywhere on the waveform or drag the slider to select your favorite part!</span>
               </p>
             </div>
           </div>
