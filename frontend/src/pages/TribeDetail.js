@@ -748,6 +748,62 @@ const TribeDetail = () => {
       </div>
     );
 
+    // Events Tab (Multiple categories)
+    if (activeTab === "events") return (
+      <div className="space-y-4">
+        <TabHeader title="Events" buttonText="Create Event" buttonIcon={Calendar} onClick={() => setShowEventModal(true)} />
+        {events.length > 0 ? events.map(e => <EventCard key={e.id} event={e} />) : <EmptyState icon={Calendar} message="No upcoming events" />}
+      </div>
+    );
+
+    // Services Tab (Business tribes)
+    if (activeTab === "services") return (
+      <div className="space-y-4">
+        <TabHeader title="Services" buttonText="Add Service" buttonIcon={Briefcase} onClick={() => setShowServiceModal(true)} />
+        {services.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{services.map(s => <ServiceCard key={s.id} service={s} />)}</div> : <EmptyState icon={Briefcase} message="No services listed yet" />}
+      </div>
+    );
+
+    // Portfolios Tab (Business/Creative tribes)
+    if (activeTab === "portfolios") return (
+      <div className="space-y-4">
+        <TabHeader title="Portfolio" buttonText="Add Work" buttonIcon={Palette} onClick={() => setShowPortfolioModal(true)} />
+        {portfolios.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{portfolios.map(p => <PortfolioCard key={p.id} portfolio={p} />)}</div> : <EmptyState icon={Palette} message="No portfolio items yet" />}
+      </div>
+    );
+
+    // Ideas Tab (Tech/Startup tribes)
+    if (activeTab === "ideas") return (
+      <div className="space-y-4">
+        <TabHeader title="Ideas" buttonText="Share Idea" buttonIcon={Lightbulb} onClick={() => setShowIdeaModal(true)} />
+        {ideas.length > 0 ? ideas.map(i => <IdeaCard key={i.id} idea={i} />) : <EmptyState icon={Lightbulb} message="No ideas shared yet" />}
+      </div>
+    );
+
+    // Showcases Tab (Startup Showcase)
+    if (activeTab === "showcases") return (
+      <div className="space-y-4">
+        <TabHeader title="Startup Showcase" buttonText="Showcase" buttonIcon={Sparkles} onClick={() => setShowShowcaseModal(true)} />
+        {showcases.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{showcases.map(s => <ShowcaseCard key={s.id} showcase={s} />)}</div> : <EmptyState icon={Sparkles} message="No startups showcased yet" />}
+      </div>
+    );
+
+    // Resources Tab (College/Tech tribes)
+    if (activeTab === "resources") return (
+      <div className="space-y-4">
+        <TabHeader title="Resources" buttonText="Share Resource" buttonIcon={BookOpen} onClick={() => setShowResourceModal(true)} />
+        {resources.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{resources.map(r => <ResourceCard key={r.id} resource={r} />)}</div> : <EmptyState icon={BookOpen} message="No resources shared yet" />}
+      </div>
+    );
+
+    // Collaborations Tab (Creative tribes)
+    if (activeTab === "collaborations") return (
+      <div className="space-y-4">
+        <TabHeader title="Collaborations" buttonText="Find Collab" buttonIcon={Handshake} onClick={() => setShowCollaborationModal(true)} />
+        {collaborations.length > 0 ? collaborations.map(c => <CollaborationCard key={c.id} collab={c} />) : <EmptyState icon={Handshake} message="No collaborations posted yet" />}
+      </div>
+    );
+
     // Members Tab (All categories)
     if (activeTab === "members") return (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
