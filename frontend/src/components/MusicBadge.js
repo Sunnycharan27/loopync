@@ -16,6 +16,9 @@ const MusicBadge = ({ track, size = 'md', showPlay = true, autoPlay = false }) =
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.ontimeupdate = null;
+        audioRef.current.onended = null;
+        audioRef.current.onerror = null;
         audioRef.current = null;
       }
       if (intervalRef.current) {
