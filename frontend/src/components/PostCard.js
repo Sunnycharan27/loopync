@@ -353,10 +353,26 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
                     }}
                   />
                 )}
-                {/* Music badge overlay on media */}
+                {/* Music badge overlay on media with playing indicator */}
                 {post.music && (
-                  <div className="absolute bottom-3 left-3">
-                    <MusicBadge track={post.music} size="sm" showPlay={true} />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {isPlaying && !isMuted && (
+                        <div className="flex items-center gap-1 px-2 py-1 bg-green-500/20 rounded-full">
+                          <div className="flex gap-0.5 items-end h-3">
+                            {[1, 2, 3].map((i) => (
+                              <div
+                                key={i}
+                                className="w-0.5 bg-green-400 rounded-full animate-bounce"
+                                style={{ animationDelay: `${i * 0.15}s`, height: '100%' }}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-green-400 text-xs ml-1">Playing</span>
+                        </div>
+                      )}
+                    </div>
+                    <MusicBadge track={post.music} size="sm" showPlay={false} />
                   </div>
                 )}
               </div>
