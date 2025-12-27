@@ -14,6 +14,18 @@ const Settings = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("main");
   const [loading, setLoading] = useState(false);
+  
+  // Feedback/Support Modals
+  const [showReportBot, setShowReportBot] = useState(false);
+  const [showSuggestionModal, setShowSuggestionModal] = useState(false);
+  const [reportMessages, setReportMessages] = useState([
+    { id: 1, type: 'bot', text: "Hi! 👋 I'm here to help you report any problems. What type of issue are you experiencing?" }
+  ]);
+  const [reportInput, setReportInput] = useState("");
+  const [reportStep, setReportStep] = useState("type"); // type, describe, contact, done
+  const [reportData, setReportData] = useState({ type: "", description: "", email: currentUser?.email || "" });
+  const [suggestionData, setSuggestionData] = useState({ category: "", title: "", description: "" });
+  const [submittingFeedback, setSubmittingFeedback] = useState(false);
 
   // Edit Profile State
   const [profile, setProfile] = useState({
