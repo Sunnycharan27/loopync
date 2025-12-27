@@ -608,6 +608,31 @@ const TribeDetail = () => {
       </div>
     );
 
+    // Fitness: Trainers Tab
+    if (activeTab === "trainers") return (
+      <div className="space-y-4">
+        {isAdmin && (
+          <TabHeader title="Trainers" buttonText="Add Trainer" buttonIcon={UserPlus} onClick={() => setShowAddTrainerModal(true)} />
+        )}
+        {!isAdmin && <h3 className="text-lg font-semibold text-white">Trainers</h3>}
+        {trainers.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {trainers.map(trainer => (
+              <TrainerCard 
+                key={trainer.id} 
+                trainer={trainer} 
+                isAdmin={isAdmin}
+                onRemove={() => removeTrainer(trainer.id)}
+                navigate={navigate}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState icon={Users} message="No trainers added yet" />
+        )}
+      </div>
+    );
+
     // Members Tab (All categories)
     if (activeTab === "members") return (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
