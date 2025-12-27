@@ -81,17 +81,7 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     }
   };
 
-  const fetchLyrics = async (track) => {
-    try {
-      const res = await axios.get(`${API}/music/lyrics/${track.id}?artist=${encodeURIComponent(track.artist)}&title=${encodeURIComponent(track.name)}`);
-      setLyrics(res.data);
-    } catch (error) {
-      console.error('Failed to fetch lyrics:', error);
-      setLyrics(null);
-    }
-  };
-
-  const playPreview = (track, fromTime = 0) => {
+  const playPreview = (track) => {
     if (!track.previewUrl) {
       console.log('No preview URL for this track');
       return;
