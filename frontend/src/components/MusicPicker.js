@@ -229,8 +229,9 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Max time for preview (30 sec)
+  // Max time for preview (Deezer provides 30 sec, but we can loop or use full song URL if available)
   const maxPreviewTime = 30;
+  const maxClipDuration = 60; // Allow up to 60 second clips
   const displayTracks = activeTab === 'search' ? tracks : trending;
 
   // Duration Selection Step with Lyrics
