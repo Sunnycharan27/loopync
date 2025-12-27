@@ -539,6 +539,16 @@ const InstagramProfile = () => {
                       Verified
                     </div>
                   )}
+                  {/* Follow Requests Button */}
+                  {pendingRequestsCount > 0 && (
+                    <button 
+                      onClick={() => setShowFollowRequestsModal(true)}
+                      className="py-2 px-4 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-400 hover:to-pink-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20"
+                    >
+                      <Users size={16} />
+                      Requests ({pendingRequestsCount})
+                    </button>
+                  )}
                   <button 
                     onClick={() => setShowProfileShare(true)}
                     className="p-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-lg transition-colors"
@@ -557,7 +567,9 @@ const InstagramProfile = () => {
                         ? showUnfollowHover 
                           ? 'bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/50' 
                           : 'bg-gray-800/80 hover:bg-gray-700 text-white border border-gray-700'
-                        : 'bg-cyan-400 hover:bg-cyan-500 text-black'
+                        : followRequestPending
+                          ? 'bg-gray-700 text-gray-300 border border-gray-600'
+                          : 'bg-cyan-400 hover:bg-cyan-500 text-black'
                     }`}
                   >
                     {isFollowing ? (
@@ -572,6 +584,11 @@ const InstagramProfile = () => {
                           Following
                         </>
                       )
+                    ) : followRequestPending ? (
+                      <>
+                        <Clock size={18} />
+                        Requested
+                      </>
                     ) : (
                       <>
                         <UserPlus size={18} />
