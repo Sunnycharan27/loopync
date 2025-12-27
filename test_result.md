@@ -1175,3 +1175,28 @@ The Feedback/Support System is FULLY WORKING and production ready. All API endpo
 
 **🚀 PRODUCTION READINESS:**
 The Admin Feedback Dashboard functionality is FULLY WORKING and production ready. All admin authentication, feedback retrieval, status updates, and verification features are functional as specified in the review request. The admin can successfully login and manage feedback status updates."
+
+---
+
+## Music Picker Simplification (December 27, 2025)
+
+### Changes Made
+- Removed duration selection options (15s, 30s, 45s, 60s)
+- Simplified to fixed 30-second clips (Deezer API limit)
+- Removed full song timeline selector (was misleading since playback was always 30s)
+- Cleaned up UI to show simple confirmation screen with playback controls
+- Removed unused props (showDurationPicker)
+
+### Features Kept
+- Music search functionality
+- Trending songs display
+- 30-second audio preview playback
+- Volume controls and mute functionality
+- Album art display
+- Play/pause controls
+
+### Testing Required
+- Verify music picker opens correctly
+- Verify song search works
+- Verify 30-second preview plays correctly
+- Verify song selection adds to story
