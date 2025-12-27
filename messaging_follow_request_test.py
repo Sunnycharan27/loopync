@@ -198,10 +198,10 @@ class MessagingFollowRequestTester:
     
     def test_message_requests_api(self):
         """Test Message Requests API - GET /api/messenger/requests"""
-        # Test from admin perspective (should see request from test user)
+        # Test from test user 2 perspective (should see request from test user 1)
         response = self.make_request("GET", "/messenger/requests", 
-                                   params={"userId": self.admin_id},
-                                   token=self.admin_token)
+                                   params={"userId": self.test_user_2_id},
+                                   token=self.test_user_2_token)
         
         if response and response.status_code == 200:
             requests_data = response.json()
