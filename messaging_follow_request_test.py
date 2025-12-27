@@ -146,17 +146,17 @@ class MessagingFollowRequestTester:
     def test_user_search_api(self):
         """Test User Search API - GET /api/users/search?q=admin&limit=10"""
         response = self.make_request("GET", "/users/search", 
-                                   params={"q": "admin", "limit": 10}, 
+                                   params={"q": "testuser2", "limit": 10}, 
                                    token=self.test_user_token)
         
         if response and response.status_code == 200:
             users = response.json()
             if isinstance(users, list):
-                admin_found = any(user.get("email") == ADMIN_EMAIL for user in users)
-                if admin_found:
-                    self.log_result("User Search API", True, f"Found {len(users)} users, admin user found")
+                user2_found = any(user.get("email") == TEST_USER_2_EMAIL for user in users)
+                if user2_found:
+                    self.log_result("User Search API", True, f"Found {len(users)} users, test user 2 found")
                 else:
-                    self.log_result("User Search API", True, f"Found {len(users)} users, admin not in results")
+                    self.log_result("User Search API", True, f"Found {len(users)} users, test user 2 not in results")
                 return True
             else:
                 self.log_result("User Search API", False, error="Invalid response format")
