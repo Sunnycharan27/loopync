@@ -239,7 +239,7 @@ class LoopyncAPITester:
                         self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", False, f"Request failed: {error}")
                     elif response.status_code in [200, 201]:
                         data = response.json()
-                        thread_id = data.get('threadId') or data.get('id')  # Try both possible field names
+                        thread_id = data.get('threadId') or data.get('id') or (data.get('thread', {}).get('id') if data.get('thread') else None)
                         self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", True, f"Conversation started: {thread_id}")
                         
                         # Test 4: Send a message
@@ -259,7 +259,7 @@ class LoopyncAPITester:
                             else:
                                 self.log_result("POST /api/messenger/send", False, f"HTTP {response.status_code}", response.text)
                         else:
-                            self.log_result("POST /api/messenger/send", False, f"No thread ID returned from start conversation. Response: {data}")
+                            self.log_result("POST /api/messenger/send", False, f"No thread ID found in response. Response: {data}")
                     else:
                         self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", False, f"HTTP {response.status_code}", response.text)
 
