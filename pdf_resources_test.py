@@ -275,10 +275,15 @@ startxref
             return False
         
         if response.status_code == 200:
-            products = response.json()
+            response_data = response.json()
             
-            if not isinstance(products, list):
-                self.log_result("Step 4: Verify Product", False, error="Invalid response format (not a list)")
+            # Handle both direct array and object with products array
+            if isinstance(response_data, list):
+                products = response_data
+            elif isinstance(response_data, dict) and "products" in response_data:
+                products = response_data["products"]
+            else:
+                self.log_result("Step 4: Verify Product", False, error="Invalid response format")
                 return False
             
             # Find our created product
