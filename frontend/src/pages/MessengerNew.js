@@ -713,6 +713,26 @@ const MessengerNew = () => {
           </div>
         )}
 
+        {/* Message Requests Banner */}
+        {messageRequests.length > 0 && !isSearching && (
+          <div 
+            onClick={() => setShowRequests(true)}
+            className="flex items-center gap-3 p-4 cursor-pointer transition hover:opacity-90"
+            style={{ background: 'linear-gradient(90deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2))', borderBottom: '1px solid rgba(168, 85, 247, 0.3)' }}
+          >
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+              <Inbox size={24} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-white">Message Requests</p>
+              <p className="text-sm text-gray-400">{messageRequests.length} pending request{messageRequests.length !== 1 ? 's' : ''}</p>
+            </div>
+            <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+              <span className="text-xs font-bold text-white">{messageRequests.length}</span>
+            </div>
+          </div>
+        )}
+
         {/* Threads */}
         <div className="flex-1 overflow-y-auto">
           {/* Show search results or threads based on search state */}
