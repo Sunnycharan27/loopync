@@ -789,6 +789,18 @@ backend:
         agent: "testing"
         comment: "✅ All existing APIs verified working: Projects, Certifications, Internships (1 found), Events, Workouts (2 found), Challenges (2 found), Reviews (1 found), Deals (2 found)"
 
+  - task: "Feedback/Support System API"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Feedback/Support System fully tested and working correctly. Test Results: 1) Authentication with test@test.com/testpassword123 ✅ PASSED, 2) POST /api/feedback (Problem Report) ✅ PASSED (Feedback ID: c398567d-3026-4efc-99fa-09551b54282d), 3) POST /api/feedback (Suggestion) ✅ PASSED (Feedback ID: d144b37a-57b8-404e-8b5f-c8265eacc183), 4) GET /api/feedback (Retrieve All) ✅ PASSED (Found 3+ feedback items), 5) Data Integrity Verification ✅ PASSED (All 11 integrity checks passed). All endpoints working: POST /api/feedback (submit feedback), GET /api/feedback (retrieve feedback). Success Rate: 100% (5/5 tests passed)"
+
 frontend:
   - task: "Login Flow Testing"
     implemented: true
