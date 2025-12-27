@@ -46,6 +46,7 @@ const CATEGORY_TABS = {
     { id: "certifications", label: "Certs", icon: Award },
     { id: "teamPosts", label: "Teams", icon: UsersRound },
     { id: "internships", label: "Jobs", icon: Briefcase },
+    { id: "resources", label: "Resources", icon: BookOpen },
     { id: "members", label: "Members", icon: Users }
   ],
   tech: [
@@ -54,6 +55,8 @@ const CATEGORY_TABS = {
     { id: "certifications", label: "Certs", icon: Award },
     { id: "teamPosts", label: "Teams", icon: UsersRound },
     { id: "internships", label: "Jobs", icon: Briefcase },
+    { id: "ideas", label: "Ideas", icon: Lightbulb },
+    { id: "showcases", label: "Startups", icon: Sparkles },
     { id: "members", label: "Members", icon: Users }
   ],
   fitness: [
@@ -61,6 +64,7 @@ const CATEGORY_TABS = {
     { id: "workouts", label: "Workouts", icon: Dumbbell },
     { id: "challenges", label: "Challenges", icon: Trophy },
     { id: "trainers", label: "Trainers", icon: Users },
+    { id: "events", label: "Events", icon: Calendar },
     { id: "members", label: "Members", icon: Users }
   ],
   food: [
@@ -74,12 +78,29 @@ const CATEGORY_TABS = {
   business: [
     { id: "posts", label: "Posts", icon: Image },
     { id: "services", label: "Services", icon: Briefcase },
+    { id: "portfolios", label: "Portfolio", icon: Palette },
     { id: "deals", label: "Deals", icon: Tag },
     { id: "reviews", label: "Reviews", icon: Star },
     { id: "members", label: "Members", icon: Users }
   ],
+  creative: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "portfolios", label: "Portfolio", icon: Palette },
+    { id: "collaborations", label: "Collabs", icon: Handshake },
+    { id: "events", label: "Events", icon: Calendar },
+    { id: "members", label: "Members", icon: Users }
+  ],
+  startup: [
+    { id: "posts", label: "Posts", icon: Image },
+    { id: "showcases", label: "Startups", icon: Sparkles },
+    { id: "ideas", label: "Ideas", icon: Lightbulb },
+    { id: "internships", label: "Jobs", icon: Briefcase },
+    { id: "events", label: "Events", icon: Calendar },
+    { id: "members", label: "Members", icon: Users }
+  ],
   default: [
     { id: "posts", label: "Posts", icon: Image },
+    { id: "events", label: "Events", icon: Calendar },
     { id: "members", label: "Members", icon: Users }
   ]
 };
@@ -101,6 +122,13 @@ const TribeDetail = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [deals, setDeals] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [services, setServices] = useState([]);
+  const [portfolios, setPortfolios] = useState([]);
+  const [ideas, setIdeas] = useState([]);
+  const [showcases, setShowcases] = useState([]);
+  const [resources, setResources] = useState([]);
+  const [collaborations, setCollaborations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newPostText, setNewPostText] = useState("");
   const [newPostMedia, setNewPostMedia] = useState(null);
@@ -115,8 +143,20 @@ const TribeDetail = () => {
   const [showDealModal, setShowDealModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showAddTrainerModal, setShowAddTrainerModal] = useState(false);
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [showJobModal, setShowJobModal] = useState(false);
+  const [showCertificationModal, setShowCertificationModal] = useState(false);
+  const [showTeamPostModal, setShowTeamPostModal] = useState(false);
+  const [showEventModal, setShowEventModal] = useState(false);
+  const [showIdeaModal, setShowIdeaModal] = useState(false);
+  const [showShowcaseModal, setShowShowcaseModal] = useState(false);
+  const [showResourceModal, setShowResourceModal] = useState(false);
+  const [showCollaborationModal, setShowCollaborationModal] = useState(false);
+  const [showServiceModal, setShowServiceModal] = useState(false);
+  const [showPortfolioModal, setShowPortfolioModal] = useState(false);
   const [trainers, setTrainers] = useState([]);
   const [skillFilter, setSkillFilter] = useState("");
+
 
   const tribeCategory = tribe?.category || 'default';
   const tabs = CATEGORY_TABS[tribeCategory] || CATEGORY_TABS.default;
