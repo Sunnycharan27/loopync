@@ -27,42 +27,7 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
   const isReposted = post.repostedBy?.includes(currentUser?.id);
   const isOwnPost = post.authorId === currentUser?.id;
 
-  // Auto-play music when post comes into view
-  useEffect(() => {
-    if (!post.music?.previewUrl) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold: 0.5 }
-    );
-
-    if (postRef.current) {
-      observer.observe(postRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [post.music]);
-
-  // Handle music playback based on visibility
-  useEffect(() => {
-    if (!post.music?.previewUrl) return;
-
-    if (isInView && !isPlaying) {
-      playMusic();
-    } else if (!isInView && isPlaying) {
-      stopMusic();
-    }
-  }, [isInView]);
-
-  // Handle mute state
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = isMuted;
-    }
-  }, [isMuted]);
-
+  // Music control functions (defined before useEffect)
   const playMusic = () => {
     if (!post.music?.previewUrl || audioRef.current) return;
 
@@ -96,6 +61,42 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
     e.stopPropagation();
     setIsMuted(!isMuted);
   };
+
+  // Auto-play music when post comes into view
+  useEffect(() => {
+    if (!post.music?.previewUrl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
+
+    if (postRef.current) {
+      observer.observe(postRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [post.music?.previewUrl]);
+
+  // Handle music playback based on visibility
+  useEffect(() => {
+    if (!post.music?.previewUrl) return;
+
+    if (isInView && !isPlaying && !audioRef.current) {
+      playMusic();
+    } else if (!isInView && audioRef.current) {
+      stopMusic();
+    }
+  }, [isInView, post.music?.previewUrl]);
+
+  // Handle mute state
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
 
   // Cleanup on unmount
   useEffect(() => {
