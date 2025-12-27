@@ -109,7 +109,7 @@ const TribeDetail = () => {
 
   const tribeCategory = tribe?.category || 'default';
   const tabs = CATEGORY_TABS[tribeCategory] || CATEGORY_TABS.default;
-  const isAdmin = tribe?.creatorId === currentUser?.id || tribe?.admins?.includes(currentUser?.id);
+  const isAdmin = tribe?.ownerId === currentUser?.id || tribe?.creatorId === currentUser?.id || tribe?.admins?.includes(currentUser?.id);
 
   useEffect(() => {
     if (tribeId) fetchTribeDetails();
