@@ -370,11 +370,13 @@ class ComprehensiveTribeFeaturesBackendTester:
         target_user_id = target_user.get("id")
         
         # Test POST /api/users/{userId}/follow-request
-        response = self.make_request("POST", f"/users/{target_user_id}/follow-request")
+        response = self.make_request("POST", f"/users/{target_user_id}/follow-request", params={"fromUserId": self.user_id})
         if response and response.status_code == 200:
             self.log_result("Send Follow Request", True, f"Follow request sent to user {target_user_id}")
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
+            if response:
+                error_msg += f", Response: {response.text}"
             self.log_result("Send Follow Request", False, error=error_msg)
         
         # Test GET /api/users/{userId}/follow-requests
