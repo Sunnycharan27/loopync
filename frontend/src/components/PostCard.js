@@ -1,5 +1,5 @@
-import React, { useState, memo } from "react";
-import { Heart, MessageCircle, Repeat2, Share2, MoreHorizontal, Trash2, Bookmark, Flag, UserPlus, Copy, ExternalLink } from "lucide-react";
+import React, { useState, memo, useRef, useEffect } from "react";
+import { Heart, MessageCircle, Repeat2, Share2, MoreHorizontal, Trash2, Bookmark, Flag, UserPlus, Copy, ExternalLink, Volume2, VolumeX } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import UniversalShareModal from "./UniversalShareModal";
@@ -17,10 +17,95 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
   const [selectedReaction, setSelectedReaction] = useState(null);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const postRef = useRef(null);
+  const audioRef = useRef(null);
   
   const isLiked = post.likedBy?.includes(currentUser?.id);
   const isReposted = post.repostedBy?.includes(currentUser?.id);
   const isOwnPost = post.authorId === currentUser?.id;
+
+  // Auto-play music when post comes into view
+  useEffect(() => {
+    if (!post.music?.previewUrl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
+
+    if (postRef.current) {
+      observer.observe(postRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [post.music]);
+
+  // Handle music playback based on visibility
+  useEffect(() => {
+    if (!post.music?.previewUrl) return;
+
+    if (isInView && !isPlaying) {
+      playMusic();
+    } else if (!isInView && isPlaying) {
+      stopMusic();
+    }
+  }, [isInView]);
+
+  // Handle mute state
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  const playMusic = () => {
+    if (!post.music?.previewUrl || audioRef.current) return;
+
+    const audio = new Audio(post.music.previewUrl);
+    audio.volume = 0.5;
+    audio.muted = isMuted;
+    audio.loop = true;
+    audioRef.current = audio;
+
+    const startTime = post.music.startTime || 0;
+    audio.addEventListener('loadedmetadata', () => {
+      if (audioRef.current === audio) {
+        audio.currentTime = Math.min(startTime, audio.duration - 1);
+      }
+    });
+
+    audio.play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(false));
+  };
+
+  const stopMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    setIsMuted(!isMuted);
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const reactions = [
     { emoji: "❤️", label: "Love", color: "hover:bg-red-500/20" },
