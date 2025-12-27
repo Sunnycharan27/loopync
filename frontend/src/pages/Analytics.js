@@ -3,7 +3,7 @@ import axios from "axios";
 import { API, AuthContext } from "../App";
 import BottomNav from "../components/BottomNav";
 import TopHeader from "../components/TopHeader";
-import { TrendingUp, Users, Activity, Shield, Heart, MessageCircle, Eye, Share2, Award, BarChart3 } from "lucide-react";
+import { TrendingUp, Users, Activity, Shield, Heart, MessageCircle, Eye, Share2, Award, BarChart3, Bug, Lightbulb, CheckCircle, Clock, XCircle, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 const Analytics = () => {
@@ -11,6 +11,8 @@ const Analytics = () => {
   const [activeTab, setActiveTab] = useState("user");
   const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState({});
+  const [feedback, setFeedback] = useState([]);
+  const [feedbackFilter, setFeedbackFilter] = useState("all");
 
   // Check if current user is admin (loopyncpvt@gmail.com)
   const isAdmin = currentUser?.email === 'loopyncpvt@gmail.com';
@@ -18,12 +20,18 @@ const Analytics = () => {
   const tabs = [
     { id: "user", name: "My Analytics", icon: <Activity size={16} /> },
     { id: "creator", name: "Creator", icon: <TrendingUp size={16} /> },
-    // Only show Platform tab for admin
-    ...(isAdmin ? [{ id: "admin", name: "Platform", icon: <Shield size={16} /> }] : []),
+    // Only show Platform and Feedback tabs for admin
+    ...(isAdmin ? [
+      { id: "admin", name: "Platform", icon: <Shield size={16} /> },
+      { id: "feedback", name: "Feedback", icon: <MessageCircle size={16} /> }
+    ] : []),
   ];
 
   useEffect(() => {
     fetchAnalytics();
+    if (activeTab === "feedback" && isAdmin) {
+      fetchFeedback();
+    }
   }, [activeTab]);
 
   const fetchAnalytics = async () => {
@@ -40,6 +48,10 @@ const Analytics = () => {
         case "admin":
           endpoint = `/analytics/admin?adminUserId=${currentUser.id}`;
           break;
+        case "feedback":
+          // No analytics endpoint for feedback
+          setLoading(false);
+          return;
         default:
           endpoint = `/analytics/${currentUser.id}`;
       }
