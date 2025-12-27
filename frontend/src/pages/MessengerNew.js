@@ -68,6 +68,7 @@ const MessengerNew = () => {
     }
     setCurrentUser(user);
     loadThreads(user.id);
+    loadMessageRequests(user.id);
     
     // Check if thread was passed from navigation
     if (location.state?.selectedThread) {
