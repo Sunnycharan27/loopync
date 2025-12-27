@@ -13,6 +13,9 @@ const categories = [
   { value: "courses", label: "Courses", icon: BookOpen, description: "Educational content, tutorials, video courses" },
   { value: "ebooks", label: "E-Books", icon: FileText, description: "Digital books, guides, manuals" },
   { value: "pdfs", label: "PDFs", icon: FileText, description: "Documents, notes, study materials" },
+  { value: "templates", label: "Templates", icon: FileText, description: "Design templates, code snippets, spreadsheets" },
+  { value: "tools", label: "Tools & Code", icon: Package, description: "Software, scripts, code repositories" },
+  { value: "other", label: "Other", icon: Package, description: "Any other type of resource" },
 ];
 
 const UploadDigitalProduct = () => {
