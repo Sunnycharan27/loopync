@@ -457,7 +457,7 @@ On other users' profiles:
 
 ## 📱 Platform URLs
 
-**Main App**: `https://student-tribes.preview.emergentagent.com`
+**Main App**: `https://talentloop-4.preview.emergentagent.com`
 
 **Key Routes**:
 - Home: `/`

@@ -24,7 +24,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://student-tribes.preview.emergentagent.com/api"
+BASE_URL = "https://talentloop-4.preview.emergentagent.com/api"
 TEST_EMAIL = "test@example.com"
 TEST_PASSWORD = "test123"
 

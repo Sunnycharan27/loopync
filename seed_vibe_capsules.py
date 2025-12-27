@@ -7,7 +7,7 @@ import requests
 import json
 from datetime import datetime, timezone, timedelta
 
-BACKEND_URL = "https://student-tribes.preview.emergentagent.com/api"
+BACKEND_URL = "https://talentloop-4.preview.emergentagent.com/api"
 
 print("=" * 80)
 print("SEEDING VIBE CAPSULES")

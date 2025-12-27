@@ -10,7 +10,7 @@ import uuid
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://student-tribes.preview.emergentagent.com/api"
+BACKEND_URL = "https://talentloop-4.preview.emergentagent.com/api"
 
 class RealUserWhitespaceTest:
     def __init__(self):

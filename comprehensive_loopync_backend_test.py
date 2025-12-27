@@ -19,7 +19,7 @@ from datetime import datetime
 import time
 
 # Configuration
-BACKEND_URL = "https://student-tribes.preview.emergentagent.com/api"
+BACKEND_URL = "https://talentloop-4.preview.emergentagent.com/api"
 TEST_EMAIL = "demo@loopync.com"
 TEST_PASSWORD = "password123"
 

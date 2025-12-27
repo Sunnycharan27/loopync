@@ -263,7 +263,7 @@ All requested critical tests have been completed successfully.
 - Password: testpassword123
 
 ### Test Environment
-- Frontend URL: https://student-tribes.preview.emergentagent.com
+- Frontend URL: https://talentloop-4.preview.emergentagent.com
 - All tests performed on December 26, 2025
 - Browser: Playwright automation (Desktop viewport 1920x1080)
 
@@ -483,7 +483,7 @@ All requested critical tests have been completed successfully.
 
 **✅ STORY POSTING IS WORKING PERFECTLY:**
 - API Response: POST /api/capsules returns 200 OK (SUCCESS)
-- Backend logs show successful story creation: 'POST /api/capsules?userId=a8d9808b-b47f-4efd-95cb-95b4f605bf82 HTTP/1.1' 200 OK
+- Backend logs show successful story creation: 'POST /api/capsules?userId=talentloop-4 HTTP/1.1' 200 OK
 - Stories are successfully created and appear in VibeCapsules section
 - No 'Failed to post story' error messages found in UI
 - Both stories with and without music post successfully

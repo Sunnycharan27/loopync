@@ -11,7 +11,7 @@
 
 ### STEP 1: Open the Application
 ```
-URL: https://student-tribes.preview.emergentagent.com
+URL: https://talentloop-4.preview.emergentagent.com
 ```
 
 **What you'll see:**
@@ -22,7 +22,7 @@ URL: https://student-tribes.preview.emergentagent.com
 
 ### STEP 2: Go to Login Page
 ```
-Direct Login URL: https://student-tribes.preview.emergentagent.com/auth
+Direct Login URL: https://talentloop-4.preview.emergentagent.com/auth
 ```
 
 **Actions:**
@@ -68,7 +68,7 @@ Ramcharan
 
 **Option A: Direct URL (Easiest)**
 ```
-https://student-tribes.preview.emergentagent.com/admin/verification
+https://talentloop-4.preview.emergentagent.com/admin/verification
 ```
 
 **Actions:**
@@ -152,7 +152,7 @@ Each request shows:
 - [ ] Password: `Ramcharan`
 
 ✅ **Direct dashboard URL:**
-- [ ] `https://student-tribes.preview.emergentagent.com/admin/verification`
+- [ ] `https://talentloop-4.preview.emergentagent.com/admin/verification`
 
 ---
 
@@ -160,22 +160,22 @@ Each request shows:
 
 **1. Main App:**
 ```
-https://student-tribes.preview.emergentagent.com
+https://talentloop-4.preview.emergentagent.com
 ```
 
 **2. Login Page:**
 ```
-https://student-tribes.preview.emergentagent.com/auth
+https://talentloop-4.preview.emergentagent.com/auth
 ```
 
 **3. Admin Dashboard:**
 ```
-https://student-tribes.preview.emergentagent.com/admin/verification
+https://talentloop-4.preview.emergentagent.com/admin/verification
 ```
 
 **4. Your Profile (after login):**
 ```
-https://student-tribes.preview.emergentagent.com/profile
+https://talentloop-4.preview.emergentagent.com/profile
 ```
 
 ---
@@ -184,9 +184,9 @@ https://student-tribes.preview.emergentagent.com/profile
 
 Same steps work on mobile:
 1. Open mobile browser (Chrome, Safari)
-2. Go to: `https://student-tribes.preview.emergentagent.com/auth`
+2. Go to: `https://talentloop-4.preview.emergentagent.com/auth`
 3. Enter credentials
-4. Navigate to: `https://student-tribes.preview.emergentagent.com/admin/verification`
+4. Navigate to: `https://talentloop-4.preview.emergentagent.com/admin/verification`
 
 ---
 

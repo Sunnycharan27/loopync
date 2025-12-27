@@ -1,52 +1,46 @@
 <analysis>**original_problem_statement**: The user wants to build a student-centric professional development platform called Loopync.
 
 The core product requirements are broken into phases:
-- **Phase 1 (Core Student Identity):** Implement student profiles, projects, and certifications. (Largely complete).
+- **Phase 1 (Core Student Identity):** Implement student profiles, projects, and certifications.
 - **Phase 2 (Collaboration & Discovery):** Add features for team formation, a skill-tagging system, and a read-only view for companies.
 - **Phase 3 (Career & Startup Ecosystem):** Build an internship hiring module, a startup showcase, and a reputation system.
 
-In this session, the user's requests evolved rapidly:
-1.  Fix the broken multi-step signup process.
-2.  Integrate all Phase 2 and 3 features into the Tribes section.
-3.  Pivot to make the Tribes feature category-specific (e.g., College tribes get Projects and Jobs tabs, while Fitness tribes get Workouts and Challenges tabs).
-4.  Remove the Tribes tab from the Discover page.
-5.  Add a Reel upload feature, ensuring reels appear in the feed, VibeZone (Discover), and user profiles.
-6.  Integrate Spotify API to add music to posts, reels, and stories, mimicking Instagram's feature.
-7.  Enhance the music feature with song portion selection (15-60s) and add location stickers to stories.
+The project has since evolved to be a full-featured social media platform with a strong focus on community Tribes that have category-specific features (e.g., Fitness tribes have Trainers and Workouts, College tribes have Projects and Jobs). Recent user requests have focused on creating a polished, Instagram-like experience for stories and posts, including fully functional music selection and playback.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a full-stack social media platform. This session saw massive feature expansion:
-- **Multi-Step Signup**: A complete, functional 3-step signup flow (Account Info -> Category -> Interests) has been implemented and tested in .
-- **Category-Based Tribes**: The Tribes feature is now dynamic. Users can create tribes under different categories (College, Tech, Fitness, Food, etc.). The detail page for each tribe displays category-relevant tabs (e.g., 'Projects' & 'Jobs' for College, 'Menu' & 'Deals' for Food). The creation and viewing of these category-specific tribes are tested and working.
-- **Reel Composer**: The main content composer () now has a Post/Reel toggle, allowing users to upload vertical videos as Reels. Reels are correctly integrated into the main feed, profile grids, and the VibeZone section of the Discover page.
-- **Spotify Music Integration**: Users can add 30-second song previews from Spotify to their posts. This includes a full-featured  modal with search and trending tracks. The selected music is displayed on .
-- **UI Cleanup**: The Tribes section has been successfully removed from the Discover page to avoid redundancy.
+The application is a full-stack social media platform with a React frontend and FastAPI backend. Key features implemented include:
+- **User Authentication:** A complete multi-step signup flow and login system.
+- **Content Feed:** Users can create posts and short-form vertical videos (Reels).
+- **Dynamic Tribes:** A core feature where users can create and join communities based on categories (e.g., College, Tech, Fitness, Food). Each tribe's detail page dynamically shows relevant tabs and features.
+- **Instagram-like Stories (VibeCapsules):** A fully-featured story creation and viewing system. This includes:
+    - Photo and video uploads.
+    - **Functional Music Integration (Deezer API):** Users can search for any song, select a 30-second clip with a visual slider, and add it to stories and posts. This was migrated from Spotify to Deezer to ensure reliable audio previews for all tracks.
+    - **Auto-playing Music:** Music automatically plays when viewing a story or when a post with music scrolls into view. A mute button is available in the story viewer.
+    - Location tagging.
+- **Content Creation for Tribes:** Modals and backend APIs exist for creating content in most tribe tabs, including Workouts, Challenges, Menu Items, Deals, Reviews, and Trainers.
+- **Skill-Based Discovery:** Users can click on skill tags on profiles, which filters the People tab on the Discover page to show users with that skill.
+- **Admin Features:** Tribe admins can add/remove Trainers in Fitness tribes.
 
 **Last working item**:
--   **Last item agent was working**: Implementing advanced Story/VibeCapsule features. This includes a new  UI, adding location stickers, and enhancing the  to allow users to select a specific 15-60 second clip from a song.
+-   **Last item agent was working**: Fulfilling the user's request to create all these pages fully fledged for the remaining Tribe categories. The agent created 8 new content creation modal components for tabs like Projects, Jobs, Certifications, Ideas, etc. It was about to start implementing the backend APIs and integrating these new modals into the  page.
 -   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: Frontend testing agent. The test should cover the entire story creation flow:
-    1.  Open the .
-    2.  Upload a photo/video.
-    3.  Open the .
-    4.  Select a song and use the new slider to choose a 15-second segment.
-    5.  Add a location sticker.
-    6.  Post the story.
-    7.  View the created story and verify the location sticker is present and the correct song segment plays.
+-   **Which testing method agent to use?**: Frontend testing agent. The test should cover creating a tribe for each category (e.g., College, Tech) and verifying that the corresponding new content creation modals (e.g., Create Project, Add Job) can be opened successfully from the tab buttons.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: (P0) Complete and Test Advanced Story Features**
-    -   **Attempted fixes**: The agent has created the necessary frontend components (, updated ) and updated backend models ( to include location). The UI for the story creator and the duration slider in the music picker has been verified via screenshots. However, the end-to-end flow was not tested due to a session timeout.
+-   **Issue 1: (P0) Complete Fully Fledged Tribe Pages**
+    -   **Attempted fixes**: The agent has already generated the frontend modal component stubs for the missing tribe features (Projects, Jobs, Certifications, Ideas, Events, etc.).
     -   **Next debug checklist**:
-        1.  Log in to the application.
-        2.  Attempt to create a story using the new UI.
-        3.  Test the full flow as described in the testing method section above.
-        4.  Debug any issues in , , and the corresponding API calls in .
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a direct user request to enhance a core social feature, bringing it closer to the functionality of major platforms like Instagram.
+        1.  In , create the backend API endpoints (POST, GET, DELETE) for each new content type (projects, jobs, certifications, etc.), mimicking the structure of existing endpoints like  or .
+        2.  In , import the 8 new modal components.
+        3.  Add state variables to control the visibility of each new modal (e.g., ).
+        4.  Update the  handlers on the tab buttons to open the correct modals instead of showing a toast notification.
+        5.  Add logic to fetch and display the newly created content within each respective tab.
+        6.  Wire the modals'  callbacks to refresh the content list.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is the current, active user request. Completing it will make the category-based Tribes feature complete and functional across all defined categories.
     -   **Status**: IN PROGRESS
     -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: Both
@@ -56,24 +50,25 @@ The application is a full-stack social media platform. This session saw massive 
 -   None.
 
 **Upcoming and Future Tasks**
-
 -   **Upcoming Tasks**:
-    -   **(P0) Implement Content Creation for Tribe Tabs**: The category-specific tabs in Tribes (e.g., Workouts, Menu, Deals, Jobs) are currently placeholders. The immediate next step is to build the forms and modals to allow users to create content for these sections (e.g., Create a Workout, Add a Menu Item, Post a Job Opening).
-    -   **(P1) Complete Phase 2 - Skill Tagging System**: Make skill tags clickable across profiles, projects, and certifications to enable user discovery.
-    -   **(P2) Complete Phase 2 - Company Discovery UI**: Build out the UI for the  file, allowing companies to browse and filter student profiles.
-
+    -   **(P1) End-to-End Testing of Phase 2/3 Stubs**: The  and  pages exist and appear functional, but the full workflow (creating an internship, then finding it via discovery) has not been tested. This should be verified.
+    -   **(P2) Implement Follow Request System**: Currently, following is immediate. A request/approve system needs to be built.
 -   **Future Tasks**:
-    -   Implement **Phase 3 (Career & Startup Ecosystem)**, including the Internship Module (), Startup Discovery, and a non-toxic Reputation System.
-    -   Implement a Follow Request system.
+    -   Implement the **Startup Showcase** and **Reputation System** from Phase 3.
     -   Enhance the messaging system to support sharing posts.
     -   Conduct end-to-end testing of the VibeRooms (Agora.io) feature.
 
 **Completed work in this session**
--   **Multi-Step Signup Flow (FIXED)**: Successfully fixed and tested the entire 3-step user registration process.
--   **Category-Based Tribes (DONE)**: Implemented a dynamic Tribe system where features and tabs change based on the selected category (e.g., College, Fitness, Food).
--   **Reel Upload Feature (DONE)**: Integrated a Reel creation option into the main composer, with reels appearing in the feed, discover page, and profiles.
--   **Spotify Music Integration (DONE)**: Added functionality for users to search for and attach 30-second song previews from Spotify to their posts.
--   **Discover Page Cleanup (DONE)**: Removed the redundant Tribes section from the Discover page as requested.
+-   **Instagram-like Story/Music Feature (DONE)**: Fixed and completely overhauled the story creation feature. This included:
+    - Migrating from Spotify to the **Deezer API** to ensure reliable 30-second audio previews for all songs.
+    - Fixing multiple critical bugs, including story post failures and null-reference errors during audio playback.
+    - Implementing a visual slider for selecting song clips.
+    - Adding auto-play for music in stories and posts (on-scroll), with a mute button in the story viewer.
+    - Fixing file upload issues in the .
+-   **Tribe Content Creation (DONE for most)**: Implemented the frontend modals and backend APIs for creating Workouts, Challenges, Menu Items, Deals, and Reviews within specific tribe categories.
+-   **Add Trainers Feature (DONE)**: Implemented the ability for admins of Fitness tribes to add and remove trainers.
+-   **Skill Tagging System (DONE)**: Made skill tags clickable, leading to a filtered user discovery page.
+-   **UI Text Cleanup (DONE)**: Changed Add Music from Spotify to Add Music as requested.
 
 **Earlier issues found/mentioned but not fixed**
 -   **VibeRooms Feature**: The Agora.io-based audio chat room feature remains untested end-to-end.
@@ -82,72 +77,71 @@ The application is a full-stack social media platform. This session saw massive 
 -   None.
 
 **Code Architecture**
-
+skill
 
 **Key Technical Concepts**
--   **Dynamic Component Rendering**: Heavy use of conditional logic in  to render different sets of tabs based on a  prop.
--   **Complex Modal State**: The  now manages multiple states (Post vs. Reel, Music Picker open/closed) within a single component.
--   **Third-Party API Integration (Spotify)**: Implemented backend-for-frontend pattern to securely call the Spotify API for track searches using stored credentials, and then passed data to the  UI.
--   **Client-side UI Manipulation**: The new  includes a range slider for selecting a song segment, demonstrating more advanced UI state management.
+-   **Third-Party API Migration**: Switched from Spotify API to Deezer API to overcome  limitations, ensuring a core feature works reliably.
+-   **Intersection Observer API**: Used in  to trigger music auto-play only when the component is visible on the screen, improving performance and user experience.
+-   **Robust Audio Handling**: Implemented complex state management (, ), event listeners (, , ), and cleanup effects ( return functions) across multiple components (, , ) to prevent race conditions and null reference errors.
+-   **Dynamic Backend Routing**:  was expanded with dozens of new endpoints for the dynamic, category-specific tribe features.
 
 **key DB schema**
--   ****: MODIFIED - Added  field.
--   ****: MODIFIED - Added  field.
--   ****: MODIFIED - Added  and  fields.
--   **New Collections (APIs created)**: , , , , , .
+-   ****: No schema change, but logic now heavily relies on the  field.
+-   ****: No schema change, but  field is now populated with Deezer track data.
+-   ****: No schema change, but  field is now populated with Deezer track data.
+-   **New Collections**:
+    -   : 
+    -   (Upcoming) New collections will be needed for , , , etc.
 
 **All files of reference**
--   **Current Task**: , , .
+-   **Current Task**: , , and the 8 new modal files in .
+-   **Music/Story Core**: , , , .
 -   **Tribe Features**: , .
--   **Content Creation**: .
--   **Backend Logic**: .
 
 **Areas that need refactoring**:
--   ** Monolith**: This file has become critically large (well over 10,000 lines). It urgently needs to be broken down into modular  files (e.g., , , ).
--   **Stub Components**: The agent created  and  but they are empty stubs. They should either be implemented or removed until needed.
--   ** is now redundant** as all logic was moved to . It should be removed to avoid confusion.
+-   ** Monolith**: This is now **CRITICAL**. The file has grown even larger with the addition of Deezer integration and numerous tribe-specific endpoints. It must be broken down into smaller, manageable  files (e.g., , , ). The current state is unsustainable and prone to errors.
 
 **Critical Info for New Agent**
-1.  **Finish the Story Features First**: Your immediate priority is to complete and test the advanced story creation flow (song clips, location stickers) as it's the last thing the agent was working on.
-2.  **Build out Tribe Content Creation**: The user will expect to be able to add content to the new category-specific tabs (Workouts, Menus, etc.). This is the most logical next step after the current task.
-3.  **Backend Refactoring is a High Priority**: The monolithic  is a significant technical debt. Plan to refactor it into smaller, manageable routers as soon as the current critical path is unblocked.
-4.  **The User Moves Fast**: Be prepared for large, ambitious requests and rapid changes in direction. Confirm your plan before implementing large-scale changes.
+1.  **Finish the Tribe Pages First**: Your immediate priority is to implement the backend APIs and frontend integrations for the 8 new content modals the previous agent just created. This will complete the user's active request for fully fledged pages.
+2.  **The Music API is DEEZER, not Spotify**: All music functionality now relies on the Deezer API, accessed through endpoints like . Do not attempt to use or fix the old Spotify code; it was intentionally abandoned because it doesn't work for this use case.
+3.  **Refactor the Backend URGENTLY**: After completing the current task, the highest priority should be refactoring the monolithic  file into separate route files. The current size and complexity of this file pose a significant risk to future development. Propose this refactoring to the user as the next essential step.
+4.  **Test End-to-End Flows**: Many features have been built and tested in isolation. After the current task, it would be valuable to run comprehensive end-to-end tests, such as creating a new Job in a Tech tribe and then verifying it appears correctly.
 
 **documents and test reports created in this job**
--   None.
+-    was frequently updated by the testing agents.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.   - **Status: In Progress**.
-2.   - **Status: In Progress**. This is the current task.
+1.   - **Status: IN PROGRESS**. The agent created 8 modal components and was about to work on the backend.
+2.   - **Status: COMPLETED**.
 3.   - **Status: COMPLETED**.
 4.   - **Status: COMPLETED**.
-5.   - **Status: Partially Done**. Agent started but then pivoted to category-specific tribes. Core Phase 2/3 features are still pending.
-6.   - **Status: COMPLETED**.
-7.   - User confirmation.
-8.   - **Status: Handled**. Credentials were provided and stored.
+5.   (with screenshot of null reference error) - **Status: COMPLETED**.
+6.   - **Status: COMPLETED**. This prompted the switch from Spotify to Deezer.
+7.   (with screenshot of post failure) - **Status: COMPLETED**.
+8.   - **Status: COMPLETED**.
 9.   - **Status: COMPLETED**.
-10.  - **Status: COMPLETED**.
+10.  - **Status: Acknowledged**.
 
 **Project Health Check:**
--   **Broken**: The story creation flow is mid-implementation and untested.
+-   **Broken**: The functionality for adding content to several tribe tabs (Projects, Jobs, Ideas, etc.) is incomplete, as the backend and frontend integration for the newly created modals are missing.
 -   **Mocked**: None.
 
 **3rd Party Integrations**
+-   **Deezer API**: Used via direct  on the backend to search for tracks and get 30-second preview URLs. Does not require an API key for public search.
+-   **lyricsgenius**: Python library used to fetch lyrics for the music picker UI.
 -   : Used for client-side image generation.
--   : **(New)** Python library for the Spotify Web API. Used on the backend for song searches. Requires Spotify Client ID and Secret in .
 -   Agora.io: Integrated for VibeRooms but the feature is untested.
 -   Capacitor: Present for future mobile app development.
+-   : **(Deprecated)** Still in  but no longer used in the application logic. Can be removed during the backend refactor.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES. Used to validate the multi-step signup and the initial Spotify integration.
+-   **Testing agent used after significant changes**: YES. The testing agent was used extensively to verify bug fixes and new features, including the story creation flow, tribe content modals, and auto-playing music.
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: None.
--   **Known regressions**: None, but many new features are just UI stubs without content creation forms.
+-   **Test files created**: The testing agent created and used temporary test scripts, results are summarized in .
+-   **Known regressions**: None.
 
 **Credentials to test flow:**
 -   **Login**:  / 
--   **Spotify**: Credentials have been added to .
 
 **What agent forgot to execute**
--   The agent created file stubs for  and  but never implemented the UI or functionality, leaving them as dead files for now.
--   The user's original request to combine the whole phase 2 and 3 and implement all at once was only partially addressed before pivoting to the category-specific tribes. Core features like the Skill-Tagging system, Internship Module, and Startup Showcase are still pending.</analysis>
+-   The agent has been highly responsive to the user's immediate requests. The primary items not yet addressed are the long-term future tasks from the original product plan, such as the Startup Showcase, Reputation System, and end-to-end testing of the existing VibeRooms feature. These have been consistently de-prioritized in favor of new, more urgent user requests.</analysis>

@@ -223,7 +223,7 @@ db.vibe_rooms.deleteMany({})
 
 ### Base URL
 ```
-https://student-tribes.preview.emergentagent.com/api
+https://talentloop-4.preview.emergentagent.com/api
 ```
 
 ### Key Endpoints
