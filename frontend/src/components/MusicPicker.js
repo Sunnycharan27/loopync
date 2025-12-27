@@ -229,7 +229,7 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Get full song duration in seconds (from track.duration which is in seconds or parse from formatted string)
+  // Get full song duration in seconds (from track.duration which could be in ms or formatted string)
   const getFullSongDuration = () => {
     if (!currentTrack) return 180; // default 3 minutes
     
@@ -251,11 +251,11 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
           return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
         }
       }
-      // If it's already a number (in seconds)
+      // If it's already a number
       const numDuration = parseInt(currentTrack.duration);
       if (!isNaN(numDuration)) {
-        // If it's more than 600, it might be in milliseconds
-        if (numDuration > 600) {
+        // If it's more than 1000, it's likely in milliseconds (convert to seconds)
+        if (numDuration > 1000) {
           return Math.floor(numDuration / 1000);
         }
         return numDuration;
