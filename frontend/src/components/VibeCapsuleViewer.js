@@ -70,32 +70,53 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
   const playMusic = () => {
     if (!currentCapsule?.music?.previewUrl) return;
 
+    // Clean up existing audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.ontimeupdate = null;
+      audioRef.current.onended = null;
+      audioRef.current.onplay = null;
+      audioRef.current.onpause = null;
+      audioRef.current = null;
+    }
+
     const music = currentCapsule.music;
     const startTime = music.startTime || 0;
     const clipDuration = music.clipDuration || 15;
 
-    audioRef.current = new Audio(music.previewUrl);
-    audioRef.current.volume = 0.8;
-    audioRef.current.muted = isMuted;
-    audioRef.current.currentTime = startTime;
+    const audio = new Audio(music.previewUrl);
+    audio.volume = 0.8;
+    audio.muted = isMuted;
+    audioRef.current = audio;
+
+    // Set start time after audio is ready
+    audio.addEventListener('loadedmetadata', () => {
+      if (audioRef.current === audio) {
+        audio.currentTime = Math.min(startTime, audio.duration - 1);
+      }
+    });
 
     // Loop within clip duration
-    audioRef.current.ontimeupdate = () => {
-      if (audioRef.current && audioRef.current.currentTime >= startTime + clipDuration) {
-        audioRef.current.currentTime = startTime;
+    audio.ontimeupdate = () => {
+      if (audioRef.current !== audio) return;
+      if (audio.currentTime >= startTime + clipDuration) {
+        audio.currentTime = startTime;
       }
     };
 
-    audioRef.current.onended = () => {
-      // Restart from beginning of clip
-      if (audioRef.current) {
-        audioRef.current.currentTime = startTime;
-        audioRef.current.play().catch(console.error);
-      }
+    audio.onended = () => {
+      if (audioRef.current !== audio) return;
+      audio.currentTime = startTime;
+      audio.play().catch(console.error);
     };
 
-    audioRef.current.onplay = () => setIsPlaying(true);
-    audioRef.current.onpause = () => setIsPlaying(false);
+    audio.onplay = () => {
+      if (audioRef.current === audio) setIsPlaying(true);
+    };
+    
+    audio.onpause = () => {
+      if (audioRef.current === audio) setIsPlaying(false);
+    };
 
     audioRef.current.play()
       .then(() => setIsPlaying(true))
