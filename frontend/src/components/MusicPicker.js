@@ -229,9 +229,25 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Get full song duration in seconds (from track.duration which is in seconds or parse from formatted string)
+  const getFullSongDuration = () => {
+    if (!currentTrack) return 180; // default 3 minutes
+    if (currentTrack.durationMs) return Math.floor(currentTrack.durationMs / 1000);
+    if (currentTrack.duration) {
+      // Could be "3:45" format or seconds
+      if (typeof currentTrack.duration === 'string' && currentTrack.duration.includes(':')) {
+        const parts = currentTrack.duration.split(':');
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+      }
+      return parseInt(currentTrack.duration);
+    }
+    return 180;
+  };
+
   // Max time for preview (Deezer provides 30 sec, but we can loop or use full song URL if available)
   const maxPreviewTime = 30;
   const maxClipDuration = 60; // Allow up to 60 second clips
+  const fullSongDuration = getFullSongDuration();
   const displayTracks = activeTab === 'search' ? tracks : trending;
 
   // Duration Selection Step with Lyrics
