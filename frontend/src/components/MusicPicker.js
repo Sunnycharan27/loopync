@@ -124,33 +124,39 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
     } else {
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.ontimeupdate = null;
+        audioRef.current.onended = null;
+        audioRef.current = null;
       }
       
-      audioRef.current = new Audio(track.previewUrl);
-      audioRef.current.volume = isMuted ? 0 : volume;
+      const audio = new Audio(track.previewUrl);
+      audio.volume = isMuted ? 0 : volume;
+      audioRef.current = audio;
       
       // Set start time (max 25 seconds to allow for clip)
       const maxStart = Math.min(fromTime, 25);
-      audioRef.current.currentTime = maxStart;
+      audio.currentTime = maxStart;
       
-      audioRef.current.ontimeupdate = () => {
-        setCurrentPlayTime(audioRef.current.currentTime);
+      audio.ontimeupdate = () => {
+        if (!audioRef.current) return;
+        setCurrentPlayTime(audio.currentTime);
         // Loop within selected clip duration
-        if (step === 'duration' && audioRef.current.currentTime >= startTime + duration) {
-          audioRef.current.currentTime = startTime;
+        if (step === 'duration' && audio.currentTime >= startTime + duration) {
+          audio.currentTime = startTime;
         }
       };
       
-      audioRef.current.onended = () => {
+      audio.onended = () => {
+        if (!audioRef.current) return;
         if (step === 'duration') {
-          audioRef.current.currentTime = startTime;
-          audioRef.current.play().catch(console.error);
+          audio.currentTime = startTime;
+          audio.play().catch(console.error);
         } else {
           setPlayingId(null);
         }
       };
 
-      audioRef.current.play()
+      audio.play()
         .then(() => setPlayingId(track.id))
         .catch(err => {
           console.error('Playback failed:', err);
