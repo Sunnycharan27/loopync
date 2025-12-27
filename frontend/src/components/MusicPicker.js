@@ -339,13 +339,14 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
               Clip Duration
             </p>
             <div className="flex gap-2">
-              {[15, 30].map((d) => (
+              {[15, 30, 45, 60].map((d) => (
                 <button
                   key={d}
                   onClick={() => {
                     setDuration(d);
+                    // Adjust start time if needed
                     if (startTime + d > maxPreviewTime) {
-                      setStartTime(Math.max(0, maxPreviewTime - d));
+                      setStartTime(0);
                     }
                   }}
                   className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
@@ -354,10 +355,15 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack, showDurationPicker = tr
                       : 'bg-gray-800/80 text-gray-400 hover:bg-gray-700 hover:text-white'
                   }`}
                 >
-                  {d} sec
+                  {d}s
                 </button>
               ))}
             </div>
+            {duration > 30 && (
+              <p className="text-xs text-yellow-400 mt-2 flex items-center gap-1">
+                ⚠️ For clips over 30s, the preview will loop to fill the duration
+              </p>
+            )}
           </div>
 
           {/* Waveform Visualizer */}
