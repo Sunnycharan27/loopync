@@ -24,7 +24,6 @@ import qrcode
 import base64
 from io import BytesIO
 import io
-import base64
 from PIL import Image
 
 # Import the Google Sheets database module
@@ -857,14 +856,14 @@ async def connect(sid, environ, auth):
     try:
         # Extract token from auth
         if not auth or 'token' not in auth:
-            logging.warning(f"Connection rejected: no token provided")
+            logging.warning("Connection rejected: no token provided")
             return False
         
         token = auth['token']
         user_id = verify_token(token)
         
         if not user_id:
-            logging.warning(f"Connection rejected: invalid token")
+            logging.warning("Connection rejected: invalid token")
             return False
         
         # Store connection
@@ -1321,7 +1320,7 @@ async def login(request: Request, req: LoginRequest):
             
             # If demo user has no friends, create test users
             if len(current_friends) == 0:
-                logger.info(f"🔧 Creating test friends for demo user...")
+                logger.info("🔧 Creating test friends for demo user...")
                 
                 test_users = [
                     {"id": "test_user_1", "name": "Alice Johnson", "email": "alice@test.com", "handle": "alice", "password": "test123"},
@@ -1377,7 +1376,7 @@ async def login(request: Request, req: LoginRequest):
                     {"$set": {"walletBalance": 10000.0}}
                 )
                 user['walletBalance'] = 10000.0
-                logger.info(f"💰 Demo user wallet topped up to ₹10,000")
+                logger.info("💰 Demo user wallet topped up to ₹10,000")
         
         # Generate JWT token
         token = create_access_token(user['id'])
@@ -1668,11 +1667,11 @@ async def resend_verification(data: dict):
     )
     
     # Mock email - log to console
-    print(f"\n=== VERIFICATION EMAIL ===")
+    print("\n=== VERIFICATION EMAIL ===")
     print(f"To: {email}")
-    print(f"Subject: Verify your Loopync account")
+    print("Subject: Verify your Loopync account")
     print(f"Code: {verification_code}")
-    print(f"========================\n")
+    print("========================\n")
     
     return {
         "success": True,
@@ -1707,12 +1706,12 @@ async def forgot_password(data: dict):
     )
     
     # Mock email - log to console
-    print(f"\n=== PASSWORD RESET EMAIL ===")
+    print("\n=== PASSWORD RESET EMAIL ===")
     print(f"To: {email}")
-    print(f"Subject: Reset your Loopync password")
+    print("Subject: Reset your Loopync password")
     print(f"Code: {reset_code}")
     print(f"Expires: {expires}")
-    print(f"===========================\n")
+    print("===========================\n")
     
     return {
         "success": True,
@@ -3022,7 +3021,7 @@ async def get_lyrics_api(trackId: str, artist: str = "", title: str = ""):
                 pass
     
     if not lyrics_text:
-        lyrics_text = f"""🎵 Lyrics not available
+        lyrics_text = """🎵 Lyrics not available
 
 Drag the waveform to select your favorite part.
 Use 15s or 30s to choose clip duration."""
@@ -3967,7 +3966,7 @@ async def kick_user(roomId: str, userId: str, targetUserId: str):
         roomId=roomId,
         userId="system",
         userName="System",
-        message=f"User was removed from the room",
+        message="User was removed from the room",
         type="system"
     )
     await db.room_messages.insert_one(message.model_dump())
@@ -4427,7 +4426,7 @@ async def upload_file(file: UploadFile = File(...)):
 @api_router.get("/media/{file_id}")
 async def serve_media_file(file_id: str, request: Request):
     """Serve media file from MongoDB or disk storage with Range request support"""
-    from fastapi.responses import Response, FileResponse, StreamingResponse
+    from fastapi.responses import FileResponse, StreamingResponse
     
     # Retrieve file metadata from MongoDB
     media_doc = await db.media_files.find_one({"id": file_id}, {"_id": 0})
@@ -6324,7 +6323,7 @@ async def use_ticket(ticketId: str, qrCode: str):
     )
     
     # Award credits for attending
-    await earn_credits(ticket["userId"], 50, "event_attendance", f"Attended event")
+    await earn_credits(ticket["userId"], 50, "event_attendance", "Attended event")
     
     return {"success": True, "message": "Ticket validated"}
 
@@ -10770,7 +10769,7 @@ async def send_follow_request(userId: str, fromUserId: str):
             "userId": userId,
             "type": "new_follower",
             "title": "New Follower",
-            "message": f"started following you",
+            "message": "started following you",
             "fromUserId": fromUserId,
             "read": False,
             "createdAt": datetime.now(timezone.utc).isoformat()
@@ -10793,7 +10792,7 @@ async def send_follow_request(userId: str, fromUserId: str):
         "userId": userId,
         "type": "follow_request",
         "title": "Follow Request",
-        "message": f"wants to follow you",
+        "message": "wants to follow you",
         "fromUserId": fromUserId,
         "read": False,
         "createdAt": datetime.now(timezone.utc).isoformat()
@@ -10830,7 +10829,7 @@ async def accept_follow_request(requestId: str, userId: str):
         "userId": request["fromUserId"],
         "type": "follow_accepted",
         "title": "Follow Request Accepted",
-        "message": f"accepted your follow request",
+        "message": "accepted your follow request",
         "fromUserId": userId,
         "read": False,
         "createdAt": datetime.now(timezone.utc).isoformat()
@@ -11102,7 +11101,7 @@ async def get_lyrics(trackId: str, artist: str = "", title: str = ""):
     
     # Method 2: Return placeholder if no lyrics found
     if not lyrics_text:
-        lyrics_text = f"""🎵 Lyrics not available for this track
+        lyrics_text = """🎵 Lyrics not available for this track
 
 Tap and drag the waveform to select your favorite part of the song.
 
