@@ -95,7 +95,7 @@ class MessagingFollowRequestTester:
     
     def test_user_authentication(self):
         """Test authentication for both test users"""
-        # Test User Login
+        # Test User 1 Login
         response = self.make_request("POST", "/auth/login", {
             "email": TEST_USER_EMAIL,
             "password": TEST_USER_PASSWORD
@@ -106,38 +106,41 @@ class MessagingFollowRequestTester:
             if "token" in result and "user" in result:
                 self.test_user_token = result["token"]
                 self.test_user_id = result["user"]["id"]
-                self.log_result("Test User Login", True, f"User ID: {self.test_user_id}")
+                self.log_result("Test User 1 Login", True, f"User ID: {self.test_user_id}")
             else:
-                self.log_result("Test User Login", False, error="Invalid login response")
+                self.log_result("Test User 1 Login", False, error="Invalid login response")
                 return False
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
             if response:
                 error_msg += f", Response: {response.text}"
-            self.log_result("Test User Login", False, error=error_msg)
+            self.log_result("Test User 1 Login", False, error=error_msg)
             return False
         
-        # Admin User Login
-        response = self.make_request("POST", "/auth/login", {
-            "email": ADMIN_EMAIL,
-            "password": ADMIN_PASSWORD
-        })
+        # Create Test User 2
+        user2_data = {
+            "email": TEST_USER_2_EMAIL,
+            "password": TEST_USER_2_PASSWORD,
+            "name": "Test User Two",
+            "handle": f"testuser2_{int(time.time())}"
+        }
         
+        response = self.make_request("POST", "/auth/signup", user2_data)
         if response and response.status_code == 200:
             result = response.json()
             if "token" in result and "user" in result:
-                self.admin_token = result["token"]
-                self.admin_id = result["user"]["id"]
-                self.log_result("Admin User Login", True, f"Admin ID: {self.admin_id}")
+                self.test_user_2_token = result["token"]
+                self.test_user_2_id = result["user"]["id"]
+                self.log_result("Create Test User 2", True, f"User ID: {self.test_user_2_id}")
                 return True
             else:
-                self.log_result("Admin User Login", False, error="Invalid login response")
+                self.log_result("Create Test User 2", False, error="Invalid signup response")
                 return False
         else:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
             if response:
                 error_msg += f", Response: {response.text}"
-            self.log_result("Admin User Login", False, error=error_msg)
+            self.log_result("Create Test User 2", False, error=error_msg)
             return False
     
     def test_user_search_api(self):
