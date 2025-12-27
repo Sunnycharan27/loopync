@@ -403,30 +403,49 @@ class ComprehensiveTribeFeaturesBackendTester:
             error_msg = f"Status: {response.status_code if response else 'No response'}"
             self.log_result("GET User Reputation", False, error=error_msg)
         
-        # Test POST /api/users/{userId}/reputation/endorse
-        endorse_data = {
-            "skill": "Backend Development",
-            "message": "Excellent backend testing skills"
-        }
-        
-        response = self.make_request("POST", f"/users/{self.user_id}/reputation/endorse", endorse_data, params={"fromUserId": self.user_id})
+        # Get a different user to endorse (cannot endorse yourself)
+        response = self.make_request("GET", "/users", params={"limit": 5})
         if response and response.status_code == 200:
-            self.log_result("Endorse User Skill", True, "Skill endorsed successfully")
+            users = response.json()
+            target_user = None
+            for user in users:
+                if user.get("id") != self.user_id:
+                    target_user = user
+                    break
+            
+            if target_user:
+                target_user_id = target_user.get("id")
+                
+                # Test POST /api/users/{userId}/reputation/endorse
+                endorse_data = {
+                    "skill": "Backend Development",
+                    "message": "Excellent backend testing skills"
+                }
+                
+                response = self.make_request("POST", f"/users/{target_user_id}/reputation/endorse", endorse_data, params={"fromUserId": self.user_id})
+                if response and response.status_code == 200:
+                    self.log_result("Endorse User Skill", True, "Skill endorsed successfully")
+                else:
+                    error_msg = f"Status: {response.status_code if response else 'No response'}"
+                    if response:
+                        error_msg += f", Response: {response.text}"
+                    self.log_result("Endorse User Skill", False, error=error_msg)
+                
+                # Test GET /api/users/{userId}/endorsements for the target user
+                response = self.make_request("GET", f"/users/{target_user_id}/endorsements")
+                if response and response.status_code == 200:
+                    endorsements = response.json()
+                    self.log_result("GET User Endorsements", True, f"Retrieved {len(endorsements)} endorsements")
+                    return True
+                else:
+                    error_msg = f"Status: {response.status_code if response else 'No response'}"
+                    self.log_result("GET User Endorsements", False, error=error_msg)
+                    return False
+            else:
+                self.log_result("Endorse User Skill", False, error="No target user found for endorsement")
+                return False
         else:
-            error_msg = f"Status: {response.status_code if response else 'No response'}"
-            if response:
-                error_msg += f", Response: {response.text}"
-            self.log_result("Endorse User Skill", False, error=error_msg)
-        
-        # Test GET /api/users/{userId}/endorsements
-        response = self.make_request("GET", f"/users/{self.user_id}/endorsements")
-        if response and response.status_code == 200:
-            endorsements = response.json()
-            self.log_result("GET User Endorsements", True, f"Retrieved {len(endorsements)} endorsements")
-            return True
-        else:
-            error_msg = f"Status: {response.status_code if response else 'No response'}"
-            self.log_result("GET User Endorsements", False, error=error_msg)
+            self.log_result("Endorse User Skill", False, error="Cannot get users list for endorsement")
             return False
     
     def test_existing_apis(self):
