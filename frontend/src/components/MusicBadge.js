@@ -48,39 +48,52 @@ const MusicBadge = ({ track, size = 'md', showPlay = true, autoPlay = false }) =
         clearInterval(intervalRef.current);
       }
     } else {
-      // Play
-      if (!audioRef.current) {
-        audioRef.current = new Audio(track.previewUrl);
-        audioRef.current.volume = 0.7;
+      // Clean up existing audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.ontimeupdate = null;
+        audioRef.current.onended = null;
+        audioRef.current.onerror = null;
       }
+      
+      // Play
+      const audio = new Audio(track.previewUrl);
+      audio.volume = 0.7;
+      audioRef.current = audio;
 
-      // Set start time
-      audioRef.current.currentTime = startTime;
+      // Set start time after audio is ready
+      audio.addEventListener('loadedmetadata', () => {
+        if (audioRef.current === audio) {
+          audio.currentTime = Math.min(startTime, audio.duration - 1);
+        }
+      });
 
       // Handle time updates to loop within the clip duration
-      audioRef.current.ontimeupdate = () => {
-        const currentPos = audioRef.current.currentTime - startTime;
+      audio.ontimeupdate = () => {
+        if (audioRef.current !== audio) return;
+        const currentPos = audio.currentTime - startTime;
         const progressPercent = (currentPos / clipDuration) * 100;
         setProgress(Math.min(progressPercent, 100));
 
         // Loop back to start when clip duration is reached
-        if (audioRef.current.currentTime >= startTime + clipDuration) {
-          audioRef.current.currentTime = startTime;
+        if (audio.currentTime >= startTime + clipDuration) {
+          audio.currentTime = startTime;
         }
       };
 
-      audioRef.current.onended = () => {
+      audio.onended = () => {
+        if (audioRef.current !== audio) return;
         // If the full preview ends before our clip, restart
-        audioRef.current.currentTime = startTime;
-        audioRef.current.play();
+        audio.currentTime = startTime;
+        audio.play().catch(console.error);
       };
 
-      audioRef.current.onerror = (e) => {
+      audio.onerror = (e) => {
         console.error('Audio error:', e);
         setIsPlaying(false);
       };
 
-      audioRef.current.play()
+      audio.play()
         .then(() => {
           setIsPlaying(true);
         })
