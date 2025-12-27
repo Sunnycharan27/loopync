@@ -366,7 +366,6 @@ const StoryCreator = ({ onClose, onStoryCreated }) => {
       {showMusicPicker && (
         <MusicPicker
           selectedTrack={selectedMusic}
-          showDurationPicker={true}
           onSelect={(track) => {
             setSelectedMusic(track);
             setShowMusicPicker(false);
