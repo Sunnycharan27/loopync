@@ -251,11 +251,13 @@ class ComprehensiveTribeFeaturesBackendTester:
             
             # Test voting on the idea
             if self.created_idea_id:
-                vote_response = self.make_request("POST", f"/ideas/{self.created_idea_id}/vote")
+                vote_response = self.make_request("POST", f"/ideas/{self.created_idea_id}/vote", params={"userId": self.user_id})
                 if vote_response and vote_response.status_code == 200:
                     self.log_result("Vote on Idea", True, "Idea voted successfully")
                 else:
                     error_msg = f"Status: {vote_response.status_code if vote_response else 'No response'}"
+                    if vote_response:
+                        error_msg += f", Response: {vote_response.text}"
                     self.log_result("Vote on Idea", False, error=error_msg)
             
             return True
