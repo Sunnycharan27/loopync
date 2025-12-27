@@ -34,8 +34,8 @@ class MessagingFollowRequestTester:
         self.session = requests.Session()
         self.test_user_token = None
         self.test_user_id = None
-        self.admin_token = None
-        self.admin_id = None
+        self.test_user_2_token = None
+        self.test_user_2_id = None
         self.test_results = []
         self.created_thread_id = None
         self.created_follow_request_id = None
