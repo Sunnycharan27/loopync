@@ -170,12 +170,12 @@ class MessagingFollowRequestTester:
     
     def test_messenger_start_conversation(self):
         """Test Messenger Start Conversation - POST /api/messenger/start"""
-        if not self.admin_id:
-            self.log_result("Messenger Start Conversation", False, error="Admin ID not available")
+        if not self.test_user_2_id:
+            self.log_result("Messenger Start Conversation", False, error="Test User 2 ID not available")
             return False
         
         response = self.make_request("POST", "/messenger/start", 
-                                   params={"userId": self.test_user_id, "friendId": self.admin_id},
+                                   params={"userId": self.test_user_id, "friendId": self.test_user_2_id},
                                    token=self.test_user_token)
         
         if response and response.status_code == 200:
