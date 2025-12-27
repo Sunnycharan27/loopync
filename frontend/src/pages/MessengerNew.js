@@ -612,7 +612,7 @@ const MessengerNew = () => {
             <Search className="absolute left-3 top-3 text-gray-400" size={20} />
             <input
               type="text"
-              placeholder="Search friends or conversations"
+              placeholder="Search people..."
               value={searchQuery}
               onChange={handleSearchChange}
               className="w-full pl-10 pr-4 py-2 text-white rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
@@ -633,41 +633,39 @@ const MessengerNew = () => {
           </div>
         </div>
 
-        {/* Search Results (Friends) */}
+        {/* Search Results (People) */}
         {isSearching && searchQuery && (
           <div className="border-b border-cyan-500/10" style={{ background: 'rgba(18, 20, 39, 0.7)' }}>
             <div className="p-2">
               <p className="text-xs text-gray-500 px-2 mb-2">
-                {searchResults.length > 0 ? 'Friends' : 'No friends found'}
+                {searchResults.length > 0 ? 'People' : 'No people found'}
               </p>
-              {searchResults.map(friend => (
+              {searchResults.map(user => (
                 <div
-                  key={friend.id}
-                  onClick={() => startChatWithUser(friend)}
+                  key={user.id}
+                  onClick={() => startChatWithUser(user)}
                   className="flex items-center gap-3 p-3 cursor-pointer rounded-lg transition hover:shadow-lg"
                   style={{ background: 'rgba(0, 224, 255, 0.05)' }}
                   onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0, 224, 255, 0.1)'}
                   onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0, 224, 255, 0.05)'}
                 >
                   <img
-                    src={friend.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.id}`}
-                    alt={friend.name}
+                    src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`}
+                    alt={user.name}
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div className="flex-1">
-                    <p className="font-semibold text-white">{friend.name}</p>
-                    <p className="text-xs text-gray-400">
-                      {friend.hasThread ? 'Tap to open chat' : 'Tap to start chatting'}
-                    </p>
+                    <p className="font-semibold text-white">{user.name}</p>
+                    <p className="text-xs text-gray-400">@{user.handle || 'user'}</p>
                   </div>
-                  {friend.online && (
+                  {user.online && (
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   )}
                 </div>
               ))}
               {searchResults.length === 0 && (
                 <div className="text-center py-4 text-gray-500 text-sm">
-                  <p>No friends found with &quot;{searchQuery}&quot;</p>
+                  <p>No people found with &quot;{searchQuery}&quot;</p>
                   <p className="mt-1">Try searching for someone else</p>
                 </div>
               )}
