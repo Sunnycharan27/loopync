@@ -801,7 +801,19 @@ backend:
         agent: "testing"
         comment: "✅ Feedback/Support System fully tested and working correctly. Test Results: 1) Authentication with test@test.com/testpassword123 ✅ PASSED, 2) POST /api/feedback (Problem Report) ✅ PASSED (Feedback ID: c398567d-3026-4efc-99fa-09551b54282d), 3) POST /api/feedback (Suggestion) ✅ PASSED (Feedback ID: d144b37a-57b8-404e-8b5f-c8265eacc183), 4) GET /api/feedback (Retrieve All) ✅ PASSED (Found 3+ feedback items), 5) Data Integrity Verification ✅ PASSED (All 11 integrity checks passed). All endpoints working: POST /api/feedback (submit feedback), GET /api/feedback (retrieve feedback). Success Rate: 100% (5/5 tests passed)"
 
-  - task: "Admin Feedback Dashboard Functionality"
+  - task: "Messaging System Update - Message Requests"
+    implemented: true
+    working: false
+    file: "backend/server.py, backend/messenger_service.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Messaging system has implementation inconsistency. server.py endpoints exist for message requests but messenger_service.py still enforces friendship requirement. POST /api/messenger/start fails with Internal Server Error due to ObjectId serialization issues. Two different thread collections being used: 'threads' vs 'message_threads'. System is in transition state and not functional."
+
+  - task: "Follow Request System"
     implemented: true
     working: true
     file: "backend/server.py"
@@ -811,7 +823,19 @@ backend:
     status_history:
       - working: true
         agent: "testing"
-        comment: "✅ Admin Feedback Dashboard functionality fully tested and working correctly. Test Results: 1) Admin Login (loopyncpvt@gmail.com / admin@loopync2025) ✅ PASSED (User ID: 30459d73-3e5b-4a5b-90d7-681155f74898), 2) GET /api/feedback ✅ PASSED (Found 7 feedback items), 3) PUT /api/feedback/{id}/status?status=in_progress ✅ PASSED, 4) Verify in_progress status ✅ PASSED, 5) PUT /api/feedback/{id}/status?status=resolved ✅ PASSED, 6) Verify resolved status ✅ PASSED. All admin feedback dashboard endpoints working correctly. Success Rate: 100% (6/6 tests passed)"
+        comment: "✅ Follow Request System fully functional. All APIs working: POST /api/users/{userId}/follow-request (send), GET /api/users/{userId}/follow-requests (get), POST /api/follow-requests/{requestId}/accept (accept), POST /api/follow-requests/{requestId}/reject (reject). Successfully tested with test users."
+
+  - task: "User Search API"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ User Search API working correctly. GET /api/users/search?q=testuser2&limit=10 returns proper user results. Successfully finds users by name, handle, and email."
 
 frontend:
   - task: "Login Flow Testing"
