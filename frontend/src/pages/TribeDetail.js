@@ -495,6 +495,14 @@ const TribeDetail = () => {
           onCreated={() => fetchReviews()} 
         />
       )}
+      {showAddTrainerModal && (
+        <AddTrainerModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowAddTrainerModal(false)} 
+          onAdded={() => fetchTrainers()} 
+        />
+      )}
       
       <BottomNav active="tribes" />
     </div>
