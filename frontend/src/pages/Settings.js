@@ -507,17 +507,24 @@ const Settings = () => {
   // Help Section
   const renderHelp = () => (
     <div className="space-y-2">
-      <MenuItem title="Help Center" onClick={() => toast.info("Opening help center...")} />
+      <MenuItem 
+        icon={<HelpCircle size={20} className="text-blue-400" />}
+        title="Help Center" 
+        onClick={() => {
+          window.location.href = "mailto:loopyncpvt@gmail.com?subject=Loopync Help Request&body=Hi Loopync Team,%0D%0A%0D%0AI need help with:%0D%0A%0D%0A[Please describe your question or issue here]%0D%0A%0D%0AThank you!";
+          toast.success("Opening email to loopyncpvt@gmail.com");
+        }} 
+      />
       <MenuItem 
         icon={<Mail size={20} className="text-cyan-400" />}
         title="Contact Support" 
         onClick={() => {
-          window.location.href = "mailto:loopyncpvt@gmail.com?subject=Loopync Support Request";
+          window.location.href = "mailto:loopyncpvt@gmail.com?subject=Loopync Support Request&body=Hi Loopync Support Team,%0D%0A%0D%0AI need assistance with:%0D%0A%0D%0A[Please describe your issue]%0D%0A%0D%0AMy registered email: " + (currentUser?.email || "") + "%0D%0A%0D%0AThank you!";
           toast.success("Opening email client for loopyncpvt@gmail.com");
         }} 
       />
       <MenuItem 
-        icon={<Bug size={20} className="text-red-400" />}
+        icon={<Bug size={20} className="text-red-400" />}}
         title="Report a Problem" 
         onClick={() => {
           setShowReportBot(true);
