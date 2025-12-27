@@ -102,27 +102,15 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
       audio.volume = isMuted ? 0 : volume;
       audioRef.current = audio;
       
-      // Set start time (max 25 seconds to allow for clip)
-      const maxStart = Math.min(fromTime, 25);
-      audio.currentTime = maxStart;
-      
       audio.ontimeupdate = () => {
         if (!audioRef.current) return;
         setCurrentPlayTime(audio.currentTime);
-        // Loop within selected clip duration
-        if (step === 'duration' && audio.currentTime >= startTime + duration) {
-          audio.currentTime = startTime;
-        }
       };
       
       audio.onended = () => {
         if (!audioRef.current) return;
-        if (step === 'duration') {
-          audio.currentTime = startTime;
-          audio.play().catch(console.error);
-        } else {
-          setPlayingId(null);
-        }
+        setPlayingId(null);
+        setCurrentPlayTime(0);
       };
 
       audio.play()
