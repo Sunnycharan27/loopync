@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2, Rocket, Award, UsersRound, Briefcase, Star, Code, Building2, Filter, Dumbbell, Utensils, Tag, Calendar, Trophy, MessageCircle, Trash2 } from "lucide-react";
+import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2, Rocket, Award, UsersRound, Briefcase, Star, Code, Building2, Filter, Dumbbell, Utensils, Tag, Calendar, Trophy, MessageCircle, Trash2, Lightbulb, BookOpen, Sparkles, Handshake, Palette } from "lucide-react";
 import { toast } from "sonner";
 import PostCard from "../components/PostCard";
 import { getMediaUrl } from "../utils/mediaUtils";
@@ -18,6 +18,17 @@ import CreateMenuItemModal from "../components/tribe/CreateMenuItemModal";
 import CreateDealModal from "../components/tribe/CreateDealModal";
 import CreateReviewModal from "../components/tribe/CreateReviewModal";
 import AddTrainerModal from "../components/tribe/AddTrainerModal";
+import CreateProjectModal from "../components/tribe/CreateProjectModal";
+import CreateJobModal from "../components/tribe/CreateJobModal";
+import CreateCertificationModal from "../components/tribe/CreateCertificationModal";
+import CreateTeamPostModal from "../components/tribe/CreateTeamPostModal";
+import CreateEventModal from "../components/tribe/CreateEventModal";
+import CreateIdeaModal from "../components/tribe/CreateIdeaModal";
+import CreateShowcaseModal from "../components/tribe/CreateShowcaseModal";
+import CreateResourceModal from "../components/tribe/CreateResourceModal";
+import CreateCollaborationModal from "../components/tribe/CreateCollaborationModal";
+import CreateServiceModal from "../components/tribe/CreateServiceModal";
+import CreatePortfolioModal from "../components/tribe/CreatePortfolioModal";
 
 const getErrorMsg = (error) => {
   const detail = error?.response?.data?.detail;
