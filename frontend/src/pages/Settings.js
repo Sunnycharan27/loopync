@@ -839,7 +839,7 @@ const Settings = () => {
       </section>
 
       <section>
-        <h3 className="text-white font-bold text-lg mb-3">12. Children's Privacy</h3>
+        <h3 className="text-white font-bold text-lg mb-3">12. Children&apos;s Privacy</h3>
         <p>The Platform is not intended for children under 13 years of age. We do not knowingly collect personal data from children under 13. If you are a parent or guardian and believe your child has provided us with personal data, please contact us immediately.</p>
       </section>
 
