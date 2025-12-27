@@ -355,14 +355,16 @@ const UploadDigitalProduct = () => {
                 <Upload size={32} className="text-gray-500 mb-2" />
                 <p className="text-white font-medium">Click to upload file</p>
                 <p className="text-gray-500 text-sm mt-1">
-                  PDF, ZIP, MP4, MP3, etc. (Max 100MB)
+                  PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, ZIP, RAR, MP4, MP3
                 </p>
+                <p className="text-gray-600 text-xs mt-1">Max 100MB</p>
               </div>
             )}
           </div>
           <input
             id="file-input"
             type="file"
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.mp4,.mp3,.wav,.json,.md,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             className="hidden"
             onChange={handleFileUpload}
           />
