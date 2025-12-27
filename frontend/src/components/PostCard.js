@@ -27,39 +27,10 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
   const isReposted = post.repostedBy?.includes(currentUser?.id);
   const isOwnPost = post.authorId === currentUser?.id;
 
-  // Music control functions (defined before useEffect)
-  const playMusic = () => {
-    if (!post.music?.previewUrl || audioRef.current) return;
-
-    const audio = new Audio(post.music.previewUrl);
-    audio.volume = 0.5;
-    audio.muted = isMuted;
-    audio.loop = true;
-    audioRef.current = audio;
-
-    const startTime = post.music.startTime || 0;
-    audio.addEventListener('loadedmetadata', () => {
-      if (audioRef.current === audio) {
-        audio.currentTime = Math.min(startTime, audio.duration - 1);
-      }
-    });
-
-    audio.play()
-      .then(() => setIsPlaying(true))
-      .catch(() => setIsPlaying(false));
-  };
-
-  const stopMusic = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-      setIsPlaying(false);
-    }
-  };
-
+  // Toggle mute
   const toggleMute = (e) => {
     e.stopPropagation();
-    setIsMuted(!isMuted);
+    setIsMuted(prev => !prev);
   };
 
   // Auto-play music when post comes into view
@@ -84,14 +55,36 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
   useEffect(() => {
     if (!post.music?.previewUrl) return;
 
-    if (isInView && !isPlaying && !audioRef.current) {
-      playMusic();
-    } else if (!isInView && audioRef.current) {
-      stopMusic();
-    }
-  }, [isInView, post.music?.previewUrl]);
+    if (isInView && !audioRef.current) {
+      // Play music
+      const audio = new Audio(post.music.previewUrl);
+      audio.volume = 0.5;
+      audio.muted = isMuted;
+      audio.loop = true;
+      audioRef.current = audio;
 
-  // Handle mute state
+      const startTime = post.music.startTime || 0;
+      audio.addEventListener('loadedmetadata', () => {
+        if (audioRef.current === audio) {
+          audio.currentTime = Math.min(startTime, audio.duration - 1);
+        }
+      });
+
+      audio.onplay = () => setIsPlaying(true);
+      audio.onpause = () => setIsPlaying(false);
+
+      audio.play().catch(() => {});
+    }
+
+    return () => {
+      if (!isInView && audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [isInView, post.music?.previewUrl, post.music?.startTime, isMuted]);
+
+  // Handle mute state changes
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.muted = isMuted;
