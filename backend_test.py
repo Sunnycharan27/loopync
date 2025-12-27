@@ -265,7 +265,7 @@ class LoopyncAPITester:
             "audience": "public"
         }
         
-        response, error = self.make_request('POST', '/posts', post_data)
+        response, error = self.make_request('POST', f'/posts?authorId={self.user_id}', post_data)
         if error:
             self.log_result("POST /api/posts", False, f"Request failed: {error}")
         elif response.status_code in [200, 201]:
