@@ -178,7 +178,7 @@ class LoopyncAPITester:
             if users and len(users) > 0:
                 target_user_id = users[0]['id']
                 if target_user_id != self.user_id:
-                    response, error = self.make_request('POST', f'/users/{target_user_id}/follow-request')
+                    response, error = self.make_request('POST', f'/users/{target_user_id}/follow-request?fromUserId={self.user_id}')
                     if error:
                         self.log_result(f"POST /api/users/{target_user_id}/follow-request", False, f"Request failed: {error}")
                     elif response.status_code in [200, 201]:
