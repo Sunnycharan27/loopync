@@ -237,10 +237,10 @@ class LoopyncAPITester:
                         self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", False, f"Request failed: {error}")
                     elif response.status_code in [200, 201]:
                         data = response.json()
-                        self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", True, f"Conversation started: {data.get('threadId', 'N/A')}")
+                        thread_id = data.get('threadId') or data.get('id')  # Try both possible field names
+                        self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", True, f"Conversation started: {thread_id}")
                         
                         # Test 4: Send a message
-                        thread_id = data.get('threadId')
                         if thread_id:
                             message_data = {
                                 "text": "Hello! This is a test message from the backend testing suite.",
@@ -257,7 +257,7 @@ class LoopyncAPITester:
                             else:
                                 self.log_result("POST /api/messenger/send", False, f"HTTP {response.status_code}", response.text)
                         else:
-                            self.log_result("POST /api/messenger/send", False, "No thread ID returned from start conversation")
+                            self.log_result("POST /api/messenger/send", False, f"No thread ID returned from start conversation. Response: {data}")
                     else:
                         self.log_result(f"POST /api/messenger/start?userId={self.user_id}&friendId={friend_id}", False, f"HTTP {response.status_code}", response.text)
 
