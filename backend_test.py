@@ -133,6 +133,19 @@ class LoopyncAPITester:
         else:
             self.log_result("POST /api/auth/signup", False, f"HTTP {response.status_code}", response.text)
         
+        # Test 4: Admin login (optional test)
+        response, error = self.make_request('POST', '/auth/login', self.admin_user, headers={})
+        if error:
+            self.log_result("POST /api/auth/login (admin)", False, f"Request failed: {error}")
+        elif response.status_code == 200:
+            data = response.json()
+            if 'token' in data and 'user' in data:
+                self.log_result("POST /api/auth/login (admin)", True, f"Admin login successful: {data['user'].get('email', 'Unknown')}")
+            else:
+                self.log_result("POST /api/auth/login (admin)", False, "Missing token or user in response", data)
+        else:
+            self.log_result("POST /api/auth/login (admin)", False, f"HTTP {response.status_code}", response.text)
+        
         return True
 
     def test_user_apis(self):
