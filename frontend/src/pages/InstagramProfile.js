@@ -209,42 +209,65 @@ const InstagramProfile = () => {
   const handleFollow = async () => {
     if (!currentUser || !profileUser) return;
     
-    const wasFollowing = isFollowing;
-    
-    // Optimistically update UI immediately
-    setIsFollowing(!wasFollowing);
-    setStats(prev => ({
-      ...prev,
-      followers: wasFollowing ? prev.followers - 1 : prev.followers + 1
-    }));
-    
-    try {
-      const token = localStorage.getItem('loopync_token');
-      const response = await axios.post(
-        `${API}/users/${currentUser.id}/follow`,
-        { targetUserId: profileUser.id },
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
-      
-      // Use server response to ensure accuracy
+    // If already following, allow instant unfollow
+    if (isFollowing) {
+      const wasFollowing = isFollowing;
+      setIsFollowing(false);
       setStats(prev => ({
         ...prev,
-        followers: response.data.followersCount
+        followers: prev.followers - 1
       }));
       
-      toast.success(wasFollowing ? 'Unfollowed' : 'Following');
-      
-      // Refresh user data to sync following list globally
-      await refreshUserData();
-    } catch (error) {
-      // Revert on error
-      setIsFollowing(wasFollowing);
-      setStats(prev => ({
-        ...prev,
-        followers: wasFollowing ? prev.followers + 1 : prev.followers - 1
-      }));
-      console.error('Error following user:', error);
-      toast.error('Failed to follow user');
+      try {
+        const token = localStorage.getItem('loopync_token');
+        const response = await axios.post(
+          `${API}/users/${currentUser.id}/follow`,
+          { targetUserId: profileUser.id },
+          { headers: { 'Authorization': `Bearer ${token}` } }
+        );
+        
+        setStats(prev => ({
+          ...prev,
+          followers: response.data.followersCount
+        }));
+        
+        toast.success('Unfollowed');
+        await refreshUserData();
+      } catch (error) {
+        setIsFollowing(wasFollowing);
+        setStats(prev => ({
+          ...prev,
+          followers: prev.followers + 1
+        }));
+        console.error('Error unfollowing user:', error);
+        toast.error('Failed to unfollow user');
+      }
+    } else if (followRequestPending) {
+      // Cancel follow request
+      toast.info('Follow request already pending');
+    } else {
+      // Send follow request
+      try {
+        const token = localStorage.getItem('loopync_token');
+        await axios.post(
+          `${API}/users/${profileUser.id}/follow-request?fromUserId=${currentUser.id}`,
+          {},
+          { headers: { 'Authorization': `Bearer ${token}` } }
+        );
+        
+        setFollowRequestPending(true);
+        toast.success('Follow request sent!');
+      } catch (error) {
+        console.error('Error sending follow request:', error);
+        const detail = error.response?.data?.detail;
+        if (detail === 'Already following this user') {
+          // They're already following, update state
+          setIsFollowing(true);
+          toast.info('Already following');
+        } else {
+          toast.error(typeof detail === 'string' ? detail : 'Failed to send follow request');
+        }
+      }
     }
   };
 
