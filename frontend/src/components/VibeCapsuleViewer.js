@@ -319,23 +319,6 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
             </p>
           </div>
 
-          {/* Mute/Unmute Button - Always visible when story has music */}
-          {currentCapsule.music && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleMute();
-              }}
-              className={`p-2.5 rounded-full transition-all ${
-                isMuted 
-                  ? 'bg-white/20 text-white' 
-                  : 'bg-white text-black'
-              }`}
-            >
-              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-            </button>
-          )}
-
           {/* Pause/Play Button */}
           <button
             onClick={(e) => {
@@ -347,6 +330,23 @@ const VibeCapsuleViewer = ({ stories, currentUserId, onClose }) => {
             {isPaused ? <Play size={18} /> : <Pause size={18} />}
           </button>
         </div>
+
+        {/* Mute/Unmute Button - Bottom Right */}
+        {currentCapsule.music && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMute();
+            }}
+            className={`absolute bottom-24 right-4 z-30 p-3 rounded-full transition-all shadow-lg ${
+              isMuted 
+                ? 'bg-white/20 text-white' 
+                : 'bg-white text-black'
+            }`}
+          >
+            {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
+          </button>
+        )}
 
         {/* Media */}
         {currentCapsule.mediaType === "video" ? (
