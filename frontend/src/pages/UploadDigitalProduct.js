@@ -432,11 +432,23 @@ const UploadDigitalProduct = () => {
           </div>
         </div>
 
+        {/* Validation Messages */}
+        {(!formData.title || !formData.category || !formData.fileUrl) && (
+          <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/30">
+            <p className="text-yellow-400 text-sm font-medium mb-1">Complete these to upload:</p>
+            <ul className="text-yellow-400/80 text-xs space-y-0.5">
+              {!formData.title && <li>• Enter a title</li>}
+              {!formData.category && <li>• Select a category</li>}
+              {!formData.fileUrl && <li>• Upload a file</li>}
+            </ul>
+          </div>
+        )}
+
         {/* Submit */}
         <button
           type="submit"
           disabled={submitting || !formData.title || !formData.category || !formData.fileUrl}
-          className="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-400/30 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {submitting ? (
             <>
