@@ -11,7 +11,7 @@ Messaging and Follow Request System Backend Testing
 
 **Test Credentials:**
 - User 1: test@test.com / testpassword123
-- Admin: admin@loopync.com / testpassword123
+- User 2: Created dynamically for testing
 
 **Backend URL:** https://vibe-capsule.preview.emergentagent.com/api
 """
@@ -26,8 +26,8 @@ from datetime import datetime
 BASE_URL = "https://vibe-capsule.preview.emergentagent.com/api"
 TEST_USER_EMAIL = "test@test.com"
 TEST_USER_PASSWORD = "testpassword123"
-ADMIN_EMAIL = "admin@loopync.com"
-ADMIN_PASSWORD = "testpassword123"
+TEST_USER_2_EMAIL = f"testuser2_{int(time.time())}@test.com"
+TEST_USER_2_PASSWORD = "testpassword123"
 
 class MessagingFollowRequestTester:
     def __init__(self):
