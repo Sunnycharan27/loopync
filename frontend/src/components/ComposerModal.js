@@ -317,7 +317,7 @@ const ComposerModal = ({ currentUser, onClose, onPostCreated, onReelCreated, ini
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-green-500/30 text-green-400 hover:bg-green-500/10 transition"
               >
                 <Music size={20} />
-                Add Music from Spotify
+                Add Music
               </button>
             )}
           </div>
