@@ -40,13 +40,6 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     return () => clearTimeout(searchTimeoutRef.current);
   }, [query]);
 
-  // Fetch lyrics when track is selected
-  useEffect(() => {
-    if (currentTrack && step === 'duration') {
-      fetchLyrics(currentTrack);
-    }
-  }, [currentTrack, step]);
-
   const fetchTrending = async () => {
     setLoading(true);
     try {
