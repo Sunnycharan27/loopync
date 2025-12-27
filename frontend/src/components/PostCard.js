@@ -166,7 +166,21 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
   };
 
   return (
-    <div className="glass-card p-4 mb-4 hover:bg-gray-800/30 transition-all relative" data-testid="post-card">
+    <div ref={postRef} className="glass-card p-4 mb-4 hover:bg-gray-800/30 transition-all relative" data-testid="post-card">
+      {/* Music Auto-play Indicator & Mute Button */}
+      {post.music && isPlaying && (
+        <button
+          onClick={toggleMute}
+          className={`absolute top-3 right-3 z-20 p-2 rounded-full transition-all shadow-lg ${
+            isMuted 
+              ? 'bg-gray-800/80 text-gray-400' 
+              : 'bg-green-500 text-white'
+          }`}
+        >
+          {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+        </button>
+      )}
+      
       {/* Repost indicator */}
       {post.isRepost && post.repostAuthor && (
         <div className="flex items-center gap-2 text-gray-400 text-sm mb-3 ml-14">
