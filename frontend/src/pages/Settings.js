@@ -568,7 +568,7 @@ const Settings = () => {
 
       <section>
         <h3 className="text-white font-bold text-lg mb-3">1. Acceptance of Terms</h3>
-        <p>By accessing or using Loopync ("Platform"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Platform. These Terms constitute a legally binding agreement between you and Loopync Private Limited ("Company", "we", "us", or "our"), a company incorporated under the Companies Act, 2013, having its registered office in India.</p>
+        <p>By accessing or using Loopync (&quot;Platform&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree to these Terms, please do not use the Platform. These Terms constitute a legally binding agreement between you and Loopync Private Limited (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), a company incorporated under the Companies Act, 2013, having its registered office in India.</p>
       </section>
 
       <section>
@@ -577,7 +577,7 @@ const Settings = () => {
           <li>You must be at least 18 years of age, or the age of legal majority in your jurisdiction, to use this Platform.</li>
           <li>If you are between 13-18 years old, you may use the Platform only with parental or guardian consent.</li>
           <li>By using the Platform, you represent and warrant that you have the legal capacity to enter into these Terms.</li>
-          <li>Users from educational institutions must comply with their institution's policies regarding social media usage.</li>
+          <li>Users from educational institutions must comply with their institution&apos;s policies regarding social media usage.</li>
         </ul>
       </section>
 
