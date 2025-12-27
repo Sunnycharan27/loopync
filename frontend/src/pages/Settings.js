@@ -993,7 +993,7 @@ const Settings = () => {
 
       <div className="glass-card p-6 rounded-xl">
         <p className="text-gray-300 text-center mb-4">
-          India's Free-Speech Social × Vibe Video × Venues × Fintech Superapp
+          India&apos;s Free-Speech Social × Vibe Video × Venues × Fintech Superapp
         </p>
         <div className="text-sm text-gray-400 space-y-2">
           <p>© 2025 Loopync</p>
