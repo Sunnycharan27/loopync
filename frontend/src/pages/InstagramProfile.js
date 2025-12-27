@@ -1059,6 +1059,15 @@ const InstagramProfile = () => {
         />
       )}
 
+      {/* Follow Requests Modal */}
+      <FollowRequestsModal
+        isOpen={showFollowRequestsModal}
+        onClose={() => {
+          setShowFollowRequestsModal(false);
+          fetchPendingRequestsCount(); // Refresh count after closing
+        }}
+      />
+
       {/* Vibe Capsule Viewer Modal */}
       {viewingCapsule && (
         <VibeCapsuleViewer
