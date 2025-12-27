@@ -1013,3 +1013,49 @@ All comprehensive tribe features are PRODUCTION READY. The backend infrastructur
 
 **🚀 PRODUCTION READINESS:**
 The PDF upload functionality for Resources feature is FULLY WORKING and production ready. All endpoints (upload, create resource, verify resource) are functional and properly integrated."
+
+  - agent: "testing"
+    message: "COMPREHENSIVE PDF RESOURCES FEATURE RE-TESTING COMPLETED - ALL TESTS PASSED (December 27, 2025):
+
+**🎯 FOCUSED PDF UPLOAD TESTING RESULTS:**
+
+**✅ STEP 1: LOGIN AND AUTH TOKEN - PASSED:**
+- Successfully authenticated with test@test.com / testpassword123
+- JWT token obtained and validated
+- User ID: a8d9808b-b47f-4efd-95cb-95b4f605bf82
+
+**✅ STEP 2: PDF FILE UPLOAD - PASSED:**
+- POST /api/upload endpoint working correctly with PDF files
+- Test PDF file (471 bytes) uploaded successfully
+- File URL: /api/media/9161adfa-0c12-4588-a294-265419f7a593
+- Content-type: application/pdf properly handled
+- NO 'file type not supported' errors encountered
+
+**✅ STEP 3: DIGITAL PRODUCT CREATION - PASSED:**
+- POST /api/digital-products?authorId={userId} working correctly
+- Digital product created with uploaded PDF
+- Product ID: 4aef2fb9-afba-424e-8836-bf45517e1319
+- Category: 'pdfs', FileType: 'pdf' correctly set
+- All required fields properly saved (title, description, category, fileUrl, fileType, fileSize)
+
+**✅ STEP 4: PRODUCT VERIFICATION - PASSED:**
+- GET /api/digital-products endpoint working correctly
+- Created product found in products list
+- Product details verified: fileType='pdf', category='pdfs'
+- File serving verified with proper content-type: application/pdf
+
+**📊 COMPREHENSIVE TEST RESULTS:**
+- Total Tests: 4
+- Passed: 4 ✅
+- Failed: 0 ❌
+- Success Rate: 100.0%
+
+**🎯 KEY FINDINGS:**
+- PDF upload functionality is working correctly
+- Digital product creation with PDF files is functional
+- NO 'file type not supported' errors found
+- File serving works with proper content-type headers
+- All API endpoints responding correctly
+
+**🚀 CONCLUSION:**
+The Free Resources (Digital Products) upload feature with PDF files is FULLY FUNCTIONAL and production ready. All test steps passed successfully with no errors."
