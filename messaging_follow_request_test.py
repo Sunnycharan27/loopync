@@ -382,8 +382,8 @@ class MessagingFollowRequestTester:
         print("🚀 Starting Messaging and Follow Request System Testing")
         print("=" * 80)
         print(f"📍 API Base URL: {BASE_URL}")
-        print(f"👤 Test User: {TEST_USER_EMAIL}")
-        print(f"👑 Admin User: {ADMIN_EMAIL}")
+        print(f"👤 Test User 1: {TEST_USER_EMAIL}")
+        print(f"👤 Test User 2: {TEST_USER_2_EMAIL}")
         print("=" * 80)
         
         # Authentication first
