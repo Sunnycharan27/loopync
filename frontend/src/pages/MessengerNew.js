@@ -30,6 +30,8 @@ const MessengerNew = () => {
   
   const [currentUser, setCurrentUser] = useState(null);
   const [threads, setThreads] = useState([]);
+  const [messageRequests, setMessageRequests] = useState([]);
+  const [showRequests, setShowRequests] = useState(false);
   const [selectedThread, setSelectedThread] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState('');
