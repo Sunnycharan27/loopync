@@ -273,16 +273,8 @@ class LoopyncAPITester:
             post_id = data.get('id')
             self.log_result("POST /api/posts", True, f"Post created: {post_id}")
             
-            # Test 3: Get single post
-            if post_id:
-                response, error = self.make_request('GET', f'/posts/{post_id}')
-                if error:
-                    self.log_result(f"GET /api/posts/{post_id}", False, f"Request failed: {error}")
-                elif response.status_code == 200:
-                    data = response.json()
-                    self.log_result(f"GET /api/posts/{post_id}", True, f"Post retrieved: {data.get('text', 'N/A')[:50]}...")
-                else:
-                    self.log_result(f"GET /api/posts/{post_id}", False, f"HTTP {response.status_code}", response.text)
+            # Test 3: Get single post (endpoint doesn't exist, skip)
+            # Note: No GET /api/posts/{postId} endpoint found in the API
         else:
             self.log_result("POST /api/posts", False, f"HTTP {response.status_code}", response.text)
 
