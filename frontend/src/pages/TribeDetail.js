@@ -1089,4 +1089,159 @@ const TrainerCard = ({ trainer, isAdmin, onRemove, navigate }) => (
   </div>
 );
 
+// Event Card
+const EventCard = ({ event }) => (
+  <div className="p-4 rounded-xl border border-pink-500/30 bg-gradient-to-br from-pink-500/10 to-orange-500/5">
+    {event.imageUrl && <img src={event.imageUrl} alt={event.title} className="w-full h-32 object-cover rounded-lg mb-3" />}
+    <div className="flex items-start justify-between mb-2">
+      <div>
+        <h4 className="font-bold text-white">{event.title}</h4>
+        <p className="text-pink-400 text-sm flex items-center gap-1"><Calendar size={14} />{event.date} {event.time && `• ${event.time}`}</p>
+      </div>
+      <span className={`px-2 py-1 rounded-full text-xs ${event.isFree ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+        {event.isFree ? 'Free' : `₹${event.price}`}
+      </span>
+    </div>
+    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{event.description}</p>
+    <div className="flex items-center justify-between">
+      <span className="text-xs text-gray-500">{event.location || 'Online'}</span>
+      <button className="px-4 py-1.5 bg-pink-500 text-white rounded-lg text-sm font-semibold">RSVP</button>
+    </div>
+  </div>
+);
+
+// Service Card
+const ServiceCard = ({ service }) => (
+  <div className="p-4 rounded-xl border border-green-500/30 bg-gradient-to-br from-green-500/10 to-teal-500/5">
+    {service.imageUrl && <img src={service.imageUrl} alt={service.title} className="w-full h-32 object-cover rounded-lg mb-3" />}
+    <h4 className="font-bold text-white">{service.title}</h4>
+    <p className="text-green-400 text-sm capitalize">{service.category}</p>
+    <p className="text-gray-400 text-sm mt-2 line-clamp-2">{service.description}</p>
+    <div className="flex items-center justify-between mt-3">
+      <span className="text-white font-semibold">{service.price ? `₹${service.price}` : 'Contact for price'}</span>
+      <span className="text-xs text-gray-500 capitalize">{service.priceType}</span>
+    </div>
+  </div>
+);
+
+// Portfolio Card
+const PortfolioCard = ({ portfolio }) => (
+  <div className="rounded-xl border border-pink-500/30 overflow-hidden bg-gradient-to-br from-pink-500/5 to-purple-500/5">
+    {portfolio.images?.[0] && <img src={portfolio.images[0]} alt={portfolio.title} className="w-full h-40 object-cover" />}
+    <div className="p-4">
+      <h4 className="font-bold text-white">{portfolio.title}</h4>
+      <p className="text-pink-400 text-sm capitalize">{portfolio.category}</p>
+      <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
+        <span>👁 {portfolio.views || 0}</span>
+        <span>❤️ {portfolio.likes || 0}</span>
+      </div>
+    </div>
+  </div>
+);
+
+// Idea Card
+const IdeaCard = ({ idea }) => (
+  <div className="p-4 rounded-xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/5">
+    <div className="flex items-start justify-between mb-2">
+      <div className="flex items-center gap-2">
+        <Lightbulb size={20} className="text-yellow-400" />
+        <h4 className="font-bold text-white">{idea.title}</h4>
+      </div>
+      <span className={`px-2 py-1 rounded-full text-xs ${
+        idea.stage === 'concept' ? 'bg-yellow-500/20 text-yellow-400' :
+        idea.stage === 'validating' ? 'bg-blue-500/20 text-blue-400' :
+        idea.stage === 'building' ? 'bg-purple-500/20 text-purple-400' : 'bg-green-500/20 text-green-400'
+      }`}>{idea.stage}</span>
+    </div>
+    <p className="text-gray-400 text-sm mb-2">{idea.problem}</p>
+    <div className="flex items-center justify-between mt-3">
+      <div className="flex items-center gap-2">
+        <img src={idea.author?.avatar} alt="" className="w-6 h-6 rounded-full" />
+        <span className="text-xs text-gray-400">{idea.author?.name}</span>
+      </div>
+      <div className="flex items-center gap-1 text-yellow-400">
+        <span>⬆️</span>
+        <span className="text-sm font-semibold">{idea.votes || 0}</span>
+      </div>
+    </div>
+  </div>
+);
+
+// Showcase Card (Startup)
+const ShowcaseCard = ({ showcase }) => (
+  <div className="rounded-xl border border-purple-500/30 overflow-hidden bg-gradient-to-br from-purple-500/5 to-pink-500/5">
+    {showcase.images?.[0] && <img src={showcase.images[0]} alt={showcase.title} className="w-full h-32 object-cover" />}
+    <div className="p-4">
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="font-bold text-white">{showcase.title}</h4>
+        {showcase.featured && <span className="px-2 py-0.5 bg-yellow-500 text-black text-xs rounded-full font-semibold">Featured</span>}
+      </div>
+      <p className="text-purple-400 text-sm">{showcase.stage} • {showcase.fundingStage}</p>
+      <p className="text-gray-400 text-sm mt-2 line-clamp-2">{showcase.description}</p>
+      {showcase.metrics && <p className="text-green-400 text-sm mt-2 font-semibold">{showcase.metrics}</p>}
+      <div className="flex flex-wrap gap-1 mt-2">
+        {showcase.achievements?.slice(0, 2).map((a, i) => (
+          <span key={i} className="px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-full text-xs">🏆 {a}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+// Resource Card
+const ResourceCard = ({ resource }) => (
+  <div className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/5">
+    <div className="flex items-start gap-3">
+      {resource.thumbnailUrl ? (
+        <img src={resource.thumbnailUrl} alt="" className="w-16 h-16 rounded-lg object-cover" />
+      ) : (
+        <div className="w-16 h-16 rounded-lg bg-blue-500/20 flex items-center justify-center">
+          <BookOpen size={24} className="text-blue-400" />
+        </div>
+      )}
+      <div className="flex-1 min-w-0">
+        <h4 className="font-bold text-white truncate">{resource.title}</h4>
+        <p className="text-blue-400 text-sm capitalize">{resource.type} • {resource.category}</p>
+        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+          <span>📥 {resource.downloads || 0}</span>
+          {resource.isPremium && <span className="text-yellow-400">💰 ₹{resource.price}</span>}
+        </div>
+      </div>
+    </div>
+    <div className="flex flex-wrap gap-1 mt-3">
+      {resource.tags?.slice(0, 3).map((t, i) => (
+        <span key={i} className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded-full text-xs">#{t}</span>
+      ))}
+    </div>
+  </div>
+);
+
+// Collaboration Card
+const CollaborationCard = ({ collab }) => (
+  <div className="p-4 rounded-xl border border-violet-500/30 bg-gradient-to-br from-violet-500/10 to-purple-500/5">
+    <div className="flex items-start justify-between mb-2">
+      <div>
+        <h4 className="font-bold text-white">{collab.title}</h4>
+        <p className="text-violet-400 text-sm capitalize">{collab.type}</p>
+      </div>
+      <span className={`px-2 py-1 rounded-full text-xs ${
+        collab.compensation === 'paid' ? 'bg-green-500/20 text-green-400' : 'bg-violet-500/20 text-violet-400'
+      }`}>{collab.compensation}</span>
+    </div>
+    <p className="text-gray-400 text-sm mb-3 line-clamp-2">{collab.description}</p>
+    <div className="flex flex-wrap gap-1 mb-3">
+      {collab.lookingFor?.slice(0, 3).map((r, i) => (
+        <span key={i} className="px-2 py-0.5 bg-violet-500/20 text-violet-400 rounded-full text-xs">{r}</span>
+      ))}
+    </div>
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <img src={collab.author?.avatar} alt="" className="w-6 h-6 rounded-full" />
+        <span className="text-xs text-gray-400">{collab.author?.name}</span>
+      </div>
+      <button className="px-4 py-1.5 bg-violet-500 text-white rounded-lg text-sm font-semibold">Apply</button>
+    </div>
+  </div>
+);
+
 export default TribeDetail;
