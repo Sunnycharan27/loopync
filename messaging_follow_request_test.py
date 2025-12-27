@@ -296,8 +296,8 @@ class MessagingFollowRequestTester:
     
     def test_get_follow_requests(self):
         """Test Get Follow Requests - GET /api/users/{userId}/follow-requests"""
-        response = self.make_request("GET", f"/users/{self.admin_id}/follow-requests",
-                                   token=self.admin_token)
+        response = self.make_request("GET", f"/users/{self.test_user_2_id}/follow-requests",
+                                   token=self.test_user_2_token)
         
         if response and response.status_code == 200:
             follow_requests = response.json()
