@@ -703,7 +703,7 @@ const Settings = () => {
 
       <section>
         <h3 className="text-white font-bold text-lg mb-3">1. Introduction</h3>
-        <p>Loopync Private Limited ("Company", "we", "us", or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Platform. This policy complies with:</p>
+        <p>Loopync Private Limited (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Platform. This policy complies with:</p>
         <ul className="list-disc pl-5 space-y-1 mt-2">
           <li>Digital Personal Data Protection Act, 2023</li>
           <li>Information Technology Act, 2000</li>
