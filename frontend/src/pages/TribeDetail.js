@@ -103,10 +103,13 @@ const TribeDetail = () => {
   const [showMenuItemModal, setShowMenuItemModal] = useState(false);
   const [showDealModal, setShowDealModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showAddTrainerModal, setShowAddTrainerModal] = useState(false);
+  const [trainers, setTrainers] = useState([]);
   const [skillFilter, setSkillFilter] = useState("");
 
   const tribeCategory = tribe?.category || 'default';
   const tabs = CATEGORY_TABS[tribeCategory] || CATEGORY_TABS.default;
+  const isAdmin = tribe?.creatorId === currentUser?.id || tribe?.admins?.includes(currentUser?.id);
 
   useEffect(() => {
     if (tribeId) fetchTribeDetails();
@@ -128,6 +131,7 @@ const TribeDetail = () => {
       case "challenges": await fetchChallenges(); break;
       case "menu": await fetchMenuItems(); break;
       case "deals": await fetchDeals(); break;
+      case "trainers": await fetchTrainers(); break;
       case "reviews": await fetchReviews(); break;
       default: break;
     }
