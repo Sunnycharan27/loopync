@@ -982,22 +982,269 @@ const Settings = () => {
 
   // About Section
   const renderAbout = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-2">
+      {/* App Header */}
       <div className="text-center">
-        <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
-          <Globe size={32} className="text-white" />
+        <div className="w-24 h-24 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+          <span className="text-4xl">🔄</span>
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Loopync</h2>
+        <h2 className="text-3xl font-bold text-white mb-1">Loopync</h2>
         <p className="text-gray-400">Version 1.0.0</p>
+        <p className="text-cyan-400 text-sm mt-1">India&apos;s Student-Centric Social Platform</p>
       </div>
 
-      <div className="glass-card p-6 rounded-xl">
-        <p className="text-gray-300 text-center mb-4">
-          India&apos;s Free-Speech Social × Vibe Video × Venues × Fintech Superapp
+      {/* About the App */}
+      <div className="glass-card p-5 rounded-xl">
+        <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2">
+          <span className="text-2xl">🚀</span> About Loopync
+        </h3>
+        <p className="text-gray-300 text-sm leading-relaxed">
+          Loopync is India&apos;s premier student-centric professional development platform that combines 
+          Instagram-like social features with LinkedIn-style professional networking. Built specifically 
+          for Indian students, it bridges the gap between academic life and professional development.
         </p>
-        <div className="text-sm text-gray-400 space-y-2">
-          <p>© 2025 Loopync</p>
-          <p>Made with ❤️ in India</p>
+        <div className="mt-4 p-3 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-lg border border-cyan-500/20">
+          <p className="text-cyan-400 text-xs font-semibold">🇮🇳 Made in India | For Indian Students</p>
+        </div>
+      </div>
+
+      {/* Key Features */}
+      <div className="glass-card p-5 rounded-xl">
+        <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+          <span className="text-2xl">✨</span> Key Features
+        </h3>
+        <div className="space-y-3">
+          {[
+            { icon: "📱", title: "Stories & Posts", desc: "Share moments with music (up to 60 sec clips)" },
+            { icon: "🎵", title: "Music Integration", desc: "Add songs to stories - search, preview & select your favorite part" },
+            { icon: "👥", title: "Dynamic Tribes", desc: "Join communities based on your interests" },
+            { icon: "💼", title: "Jobs & Internships", desc: "Find opportunities within your tribes" },
+            { icon: "🏆", title: "Skill Endorsements", desc: "Get endorsed by peers for your skills" },
+            { icon: "🚀", title: "Startup Showcase", desc: "Showcase your startup to the community" },
+            { icon: "📚", title: "Free Resources", desc: "Share and download learning resources" },
+            { icon: "🎙️", title: "VibeRooms", desc: "Audio chat rooms for live discussions" },
+          ].map((feature, i) => (
+            <div key={i} className="flex items-start gap-3 p-2 hover:bg-gray-800/30 rounded-lg transition">
+              <span className="text-xl">{feature.icon}</span>
+              <div>
+                <p className="text-white font-medium text-sm">{feature.title}</p>
+                <p className="text-gray-400 text-xs">{feature.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* How to Use */}
+      <div className="glass-card p-5 rounded-xl">
+        <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+          <span className="text-2xl">📖</span> How to Use Loopync
+        </h3>
+        <div className="space-y-4">
+          <div className="border-l-2 border-cyan-500 pl-4">
+            <p className="text-cyan-400 font-semibold text-sm">Step 1: Create Your Profile</p>
+            <p className="text-gray-400 text-xs mt-1">Add your bio, skills, avatar, and professional details</p>
+          </div>
+          <div className="border-l-2 border-purple-500 pl-4">
+            <p className="text-purple-400 font-semibold text-sm">Step 2: Join Tribes</p>
+            <p className="text-gray-400 text-xs mt-1">Browse categories like Tech, College, Fitness, Food and join communities</p>
+          </div>
+          <div className="border-l-2 border-pink-500 pl-4">
+            <p className="text-pink-400 font-semibold text-sm">Step 3: Share Content</p>
+            <p className="text-gray-400 text-xs mt-1">Post updates, stories with music, projects, and resources</p>
+          </div>
+          <div className="border-l-2 border-yellow-500 pl-4">
+            <p className="text-yellow-400 font-semibold text-sm">Step 4: Connect & Grow</p>
+            <p className="text-gray-400 text-xs mt-1">Follow people, get endorsements, and find opportunities</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Adding Music to Stories */}
+      <div className="glass-card p-5 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10">
+        <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+          <span className="text-2xl">🎵</span> Adding Music to Stories
+        </h3>
+        <div className="space-y-3 text-sm">
+          <div className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">1.</span>
+            <p className="text-gray-300">Tap &quot;Add Music&quot; when creating a story or post</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">2.</span>
+            <p className="text-gray-300">Search for any song or browse trending tracks</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">3.</span>
+            <p className="text-gray-300">Preview the song and tap to select</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">4.</span>
+            <p className="text-gray-300">Choose clip duration: <span className="text-cyan-400 font-semibold">15s, 30s, 45s, or 60s</span></p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">5.</span>
+            <p className="text-gray-300">Use the <span className="text-pink-400">waveform slider</span> to pick your favorite part of the song</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">6.</span>
+            <p className="text-gray-300">Tap &quot;Use This Clip&quot; to add it to your story!</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Tribe Categories */}
+      <div className="glass-card p-5 rounded-xl">
+        <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+          <span className="text-2xl">🏷️</span> Tribe Categories & Use Cases
+        </h3>
+        <div className="space-y-4">
+          {/* College Tribe */}
+          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">🎓</span>
+              <h4 className="text-blue-400 font-bold">College Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For students to connect with their college community</p>
+            <div className="flex flex-wrap gap-1">
+              {["Projects", "Certifications", "Teams", "Jobs", "Resources"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: Find teammates for hackathons, share notes, discover job opportunities</p>
+          </div>
+
+          {/* Tech Tribe */}
+          <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">💻</span>
+              <h4 className="text-purple-400 font-bold">Tech Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For developers, designers, and tech enthusiasts</p>
+            <div className="flex flex-wrap gap-1">
+              {["Projects", "Ideas", "Startups", "Jobs", "Teams"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: Share your projects, pitch startup ideas, find co-founders</p>
+          </div>
+
+          {/* Fitness Tribe */}
+          <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">💪</span>
+              <h4 className="text-green-400 font-bold">Fitness Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For fitness enthusiasts and gym goers</p>
+            <div className="flex flex-wrap gap-1">
+              {["Workouts", "Challenges", "Trainers", "Events"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: Share workout routines, join fitness challenges, find trainers</p>
+          </div>
+
+          {/* Food Tribe */}
+          <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">🍔</span>
+              <h4 className="text-orange-400 font-bold">Food Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For foodies and restaurant owners</p>
+            <div className="flex flex-wrap gap-1">
+              {["Menu", "Deals", "Events", "Reviews"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: Discover restaurants, post reviews, find food deals</p>
+          </div>
+
+          {/* Business Tribe */}
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">🏢</span>
+              <h4 className="text-emerald-400 font-bold">Business Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For entrepreneurs and service providers</p>
+            <div className="flex flex-wrap gap-1">
+              {["Services", "Portfolio", "Deals", "Reviews"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: List services, showcase portfolio, attract clients</p>
+          </div>
+
+          {/* Creative Tribe */}
+          <div className="p-3 rounded-xl bg-pink-500/10 border border-pink-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">🎨</span>
+              <h4 className="text-pink-400 font-bold">Creative Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For artists, designers, and creators</p>
+            <div className="flex flex-wrap gap-1">
+              {["Portfolio", "Collaborations", "Events"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-pink-500/20 text-pink-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: Showcase artwork, find collaboration partners, attend events</p>
+          </div>
+
+          {/* Startup Tribe */}
+          <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl">🚀</span>
+              <h4 className="text-yellow-400 font-bold">Startup Tribes</h4>
+            </div>
+            <p className="text-gray-300 text-xs mb-2">For founders and aspiring entrepreneurs</p>
+            <div className="flex flex-wrap gap-1">
+              {["Showcases", "Ideas", "Jobs", "Events"].map(t => (
+                <span key={t} className="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">{t}</span>
+              ))}
+            </div>
+            <p className="text-gray-500 text-xs mt-2 italic">Use case: Showcase startup, share ideas, hire talent, network</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact & Support */}
+      <div className="glass-card p-5 rounded-xl">
+        <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2">
+          <span className="text-2xl">📞</span> Contact & Support
+        </h3>
+        <div className="space-y-3">
+          <a 
+            href="mailto:loopyncpvt@gmail.com" 
+            className="flex items-center gap-3 p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20 hover:bg-cyan-500/20 transition"
+          >
+            <Mail size={20} className="text-cyan-400" />
+            <div>
+              <p className="text-white font-medium text-sm">Email Support</p>
+              <p className="text-cyan-400 text-xs">loopyncpvt@gmail.com</p>
+            </div>
+          </a>
+          <div className="text-center text-gray-500 text-xs mt-4">
+            <p>Response Time: Within 24 hours</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="text-center py-4">
+        <p className="text-gray-400 text-sm">© 2025 Loopync Private Limited</p>
+        <p className="text-gray-500 text-xs mt-1">Made with ❤️ in India</p>
+        <div className="flex justify-center gap-4 mt-3">
+          <button 
+            onClick={() => setActiveSection("terms")}
+            className="text-cyan-400 text-xs hover:underline"
+          >
+            Terms of Service
+          </button>
+          <button 
+            onClick={() => setActiveSection("privacy-policy")}
+            className="text-cyan-400 text-xs hover:underline"
+          >
+            Privacy Policy
+          </button>
         </div>
       </div>
     </div>
