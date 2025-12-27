@@ -737,6 +737,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ PDF Upload functionality fully tested and working correctly. Test Results: 1) Login with test@test.com/testpassword123 ✅ PASSED, 2) PDF Upload to /api/upload ✅ PASSED (File URL: /api/media/e19ea56a-3cf7-46d2-af16-619a27cddc5d), 3) Resource Creation ✅ PASSED (Resource ID: a0b43008-c31e-468a-8d0f-9784f00f95aa), 4) Resource Verification ✅ PASSED. All endpoints working: POST /api/upload (PDF file upload), POST /api/resources (resource creation), GET /api/resources (resource retrieval). Success Rate: 100% (4/4 tests passed)"
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE PDF RESOURCES TESTING COMPLETED - ALL TESTS PASSED (December 27, 2025): Executed focused test for Free Resources (Digital Products) upload feature with PDF files. Test Results: 1) Login with test@test.com/testpassword123 ✅ PASSED (User ID: a8d9808b-b47f-4efd-95cb-95b4f605bf82), 2) PDF Upload to /api/upload ✅ PASSED (File URL: /api/media/9161adfa-0c12-4588-a294-265419f7a593, Size: 471 bytes), 3) Digital Product Creation ✅ PASSED (Product ID: 4aef2fb9-afba-424e-8836-bf45517e1319, Category: pdfs, FileType: pdf), 4) Product Verification via GET /api/digital-products ✅ PASSED. File serving verified with proper content-type: application/pdf. NO 'file type not supported' errors found. Success Rate: 100% (4/4 tests passed). PDF upload functionality is working correctly."
 
   - task: "Follow Request System"
     implemented: true
