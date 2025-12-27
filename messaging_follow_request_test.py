@@ -348,8 +348,8 @@ class MessagingFollowRequestTester:
         """Test Reject Follow Request - POST /api/follow-requests/{requestId}/reject"""
         # Create another follow request to test rejection
         response = self.make_request("POST", f"/users/{self.test_user_id}/follow-request",
-                                   params={"fromUserId": self.admin_id},
-                                   token=self.admin_token)
+                                   params={"fromUserId": self.test_user_2_id},
+                                   token=self.test_user_2_token)
         
         if response and response.status_code == 200:
             result = response.json()
