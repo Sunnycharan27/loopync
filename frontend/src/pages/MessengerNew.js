@@ -176,7 +176,7 @@ const MessengerNew = () => {
     try {
       // Check if thread already exists
       const existingThread = threads.find(t => 
-        t.otherUser?.id === friend.id
+        t.otherUser?.id === user.id
       );
 
       if (existingThread) {
@@ -188,9 +188,9 @@ const MessengerNew = () => {
         return;
       }
 
-      // Create new thread
+      // Create new thread - backend will mark as request if not mutual follow
       const res = await axios.post(
-        `${API}/messenger/start?userId=${currentUser.id}&friendId=${friend.id}`
+        `${API}/messenger/start?userId=${currentUser.id}&friendId=${user.id}`
       );
 
       if (res.data.success) {
@@ -207,7 +207,7 @@ const MessengerNew = () => {
         setSearchResults([]);
         setIsSearching(false);
         
-        toast.success(`Started chat with ${friend.name}`);
+        toast.success(`Started chat with ${user.name}`);
       }
     } catch (error) {
       console.error('Error starting chat:', error);
