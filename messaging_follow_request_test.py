@@ -26,8 +26,8 @@ from datetime import datetime
 BASE_URL = "https://vibe-capsule.preview.emergentagent.com/api"
 TEST_USER_EMAIL = "test@test.com"
 TEST_USER_PASSWORD = "testpassword123"
-ADMIN_EMAIL = "admin@loopync.com"
-ADMIN_PASSWORD = "testpassword123"
+ADMIN_EMAIL = "loopyncpvt@gmail.com"
+ADMIN_PASSWORD = "admin@loopync2025"
 
 class MessagingFollowRequestTester:
     def __init__(self):
