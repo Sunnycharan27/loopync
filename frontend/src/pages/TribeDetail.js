@@ -228,6 +228,24 @@ const TribeDetail = () => {
     } catch (error) { console.error("Failed to fetch reviews"); }
   };
 
+  const fetchTrainers = async () => {
+    try {
+      const res = await axios.get(`${API}/tribes/${tribeId}/trainers`);
+      setTrainers(res.data || []);
+    } catch (error) { console.error("Failed to fetch trainers"); }
+  };
+
+  const removeTrainer = async (trainerId) => {
+    if (!confirm("Remove this trainer from the tribe?")) return;
+    try {
+      await axios.delete(`${API}/tribes/${tribeId}/trainers/${trainerId}?userId=${currentUser.id}`);
+      toast.success("Trainer removed");
+      fetchTrainers();
+    } catch (error) {
+      toast.error("Failed to remove trainer");
+    }
+  };
+
   const joinTribe = async () => {
     if (!currentUser) { toast.error("Please login to join"); navigate('/auth'); return; }
     setJoining(true);
