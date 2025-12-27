@@ -109,6 +109,7 @@ const Notifications = () => {
     switch (type) {
       case 'new_follower':
       case 'follow':
+      case 'follow_request':
         // Navigate to the follower's profile
         if (fromUserId || notif.fromUser?.id) {
           navigate(`/user/${fromUserId || notif.fromUser?.id}`);
