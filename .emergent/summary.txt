@@ -1,48 +1,38 @@
-<analysis>**original_problem_statement**: The user wants to build a student-centric professional development platform called Loopync.
-
-The core product requirements are broken into phases:
-- **Phase 1 (Core Student Identity):** Implement student profiles, projects, and certifications.
-- **Phase 2 (Collaboration & Discovery):** Add features for team formation, a skill-tagging system, and a read-only view for companies.
-- **Phase 3 (Career & Startup Ecosystem):** Build an internship hiring module, a startup showcase, and a reputation system.
-
-The project has since evolved to be a full-featured social media platform with a strong focus on community Tribes that have category-specific features (e.g., Fitness tribes have Trainers and Workouts, College tribes have Projects and Jobs). Recent user requests have focused on creating a polished, Instagram-like experience for stories and posts, including fully functional music selection and playback.
+<analysis>**original_problem_statement**: The user wants to build a student-centric professional development platform called Loopync. The initial vision included phases for student profiles, collaboration tools, and a career/startup ecosystem. The project has since evolved into a full-featured social media platform with a strong focus on community Tribes that have category-specific features and an Instagram-like experience for stories and posts, including a rich music selection feature. The user continues to request new features and refinements to existing ones.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a full-stack social media platform with a React frontend and FastAPI backend. Key features implemented include:
-- **User Authentication:** A complete multi-step signup flow and login system.
-- **Content Feed:** Users can create posts and short-form vertical videos (Reels).
-- **Dynamic Tribes:** A core feature where users can create and join communities based on categories (e.g., College, Tech, Fitness, Food). Each tribe's detail page dynamically shows relevant tabs and features.
-- **Instagram-like Stories (VibeCapsules):** A fully-featured story creation and viewing system. This includes:
-    - Photo and video uploads.
-    - **Functional Music Integration (Deezer API):** Users can search for any song, select a 30-second clip with a visual slider, and add it to stories and posts. This was migrated from Spotify to Deezer to ensure reliable audio previews for all tracks.
-    - **Auto-playing Music:** Music automatically plays when viewing a story or when a post with music scrolls into view. A mute button is available in the story viewer.
-    - Location tagging.
-- **Content Creation for Tribes:** Modals and backend APIs exist for creating content in most tribe tabs, including Workouts, Challenges, Menu Items, Deals, Reviews, and Trainers.
-- **Skill-Based Discovery:** Users can click on skill tags on profiles, which filters the People tab on the Discover page to show users with that skill.
-- **Admin Features:** Tribe admins can add/remove Trainers in Fitness tribes.
+The application is a full-stack social media platform using React and FastAPI. Key implemented features are:
+-   **User Authentication**: A complete multi-step signup flow and login system.
+-   **Content Creation**: A main feed for posts, Reels-style videos, and a full-featured story creator (VibeCapsules).
+-   **Dynamic Tribes**: A core feature where users can create and join communities based on categories (e.g., College, Tech, Fitness). Each tribe's detail page dynamically shows relevant tabs and content creation modals (Projects, Jobs, Workouts, Ideas, etc.). All planned tribe content types are now fully implemented on both frontend and backend.
+-   **Advanced Music Integration**: Users can search for music (via Deezer), and select a clip of a chosen duration (15s, 30s, 45s, 60s) from the *entire song's timeline* using a visual slider and clickable waveform.
+-   **File Uploads**: Users can upload various file types (PDF, DOC, ZIP) in the Free Resources discovery section and within relevant Tribe tabs.
+-   **Feedback & Support System**: The Settings page includes a Report a Problem chatbot, a Suggestions modal, and all contact points email .
+-   **Legal Pages**: The Settings page contains comprehensive, Indian law-compliant (DPDP Act 2023) Terms of Service and Privacy Policy sections.
+-   **Admin Dashboard**: An  page accessible to admins shows user-submitted reports and suggestions, with functionality to filter and update their status.
+-   **Detailed About Page**: A comprehensive section in Settings explaining the app's features, How to Use guides, and use cases for different tribe categories.
 
 **Last working item**:
--   **Last item agent was working**: Fulfilling the user's request to create all these pages fully fledged for the remaining Tribe categories. The agent created 8 new content creation modal components for tabs like Projects, Jobs, Certifications, Ideas, etc. It was about to start implementing the backend APIs and integrating these new modals into the  page.
+-   **Last item agent was working**: The user reported that while they can visually select a specific part of a song in the  (e.g., from 1:35 to 2:05), the audio they hear is still the default 30-second preview provided by the Deezer API, not the segment they selected. This creates a disconnect between the UI and the audio playback. The agent identified this as a fundamental limitation of the Deezer API's free tier and began searching for alternative music APIs that could provide full playback control.
 -   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: Frontend testing agent. The test should cover creating a tribe for each category (e.g., College, Tech) and verifying that the corresponding new content creation modals (e.g., Create Project, Add Job) can be opened successfully from the tab buttons.
+-   **Which testing method agent to use?**: Backend testing agent (to validate any new music API integration) and Frontend testing agent (to verify the updated music picker UI/UX).
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: (P0) Complete Fully Fledged Tribe Pages**
-    -   **Attempted fixes**: The agent has already generated the frontend modal component stubs for the missing tribe features (Projects, Jobs, Certifications, Ideas, Events, etc.).
+-   **Issue 1: (P0) Music Picker Playback Does Not Match User Selection**
+    -   **Attempted fixes**: The agent successfully built a UI that allows a user to *visually* select a time-stamped clip from a full song's duration. However, the playback is still tied to Deezer's fixed 30-second preview. The agent's last action was to search for alternative APIs.
     -   **Next debug checklist**:
-        1.  In , create the backend API endpoints (POST, GET, DELETE) for each new content type (projects, jobs, certifications, etc.), mimicking the structure of existing endpoints like  or .
-        2.  In , import the 8 new modal components.
-        3.  Add state variables to control the visibility of each new modal (e.g., ).
-        4.  Update the  handlers on the tab buttons to open the correct modals instead of showing a toast notification.
-        5.  Add logic to fetch and display the newly created content within each respective tab.
-        6.  Wire the modals'  callbacks to refresh the content list.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is the current, active user request. Completing it will make the category-based Tribes feature complete and functional across all defined categories.
+        1.  Complete the web search for music APIs that allow playback of specific song segments (e.g., YouTube Music API, SoundCloud API).
+        2.  Present findings to the user, explaining the trade-offs (e.g., API keys required, different usage limits).
+        3.  If an alternative is chosen, use  to get an implementation plan.
+        4.  Integrate the new API, replacing the Deezer preview logic in .
+        5.  If no viable alternative is found, implement a UI change in  to clearly message the user: Playback is a 30s sample. Your selected clip from X:XX to Y:YY will be saved with your story. This manages expectations.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a direct user request to perfect a core feature. The current behavior is confusing and undermines the advanced selection UI.
     -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: N
+    -   **Is recurring issue?**: Y
     -   **Should Test frontend/backend/both after fix?**: Both
     -   **Blocked on other issue**: None
 
@@ -51,24 +41,21 @@ The application is a full-stack social media platform with a React frontend and 
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks**:
-    -   **(P1) End-to-End Testing of Phase 2/3 Stubs**: The  and  pages exist and appear functional, but the full workflow (creating an internship, then finding it via discovery) has not been tested. This should be verified.
-    -   **(P2) Implement Follow Request System**: Currently, following is immediate. A request/approve system needs to be built.
+    -   **(P1) Urgent Refactoring**: The  and  files are now monoliths (11k+ and 1.2k+ lines respectively). They must be broken down into smaller, manageable components/routers to ensure project stability.
+    -   **(P2) End-to-End Testing of Phase 2/3 Stubs**: The  and  pages exist but the full workflow (creating an internship, then finding it) remains untested.
+    -   **(P3) Implement Follow Request System**: Currently, following is immediate. A request/approve system needs to be built.
 -   **Future Tasks**:
-    -   Implement the **Startup Showcase** and **Reputation System** from Phase 3.
+    -   Implement the **Startup Showcase** and **Reputation System** from the original Phase 3 plan.
     -   Enhance the messaging system to support sharing posts.
     -   Conduct end-to-end testing of the VibeRooms (Agora.io) feature.
 
 **Completed work in this session**
--   **Instagram-like Story/Music Feature (DONE)**: Fixed and completely overhauled the story creation feature. This included:
-    - Migrating from Spotify to the **Deezer API** to ensure reliable 30-second audio previews for all songs.
-    - Fixing multiple critical bugs, including story post failures and null-reference errors during audio playback.
-    - Implementing a visual slider for selecting song clips.
-    - Adding auto-play for music in stories and posts (on-scroll), with a mute button in the story viewer.
-    - Fixing file upload issues in the .
--   **Tribe Content Creation (DONE for most)**: Implemented the frontend modals and backend APIs for creating Workouts, Challenges, Menu Items, Deals, and Reviews within specific tribe categories.
--   **Add Trainers Feature (DONE)**: Implemented the ability for admins of Fitness tribes to add and remove trainers.
--   **Skill Tagging System (DONE)**: Made skill tags clickable, leading to a filtered user discovery page.
--   **UI Text Cleanup (DONE)**: Changed Add Music from Spotify to Add Music as requested.
+-   **Fully Fledged Tribe Pages (DONE)**: Implemented frontend modals and backend APIs for all remaining content types (Ideas, Showcases, Resources, etc.), making all Tribe tabs fully functional.
+-   **PDF/Document Upload Fix (DONE)**: Fixed file upload restrictions, enabling users to upload PDFs, DOCs, and other documents in the Free Resources and Tribe sections.
+-   **Feedback & Support System (DONE)**: Created a Report a Problem chatbot, a Suggestions modal, and updated all contact points to use the  email.
+-   **Admin Feedback Dashboard (DONE)**: Added a new section in the Admin Dashboard to view and manage all user-submitted reports and suggestions.
+-   **Legal & About Pages (DONE)**: Added comprehensive, Indian law-compliant (DPDP Act 2023) Terms of Service and Privacy Policy, along with a detailed About section explaining all app features.
+-   **Full Song Music Selector (DONE - UI/Selection Logic)**: Re-engineered the  component to feature a slider representing the full song's duration, allowing users to visually select a precise clip.
 
 **Earlier issues found/mentioned but not fixed**
 -   **VibeRooms Feature**: The Agora.io-based audio chat room feature remains untested end-to-end.
@@ -77,71 +64,79 @@ The application is a full-stack social media platform with a React frontend and 
 -   None.
 
 **Code Architecture**
-skill
+
 
 **Key Technical Concepts**
--   **Third-Party API Migration**: Switched from Spotify API to Deezer API to overcome  limitations, ensuring a core feature works reliably.
--   **Intersection Observer API**: Used in  to trigger music auto-play only when the component is visible on the screen, improving performance and user experience.
--   **Robust Audio Handling**: Implemented complex state management (, ), event listeners (, , ), and cleanup effects ( return functions) across multiple components (, , ) to prevent race conditions and null reference errors.
--   **Dynamic Backend Routing**:  was expanded with dozens of new endpoints for the dynamic, category-specific tribe features.
+-   **API Limitation Workaround**: The current P0 issue revolves around finding a solution (technical or UX-based) for the limitations of a third-party API (Deezer).
+-   **Monolithic Codebases**: The agent's rapid feature additions have resulted in massive, hard-to-maintain files (, ), creating significant technical debt.
+-   **Full-Stack Feature Slice**: The feedback system (from frontend modal -> backend API -> admin dashboard) is a prime example of a complete, vertically-sliced feature implementation.
 
 **key DB schema**
--   ****: No schema change, but logic now heavily relies on the  field.
--   ****: No schema change, but  field is now populated with Deezer track data.
--   ****: No schema change, but  field is now populated with Deezer track data.
--   **New Collections**:
-    -   : 
-    -   (Upcoming) New collections will be needed for , , , etc.
+-   ** (New)**: 
+-   **New Tribe Collections (all created)**: , , , , ,  following the pattern: 
+
+**changes in tech stack**
+-   None. The agent is about to research potential new music APIs which may introduce a change.
 
 **All files of reference**
--   **Current Task**: , , and the 8 new modal files in .
--   **Music/Story Core**: , , , .
--   **Tribe Features**: , .
+-   **Current Task (Music Picker)**: 
+-   **Refactoring Candidates**: , 
+-   **Admin/Feedback**: , 
 
 **Areas that need refactoring**:
--   ** Monolith**: This is now **CRITICAL**. The file has grown even larger with the addition of Deezer integration and numerous tribe-specific endpoints. It must be broken down into smaller, manageable  files (e.g., , , ). The current state is unsustainable and prone to errors.
+-   ** (CRITICAL)**: This file is now over 11,000 lines and dangerously unmanageable. It must be broken down into separate  files by feature (e.g., , , ).
+-   ** (CRITICAL)**: This file has ballooned to over 1,200 lines, containing UI and logic for profile settings, security, help, about, terms, and privacy. It must be refactored into smaller, distinct components.
+
+**key api endpoints**
+-   : Submits a new problem report or suggestion.
+-   : Retrieves all feedback for the admin dashboard.
+-   : Updates the status of a feedback item.
+-   : **Modified** to accept a wide range of document and archive file types.
+-   : A full suite of endpoints for all new tribe content.
 
 **Critical Info for New Agent**
-1.  **Finish the Tribe Pages First**: Your immediate priority is to implement the backend APIs and frontend integrations for the 8 new content modals the previous agent just created. This will complete the user's active request for fully fledged pages.
-2.  **The Music API is DEEZER, not Spotify**: All music functionality now relies on the Deezer API, accessed through endpoints like . Do not attempt to use or fix the old Spotify code; it was intentionally abandoned because it doesn't work for this use case.
-3.  **Refactor the Backend URGENTLY**: After completing the current task, the highest priority should be refactoring the monolithic  file into separate route files. The current size and complexity of this file pose a significant risk to future development. Propose this refactoring to the user as the next essential step.
-4.  **Test End-to-End Flows**: Many features have been built and tested in isolation. After the current task, it would be valuable to run comprehensive end-to-end tests, such as creating a new Job in a Tech tribe and then verifying it appears correctly.
+1.  **Solve the Music Playback Issue First**: Your immediate priority is the P0 issue. The user wants to *hear* the specific clip they select in the . The Deezer API cannot do this. You must either find and integrate a new API that can, or implement a clear UI message explaining the limitation to manage user expectations.
+2.  **URGENT - Propose Refactoring Next**: After the music picker, you MUST propose refactoring the monolithic  and  files. The project's stability is at risk. Frame this to the user as a necessary step to ensure future features can be added reliably.
+3.  **Admin Access**: An admin user exists with credentials  / . Use this to test admin-only features like the feedback dashboard at .
 
 **documents and test reports created in this job**
--    was frequently updated by the testing agents.
+-   
+-   
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.   - **Status: IN PROGRESS**. The agent created 8 modal components and was about to work on the backend.
-2.   - **Status: COMPLETED**.
-3.   - **Status: COMPLETED**.
-4.   - **Status: COMPLETED**.
-5.   (with screenshot of null reference error) - **Status: COMPLETED**.
-6.   - **Status: COMPLETED**. This prompted the switch from Spotify to Deezer.
-7.   (with screenshot of post failure) - **Status: COMPLETED**.
-8.   - **Status: COMPLETED**.
-9.   - **Status: COMPLETED**.
-10.  - **Status: Acknowledged**.
+1.  : **Status: IN PROGRESS**. The current P0 task.
+2.  : **Status: Partially Completed**. The selection UI was built, but the playback is the unresolved issue.
+3.  : **Status: COMPLETED**.
+4.  : **Status: COMPLETED**.
+5.  : **Status: COMPLETED**.
+6.  : **Status: COMPLETED**.
+7.  : **Status: COMPLETED**.
+8.  : **Status: COMPLETED**.
+9.  : **Status: COMPLETED**.
+10. : **Status: Acknowledged**.
 
 **Project Health Check:**
--   **Broken**: The functionality for adding content to several tribe tabs (Projects, Jobs, Ideas, etc.) is incomplete, as the backend and frontend integration for the newly created modals are missing.
+-   **Broken**: The core user experience of the  is broken. The UI allows for precise clip selection, but the audio playback does not honor it, which is highly misleading.
 -   **Mocked**: None.
 
 **3rd Party Integrations**
--   **Deezer API**: Used via direct  on the backend to search for tracks and get 30-second preview URLs. Does not require an API key for public search.
--   **lyricsgenius**: Python library used to fetch lyrics for the music picker UI.
--   : Used for client-side image generation.
--   Agora.io: Integrated for VibeRooms but the feature is untested.
--   Capacitor: Present for future mobile app development.
--   : **(Deprecated)** Still in  but no longer used in the application logic. Can be removed during the backend refactor.
+-   **Deezer API**: Used for music search. **Critical Limitation:** Only provides a fixed 30-second audio preview, which is the root cause of the current P0 issue.
+-   **lyricsgenius**: Used to fetch lyrics for the music picker UI.
+-   **Agora.io**: Integrated for VibeRooms but the feature remains untested.
+-   , , .
+-   : **(Deprecated)** Can be removed from .
 
 **Testing status**
--   **Testing agent used after significant changes**: YES. The testing agent was used extensively to verify bug fixes and new features, including the story creation flow, tribe content modals, and auto-playing music.
+-   **Testing agent used after significant changes**: YES, used for testing new features like the feedback system and tribe content APIs.
 -   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: The testing agent created and used temporary test scripts, results are summarized in .
+-   **Test files created**: Temporary test scripts were created by the testing agent; results are in .
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
--   **Login**:  / 
+-   **User**:  / 
+-   **Admin**:  / 
 
 **What agent forgot to execute**
--   The agent has been highly responsive to the user's immediate requests. The primary items not yet addressed are the long-term future tasks from the original product plan, such as the Startup Showcase, Reputation System, and end-to-end testing of the existing VibeRooms feature. These have been consistently de-prioritized in favor of new, more urgent user requests.</analysis>
+-   The agent has not yet acted on the critical need to refactor the  and  monoliths, despite the growing risk.
+-   Long-standing backlog items like end-to-end testing for  and the  workflow remain pending.</analysis>

@@ -290,7 +290,7 @@ All requested critical tests have been completed successfully.
 - Password: testpassword123
 
 ### Test Environment
-- Frontend URL: https://talentloop-4.preview.emergentagent.com
+- Frontend URL: https://vibe-capsule.preview.emergentagent.com
 - All tests performed on December 26, 2025
 - Browser: Playwright automation (Desktop viewport 1920x1080)
 
@@ -595,7 +595,7 @@ All requested critical tests have been completed successfully.
 ### ✅ ALL BACKEND APIS TESTED AND WORKING - 100% SUCCESS RATE
 
 **Test Environment:**
-- Backend URL: https://talentloop-4.preview.emergentagent.com/api
+- Backend URL: https://vibe-capsule.preview.emergentagent.com/api
 - Test Credentials: test@test.com / testpassword123
 - Total Tests: 27
 - Passed: 27 ✅

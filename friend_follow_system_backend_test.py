@@ -21,7 +21,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://talentloop-4.preview.emergentagent.com/api"
+BACKEND_URL = "https://vibe-capsule.preview.emergentagent.com/api"
 
 # Test accounts
 TEST_ACCOUNTS = {

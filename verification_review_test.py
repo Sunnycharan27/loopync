@@ -6,7 +6,7 @@ Test the verification review endpoint to ensure it works properly
 import requests
 import json
 
-BASE_URL = "https://talentloop-4.preview.emergentagent.com/api"
+BASE_URL = "https://vibe-capsule.preview.emergentagent.com/api"
 ADMIN_EMAIL = "loopyncpvt@gmail.com"
 ADMIN_PASSWORD = "ramcharan@123"
 

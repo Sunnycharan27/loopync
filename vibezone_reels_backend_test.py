@@ -13,7 +13,7 @@ Test Credentials:
 - Admin: loopyncpvt@gmail.com / ramcharan@123
 - Test User: test@example.com / test123
 
-Base URL: https://talentloop-4.preview.emergentagent.com
+Base URL: https://vibe-capsule.preview.emergentagent.com
 """
 
 import requests
@@ -23,7 +23,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://talentloop-4.preview.emergentagent.com/api"
+BASE_URL = "https://vibe-capsule.preview.emergentagent.com/api"
 ADMIN_EMAIL = "loopyncpvt@gmail.com"
 ADMIN_PASSWORD = "ramcharan@123"
 TEST_EMAIL = "test@example.com"
