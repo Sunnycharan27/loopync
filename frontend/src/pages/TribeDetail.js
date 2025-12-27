@@ -293,6 +293,55 @@ const TribeDetail = () => {
     } catch (error) { console.error("Failed to fetch trainers"); }
   };
 
+  const fetchEvents = async () => {
+    try {
+      const res = await axios.get(`${API}/events?tribeId=${tribeId}`);
+      setEvents(res.data || []);
+    } catch (error) { console.error("Failed to fetch events"); }
+  };
+
+  const fetchServices = async () => {
+    try {
+      const res = await axios.get(`${API}/services?tribeId=${tribeId}`);
+      setServices(res.data || []);
+    } catch (error) { console.error("Failed to fetch services"); }
+  };
+
+  const fetchPortfolios = async () => {
+    try {
+      const res = await axios.get(`${API}/portfolios?tribeId=${tribeId}`);
+      setPortfolios(res.data || []);
+    } catch (error) { console.error("Failed to fetch portfolios"); }
+  };
+
+  const fetchIdeas = async () => {
+    try {
+      const res = await axios.get(`${API}/ideas?tribeId=${tribeId}`);
+      setIdeas(res.data || []);
+    } catch (error) { console.error("Failed to fetch ideas"); }
+  };
+
+  const fetchShowcases = async () => {
+    try {
+      const res = await axios.get(`${API}/showcases?tribeId=${tribeId}`);
+      setShowcases(res.data || []);
+    } catch (error) { console.error("Failed to fetch showcases"); }
+  };
+
+  const fetchResources = async () => {
+    try {
+      const res = await axios.get(`${API}/resources?tribeId=${tribeId}`);
+      setResources(res.data || []);
+    } catch (error) { console.error("Failed to fetch resources"); }
+  };
+
+  const fetchCollaborations = async () => {
+    try {
+      const res = await axios.get(`${API}/collaborations?tribeId=${tribeId}`);
+      setCollaborations(res.data || []);
+    } catch (error) { console.error("Failed to fetch collaborations"); }
+  };
+
   const removeTrainer = async (trainerId) => {
     if (!confirm("Remove this trainer from the tribe?")) return;
     try {
