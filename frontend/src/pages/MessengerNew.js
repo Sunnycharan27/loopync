@@ -137,10 +137,49 @@ const MessengerNew = () => {
   const loadThreads = async (userId) => {
     try {
       const res = await axios.get(`${API}/messenger/threads?userId=${userId}`);
-      setThreads(res.data.threads || []);
+      const allThreads = res.data.threads || [];
+      // Filter out request threads from main list
+      setThreads(allThreads.filter(t => !t.isRequest || t.isAccepted || t.requestFromId === userId));
     } catch (error) {
       console.error('Error loading threads:', error);
       toast.error('Failed to load conversations');
+    }
+  };
+
+  const loadMessageRequests = async (userId) => {
+    try {
+      const res = await axios.get(`${API}/messenger/requests?userId=${userId}`);
+      setMessageRequests(res.data.requests || []);
+    } catch (error) {
+      console.error('Error loading message requests:', error);
+    }
+  };
+
+  const acceptMessageRequest = async (threadId) => {
+    try {
+      await axios.post(`${API}/messenger/requests/${threadId}/accept?userId=${currentUser.id}`);
+      toast.success('Message request accepted!');
+      // Move from requests to threads
+      const request = messageRequests.find(r => r.id === threadId);
+      if (request) {
+        setMessageRequests(prev => prev.filter(r => r.id !== threadId));
+        setThreads(prev => [{ ...request, isRequest: false, isAccepted: true }, ...prev]);
+      }
+      setShowRequests(false);
+    } catch (error) {
+      console.error('Error accepting request:', error);
+      toast.error('Failed to accept request');
+    }
+  };
+
+  const rejectMessageRequest = async (threadId) => {
+    try {
+      await axios.post(`${API}/messenger/requests/${threadId}/reject?userId=${currentUser.id}`);
+      toast.success('Message request declined');
+      setMessageRequests(prev => prev.filter(r => r.id !== threadId));
+    } catch (error) {
+      console.error('Error rejecting request:', error);
+      toast.error('Failed to decline request');
     }
   };
 
