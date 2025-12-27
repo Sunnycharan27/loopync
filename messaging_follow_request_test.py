@@ -225,8 +225,8 @@ class MessagingFollowRequestTester:
             return False
         
         response = self.make_request("POST", f"/messenger/requests/{self.created_thread_id}/accept",
-                                   params={"userId": self.admin_id},
-                                   token=self.admin_token)
+                                   params={"userId": self.test_user_2_id},
+                                   token=self.test_user_2_token)
         
         if response and response.status_code == 200:
             result = response.json()
