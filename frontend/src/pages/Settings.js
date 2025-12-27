@@ -711,6 +711,188 @@ const Settings = () => {
           {activeSection === "about" && renderAbout()}
         </div>
       </div>
+
+      {/* Report Problem Bot Modal */}
+      {showReportBot && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center">
+          <div className="w-full sm:max-w-md bg-[#1a0b2e] sm:rounded-2xl rounded-t-2xl max-h-[80vh] flex flex-col">
+            {/* Header */}
+            <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
+                  <Bug size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold">Report a Problem</h3>
+                  <p className="text-gray-400 text-xs">We're here to help!</p>
+                </div>
+              </div>
+              <button onClick={() => setShowReportBot(false)} className="p-2 hover:bg-gray-800 rounded-full">
+                <X size={20} className="text-gray-400" />
+              </button>
+            </div>
+            
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {reportMessages.map(msg => (
+                <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-3 rounded-2xl ${
+                    msg.type === 'user' 
+                      ? 'bg-cyan-500 text-black rounded-br-sm' 
+                      : 'bg-gray-800 text-white rounded-bl-sm'
+                  }`}>
+                    <p className="text-sm whitespace-pre-line">{msg.text}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Quick Options */}
+              {reportStep === "type" && (
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {["Bug/Error", "App Crash", "Feature Not Working", "UI Issue", "Performance", "Other"].map(opt => (
+                    <button 
+                      key={opt} 
+                      onClick={() => handleReportOption(opt)}
+                      className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm transition"
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Input */}
+            {reportStep === "describe" && (
+              <div className="p-4 border-t border-gray-800">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={reportInput}
+                    onChange={(e) => setReportInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleReportSubmit()}
+                    placeholder="Describe your problem..."
+                    className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  />
+                  <button 
+                    onClick={handleReportSubmit}
+                    disabled={!reportInput.trim() || submittingFeedback}
+                    className="p-3 bg-cyan-500 text-black rounded-xl disabled:opacity-50"
+                  >
+                    {submittingFeedback ? (
+                      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Send size={20} />
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            {reportStep === "done" && (
+              <div className="p-4 border-t border-gray-800">
+                <button 
+                  onClick={() => setShowReportBot(false)}
+                  className="w-full py-3 bg-cyan-500 text-black font-semibold rounded-xl"
+                >
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Suggestions Modal */}
+      {showSuggestionModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-[#1a0b2e] rounded-2xl overflow-hidden">
+            {/* Header */}
+            <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center">
+                  <Lightbulb size={20} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold">Share Your Ideas</h3>
+                  <p className="text-gray-400 text-xs">Help us improve Loopync!</p>
+                </div>
+              </div>
+              <button onClick={() => setShowSuggestionModal(false)} className="p-2 hover:bg-gray-800 rounded-full">
+                <X size={20} className="text-gray-400" />
+              </button>
+            </div>
+            
+            {/* Form */}
+            <div className="p-4 space-y-4">
+              {/* Category */}
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Category</label>
+                <div className="flex flex-wrap gap-2">
+                  {["New Feature", "UI/UX", "Performance", "Content", "Other"].map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => setSuggestionData(prev => ({ ...prev, category: cat }))}
+                      className={`px-4 py-2 rounded-full text-sm transition ${
+                        suggestionData.category === cat 
+                          ? 'bg-yellow-500 text-black' 
+                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Title */}
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Title *</label>
+                <input
+                  type="text"
+                  value={suggestionData.title}
+                  onChange={(e) => setSuggestionData(prev => ({ ...prev, title: e.target.value }))}
+                  placeholder="Brief title for your suggestion"
+                  className="w-full px-4 py-3 bg-gray-800 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                />
+              </div>
+              
+              {/* Description */}
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Description *</label>
+                <textarea
+                  value={suggestionData.description}
+                  onChange={(e) => setSuggestionData(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Describe your idea in detail..."
+                  rows={4}
+                  className="w-full px-4 py-3 bg-gray-800 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none"
+                />
+              </div>
+              
+              {/* Submit */}
+              <button
+                onClick={handleSuggestionSubmit}
+                disabled={!suggestionData.title.trim() || !suggestionData.description.trim() || submittingFeedback}
+                className="w-full py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-bold rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {submittingFeedback ? (
+                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <Zap size={20} />
+                    Submit Suggestion
+                  </>
+                )}
+              </button>
+              
+              {/* Email Info */}
+              <p className="text-center text-gray-500 text-xs">
+                Or email us directly at <a href="mailto:loopyncpvt@gmail.com" className="text-cyan-400">loopyncpvt@gmail.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
