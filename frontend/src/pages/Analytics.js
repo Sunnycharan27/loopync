@@ -64,6 +64,34 @@ const Analytics = () => {
     }
   };
 
+  const fetchFeedback = async () => {
+    try {
+      const res = await axios.get(`${API}/feedback`);
+      setFeedback(res.data || []);
+    } catch (error) {
+      console.error("Failed to load feedback");
+    }
+  };
+
+  const updateFeedbackStatus = async (feedbackId, status) => {
+    try {
+      await axios.put(`${API}/feedback/${feedbackId}/status?status=${status}`);
+      toast.success(`Marked as ${status}`);
+      fetchFeedback();
+    } catch (error) {
+      toast.error("Failed to update status");
+    }
+  };
+
+  const filteredFeedback = feedback.filter(f => {
+    if (feedbackFilter === "all") return true;
+    if (feedbackFilter === "problems") return f.type === "problem";
+    if (feedbackFilter === "suggestions") return f.type === "suggestion";
+    if (feedbackFilter === "new") return f.status === "new";
+    if (feedbackFilter === "resolved") return f.status === "resolved";
+    return true;
+  });
+
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
       <TopHeader title="Analytics" subtitle="Track your performance" />
@@ -96,6 +124,17 @@ const Analytics = () => {
             {activeTab === "user" && <UserAnalytics data={analytics} />}
             {activeTab === "creator" && <CreatorDashboard data={analytics} />}
             {activeTab === "admin" && <AdminDashboard data={analytics} />}
+            {activeTab === "feedback" && (
+              <FeedbackDashboard 
+                feedback={filteredFeedback} 
+                filter={feedbackFilter}
+                setFilter={setFeedbackFilter}
+                onUpdateStatus={updateFeedbackStatus}
+                totalCount={feedback.length}
+                problemsCount={feedback.filter(f => f.type === "problem").length}
+                suggestionsCount={feedback.filter(f => f.type === "suggestion").length}
+              />
+            )}
           </>
         )}
       </div>
