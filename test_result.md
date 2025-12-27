@@ -1315,3 +1315,46 @@ The Admin Feedback Dashboard functionality is FULLY WORKING and production ready
 - ✅ 30-second preview infrastructure verified
 - ✅ Simplified UI confirmed (no duration/waveform selectors)
 - ✅ Story integration ready
+
+---
+
+## Messaging System Update (December 27, 2025)
+
+### Changes Made - Message Requests System
+1. **Removed friends-only restriction** - Anyone can now message anyone
+2. **Added Message Requests** - When a non-follower sends a message, it appears as a "Message Request"
+3. **Message Requests UI** - Added purple banner in messenger showing pending requests count
+4. **Accept/Reject Requests** - Users can accept or decline message requests
+5. **Search People** - Changed from "Search friends" to "Search people" - searches all users
+
+### Backend Changes
+- Modified `/api/messenger/start` to allow anyone to start conversations
+- Added `/api/messenger/requests` to get pending message requests
+- Added `/api/messenger/requests/{threadId}/accept` to accept requests  
+- Added `/api/messenger/requests/{threadId}/reject` to reject requests
+- Threads from non-followers are marked with `isRequest: true`
+
+### Frontend Changes (MessengerNew.js)
+- Updated search to use `/api/users/search` instead of friends API
+- Added `messageRequests` state and `showRequests` modal
+- Added Message Requests banner with count
+- Added Message Requests modal with accept/reject buttons
+- Updated text from "friends" to "people"
+
+### Follow Request System (InstagramProfile.js)
+- Added Follow Request button state for non-followers
+- Shows "Requested" badge after sending follow request
+- Added Follow Requests modal on own profile (when requests > 0)
+- Updated Notifications to handle `follow_request` type
+
+### Testing Required
+- Verify user search works in messenger
+- Verify starting a conversation with non-follower creates a request
+- Verify message requests appear for recipient
+- Verify accept/reject functionality
+- Verify follow request system on profiles
+
+### Removed Features (saved for future)
+- StartupShowcase.js - removed
+- ReputationBadge.js - removed
+- SharePostModal.js - removed
