@@ -243,15 +243,15 @@ class MessagingFollowRequestTester:
         """Test Reject Message Request - POST /api/messenger/requests/{threadId}/reject"""
         # Create another conversation to test rejection
         response = self.make_request("POST", "/messenger/start", 
-                                   params={"userId": self.admin_id, "friendId": self.test_user_id},
-                                   token=self.admin_token)
+                                   params={"userId": self.test_user_2_id, "friendId": self.test_user_id},
+                                   token=self.test_user_2_token)
         
         if response and response.status_code == 200:
             result = response.json()
             thread_id = result.get("threadId")
             
             if thread_id:
-                # Now reject this request from test user perspective
+                # Now reject this request from test user 1 perspective
                 response = self.make_request("POST", f"/messenger/requests/{thread_id}/reject",
                                            params={"userId": self.test_user_id},
                                            token=self.test_user_token)
