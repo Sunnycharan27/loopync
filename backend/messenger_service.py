@@ -52,11 +52,6 @@ class MessengerService:
         
     async def get_or_create_thread(self, user1_id: str, user2_id: str) -> dict:
         """Get existing thread or create new one between two users"""
-        # Check if users are friends
-        are_friends = await self.check_friendship(user1_id, user2_id)
-        if not are_friends:
-            raise HTTPException(status_code=403, detail="You can only message friends. Send a friend request first!")
-        
         # Sort user IDs to ensure consistent thread lookup
         participants = sorted([user1_id, user2_id])
         
