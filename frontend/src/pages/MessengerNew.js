@@ -1204,7 +1204,75 @@ const MessengerNew = () => {
               <Send size={40} className="text-cyan-400" />
             </div>
             <h2 className="text-2xl font-bold mb-2 text-white">Your Messages</h2>
-            <p className="text-gray-400">Send private messages to your friends</p>
+            <p className="text-gray-400">Send private messages to anyone</p>
+          </div>
+        </div>
+      )}
+
+      {/* Message Requests Modal */}
+      {showRequests && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center">
+          <div className="bg-[#0f021e] rounded-t-2xl sm:rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden border border-purple-500/30">
+            <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Inbox className="text-purple-400" size={24} />
+                <h2 className="text-lg font-bold text-white">Message Requests</h2>
+              </div>
+              <button 
+                onClick={() => setShowRequests(false)}
+                className="p-2 hover:bg-gray-800 rounded-full transition"
+              >
+                <X size={20} className="text-gray-400" />
+              </button>
+            </div>
+            
+            <div className="p-4 max-h-[60vh] overflow-y-auto">
+              {messageRequests.length === 0 ? (
+                <div className="text-center py-12">
+                  <Inbox size={48} className="mx-auto text-gray-600 mb-4" />
+                  <p className="text-gray-400">No message requests</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {messageRequests.map((request) => (
+                    <div key={request.id} className="p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                      <div className="flex items-start gap-3 mb-3">
+                        <img
+                          src={request.requester?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${request.requestFromId}`}
+                          alt=""
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="font-semibold text-white">{request.requester?.name || 'Unknown'}</p>
+                          <p className="text-sm text-gray-400">@{request.requester?.handle || 'user'}</p>
+                        </div>
+                      </div>
+                      
+                      {request.lastMessage && (
+                        <div className="p-3 bg-gray-900/50 rounded-lg mb-3">
+                          <p className="text-sm text-gray-300 line-clamp-2">{request.lastMessage.text}</p>
+                        </div>
+                      )}
+                      
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => rejectMessageRequest(request.id)}
+                          className="flex-1 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition"
+                        >
+                          Decline
+                        </button>
+                        <button
+                          onClick={() => acceptMessageRequest(request.id)}
+                          className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 text-white font-semibold rounded-lg transition"
+                        >
+                          Accept
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
