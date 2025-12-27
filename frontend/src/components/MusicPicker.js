@@ -124,7 +124,6 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
 
   const handleTrackSelect = (track) => {
     if (!track.previewUrl) {
-      // If no preview, still allow selection but show message
       console.log('This track has no preview available');
     }
     
@@ -134,17 +133,10 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     }
     setCurrentTrack(track);
     setCurrentPlayTime(0);
-    setLyrics(null);
-    
-    if (showDurationPicker) {
-      setStep('duration');
-      setStartTime(0);
-      // Auto-play when entering duration selection
-      if (track.previewUrl) {
-        setTimeout(() => playPreview(track, 0), 100);
-      }
-    } else {
-      onSelect({ ...track, startTime: 0, clipDuration: 30 });
+    setStep('confirm');
+    // Auto-play when entering confirmation screen
+    if (track.previewUrl) {
+      setTimeout(() => playPreview(track), 100);
     }
   };
 
@@ -154,8 +146,8 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     }
     onSelect({
       ...currentTrack,
-      startTime,
-      clipDuration: duration
+      startTime: 0,
+      clipDuration: 30 // Fixed 30-second clip
     });
   };
 
