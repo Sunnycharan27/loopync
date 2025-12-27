@@ -610,6 +610,94 @@ const TribeDetail = () => {
           onAdded={() => fetchTrainers()} 
         />
       )}
+      {showProjectModal && (
+        <CreateProjectModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowProjectModal(false)} 
+          onCreated={() => fetchProjects()} 
+        />
+      )}
+      {showJobModal && (
+        <CreateJobModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowJobModal(false)} 
+          onCreated={() => fetchInternships()} 
+        />
+      )}
+      {showCertificationModal && (
+        <CreateCertificationModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowCertificationModal(false)} 
+          onCreated={() => fetchCertifications()} 
+        />
+      )}
+      {showTeamPostModal && (
+        <CreateTeamPostModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowTeamPostModal(false)} 
+          onCreated={() => fetchTeamPosts()} 
+        />
+      )}
+      {showEventModal && (
+        <CreateEventModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowEventModal(false)} 
+          onCreated={() => fetchEvents()} 
+        />
+      )}
+      {showIdeaModal && (
+        <CreateIdeaModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowIdeaModal(false)} 
+          onCreated={() => fetchIdeas()} 
+        />
+      )}
+      {showShowcaseModal && (
+        <CreateShowcaseModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowShowcaseModal(false)} 
+          onCreated={() => fetchShowcases()} 
+        />
+      )}
+      {showResourceModal && (
+        <CreateResourceModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowResourceModal(false)} 
+          onCreated={() => fetchResources()} 
+        />
+      )}
+      {showCollaborationModal && (
+        <CreateCollaborationModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowCollaborationModal(false)} 
+          onCreated={() => fetchCollaborations()} 
+        />
+      )}
+      {showServiceModal && (
+        <CreateServiceModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowServiceModal(false)} 
+          onCreated={() => fetchServices()} 
+        />
+      )}
+      {showPortfolioModal && (
+        <CreatePortfolioModal 
+          tribeId={tribeId} 
+          currentUser={currentUser} 
+          onClose={() => setShowPortfolioModal(false)} 
+          onCreated={() => fetchPortfolios()} 
+        />
+      )}
       
       <BottomNav active="tribes" />
     </div>
