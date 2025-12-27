@@ -318,8 +318,8 @@ class MessagingFollowRequestTester:
         """Test Accept Follow Request - POST /api/follow-requests/{requestId}/accept"""
         if not self.created_follow_request_id:
             # Try to find a follow request to accept
-            response = self.make_request("GET", f"/users/{self.admin_id}/follow-requests",
-                                       token=self.admin_token)
+            response = self.make_request("GET", f"/users/{self.test_user_2_id}/follow-requests",
+                                       token=self.test_user_2_token)
             
             if response and response.status_code == 200:
                 follow_requests = response.json()
@@ -331,8 +331,8 @@ class MessagingFollowRequestTester:
             return False
         
         response = self.make_request("POST", f"/follow-requests/{self.created_follow_request_id}/accept",
-                                   params={"userId": self.admin_id},
-                                   token=self.admin_token)
+                                   params={"userId": self.test_user_2_id},
+                                   token=self.test_user_2_token)
         
         if response and response.status_code == 200:
             self.log_result("Accept Follow Request", True, "Follow request accepted successfully")
