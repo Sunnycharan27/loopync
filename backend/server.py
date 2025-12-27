@@ -10947,6 +10947,42 @@ async def get_user_endorsements(userId: str):
     
     return list(skills.values())
 
+# ============= FEEDBACK/SUPPORT API =============
+
+@api_router.post("/feedback")
+async def submit_feedback(data: dict = Body(...)):
+    """Submit user feedback (problems or suggestions)"""
+    feedback = {
+        "id": str(uuid.uuid4()),
+        "userId": data.get("userId"),
+        "type": data.get("type", "general"),  # problem, suggestion, general
+        "category": data.get("category", "other"),
+        "title": data.get("title", ""),
+        "description": data.get("description", ""),
+        "email": data.get("email", ""),
+        "userAgent": data.get("userAgent", ""),
+        "status": "new",
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    await db.feedback.insert_one(feedback)
+    feedback.pop("_id", None)
+    return {"success": True, "id": feedback["id"]}
+
+@api_router.get("/feedback")
+async def get_all_feedback(type: str = None, status: str = None, skip: int = 0, limit: int = 50):
+    """Get all feedback (admin only)"""
+    query = {}
+    if type: query["type"] = type
+    if status: query["status"] = status
+    feedback = await db.feedback.find(query, {"_id": 0}).sort("createdAt", -1).skip(skip).limit(limit).to_list(limit)
+    return feedback
+
+@api_router.put("/feedback/{feedbackId}/status")
+async def update_feedback_status(feedbackId: str, status: str):
+    """Update feedback status (admin only)"""
+    await db.feedback.update_one({"id": feedbackId}, {"$set": {"status": status, "updatedAt": datetime.now(timezone.utc).isoformat()}})
+    return {"success": True}
+
 # Include router
 app.include_router(api_router)
 
