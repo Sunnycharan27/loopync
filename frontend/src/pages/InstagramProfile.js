@@ -6,13 +6,14 @@ import { toast } from 'sonner';
 import {
   Camera, Edit3, Settings, Grid, Film, BarChart3,
   Mail, Phone, MessageCircle, Globe, MapPin,
-  MoreHorizontal, UserPlus, UserCheck, UserMinus, UserX, Share2, BadgeCheck, Shield, Plus
+  MoreHorizontal, UserPlus, UserCheck, UserMinus, UserX, Share2, BadgeCheck, Shield, Plus, Clock, Users
 } from 'lucide-react';
 import BottomNav from '../components/BottomNav';
 import ImageCropModal from '../components/ImageCropModal';
 import VerifiedBadge from '../components/VerifiedBadge';
 import PostCard from '../components/PostCard';
 import FollowersModal from '../components/FollowersModal';
+import FollowRequestsModal from '../components/FollowRequestsModal';
 import VibeCapsuleViewer from '../components/VibeCapsuleViewer';
 import VibeCapsuleUpload from '../components/VibeCapsuleUpload';
 import UniversalShareModal from '../components/UniversalShareModal';
