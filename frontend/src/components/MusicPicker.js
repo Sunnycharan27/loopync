@@ -178,52 +178,12 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Get full song duration in seconds (from track.duration which could be in ms or formatted string)
-  const getFullSongDuration = () => {
-    if (!currentTrack) return 180; // default 3 minutes
-    
-    // If we have durationMs (milliseconds)
-    if (currentTrack.durationMs) {
-      return Math.floor(currentTrack.durationMs / 1000);
-    }
-    
-    // If we have duration
-    if (currentTrack.duration) {
-      // Handle "3:59" format (mm:ss)
-      if (typeof currentTrack.duration === 'string' && currentTrack.duration.includes(':')) {
-        const parts = currentTrack.duration.split(':');
-        if (parts.length === 2) {
-          return parseInt(parts[0]) * 60 + parseInt(parts[1]);
-        }
-        if (parts.length === 3) {
-          // Handle "1:23:45" format (hh:mm:ss)
-          return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
-        }
-      }
-      // If it's already a number
-      const numDuration = parseInt(currentTrack.duration);
-      if (!isNaN(numDuration)) {
-        // If it's more than 1000, it's likely in milliseconds (convert to seconds)
-        if (numDuration > 1000) {
-          return Math.floor(numDuration / 1000);
-        }
-        return numDuration;
-      }
-    }
-    
-    return 180; // default 3 minutes
-  };
-
-  // Max time for preview (Deezer provides 30 sec, but we can loop or use full song URL if available)
-  const maxPreviewTime = 30;
-  const maxClipDuration = 60; // Allow up to 60 second clips
-  const fullSongDuration = getFullSongDuration();
   const displayTracks = activeTab === 'search' ? tracks : trending;
 
-  // Duration Selection Step with Lyrics
-  if (step === 'duration' && currentTrack) {
+  // Confirmation Step - Simple 30-second preview
+  if (step === 'confirm' && currentTrack) {
     const isPlaying = playingId === currentTrack.id;
-    const playProgress = ((currentPlayTime - startTime) / duration) * 100;
+    const playProgress = (currentPlayTime / 30) * 100;
 
     return (
       <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-end sm:items-center justify-center">
@@ -236,274 +196,94 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
                   if (audioRef.current) audioRef.current.pause(); 
                   setPlayingId(null); 
                   setStep('browse'); 
-                  setLyrics(null);
                 }} 
                 className="p-2 hover:bg-gray-800 rounded-full transition"
               >
                 <ChevronLeft size={24} className="text-white" />
               </button>
               <div className="flex-1">
-                <h2 className="text-lg font-bold text-white">Select Music Clip</h2>
-                <p className="text-xs text-gray-400">Choose the part you want to play</p>
+                <h2 className="text-lg font-bold text-white">Confirm Selection</h2>
+                <p className="text-xs text-gray-400">30-second music clip</p>
               </div>
-              <button 
-                onClick={() => setShowLyrics(!showLyrics)}
-                className={`p-2 rounded-full transition ${showLyrics ? 'bg-purple-500 text-white' : 'hover:bg-gray-800 text-gray-400'}`}
-              >
-                <FileText size={20} />
-              </button>
               <button onClick={onClose} className="p-2 hover:bg-gray-800 rounded-full transition">
                 <X size={24} className="text-gray-400" />
               </button>
             </div>
           </div>
 
-          {/* Track Info */}
-          <div className="p-4">
-            <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20">
-              <div className="relative">
-                <img
-                  src={currentTrack.albumArt || currentTrack.albumArtSmall}
-                  alt={currentTrack.album}
-                  className={`w-20 h-20 rounded-xl object-cover shadow-lg ${isPlaying ? 'animate-pulse' : ''}`}
-                />
-                {isPlaying && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-xl">
-                    <div className="flex gap-1 items-end h-6">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div
-                          key={i}
-                          className="w-1 bg-purple-400 rounded-full animate-bounce"
-                          style={{ animationDelay: `${i * 0.1}s`, height: `${40 + Math.random() * 60}%` }}
-                        />
-                      ))}
-                    </div>
+          {/* Track Info with Large Album Art */}
+          <div className="p-6 flex flex-col items-center">
+            <div className="relative mb-4">
+              <img
+                src={currentTrack.albumArt || currentTrack.albumArtSmall}
+                alt={currentTrack.album}
+                className={`w-48 h-48 rounded-2xl object-cover shadow-2xl ${isPlaying ? 'animate-pulse' : ''}`}
+              />
+              {isPlaying && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl">
+                  <div className="flex gap-1 items-end h-10">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <div
+                        key={i}
+                        className="w-1.5 bg-purple-400 rounded-full animate-bounce"
+                        style={{ animationDelay: `${i * 0.1}s`, height: `${30 + Math.random() * 70}%` }}
+                      />
+                    ))}
                   </div>
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-bold text-lg truncate">{currentTrack.name}</p>
-                <p className="text-gray-400 truncate">{currentTrack.artist}</p>
-                <p className="text-xs text-purple-400 mt-1">{formatDuration(currentTrack.duration)}</p>
-              </div>
-              <button
-                onClick={() => playPreview(currentTrack, startTime)}
-                disabled={!currentTrack.previewUrl}
-                className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg ${
-                  !currentTrack.previewUrl 
-                    ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                    : isPlaying 
-                      ? 'bg-white text-black hover:bg-gray-200' 
-                      : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90 hover:scale-105'
-                }`}
-              >
-                {isPlaying ? <Pause size={28} /> : <Play size={28} className="ml-1" />}
-              </button>
+                </div>
+              )}
             </div>
+            <p className="text-white font-bold text-xl text-center">{currentTrack.name}</p>
+            <p className="text-gray-400 text-center">{currentTrack.artist}</p>
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-xs text-purple-400 bg-purple-500/20 px-3 py-1 rounded-full">
+                🎵 30 sec clip
+              </span>
+            </div>
+          </div>
+
+          {/* Playback Progress */}
+          <div className="px-6 pb-4">
+            <div className="bg-gray-900/50 rounded-2xl p-4 border border-gray-800">
+              {/* Progress Bar */}
+              <div className="relative h-2 bg-gray-700 rounded-full overflow-hidden mb-3">
+                <div 
+                  className="absolute h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all"
+                  style={{ width: `${playProgress}%` }}
+                />
+              </div>
+              
+              {/* Time Display */}
+              <div className="flex justify-between text-xs text-gray-400 mb-4">
+                <span>{formatTime(currentPlayTime)}</span>
+                <span>0:30</span>
+              </div>
+
+              {/* Play/Pause Button */}
+              <div className="flex justify-center">
+                <button
+                  onClick={() => playPreview(currentTrack)}
+                  disabled={!currentTrack.previewUrl}
+                  className={`w-16 h-16 rounded-full flex items-center justify-center transition-all shadow-lg ${
+                    !currentTrack.previewUrl 
+                      ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                      : isPlaying 
+                        ? 'bg-white text-black hover:bg-gray-200' 
+                        : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90 hover:scale-105'
+                  }`}
+                >
+                  {isPlaying ? <Pause size={32} /> : <Play size={32} className="ml-1" />}
+                </button>
+              </div>
+            </div>
+            
             {!currentTrack.previewUrl && (
-              <p className="text-yellow-400 text-xs text-center mt-2">⚠️ Preview not available for this track</p>
+              <p className="text-yellow-400 text-xs text-center mt-3">⚠️ Preview not available for this track</p>
             )}
           </div>
 
-          {/* Lyrics Section (Collapsible) */}
-          {showLyrics && lyrics && (
-            <div className="px-4 pb-2 max-h-32 overflow-y-auto">
-              <div className="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
-                <p className="text-xs text-gray-500 mb-2">📝 Lyrics</p>
-                <div className="text-gray-300 text-sm whitespace-pre-line max-h-20 overflow-y-auto">
-                  {lyrics.lyrics?.substring(0, 500) || 'Lyrics not available'}
-                  {lyrics.lyrics?.length > 500 && '...'}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Duration Buttons */}
-          <div className="px-4 pb-3">
-            <p className="text-sm text-gray-400 mb-2 flex items-center gap-2">
-              <Clock size={14} />
-              Clip Duration
-            </p>
-            <div className="flex gap-2">
-              {[15, 30, 45, 60].map((d) => (
-                <button
-                  key={d}
-                  onClick={() => {
-                    setDuration(d);
-                    // Adjust start time if it would exceed song length
-                    if (startTime + d > fullSongDuration) {
-                      setStartTime(Math.max(0, fullSongDuration - d));
-                    }
-                  }}
-                  className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                    duration === d
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                      : 'bg-gray-800/80 text-gray-400 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  {d}s
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Full Song Timeline Selector */}
-          <div className="px-4 pb-3">
-            <div className="relative bg-gray-900 rounded-2xl p-4 border border-gray-800">
-              {/* Song Info Header */}
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-white font-semibold">{currentTrack?.name}</p>
-                  <p className="text-gray-400 text-sm">{currentTrack?.artist}</p>
-                </div>
-                <span className="text-sm text-purple-400 font-mono bg-purple-500/10 px-3 py-1.5 rounded-full">
-                  Full: {formatTime(fullSongDuration)}
-                </span>
-              </div>
-
-              {/* Preview Player Section */}
-              <div className="mb-4 p-3 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl border border-purple-500/20">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-sm text-gray-300 flex items-center gap-2">
-                    <span>🎧</span> Preview (30 sec sample)
-                  </p>
-                  <button
-                    onClick={() => {
-                      if (isPlaying) {
-                        audioRef.current?.pause();
-                        setPlayingId(null);
-                      } else {
-                        playPreview(currentTrack, 0);
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-full font-semibold text-sm transition ${
-                      isPlaying
-                        ? 'bg-white text-purple-600'
-                        : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                    }`}
-                  >
-                    {isPlaying ? '⏸ Pause' : '▶ Play Preview'}
-                  </button>
-                </div>
-                
-                {/* Mini Preview Progress */}
-                <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all"
-                    style={{ width: `${(currentPlayTime / 30) * 100}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Selection Section */}
-              <div className="mb-3">
-                <p className="text-sm text-gray-300 mb-2 flex items-center gap-2">
-                  <span>✂️</span> Select your clip from the full song:
-                </p>
-              </div>
-
-              {/* Waveform Visualization - Clickable to seek */}
-              <div 
-                className="h-20 relative flex items-center gap-[2px] cursor-pointer rounded-xl overflow-hidden"
-                onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const clickX = e.clientX - rect.left;
-                  const percentage = clickX / rect.width;
-                  const newStartTime = Math.floor(percentage * fullSongDuration);
-                  const maxStart = Math.max(0, fullSongDuration - duration);
-                  setStartTime(Math.min(newStartTime, maxStart));
-                }}
-              >
-                {Array.from({ length: 60 }, (_, i) => {
-                  const barPosition = (i / 60) * fullSongDuration;
-                  const isInRange = barPosition >= startTime && barPosition < startTime + duration;
-                  const seed = (currentTrack?.id?.toString() || 'default').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                  const height = 25 + (Math.sin(seed + i * 0.4) * 0.5 + 0.5) * 75;
-                  
-                  return (
-                    <div
-                      key={i}
-                      className={`flex-1 rounded-full transition-all duration-150 ${
-                        isInRange
-                          ? 'bg-gradient-to-t from-purple-500 to-pink-500 shadow-lg shadow-purple-500/30'
-                          : 'bg-gray-700 hover:bg-gray-600'
-                      }`}
-                      style={{ height: `${height}%` }}
-                    />
-                  );
-                })}
-                
-                {/* Selection Range Overlay */}
-                <div 
-                  className="absolute top-0 bottom-0 border-2 border-white/60 rounded-lg pointer-events-none"
-                  style={{ 
-                    left: `${(startTime / fullSongDuration) * 100}%`,
-                    width: `${(duration / fullSongDuration) * 100}%`,
-                    backgroundColor: 'rgba(168, 85, 247, 0.2)'
-                  }}
-                >
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-12 bg-purple-500 rounded-full shadow-lg border-2 border-white" />
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-12 bg-pink-500 rounded-full shadow-lg border-2 border-white" />
-                </div>
-              </div>
-              
-              {/* Range Slider */}
-              <div className="mt-4 px-1">
-                <input
-                  type="range"
-                  min="0"
-                  max={Math.max(0, fullSongDuration - duration)}
-                  step="1"
-                  value={startTime}
-                  onChange={(e) => setStartTime(Number(e.target.value))}
-                  className="w-full h-3 rounded-lg appearance-none cursor-pointer bg-gray-700"
-                  style={{
-                    background: `linear-gradient(to right, 
-                      #374151 ${(startTime / Math.max(1, fullSongDuration - duration)) * 100}%, 
-                      #a855f7 ${(startTime / Math.max(1, fullSongDuration - duration)) * 100}%)`
-                  }}
-                />
-              </div>
-              
-              {/* Time Labels */}
-              <div className="flex justify-between items-center mt-3">
-                <span className="text-xs text-gray-500 font-mono">0:00</span>
-                <span className="text-lg text-white font-bold bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2 rounded-full shadow-lg">
-                  {formatTime(startTime)} → {formatTime(startTime + duration)}
-                </span>
-                <span className="text-xs text-gray-500 font-mono">{formatTime(fullSongDuration)}</span>
-              </div>
-
-              {/* Selected Range Info */}
-              <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                <div className="p-2 bg-purple-500/10 rounded-lg border border-purple-500/30">
-                  <p className="text-xs text-gray-400">Start</p>
-                  <p className="text-purple-400 font-bold text-lg">{formatTime(startTime)}</p>
-                </div>
-                <div className="p-2 bg-pink-500/10 rounded-lg border border-pink-500/30">
-                  <p className="text-xs text-gray-400">End</p>
-                  <p className="text-pink-400 font-bold text-lg">{formatTime(startTime + duration)}</p>
-                </div>
-                <div className="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/30">
-                  <p className="text-xs text-gray-400">Clip</p>
-                  <p className="text-cyan-400 font-bold text-lg">{duration}s</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Info Note */}
-          <div className="px-4 pb-3">
-            <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-              <p className="text-blue-400 text-sm flex items-center gap-2">
-                <span>ℹ️</span>
-                <span>Your selection <strong>{formatTime(startTime)} - {formatTime(startTime + duration)}</strong> will be saved with your story. The preview above is a sample from the song.</span>
-              </p>
-            </div>
-          </div>
-
           {/* Volume Control */}
-          <div className="px-4 pb-3">
+          <div className="px-6 pb-4">
             <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-xl">
               <button onClick={toggleMute} className="p-2 hover:bg-gray-700 rounded-lg transition">
                 {isMuted ? <VolumeX size={20} className="text-gray-400" /> : <Volume2 size={20} className="text-purple-400" />}
@@ -522,13 +302,12 @@ const MusicPicker = ({ onSelect, onClose, selectedTrack }) => {
           </div>
 
           {/* Footer */}
-          <div className="p-4 border-t border-gray-800/50 flex gap-3 bg-black/30">
+          <div className="p-4 border-t border-gray-800/50 flex gap-3 bg-black/30 mt-auto">
             <button
               onClick={() => { 
                 if (audioRef.current) audioRef.current.pause(); 
                 setPlayingId(null); 
                 setStep('browse');
-                setLyrics(null);
               }}
               className="flex-1 py-3.5 rounded-xl bg-gray-800 text-white font-semibold hover:bg-gray-700 transition"
             >
