@@ -184,6 +184,13 @@ const TribeDetail = () => {
       case "deals": await fetchDeals(); break;
       case "trainers": await fetchTrainers(); break;
       case "reviews": await fetchReviews(); break;
+      case "events": await fetchEvents(); break;
+      case "services": await fetchServices(); break;
+      case "portfolios": await fetchPortfolios(); break;
+      case "ideas": await fetchIdeas(); break;
+      case "showcases": await fetchShowcases(); break;
+      case "resources": await fetchResources(); break;
+      case "collaborations": await fetchCollaborations(); break;
       default: break;
     }
   };
