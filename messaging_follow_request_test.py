@@ -274,7 +274,7 @@ class MessagingFollowRequestTester:
     
     def test_send_follow_request(self):
         """Test Send Follow Request - POST /api/users/{userId}/follow-request"""
-        response = self.make_request("POST", f"/users/{self.admin_id}/follow-request",
+        response = self.make_request("POST", f"/users/{self.test_user_2_id}/follow-request",
                                    params={"fromUserId": self.test_user_id},
                                    token=self.test_user_token)
         
