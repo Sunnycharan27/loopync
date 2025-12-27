@@ -346,7 +346,7 @@ class LoopyncAPITester:
             "tags": ["testing", "backend", "api"]
         }
         
-        response, error = self.make_request('POST', '/rooms', room_data)
+        response, error = self.make_request('POST', f'/rooms?userId={self.user_id}', room_data)
         if error:
             self.log_result("POST /api/rooms", False, f"Request failed: {error}")
         elif response.status_code in [200, 201]:
