@@ -434,7 +434,7 @@ class LoopyncAPITester:
             "applicationDeadline": "2024-12-31"
         }
         
-        response, error = self.make_request('POST', '/internships', internship_data)
+        response, error = self.make_request('POST', f'/internships?userId={self.user_id}', internship_data)
         if error:
             self.log_result("POST /api/internships", False, f"Request failed: {error}")
         elif response.status_code in [200, 201]:
