@@ -9335,7 +9335,7 @@ async def search_verified_accounts(
 # ===== DIGITAL PRODUCTS (FREE RESOURCES) =====
 
 PRODUCT_CATEGORIES = [
-    "courses", "ebooks", "pdfs"
+    "ebooks", "courses", "study-material", "placement-material", "digital-products", "money-making"
 ]
 
 @api_router.get("/digital-products")
