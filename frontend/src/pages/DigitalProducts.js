@@ -51,12 +51,18 @@ const DigitalProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [viewMode, setViewMode] = useState("grid");
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   useEffect(() => {
     fetchProducts();
     fetchFeatured();
     fetchCategories();
-  }, [selectedCategory, sortBy]);
+  }, [selectedCategory, sortBy, currentPage]);
 
   const fetchProducts = async () => {
     try {
@@ -65,9 +71,12 @@ const DigitalProducts = () => {
       if (selectedCategory !== "all") params.append("category", selectedCategory);
       if (searchQuery) params.append("search", searchQuery);
       params.append("sort_by", sortBy);
+      params.append("skip", ((currentPage - 1) * itemsPerPage).toString());
+      params.append("limit", itemsPerPage.toString());
       
       const res = await axios.get(`${API}/digital-products?${params.toString()}`);
       setProducts(res.data.products || []);
+      setTotalItems(res.data.total || 0);
     } catch (error) {
       console.error("Failed to fetch products:", error);
       toast.error("Failed to load products");
