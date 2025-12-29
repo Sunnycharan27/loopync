@@ -4,18 +4,18 @@ import { API, AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft, Upload, Image, FileText, X, Plus, Package,
-  BookOpen
+  BookOpen, GraduationCap, Briefcase, DollarSign, ShoppingBag
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
 import { toast } from "sonner";
 
 const categories = [
+  { value: "ebooks", label: "eBooks", icon: FileText, description: "Digital books, guides, manuals" },
   { value: "courses", label: "Courses", icon: BookOpen, description: "Educational content, tutorials, video courses" },
-  { value: "ebooks", label: "E-Books", icon: FileText, description: "Digital books, guides, manuals" },
-  { value: "pdfs", label: "PDFs", icon: FileText, description: "Documents, notes, study materials" },
-  { value: "templates", label: "Templates", icon: FileText, description: "Design templates, code snippets, spreadsheets" },
-  { value: "tools", label: "Tools & Code", icon: Package, description: "Software, scripts, code repositories" },
-  { value: "other", label: "Other", icon: Package, description: "Any other type of resource" },
+  { value: "study-material", label: "Study Material", icon: GraduationCap, description: "Notes, study guides, exam prep materials" },
+  { value: "placement-material", label: "Placement Material", icon: Briefcase, description: "Interview prep, resume templates, job resources" },
+  { value: "digital-products", label: "Digital Products", icon: ShoppingBag, description: "Templates, tools, design assets" },
+  { value: "money-making", label: "Money Making", icon: DollarSign, description: "Business guides, side hustle resources, investment tips" },
 ];
 
 const UploadDigitalProduct = () => {
