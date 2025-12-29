@@ -283,7 +283,7 @@ const DigitalProducts = () => {
             {/* Categories */}
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               <button
-                onClick={() => setSelectedCategory("all")}
+                onClick={() => handleCategoryChange("all")}
                 className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition ${
                   selectedCategory === "all"
                     ? "bg-cyan-400 text-black"
@@ -292,19 +292,23 @@ const DigitalProducts = () => {
               >
                 All
               </button>
-              {categories.map(cat => (
-                <button
-                  key={cat.name}
-                  onClick={() => setSelectedCategory(cat.name)}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition capitalize ${
-                    selectedCategory === cat.name
-                      ? "bg-cyan-400 text-black"
-                      : "bg-gray-800 text-gray-400 hover:text-white"
-                  }`}
-                >
-                  {cat.name} ({cat.count})
-                </button>
-              ))}
+              {categories.map(cat => {
+                const IconComponent = categoryIcons[cat.name] || Package;
+                return (
+                  <button
+                    key={cat.name}
+                    onClick={() => handleCategoryChange(cat.name)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition ${
+                      selectedCategory === cat.name
+                        ? "bg-cyan-400 text-black"
+                        : "bg-gray-800 text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    <IconComponent size={16} />
+                    {categoryLabels[cat.name] || cat.name} ({cat.count})
+                  </button>
+                );
+              })}
             </div>
 
             {/* Sort */}
