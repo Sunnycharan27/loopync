@@ -105,7 +105,13 @@ const DigitalProducts = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setCurrentPage(1);
     fetchProducts();
+  };
+
+  const handleCategoryChange = (cat) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
   };
 
   const handleLike = async (productId, e) => {
