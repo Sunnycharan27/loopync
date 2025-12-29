@@ -364,9 +364,9 @@ const DigitalProducts = () => {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               <Clock className="text-cyan-400" />
-              {selectedCategory === "all" ? "All Resources" : `${selectedCategory} Resources`}
+              {selectedCategory === "all" ? "All Resources" : `${categoryLabels[selectedCategory] || selectedCategory}`}
             </h2>
-            <span className="text-gray-500 text-sm">{products.length} items</span>
+            <span className="text-gray-500 text-sm">{totalItems} items</span>
           </div>
 
           {loading ? (
@@ -374,15 +374,102 @@ const DigitalProducts = () => {
               <div className="animate-spin w-12 h-12 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
             </div>
           ) : products.length > 0 ? (
-            <div className={
-              viewMode === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-                : "flex flex-col gap-4"
-            }>
-              {products.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            <>
+              <div className={
+                viewMode === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                  : "flex flex-col gap-4"
+              }>
+                {products.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-8 pb-4">
+                  <button
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded-lg bg-gray-800 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  
+                  <div className="flex items-center gap-1">
+                    {/* First page */}
+                    {currentPage > 3 && (
+                      <>
+                        <button
+                          onClick={() => setCurrentPage(1)}
+                          className="w-10 h-10 rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition"
+                        >
+                          1
+                        </button>
+                        {currentPage > 4 && <span className="text-gray-500 px-1">...</span>}
+                      </>
+                    )}
+                    
+                    {/* Page numbers around current page */}
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+                      
+                      if (pageNum < 1 || pageNum > totalPages) return null;
+                      if (currentPage > 3 && pageNum === 1) return null;
+                      if (currentPage < totalPages - 2 && pageNum === totalPages) return null;
+                      
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => setCurrentPage(pageNum)}
+                          className={`w-10 h-10 rounded-lg transition ${
+                            currentPage === pageNum
+                              ? "bg-cyan-400 text-black font-bold"
+                              : "bg-gray-800 text-white hover:bg-gray-700"
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                    
+                    {/* Last page */}
+                    {currentPage < totalPages - 2 && (
+                      <>
+                        {currentPage < totalPages - 3 && <span className="text-gray-500 px-1">...</span>}
+                        <button
+                          onClick={() => setCurrentPage(totalPages)}
+                          className="w-10 h-10 rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition"
+                        >
+                          {totalPages}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  
+                  <button
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded-lg bg-gray-800 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                  
+                  <span className="text-gray-500 text-sm ml-4">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-12">
               <Package size={64} className="mx-auto mb-4 text-gray-600" />
