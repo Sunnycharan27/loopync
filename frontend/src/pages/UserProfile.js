@@ -14,6 +14,7 @@ const UserProfile = () => {
   const [posts, setPosts] = useState([]);
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
+  const [relationshipStatus, setRelationshipStatus] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
