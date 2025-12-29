@@ -4,8 +4,8 @@ import { API, AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import {
   Search, Filter, Grid, List, Download, Eye, Heart, Star,
-  BookOpen, FileText, Package, Plus,
-  ArrowRight, TrendingUp, Clock
+  BookOpen, FileText, Package, Plus, GraduationCap, Briefcase,
+  ArrowRight, TrendingUp, Clock, ChevronLeft, ChevronRight, DollarSign, ShoppingBag
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
 import { toast } from "sonner";
@@ -13,13 +13,30 @@ import { toast } from "sonner";
 const categoryIcons = {
   courses: BookOpen,
   ebooks: FileText,
+  "study-material": GraduationCap,
+  "placement-material": Briefcase,
+  "digital-products": ShoppingBag,
+  "money-making": DollarSign,
   pdfs: FileText,
 };
 
 const categoryColors = {
   courses: "from-blue-500 to-cyan-500",
   ebooks: "from-purple-500 to-pink-500",
+  "study-material": "from-green-500 to-teal-500",
+  "placement-material": "from-orange-500 to-amber-500",
+  "digital-products": "from-pink-500 to-rose-500",
+  "money-making": "from-yellow-500 to-orange-500",
   pdfs: "from-green-500 to-teal-500",
+};
+
+const categoryLabels = {
+  courses: "Courses",
+  ebooks: "eBooks",
+  "study-material": "Study Material",
+  "placement-material": "Placement Material",
+  "digital-products": "Digital Products",
+  "money-making": "Money Making",
 };
 
 const DigitalProducts = () => {
