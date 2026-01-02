@@ -314,6 +314,18 @@ const ReelViewer = ({ reels, currentUser, onLike }) => {
           {currentReel.caption}
         </p>
 
+        {/* Music info - if reel has music */}
+        {currentReel.music && (
+          <div className="flex items-center gap-2 mb-2 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1.5 w-fit">
+            <div className="w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center animate-spin" style={{ animationDuration: '3s' }}>
+              <span className="text-white text-[8px]">♪</span>
+            </div>
+            <span className="text-white text-sm truncate max-w-[200px]">
+              {currentReel.music.name} - {currentReel.music.artist}
+            </span>
+          </div>
+        )}
+
         {/* Views */}
         <div className="flex items-center gap-2 text-white/60 text-sm">
           <span>{currentReel.stats?.views || 0} views</span>
