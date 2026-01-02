@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { API, getMediaUrl } from '../App';
+import { API } from '../App';
+import { getMediaUrl } from '../utils/mediaUtils';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, Heart, MessageCircle, Bookmark, Share2, Eye, Users, 
