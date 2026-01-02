@@ -11562,28 +11562,38 @@ async def startup_db_indexes():
         await db.users.create_index("friends")  # For friend lookups
         await db.users.create_index("friendRequestsSent")
         await db.users.create_index("friendRequestsReceived")
+        await db.users.create_index("followers")  # NEW: For follower lookups
+        await db.users.create_index("following")  # NEW: For following lookups
         
-        # Posts collection indexes
+        # Posts collection indexes - OPTIMIZED
         await db.posts.create_index("id", unique=True)
         await db.posts.create_index("authorId")  # For user's posts
         await db.posts.create_index([("createdAt", -1)])  # For timeline sorting
+        await db.posts.create_index([("authorId", 1), ("createdAt", -1)])  # NEW: Compound for user feed
         await db.posts.create_index("likes")  # For like lookups
+        await db.posts.create_index("likedBy")  # NEW: For efficient like queries
+        await db.posts.create_index("hashtags")  # NEW: For hashtag searches
+        await db.posts.create_index([("likeCount", -1)])  # NEW: For trending
         
         # Reels collection indexes
         await db.reels.create_index("id", unique=True)
         await db.reels.create_index("authorId")
         await db.reels.create_index([("createdAt", -1)])
+        await db.reels.create_index([("viewCount", -1)])  # NEW: For trending reels
         
         # DM threads indexes
         await db.dm_threads.create_index("id", unique=True)
         await db.dm_threads.create_index("user1Id")
         await db.dm_threads.create_index("user2Id")
         await db.dm_threads.create_index([("lastMessageAt", -1)])
+        await db.threads.create_index("participants")  # NEW: For messenger
+        await db.threads.create_index([("participants", 1), ("lastMessageAt", -1)])  # NEW: Compound
         
         # DM messages indexes
         await db.dm_messages.create_index("id", unique=True)
         await db.dm_messages.create_index("threadId")
         await db.dm_messages.create_index([("createdAt", -1)])
+        await db.messages.create_index([("threadId", 1), ("createdAt", -1)])  # NEW: Compound
         
         # Calls collection indexes
         await db.calls.create_index("id", unique=True)
@@ -11591,10 +11601,12 @@ async def startup_db_indexes():
         await db.calls.create_index("recipientId")
         await db.calls.create_index([("startedAt", -1)])
         
-        # Notifications indexes
+        # Notifications indexes - OPTIMIZED
         await db.notifications.create_index("id", unique=True)
         await db.notifications.create_index("userId")
         await db.notifications.create_index([("createdAt", -1)])
+        await db.notifications.create_index([("userId", 1), ("createdAt", -1)])  # NEW: Compound
+        await db.notifications.create_index([("userId", 1), ("read", 1)])  # NEW: For unread count
         
         # Events and Venues indexes
         await db.events.create_index("id", unique=True)
@@ -11604,6 +11616,7 @@ async def startup_db_indexes():
         # Tribes indexes
         await db.tribes.create_index("id", unique=True)
         await db.tribes.create_index("members")
+        await db.tribes.create_index("category")  # NEW: For category filter
         
         # TasteDNA indexes
         await db.taste_dna.create_index("userId", unique=True)
@@ -11612,6 +11625,7 @@ async def startup_db_indexes():
         await db.vibe_capsules.create_index("id", unique=True)
         await db.vibe_capsules.create_index("authorId")
         await db.vibe_capsules.create_index([("createdAt", -1)])
+        await db.vibe_capsules.create_index([("authorId", 1), ("expiresAt", -1)])  # NEW: Compound
         await db.vibe_capsules.create_index("expiresAt", expireAfterSeconds=0)  # TTL index for auto-deletion
         
         # Student Profile indexes
@@ -11645,10 +11659,34 @@ async def startup_db_indexes():
         # Saved Projects indexes
         await db.saved_projects.create_index([("userId", 1), ("projectId", 1)], unique=True)
         
+        # Digital Products indexes - NEW
+        await db.digital_products.create_index("id", unique=True)
+        await db.digital_products.create_index("category")
+        await db.digital_products.create_index([("downloadCount", -1)])
+        await db.digital_products.create_index([("createdAt", -1)])
+        
         logger.info("✅ Database indexes created successfully - Ready for 100k+ users")
     except Exception as e:
         logger.warning(f"⚠️ Some indexes already exist or had issues: {str(e)}")
         logger.info("✅ Database is ready for operations")
+
+
+# ===== PERFORMANCE MONITORING ENDPOINT =====
+@api_router.get("/performance/stats")
+async def get_performance_stats():
+    """Get server performance statistics"""
+    return perf_monitor.get_stats()
+
+
+@api_router.post("/performance/clear-cache")
+async def clear_all_caches():
+    """Clear all caches (admin only)"""
+    await posts_cache.clear()
+    await users_cache.clear()
+    await feed_cache.clear()
+    await trending_cache.clear()
+    return {"success": True, "message": "All caches cleared"}
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
