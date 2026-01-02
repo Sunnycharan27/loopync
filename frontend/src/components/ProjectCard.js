@@ -103,12 +103,18 @@ const ProjectCard = ({ project, currentUser, onLike, onSave, onSkillClick, compa
               <Github size={14} />GitHub
             </a>
           )}
-          {project.demoUrl && (
-            <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+          {(project.demoUrl || project.liveUrl) && (
+            <a href={project.demoUrl || project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300">
               <ExternalLink size={14} />Live Demo
             </a>
           )}
+          <button 
+            onClick={(e) => { e.stopPropagation(); navigate(`/projects/${project.id}`); }}
+            className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300"
+          >
+            <Eye size={14} />View Details
+          </button>
         </div>
 
         {/* Actions */}
