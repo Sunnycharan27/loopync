@@ -904,10 +904,12 @@ const TribeDetail = () => {
 };
 
 // Helper Components
-const TabHeader = ({ title, buttonText, buttonIcon: Icon, onClick }) => (
+const TabHeader = ({ title, buttonText, buttonIcon: Icon, onClick, showButton = true }) => (
   <div className="flex justify-between items-center">
     <h3 className="text-lg font-semibold text-white">{title}</h3>
-    <button onClick={onClick} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><Icon size={16} />{buttonText}</button>
+    {showButton && (
+      <button onClick={onClick} className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-lg text-sm font-semibold flex items-center gap-2"><Icon size={16} />{buttonText}</button>
+    )}
   </div>
 );
 
