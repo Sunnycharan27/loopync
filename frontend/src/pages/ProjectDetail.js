@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { 
   ArrowLeft, Heart, MessageCircle, Bookmark, Share2, Eye, Users, 
   Rocket, Github, ExternalLink, Calendar, Clock, Star, Send, Trash2,
-  Code, Globe, Play
+  Code, Globe, Play, Edit3, X
 } from 'lucide-react';
 import SkillTag from '../components/SkillTag';
 import VerifiedBadge from '../components/VerifiedBadge';
@@ -20,6 +20,9 @@ const ProjectDetail = ({ currentUser }) => {
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editData, setEditData] = useState({ githubUrl: '', liveUrl: '', description: '' });
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     fetchProject();
