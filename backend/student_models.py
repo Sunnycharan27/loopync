@@ -327,28 +327,38 @@ class Project(BaseModel):
     # Links
     githubUrl: str = ""
     demoUrl: str = ""
+    liveUrl: str = ""
     videoUrl: str = ""  # Demo video
     
     # Media
     coverImage: str = ""
+    imageUrl: str = ""
     screenshots: List[str] = Field(default_factory=list)
     
     # Skills & Tags
     skills: List[str] = Field(default_factory=list)
+    techStack: List[str] = Field(default_factory=list)
     tags: List[str] = Field(default_factory=list)
     
     # Team (for collaborative projects)
     teamMembers: List[str] = Field(default_factory=list)  # User IDs
     isTeamProject: bool = False
+    lookingForMembers: bool = False
+    memberRoles: List[str] = Field(default_factory=list)
     
     # Is this a startup?
     isStartup: bool = False
     startupStage: str = ""  # idea, mvp, launched
     
+    # Tribe association
+    tribeId: Optional[str] = None
+    author: Optional[dict] = None
+    authorId: Optional[str] = None
+    
     # Stats
     likes: List[str] = Field(default_factory=list)
     likeCount: int = 0
-    comments: int = 0
+    comments: List[dict] = Field(default_factory=list)
     saves: int = 0  # Bookmarks
     views: int = 0
     interestedUsers: List[str] = Field(default_factory=list)  # Users who expressed interest
