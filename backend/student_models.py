@@ -405,16 +405,22 @@ class ProjectUpdate(BaseModel):
     status: Optional[str] = None
     githubUrl: Optional[str] = None
     demoUrl: Optional[str] = None
+    liveUrl: Optional[str] = None
     videoUrl: Optional[str] = None
     coverImage: Optional[str] = None
+    imageUrl: Optional[str] = None
     screenshots: Optional[List[str]] = None
     skills: Optional[List[str]] = None
+    techStack: Optional[List[str]] = None
     tags: Optional[List[str]] = None
     isTeamProject: Optional[bool] = None
     teamMembers: Optional[List[str]] = None
+    lookingForMembers: Optional[bool] = None
+    memberRoles: Optional[List[str]] = None
     isStartup: Optional[bool] = None
     startupStage: Optional[str] = None
     isPublic: Optional[bool] = None
+    tribeId: Optional[str] = None
 
 
 class TeamPost(BaseModel):
