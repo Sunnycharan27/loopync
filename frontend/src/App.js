@@ -570,7 +570,7 @@ function App() {
                 !authLoaded ? (
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
                 ) : (
-                  <ProjectDetail currentUser={user} />
+                  <ProjectDetail currentUser={currentUser} />
                 )
               }
             />
