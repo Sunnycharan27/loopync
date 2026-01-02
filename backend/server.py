@@ -89,8 +89,15 @@ JWT_EXPIRATION_HOURS = 24
 # Security scheme for auth
 security = HTTPBearer()
 
-# Create the main app
-app = FastAPI()
+# Create the main app with ORJSON for faster JSON serialization
+app = FastAPI(
+    title="Loopync API",
+    description="High-performance social media API",
+    default_response_class=ORJSONResponse
+)
+
+# Add GZip compression for faster data transfer (especially on 3G/4G)
+app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # Create Socket.IO server
 sio = socketio.AsyncServer(
