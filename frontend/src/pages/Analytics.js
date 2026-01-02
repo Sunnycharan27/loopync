@@ -266,6 +266,51 @@ const AdminDashboard = ({ data }) => (
       <StatCard icon={<Eye />} label="Total VibeZone" value={data.totalReels || 0} color="orange" />
     </div>
 
+    {/* Verified Users Section */}
+    <div className="glass-card p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+          <Award className="text-cyan-400" />
+          Verified Users ({data.verifiedUsersCount || 0})
+        </h3>
+        {data.pendingVerifications > 0 && (
+          <span className="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm">
+            {data.pendingVerifications} Pending
+          </span>
+        )}
+      </div>
+      
+      {data.verifiedUsers && data.verifiedUsers.length > 0 ? (
+        <div className="space-y-3 max-h-64 overflow-y-auto">
+          {data.verifiedUsers.map((user) => (
+            <div key={user.id} className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-xl">
+              <img
+                src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`}
+                alt={user.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="font-semibold text-white truncate">{user.name}</p>
+                  <span className="w-4 h-4 bg-cyan-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-black" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                    </svg>
+                  </span>
+                </div>
+                <p className="text-sm text-gray-400">@{user.handle || 'user'}</p>
+              </div>
+              <span className="text-xs text-gray-500">
+                {user.verifiedAt ? new Date(user.verifiedAt).toLocaleDateString() : 'Verified'}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-400 py-4">No verified users yet</p>
+      )}
+    </div>
+
     {/* Engagement Overview */}
     <div className="glass-card p-6">
       <h3 className="text-lg font-bold text-white mb-4">Platform Engagement</h3>
