@@ -368,16 +368,24 @@ class ProjectCreate(BaseModel):
     status: str = "in_progress"
     githubUrl: str = ""
     demoUrl: str = ""
+    liveUrl: str = ""
     videoUrl: str = ""
     coverImage: str = ""
+    imageUrl: str = ""
     screenshots: List[str] = []
     skills: List[str] = []
+    techStack: List[str] = []
     tags: List[str] = []
     isTeamProject: bool = False
     teamMembers: List[str] = []
     isStartup: bool = False
     startupStage: str = ""
     isPublic: bool = True
+    lookingForMembers: bool = False
+    memberRoles: List[str] = []
+    tribeId: Optional[str] = None
+    author: Optional[dict] = None
+    authorId: Optional[str] = None
 
 
 class ProjectUpdate(BaseModel):
