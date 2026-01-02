@@ -101,6 +101,11 @@ class VerificationService:
             
             user_id = request["userId"]
             
+            # Get user info
+            user = await self.db.users.find_one({"id": user_id}, {"_id": 0})
+            if not user:
+                return {"success": False, "message": "User not found"}
+            
             # Update verification request
             update_data = {
                 "status": status,
@@ -122,7 +127,7 @@ class VerificationService:
                     "id": f"page_{user_id}",
                     "userId": user_id,
                     "pageName": request.get("fullName") or request.get("businessName"),
-                    "handle": (await self.db.users.find_one({"id": user_id}))["handle"],
+                    "handle": user.get("handle", ""),
                     "accountType": request["accountType"],
                     "category": request.get("pageCategory", "public_figure"),
                     "about": request.get("aboutText", ""),
@@ -140,8 +145,7 @@ class VerificationService:
                 }
                 
                 # Get user's avatar
-                user = await self.db.users.find_one({"id": user_id}, {"_id": 0, "avatar": 1})
-                if user and user.get("avatar"):
+                if user.get("avatar"):
                     page_data["avatar"] = user["avatar"]
                 
                 await self.db.pages.insert_one(page_data)
