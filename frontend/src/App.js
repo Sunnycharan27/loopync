@@ -91,6 +91,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
   const [authLoaded, setAuthLoaded] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   useEffect(() => {
     // Check if user is logged in
@@ -127,6 +128,12 @@ function App() {
     setCurrentUser(user);
     setIsAuthenticated(true);
     checkOnboardingStatus(user.id);
+    
+    // Show tutorial for new users (check if they've seen it before)
+    const tutorialSeen = localStorage.getItem('loopync_tutorial_seen');
+    if (!tutorialSeen) {
+      setTimeout(() => setShowTutorial(true), 1000); // Show after 1 second
+    }
   };
 
   const refreshUserData = async () => {
