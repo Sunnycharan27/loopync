@@ -508,6 +508,15 @@ const Settings = () => {
   const renderHelp = () => (
     <div className="space-y-2">
       <MenuItem 
+        icon={<Sparkles size={20} className="text-purple-400" />}
+        title="View App Tutorial" 
+        onClick={() => {
+          localStorage.removeItem('loopync_tutorial_seen');
+          toast.success("Tutorial will show on next page load. Refresh to see it!");
+          setTimeout(() => window.location.reload(), 1000);
+        }} 
+      />
+      <MenuItem 
         icon={<HelpCircle size={20} className="text-blue-400" />}
         title="Help Center" 
         onClick={() => {
