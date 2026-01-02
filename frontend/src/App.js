@@ -56,6 +56,7 @@ import UploadDigitalProduct from "./pages/UploadDigitalProduct";
 import StudentOnboarding from "./pages/StudentOnboarding";
 import Projects from "./pages/Projects";
 import CreateProject from "./pages/CreateProject";
+import ProjectDetail from "./pages/ProjectDetail";
 import Certifications from "./pages/Certifications";
 import CreateCertification from "./pages/CreateCertification";
 import TeamPosts from "./pages/TeamPosts";
