@@ -981,9 +981,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All new tribe features backend APIs"
-    - "Follow Request System"
-    - "Enhanced Reputation System"
+    - "Project Features Testing Completed"
+    - "All tribe access control verified"
+    - "Project upload, view, and preview features working"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
