@@ -1,9 +1,10 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Body, UploadFile, File, Depends, Request, Form
-from fastapi.responses import Response
+from fastapi.responses import Response, ORJSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.gzip import GZipMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -25,6 +26,15 @@ import base64
 from io import BytesIO
 import io
 from PIL import Image
+
+# Performance optimization imports
+from performance import (
+    posts_cache, users_cache, trending_cache, feed_cache,
+    batch_get_users, batch_enrich_posts, batch_enrich_comments,
+    get_feed_optimized, get_trending_posts_optimized,
+    invalidate_user_cache, invalidate_post_cache,
+    perf_monitor, ensure_indexes, rate_limiter
+)
 
 # Import the Google Sheets database module
 from messenger_service import MessengerService, SendMessageRequest, AIMessageRequest, UpdateReadStatusRequest
