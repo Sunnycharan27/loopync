@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://vibe-capsule.preview.emergentagent.com/api"
+BACKEND_URL = "https://loopync-social-4.preview.emergentagent.com/api"
 
 def test_whitespace_password_issue():
     """Test the specific whitespace password issue"""

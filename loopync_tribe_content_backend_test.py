@@ -3,7 +3,7 @@
 Comprehensive Backend API Testing for Loopync Platform - Tribe Content Features
 
 **Test Environment:**
-- Backend URL: https://vibe-capsule.preview.emergentagent.com/api
+- Backend URL: https://loopync-social-4.preview.emergentagent.com/api
 - Test Credentials: test@test.com / testpassword123
 
 **Test Cases:**
@@ -27,7 +27,7 @@ import uuid
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://vibe-capsule.preview.emergentagent.com/api"
+BASE_URL = "https://loopync-social-4.preview.emergentagent.com/api"
 TEST_EMAIL = "test@test.com"
 TEST_PASSWORD = "testpassword123"
 

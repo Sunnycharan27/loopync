@@ -13,7 +13,7 @@ Messaging and Follow Request System Backend Testing
 - User 1: test@test.com / testpassword123
 - User 2: Created dynamically for testing
 
-**Backend URL:** https://vibe-capsule.preview.emergentagent.com/api
+**Backend URL:** https://loopync-social-4.preview.emergentagent.com/api
 """
 
 import requests
@@ -23,7 +23,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://vibe-capsule.preview.emergentagent.com/api"
+BASE_URL = "https://loopync-social-4.preview.emergentagent.com/api"
 TEST_USER_EMAIL = "test@test.com"
 TEST_USER_PASSWORD = "testpassword123"
 TEST_USER_2_EMAIL = f"testuser2_{int(time.time())}@test.com"
