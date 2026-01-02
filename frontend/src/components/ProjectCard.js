@@ -95,23 +95,23 @@ const ProjectCard = ({ project, currentUser, onLike, onSave, onSkillClick, compa
           </div>
         )}
 
-        {/* Links */}
-        <div className="flex items-center gap-3 mb-3">
+        {/* Links & Action Buttons */}
+        <div className="flex flex-wrap items-center gap-2 mb-3">
           {project.githubUrl && (
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-xs text-gray-400 hover:text-white">
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-xs font-medium transition">
               <Github size={14} />GitHub
             </a>
           )}
           {(project.demoUrl || project.liveUrl) && (
             <a href={project.demoUrl || project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300">
-              <ExternalLink size={14} />Live Demo
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg text-xs font-semibold transition">
+              <ExternalLink size={14} />Live Preview
             </a>
           )}
           <button 
             onClick={(e) => { e.stopPropagation(); navigate(`/projects/${project.id}`); }}
-            className="flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition"
           >
             <Eye size={14} />View Details
           </button>
