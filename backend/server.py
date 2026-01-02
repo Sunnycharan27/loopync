@@ -9963,6 +9963,31 @@ async def get_saved_projects(userId: str):
     
     return projects
 
+@api_router.post("/projects/{projectId}/comment")
+async def add_project_comment(projectId: str, data: dict):
+    """Add a comment to a project"""
+    project = await db.projects.find_one({"id": projectId}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    user = await db.users.find_one({"id": data.get("userId")}, {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "isVerified": 1})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    comment = {
+        "id": str(uuid4()),
+        "text": data.get("text", ""),
+        "author": user,
+        "createdAt": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.projects.update_one(
+        {"id": projectId},
+        {"$push": {"comments": comment}}
+    )
+    
+    return comment
+
 # ===== TEAM POSTS =====
 
 @api_router.get("/team-posts")
