@@ -203,25 +203,43 @@ const ProjectDetail = ({ currentUser }) => {
           </div>
         )}
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-3 mb-6">
-          {project.githubUrl && (
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-sm font-medium transition">
-              <Github size={18} />View on GitHub
-            </a>
-          )}
-          {(project.demoUrl || project.liveUrl) && (
-            <a href={project.demoUrl || project.liveUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl text-sm font-semibold transition">
-              <ExternalLink size={18} />Live Preview
-            </a>
-          )}
-          {project.videoUrl && (
-            <a href={project.videoUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-xl text-sm font-medium transition">
-              <Play size={18} />Watch Demo
-            </a>
+        {/* Action Buttons / Links Section */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <Globe size={18} className="text-cyan-400" />Project Links
+          </h2>
+          
+          {(project.githubUrl || project.demoUrl || project.liveUrl || project.videoUrl) ? (
+            <div className="flex flex-wrap gap-3">
+              {project.githubUrl && (
+                <a href={project.githubUrl.startsWith('http') ? project.githubUrl : `https://${project.githubUrl}`} 
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-sm font-medium transition">
+                  <Github size={18} />View on GitHub
+                </a>
+              )}
+              {(project.demoUrl || project.liveUrl) && (
+                <a href={(project.demoUrl || project.liveUrl).startsWith('http') ? (project.demoUrl || project.liveUrl) : `https://${project.demoUrl || project.liveUrl}`} 
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl text-sm font-semibold transition">
+                  <ExternalLink size={18} />Live Preview
+                </a>
+              )}
+              {project.videoUrl && (
+                <a href={project.videoUrl.startsWith('http') ? project.videoUrl : `https://${project.videoUrl}`} 
+                  target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-xl text-sm font-medium transition">
+                  <Play size={18} />Watch Demo
+                </a>
+              )}
+            </div>
+          ) : (
+            <div className="p-4 bg-gray-800/30 rounded-xl border border-gray-700/50 text-gray-500 text-sm">
+              <p className="flex items-center gap-2">
+                <ExternalLink size={16} />
+                No project links added yet
+              </p>
+            </div>
           )}
         </div>
 
