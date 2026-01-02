@@ -6569,6 +6569,18 @@ async def get_admin_dashboard(adminUserId: str):
     total_tribes = await db.tribes.count_documents({})
     total_rooms = await db.vibe_rooms.count_documents({})
     
+    # Get verified users
+    verified_users = await db.users.find(
+        {"isVerified": True}, 
+        {"_id": 0, "id": 1, "name": 1, "handle": 1, "avatar": 1, "email": 1, "isVerified": 1, "verifiedAt": 1}
+    ).to_list(100)
+    
+    # Get pending verification requests
+    pending_requests = await db.verification_requests.find(
+        {"status": "pending"},
+        {"_id": 0}
+    ).to_list(50)
+    
     # Active users (posted in last 7 days)
     from datetime import timedelta
     week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
@@ -6602,6 +6614,10 @@ async def get_admin_dashboard(adminUserId: str):
         "totalComments": total_comments,
         "platformEngagementRate": round((total_likes + total_comments) / max(total_posts + total_reels, 1), 2),
         "growthRate": f"+{growth_rate}%",
+        "verifiedUsers": verified_users,
+        "verifiedUsersCount": len(verified_users),
+        "pendingVerifications": len(pending_requests),
+        "pendingVerificationRequests": pending_requests,
         "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
