@@ -98,13 +98,13 @@ const ProjectCard = ({ project, currentUser, onLike, onSave, onSkillClick, compa
         {/* Links & Action Buttons */}
         <div className="flex flex-wrap items-center gap-2 mb-3">
           {project.githubUrl && (
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+            <a href={project.githubUrl.startsWith('http') ? project.githubUrl : `https://${project.githubUrl}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-xs font-medium transition">
               <Github size={14} />GitHub
             </a>
           )}
           {(project.demoUrl || project.liveUrl) && (
-            <a href={project.demoUrl || project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+            <a href={(project.demoUrl || project.liveUrl).startsWith('http') ? (project.demoUrl || project.liveUrl) : `https://${project.demoUrl || project.liveUrl}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg text-xs font-semibold transition">
               <ExternalLink size={14} />Live Preview
             </a>
