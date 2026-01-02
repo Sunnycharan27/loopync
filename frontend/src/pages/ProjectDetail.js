@@ -151,6 +151,65 @@ const ProjectDetail = ({ currentUser }) => {
 
   return (
     <div className="min-h-screen pb-24" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
+      {/* Edit Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-[#1a0b2e] rounded-2xl overflow-hidden">
+            <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-white">Edit Project Links</h2>
+              <button onClick={() => setShowEditModal(false)} className="p-2 hover:bg-gray-800 rounded-full">
+                <X size={20} className="text-gray-400" />
+              </button>
+            </div>
+            <div className="p-4 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">GitHub URL</label>
+                <div className="relative">
+                  <Github size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="url"
+                    value={editData.githubUrl}
+                    onChange={(e) => setEditData(prev => ({ ...prev, githubUrl: e.target.value }))}
+                    placeholder="https://github.com/username/repo"
+                    className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Live URL / Demo Link</label>
+                <div className="relative">
+                  <Globe size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="url"
+                    value={editData.liveUrl}
+                    onChange={(e) => setEditData(prev => ({ ...prev, liveUrl: e.target.value }))}
+                    placeholder="https://your-project.vercel.app"
+                    className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                <textarea
+                  value={editData.description}
+                  onChange={(e) => setEditData(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Describe your project..."
+                  rows={3}
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-400 resize-none"
+                />
+              </div>
+              <button
+                onClick={handleSaveEdit}
+                disabled={saving}
+                className="w-full py-3 bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-bold rounded-xl disabled:opacity-50"
+              >
+                {saving ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="sticky top-0 z-50 bg-[#0f021e]/90 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -158,9 +217,16 @@ const ProjectDetail = ({ currentUser }) => {
             <ArrowLeft size={24} className="text-white" />
           </button>
           <h1 className="text-lg font-bold text-white">Project Details</h1>
-          <button onClick={handleShare} className="p-2 hover:bg-gray-800 rounded-full transition">
-            <Share2 size={20} className="text-white" />
-          </button>
+          <div className="flex items-center gap-2">
+            {isOwner && (
+              <button onClick={openEditModal} className="p-2 hover:bg-gray-800 rounded-full transition">
+                <Edit3 size={20} className="text-cyan-400" />
+              </button>
+            )}
+            <button onClick={handleShare} className="p-2 hover:bg-gray-800 rounded-full transition">
+              <Share2 size={20} className="text-white" />
+            </button>
+          </div>
         </div>
       </div>
 
