@@ -1188,33 +1188,68 @@ const ShowcaseCard = ({ showcase }) => (
   </div>
 );
 
-// Resource Card
-const ResourceCard = ({ resource }) => (
-  <div className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/5">
-    <div className="flex items-start gap-3">
-      {resource.thumbnailUrl ? (
-        <img src={resource.thumbnailUrl} alt="" className="w-16 h-16 rounded-lg object-cover" />
-      ) : (
-        <div className="w-16 h-16 rounded-lg bg-blue-500/20 flex items-center justify-center">
-          <BookOpen size={24} className="text-blue-400" />
-        </div>
-      )}
-      <div className="flex-1 min-w-0">
-        <h4 className="font-bold text-white truncate">{resource.title}</h4>
-        <p className="text-blue-400 text-sm capitalize">{resource.type} • {resource.category}</p>
-        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
-          <span>📥 {resource.downloads || 0}</span>
-          {resource.isPremium && <span className="text-yellow-400">💰 ₹{resource.price}</span>}
+// Resource Card with Download/View
+const ResourceCard = ({ resource }) => {
+  const handleDownload = () => {
+    if (resource.fileUrl || resource.link) {
+      window.open(resource.fileUrl || resource.link, '_blank');
+    }
+  };
+
+  const handleView = () => {
+    if (resource.previewUrl || resource.fileUrl || resource.link) {
+      window.open(resource.previewUrl || resource.fileUrl || resource.link, '_blank');
+    }
+  };
+
+  return (
+    <div className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/5">
+      <div className="flex items-start gap-3">
+        {resource.thumbnailUrl ? (
+          <img src={resource.thumbnailUrl} alt="" className="w-16 h-16 rounded-lg object-cover" />
+        ) : (
+          <div className="w-16 h-16 rounded-lg bg-blue-500/20 flex items-center justify-center">
+            <BookOpen size={24} className="text-blue-400" />
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
+          <h4 className="font-bold text-white truncate">{resource.title}</h4>
+          <p className="text-blue-400 text-sm capitalize">{resource.type} • {resource.category}</p>
+          <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+            <span>📥 {resource.downloads || 0}</span>
+            {resource.isPremium && <span className="text-yellow-400">💰 ₹{resource.price}</span>}
+          </div>
         </div>
       </div>
+      <div className="flex flex-wrap gap-1 mt-3">
+        {resource.tags?.slice(0, 3).map((t, i) => (
+          <span key={i} className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded-full text-xs">#{t}</span>
+        ))}
+      </div>
+      {/* Download/View Buttons */}
+      <div className="flex gap-2 mt-3">
+        {(resource.previewUrl || resource.fileUrl || resource.link) && (
+          <button
+            onClick={handleView}
+            className="flex-1 py-2 px-3 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2"
+          >
+            <Eye size={16} />
+            View
+          </button>
+        )}
+        {(resource.fileUrl || resource.link) && (
+          <button
+            onClick={handleDownload}
+            className="flex-1 py-2 px-3 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2"
+          >
+            <Download size={16} />
+            Download
+          </button>
+        )}
+      </div>
     </div>
-    <div className="flex flex-wrap gap-1 mt-3">
-      {resource.tags?.slice(0, 3).map((t, i) => (
-        <span key={i} className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded-full text-xs">#{t}</span>
-      ))}
-    </div>
-  </div>
-);
+  );
+};
 
 // Collaboration Card
 const CollaborationCard = ({ collab }) => (
