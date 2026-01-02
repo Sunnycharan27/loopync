@@ -742,72 +742,90 @@ const TribeDetail = () => {
     // College/Tech: Projects
     if (activeTab === "projects") return (
       <div className="space-y-4">
-        <TabHeader title="Member Projects" buttonText="Add Project" buttonIcon={Rocket} onClick={() => setShowProjectModal(true)} />
-        {projects.length > 0 ? projects.map(p => <ProjectCard key={p.id} project={p} currentUser={currentUser} onSkillClick={setSkillFilter} />) : <EmptyState icon={Code} message="No projects yet" />}
+        <TabHeader title="Member Projects" buttonText="Add Project" buttonIcon={Rocket} onClick={() => setShowProjectModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (projects.length > 0 ? projects.map(p => <ProjectCard key={p.id} project={p} currentUser={currentUser} onSkillClick={setSkillFilter} />) : <EmptyState icon={Code} message="No projects yet" />)}
       </div>
     );
 
     // College/Tech: Certifications
     if (activeTab === "certifications") return (
       <div className="space-y-4">
-        <TabHeader title="Member Certifications" buttonText="Add Cert" buttonIcon={Award} onClick={() => setShowCertificationModal(true)} />
-        {certifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{certifications.map(c => <CertificationCard key={c.id} cert={c} onSkillClick={setSkillFilter} />)}</div> : <EmptyState icon={Award} message="No certifications yet" />}
+        <TabHeader title="Member Certifications" buttonText="Add Cert" buttonIcon={Award} onClick={() => setShowCertificationModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (certifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{certifications.map(c => <CertificationCard key={c.id} cert={c} onSkillClick={setSkillFilter} />)}</div> : <EmptyState icon={Award} message="No certifications yet" />)}
       </div>
     );
 
     // College/Tech: Team Posts
     if (activeTab === "teamPosts") return (
       <div className="space-y-4">
-        <TabHeader title="Looking for Team" buttonText="Find Team" buttonIcon={UsersRound} onClick={() => setShowTeamPostModal(true)} />
-        {teamPosts.length > 0 ? teamPosts.map(p => <TeamPostCard key={p.id} post={p} currentUser={currentUser} />) : <EmptyState icon={UsersRound} message="No team posts yet" />}
+        <TabHeader title="Looking for Team" buttonText="Find Team" buttonIcon={UsersRound} onClick={() => setShowTeamPostModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (teamPosts.length > 0 ? teamPosts.map(p => <TeamPostCard key={p.id} post={p} currentUser={currentUser} />) : <EmptyState icon={UsersRound} message="No team posts yet" />)}
       </div>
     );
 
     // College/Tech: Internships
     if (activeTab === "internships") return (
       <div className="space-y-4">
-        <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => setShowJobModal(true)} />
-        {internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />}
+        <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => setShowJobModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />)}
       </div>
     );
 
     // Fitness: Workouts
     if (activeTab === "workouts") return (
       <div className="space-y-4">
-        <TabHeader title="Workouts" buttonText="Add Workout" buttonIcon={Dumbbell} onClick={() => setShowWorkoutModal(true)} />
-        {workouts.length > 0 ? workouts.map(w => <WorkoutCard key={w.id} workout={w} />) : <EmptyState icon={Dumbbell} message="No workouts shared yet" />}
+        <TabHeader title="Workouts" buttonText="Add Workout" buttonIcon={Dumbbell} onClick={() => setShowWorkoutModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (workouts.length > 0 ? workouts.map(w => <WorkoutCard key={w.id} workout={w} />) : <EmptyState icon={Dumbbell} message="No workouts shared yet" />)}
       </div>
     );
 
     // Fitness: Challenges
     if (activeTab === "challenges") return (
       <div className="space-y-4">
-        <TabHeader title="Fitness Challenges" buttonText="Create Challenge" buttonIcon={Trophy} onClick={() => setShowChallengeModal(true)} />
-        {challenges.length > 0 ? challenges.map(c => <ChallengeCard key={c.id} challenge={c} />) : <EmptyState icon={Trophy} message="No active challenges" />}
+        <TabHeader title="Fitness Challenges" buttonText="Create Challenge" buttonIcon={Trophy} onClick={() => setShowChallengeModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (challenges.length > 0 ? challenges.map(c => <ChallengeCard key={c.id} challenge={c} />) : <EmptyState icon={Trophy} message="No active challenges" />)}
       </div>
     );
 
     // Food: Menu
     if (activeTab === "menu") return (
       <div className="space-y-4">
-        <TabHeader title="Menu Items" buttonText="Add Item" buttonIcon={Utensils} onClick={() => setShowMenuItemModal(true)} />
-        {menuItems.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{menuItems.map(m => <MenuItemCard key={m.id} item={m} />)}</div> : <EmptyState icon={Utensils} message="No menu items yet" />}
+        <TabHeader title="Menu Items" buttonText="Add Item" buttonIcon={Utensils} onClick={() => setShowMenuItemModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (menuItems.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{menuItems.map(m => <MenuItemCard key={m.id} item={m} />)}</div> : <EmptyState icon={Utensils} message="No menu items yet" />)}
       </div>
     );
 
     // Food/Business: Deals
     if (activeTab === "deals") return (
       <div className="space-y-4">
-        <TabHeader title="Deals & Offers" buttonText="Add Deal" buttonIcon={Tag} onClick={() => setShowDealModal(true)} />
-        {deals.length > 0 ? deals.map(d => <DealCard key={d.id} deal={d} />) : <EmptyState icon={Tag} message="No deals available" />}
+        <TabHeader title="Deals & Offers" buttonText="Add Deal" buttonIcon={Tag} onClick={() => setShowDealModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (deals.length > 0 ? deals.map(d => <DealCard key={d.id} deal={d} />) : <EmptyState icon={Tag} message="No deals available" />)}
       </div>
     );
 
     // Food/Business: Reviews
     if (activeTab === "reviews") return (
       <div className="space-y-4">
-        <TabHeader title="Reviews" buttonText="Write Review" buttonIcon={Star} onClick={() => setShowReviewModal(true)} />
-        {reviews.length > 0 ? reviews.map(r => <ReviewCard key={r.id} review={r} />) : <EmptyState icon={Star} message="No reviews yet" />}
+        <TabHeader title="Reviews" buttonText="Write Review" buttonIcon={Star} onClick={() => setShowReviewModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (reviews.length > 0 ? reviews.map(r => <ReviewCard key={r.id} review={r} />) : <EmptyState icon={Star} message="No reviews yet" />)}
       </div>
     );
 
@@ -815,10 +833,12 @@ const TribeDetail = () => {
     if (activeTab === "trainers") return (
       <div className="space-y-4">
         {isAdmin && (
-          <TabHeader title="Trainers" buttonText="Add Trainer" buttonIcon={UserPlus} onClick={() => setShowAddTrainerModal(true)} />
+          <TabHeader title="Trainers" buttonText="Add Trainer" buttonIcon={UserPlus} onClick={() => setShowAddTrainerModal(true)} showButton={isAdmin} />
         )}
         {!isAdmin && <h3 className="text-lg font-semibold text-white">Trainers</h3>}
-        {trainers.length > 0 ? (
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (trainers.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {trainers.map(trainer => (
               <TrainerCard 
@@ -832,67 +852,81 @@ const TribeDetail = () => {
           </div>
         ) : (
           <EmptyState icon={Users} message="No trainers added yet" />
-        )}
+        ))}
       </div>
     );
 
     // Events Tab (Multiple categories)
     if (activeTab === "events") return (
       <div className="space-y-4">
-        <TabHeader title="Events" buttonText="Create Event" buttonIcon={Calendar} onClick={() => setShowEventModal(true)} />
-        {events.length > 0 ? events.map(e => <EventCard key={e.id} event={e} />) : <EmptyState icon={Calendar} message="No upcoming events" />}
+        <TabHeader title="Events" buttonText="Create Event" buttonIcon={Calendar} onClick={() => setShowEventModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (events.length > 0 ? events.map(e => <EventCard key={e.id} event={e} />) : <EmptyState icon={Calendar} message="No upcoming events" />)}
       </div>
     );
 
     // Services Tab (Business tribes)
     if (activeTab === "services") return (
       <div className="space-y-4">
-        <TabHeader title="Services" buttonText="Add Service" buttonIcon={Briefcase} onClick={() => setShowServiceModal(true)} />
-        {services.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{services.map(s => <ServiceCard key={s.id} service={s} />)}</div> : <EmptyState icon={Briefcase} message="No services listed yet" />}
+        <TabHeader title="Services" buttonText="Add Service" buttonIcon={Briefcase} onClick={() => setShowServiceModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (services.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{services.map(s => <ServiceCard key={s.id} service={s} />)}</div> : <EmptyState icon={Briefcase} message="No services listed yet" />)}
       </div>
     );
 
     // Portfolios Tab (Business/Creative tribes)
     if (activeTab === "portfolios") return (
       <div className="space-y-4">
-        <TabHeader title="Portfolio" buttonText="Add Work" buttonIcon={Palette} onClick={() => setShowPortfolioModal(true)} />
-        {portfolios.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{portfolios.map(p => <PortfolioCard key={p.id} portfolio={p} />)}</div> : <EmptyState icon={Palette} message="No portfolio items yet" />}
+        <TabHeader title="Portfolio" buttonText="Add Work" buttonIcon={Palette} onClick={() => setShowPortfolioModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (portfolios.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{portfolios.map(p => <PortfolioCard key={p.id} portfolio={p} />)}</div> : <EmptyState icon={Palette} message="No portfolio items yet" />)}
       </div>
     );
 
     // Ideas Tab (Tech/Startup tribes)
     if (activeTab === "ideas") return (
       <div className="space-y-4">
-        <TabHeader title="Ideas" buttonText="Share Idea" buttonIcon={Lightbulb} onClick={() => setShowIdeaModal(true)} />
-        {ideas.length > 0 ? ideas.map(i => <IdeaCard key={i.id} idea={i} />) : <EmptyState icon={Lightbulb} message="No ideas shared yet" />}
+        <TabHeader title="Ideas" buttonText="Share Idea" buttonIcon={Lightbulb} onClick={() => setShowIdeaModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (ideas.length > 0 ? ideas.map(i => <IdeaCard key={i.id} idea={i} />) : <EmptyState icon={Lightbulb} message="No ideas shared yet" />)}
       </div>
     );
 
     // Showcases Tab (Startup Showcase)
     if (activeTab === "showcases") return (
       <div className="space-y-4">
-        <TabHeader title="Startup Showcase" buttonText="Showcase" buttonIcon={Sparkles} onClick={() => setShowShowcaseModal(true)} />
-        {showcases.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{showcases.map(s => <ShowcaseCard key={s.id} showcase={s} />)}</div> : <EmptyState icon={Sparkles} message="No startups showcased yet" />}
+        <TabHeader title="Startup Showcase" buttonText="Showcase" buttonIcon={Sparkles} onClick={() => setShowShowcaseModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (showcases.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{showcases.map(s => <ShowcaseCard key={s.id} showcase={s} />)}</div> : <EmptyState icon={Sparkles} message="No startups showcased yet" />)}
       </div>
     );
 
     // Resources Tab (College/Tech tribes)
     if (activeTab === "resources") return (
       <div className="space-y-4">
-        <TabHeader title="Resources" buttonText="Share Resource" buttonIcon={BookOpen} onClick={() => setShowResourceModal(true)} />
-        {resources.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{resources.map(r => <ResourceCard key={r.id} resource={r} />)}</div> : <EmptyState icon={BookOpen} message="No resources shared yet" />}
+        <TabHeader title="Resources" buttonText="Share Resource" buttonIcon={BookOpen} onClick={() => setShowResourceModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (resources.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{resources.map(r => <ResourceCard key={r.id} resource={r} />)}</div> : <EmptyState icon={BookOpen} message="No resources shared yet" />)}
       </div>
     );
 
     // Collaborations Tab (Creative tribes)
     if (activeTab === "collaborations") return (
       <div className="space-y-4">
-        <TabHeader title="Collaborations" buttonText="Find Collab" buttonIcon={Handshake} onClick={() => setShowCollaborationModal(true)} />
-        {collaborations.length > 0 ? collaborations.map(c => <CollaborationCard key={c.id} collab={c} />) : <EmptyState icon={Handshake} message="No collaborations posted yet" />}
+        <TabHeader title="Collaborations" buttonText="Find Collab" buttonIcon={Handshake} onClick={() => setShowCollaborationModal(true)} showButton={isMember} />
+        {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
+        {!currentUser && <LoginPrompt navigate={navigate} />}
+        {isMember && (collaborations.length > 0 ? collaborations.map(c => <CollaborationCard key={c.id} collab={c} />) : <EmptyState icon={Handshake} message="No collaborations posted yet" />)}
       </div>
     );
 
-    // Members Tab (All categories)
+    // Members Tab (All categories) - Members tab can be visible to everyone
     if (activeTab === "members") return (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {members.map(m => <MemberCard key={m.id} member={m} tribe={tribe} navigate={navigate} />)}
