@@ -1226,15 +1226,19 @@ const ShowcaseCard = ({ showcase }) => (
 
 // Resource Card with Download/View
 const ResourceCard = ({ resource }) => {
+  // Get the best available URL for viewing/downloading
+  const viewUrl = resource.previewUrl || resource.fileUrl || resource.resourceUrl || resource.link;
+  const downloadUrl = resource.fileUrl || resource.resourceUrl || resource.link;
+  
   const handleDownload = () => {
-    if (resource.fileUrl || resource.link) {
-      window.open(resource.fileUrl || resource.link, '_blank');
+    if (downloadUrl) {
+      window.open(downloadUrl, '_blank');
     }
   };
 
   const handleView = () => {
-    if (resource.previewUrl || resource.fileUrl || resource.link) {
-      window.open(resource.previewUrl || resource.fileUrl || resource.link, '_blank');
+    if (viewUrl) {
+      window.open(viewUrl, '_blank');
     }
   };
 
@@ -1257,14 +1261,23 @@ const ResourceCard = ({ resource }) => {
           </div>
         </div>
       </div>
+      {resource.description && (
+        <p className="text-gray-400 text-sm mt-2 line-clamp-2">{resource.description}</p>
+      )}
       <div className="flex flex-wrap gap-1 mt-3">
         {resource.tags?.slice(0, 3).map((t, i) => (
           <span key={i} className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded-full text-xs">#{t}</span>
         ))}
       </div>
+      {/* Show URL Info */}
+      {(viewUrl) && (
+        <div className="mt-2 text-xs text-gray-500 truncate">
+          🔗 {viewUrl.length > 50 ? viewUrl.substring(0, 50) + '...' : viewUrl}
+        </div>
+      )}
       {/* Download/View Buttons */}
       <div className="flex gap-2 mt-3">
-        {(resource.previewUrl || resource.fileUrl || resource.link) && (
+        {viewUrl && (
           <button
             onClick={handleView}
             className="flex-1 py-2 px-3 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2"
@@ -1273,7 +1286,7 @@ const ResourceCard = ({ resource }) => {
             View
           </button>
         )}
-        {(resource.fileUrl || resource.link) && (
+        {downloadUrl && (
           <button
             onClick={handleDownload}
             className="flex-1 py-2 px-3 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2"
