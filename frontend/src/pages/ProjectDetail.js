@@ -88,6 +88,31 @@ const ProjectDetail = ({ currentUser }) => {
     }
   };
 
+  const openEditModal = () => {
+    setEditData({
+      githubUrl: project.githubUrl || '',
+      liveUrl: project.liveUrl || project.demoUrl || '',
+      description: project.description || ''
+    });
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = async () => {
+    setSaving(true);
+    try {
+      await axios.put(`${API}/projects/${id}?userId=${currentUser.id}`, editData);
+      setProject(prev => ({ ...prev, ...editData }));
+      setShowEditModal(false);
+      toast.success('Project updated!');
+    } catch (error) {
+      toast.error('Failed to update project');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const isOwner = currentUser && project && (project.userId === currentUser.id || project.authorId === currentUser.id);
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'completed': return 'bg-green-500/20 text-green-400 border-green-500/30';
