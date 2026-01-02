@@ -165,6 +165,14 @@ function App() {
     <AuthContext.Provider value={{ currentUser, isAuthenticated, needsOnboarding, setNeedsOnboarding, login, logout, refreshUserData }}>
       <WebSocketProvider>
         <div className="App">
+          {/* Tutorial Modal for new users */}
+          {showTutorial && (
+            <TutorialModal 
+              onClose={() => setShowTutorial(false)} 
+              userName={currentUser?.name?.split(' ')[0]} 
+            />
+          )}
+          
           {/* Global Call Manager - handles incoming calls */}
           {isAuthenticated && currentUser && <CallManager currentUser={currentUser} />}
           
