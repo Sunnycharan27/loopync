@@ -11688,6 +11688,10 @@ async def clear_all_caches():
     return {"success": True, "message": "All caches cleared"}
 
 
+# Re-include router to pick up all routes defined after initial include
+app.include_router(api_router)
+
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
