@@ -953,6 +953,34 @@ test_plan:
         comment: "✅ COMPREHENSIVE PRE-DEPLOYMENT TESTING COMPLETED - ALL CRITICAL APIS WORKING (December 27, 2025): Executed comprehensive testing of all backend APIs as specified in review request. Test Results: 1) Authentication APIs ✅ PASSED (Login, Signup, Get Current User), 2) User APIs ✅ PASSED (Search Users, Get Profile, Follow Requests), 3) Messenger APIs ✅ PASSED (Get Threads, Get Requests, Start Conversation, Send Message), 4) Posts/Feed APIs ✅ PASSED (Get Posts, Create Post), 5) Tribes APIs ✅ PASSED (Get Tribes, Get Details, Join Tribe), 6) Rooms/VibeRooms APIs ✅ PASSED (Get Rooms, Create Room), 7) Notifications API ✅ PASSED (Get User Notifications), 8) Music API ✅ PASSED (Search Music, Get Trending), 9) Stories/Capsules API ✅ PASSED (Get Stories), 10) Internships API ✅ PASSED (Get Internships, Create Internship). Total Tests: 25, Passed: 25 ✅, Failed: 0 ❌, Success Rate: 100.0%. All critical backend APIs are production ready."
 
 agent_communication:
+  - agent: "main"
+    message: "PRE-DEPLOYMENT VERIFICATION TESTING (January 2, 2026):
+    
+**TESTING FOCUS - 3 CRITICAL FIXES:**
+
+**Fix 1: Reel Music & Mute Button**
+- Verify music plays when viewing reels with music attached
+- Verify mute button is visible and functional in ReelViewer
+- Components: /app/frontend/src/components/ReelViewer.js
+
+**Fix 2: Admin Dashboard Data**
+- Login as admin (loopyncpvt@gmail.com / admin123)
+- Navigate to /analytics
+- Verify 'Platform' tab shows verified users count
+- Verify 'Platform' tab shows pending verification requests count
+- Components: /app/frontend/src/pages/Analytics.js
+
+**Fix 3: Tribe Resource Download/View Buttons**
+- Navigate to a tribe with resources
+- Verify 'View' button appears on resource cards
+- Verify 'Download' button appears on resource cards  
+- Test both buttons open correct URLs
+- Components: /app/frontend/src/pages/TribeDetail.js (ResourceCard)
+
+**Test Credentials:**
+- Regular User: test@test.com / testpassword123
+- Admin User: loopyncpvt@gmail.com / admin123"
+
   - agent: "testing"
     message: "LOOPYNC CRITICAL FIXES VERIFICATION COMPLETED SUCCESSFULLY (December 29, 2025):
 
