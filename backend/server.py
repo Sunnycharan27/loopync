@@ -116,6 +116,17 @@ limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# Health check endpoint for Kubernetes
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Kubernetes liveness/readiness probes"""
+    try:
+        # Quick database ping to verify connectivity
+        await client.admin.command('ping')
+        return {"status": "healthy", "database": "connected"}
+    except Exception as e:
+        return {"status": "unhealthy", "database": "disconnected", "error": str(e)}
+
 api_router = APIRouter(prefix="/api")
 
 # Store connected clients: {userId: sid}
