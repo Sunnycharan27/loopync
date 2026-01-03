@@ -64,12 +64,13 @@ logger = logging.getLogger(__name__)
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(
     mongo_url,
-    maxPoolSize=100,          # Max connections in pool
-    minPoolSize=10,           # Min connections to maintain
-    maxIdleTimeMS=30000,      # Close idle connections after 30s
-    waitQueueTimeoutMS=5000,  # Timeout waiting for connection
-    serverSelectionTimeoutMS=5000,  # Timeout for server selection
-    connectTimeoutMS=10000,   # Connection timeout
+    maxPoolSize=50,           # Max connections in pool (reduced for Atlas)
+    minPoolSize=5,            # Min connections to maintain
+    maxIdleTimeMS=45000,      # Close idle connections after 45s
+    waitQueueTimeoutMS=10000, # Timeout waiting for connection (increased)
+    serverSelectionTimeoutMS=30000,  # Timeout for server selection (increased for Atlas)
+    connectTimeoutMS=30000,   # Connection timeout (increased for Atlas)
+    socketTimeoutMS=45000,    # Socket timeout for operations
     retryWrites=True,         # Retry failed writes
     retryReads=True           # Retry failed reads
 )
