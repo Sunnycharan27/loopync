@@ -141,13 +141,17 @@ class TestCapsulesEndpoints:
         response = requests.get(f"{BASE_URL}/api/capsules")
         assert response.status_code == 200
         data = response.json()
-        assert isinstance(data, list)
+        # Capsules endpoint returns object with 'stories' key
+        assert isinstance(data, dict)
+        assert "stories" in data
+        assert isinstance(data["stories"], list)
         
     def test_capsules_have_author_info(self):
         """Test capsules have author info for VibeCapsules OptimizedAvatar"""
         response = requests.get(f"{BASE_URL}/api/capsules")
         assert response.status_code == 200
-        capsules = response.json()
+        data = response.json()
+        capsules = data.get("stories", [])
         
         # Capsules may be empty, that's OK
         for capsule in capsules:
@@ -238,7 +242,8 @@ class TestMediaEndpoints:
             media_url = posts_with_media[0].get("media") or posts_with_media[0].get("mediaUrl")
             if media_url and media_url.startswith("/api/media/"):
                 full_url = f"{BASE_URL}{media_url}"
-                response = requests.head(full_url)
+                # Use GET instead of HEAD as media endpoint may not support HEAD
+                response = requests.get(full_url, stream=True)
                 # Media should be accessible (200) or redirect
                 assert response.status_code in [200, 301, 302, 304]
 
