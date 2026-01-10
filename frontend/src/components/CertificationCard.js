@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, ExternalLink, Calendar, Building2 } from 'lucide-react';
+import { Award, ExternalLink, Calendar, Building2, Download, Eye } from 'lucide-react';
 import SkillTag from './SkillTag';
 
 const CertificationCard = ({ cert, onSkillClick }) => {
@@ -28,16 +28,6 @@ const CertificationCard = ({ cert, onSkillClick }) => {
             </p>
           )}
         </div>
-        {cert.credentialUrl && (
-          <a
-            href={cert.credentialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 text-cyan-400 hover:bg-cyan-400/10 rounded-lg transition"
-          >
-            <ExternalLink size={16} />
-          </a>
-        )}
       </div>
 
       {/* Skills */}
@@ -58,11 +48,38 @@ const CertificationCard = ({ cert, onSkillClick }) => {
           <img
             src={cert.fileUrl}
             alt={cert.title}
-            className="w-full h-24 object-cover rounded"
+            className="w-full h-24 object-cover rounded cursor-pointer hover:opacity-80 transition"
             loading="lazy"
+            onClick={() => window.open(cert.fileUrl, '_blank')}
           />
         </div>
       )}
+
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-2 mt-3">
+        {cert.credentialUrl && (
+          <a
+            href={cert.credentialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg text-xs font-semibold transition"
+          >
+            <ExternalLink size={14} />
+            Verify Certificate
+          </a>
+        )}
+        {cert.fileUrl && (
+          <a
+            href={cert.fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-xs font-medium transition"
+          >
+            <Eye size={14} />
+            View Full
+          </a>
+        )}
+      </div>
     </div>
   );
 };
