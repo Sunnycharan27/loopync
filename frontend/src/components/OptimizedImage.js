@@ -155,15 +155,24 @@ export const OptimizedPostImage = ({
   alt = '',
   className = '',
   aspectRatio = '4/3',
+  onClick,
+  onError,
   ...props
 }) => {
+  const aspectStyle = aspectRatio === 'auto' ? {} : { aspectRatio };
+  
   return (
-    <div className={`relative w-full overflow-hidden ${className}`} style={{ aspectRatio }}>
+    <div 
+      className={`relative w-full overflow-hidden ${className}`} 
+      style={aspectStyle}
+      onClick={onClick}
+    >
       <OptimizedImage
         src={src}
         alt={alt}
         className="w-full h-full object-cover"
         quality={75}
+        onError={onError}
         {...props}
       />
     </div>
