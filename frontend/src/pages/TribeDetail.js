@@ -1017,12 +1017,14 @@ const MemberCard = ({ member, tribe, navigate }) => (
   </div>
 );
 
-const InternshipCard = ({ job }) => {
+const InternshipCard = ({ job, currentUser, onEdit, onDelete }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const isOwner = currentUser && (job.authorId === currentUser.id || job.postedBy === currentUser.id);
   
   return (
-    <div className="rounded-xl border border-gray-800 hover:border-cyan-400/30 transition overflow-hidden" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+    <div className="rounded-xl border border-gray-800 hover:border-cyan-400/30 transition overflow-hidden relative" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
       {/* Header with company logo */}
       <div className="p-4">
         <div className="flex items-start justify-between mb-3">
@@ -1039,17 +1041,48 @@ const InternshipCard = ({ job }) => {
               <p className="text-cyan-400 text-sm">{job.company}</p>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-              job.type === 'internship' ? 'bg-blue-500/20 text-blue-400' : 
-              job.type === 'full-time' ? 'bg-green-500/20 text-green-400' :
-              job.type === 'part-time' ? 'bg-purple-500/20 text-purple-400' :
-              'bg-orange-500/20 text-orange-400'
-            }`}>
-              {job.type || 'Job'}
-            </span>
-            {job.remote && (
-              <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Remote</span>
+          <div className="flex items-center gap-2">
+            <div className="flex flex-col items-end gap-1">
+              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                job.type === 'internship' ? 'bg-blue-500/20 text-blue-400' : 
+                job.type === 'full-time' ? 'bg-green-500/20 text-green-400' :
+                job.type === 'part-time' ? 'bg-purple-500/20 text-purple-400' :
+                'bg-orange-500/20 text-orange-400'
+              }`}>
+                {job.type || 'Job'}
+              </span>
+              {job.remote && (
+                <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Remote</span>
+              )}
+            </div>
+            {/* Owner Menu */}
+            {isOwner && (
+              <div className="relative">
+                <button
+                  onClick={(e) => { e.stopPropagation(); setShowMenu(!showMenu); }}
+                  className="p-1.5 hover:bg-gray-700 rounded-lg transition"
+                >
+                  <MoreVertical size={16} className="text-gray-400" />
+                </button>
+                {showMenu && (
+                  <div className="absolute right-0 top-8 bg-gray-900 border border-gray-700 rounded-lg shadow-xl z-20 min-w-[120px] py-1">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onEdit?.(job); setShowMenu(false); }}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-white hover:bg-gray-800 text-sm transition"
+                    >
+                      <Pencil size={14} />
+                      Edit
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDelete?.(job.id); setShowMenu(false); }}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-red-400 hover:bg-red-500/10 text-sm transition"
+                    >
+                      <Trash2 size={14} />
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
