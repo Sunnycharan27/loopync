@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { API, AuthContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2, Rocket, Award, UsersRound, Briefcase, Star, Code, Building2, Filter, Dumbbell, Utensils, Tag, Calendar, Trophy, MessageCircle, Trash2, Lightbulb, BookOpen, Sparkles, Handshake, Palette, Eye, Download, ExternalLink } from "lucide-react";
+import { ArrowLeft, Users, UserPlus, UserMinus, Settings, Image, Video, Send, Share2, Rocket, Award, UsersRound, Briefcase, Star, Code, Building2, Filter, Dumbbell, Utensils, Tag, Calendar, Trophy, MessageCircle, Trash2, Lightbulb, BookOpen, Sparkles, Handshake, Palette, Eye, Download, ExternalLink, MoreVertical, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import PostCard from "../components/PostCard";
 import { getMediaUrl } from "../utils/mediaUtils";
