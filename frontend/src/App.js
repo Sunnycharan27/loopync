@@ -472,26 +472,12 @@ function App() {
             />
 
             <Route
-              path="/viberooms"
+              path="/resources"
               element={
                 !authLoaded ? (
                   <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : isAuthenticated ? (
-                  <Rooms />
                 ) : (
-                  <Navigate to="/auth" />
-                )
-              }
-            />
-            <Route
-              path="/viberooms/:roomId"
-              element={
-                !authLoaded ? (
-                  <div className="min-h-screen grid place-items-center text-gray-400">Loading…</div>
-                ) : isAuthenticated ? (
-                  <RoomDetailClubhouse />
-                ) : (
-                  <Navigate to="/auth" />
+                  <Resources />
                 )
               }
             />
