@@ -775,7 +775,7 @@ const TribeDetail = () => {
         <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => setShowJobModal(true)} showButton={isMember} />
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />)}
+        {isMember && (internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} currentUser={currentUser} onEdit={(job) => { setEditingJob(job); setShowEditJobModal(true); }} onDelete={handleDeleteJob} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />)}
       </div>
     );
 
