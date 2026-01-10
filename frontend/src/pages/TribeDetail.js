@@ -578,15 +578,40 @@ const TribeDetail = () => {
           ))}
         </div>
 
-        {/* Skill Filter for relevant tabs */}
-        {["projects", "certifications", "workouts"].includes(activeTab) && isMember && (
+        {/* Global Search Bar */}
+        {isMember && activeTab !== "members" && (
           <div className="mb-4 flex gap-2">
             <div className="relative flex-1">
-              <Filter size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input type="text" placeholder="Filter by skill..." value={skillFilter} onChange={(e) => setSkillFilter(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-cyan-400" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <input 
+                type="text" 
+                placeholder={`Search ${activeTab}...`} 
+                value={searchQuery} 
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-cyan-400" 
+              />
             </div>
-            {skillFilter && <button onClick={() => setSkillFilter("")} className="px-3 py-2 bg-gray-800 text-gray-400 rounded-lg text-sm hover:text-white">Clear</button>}
+            {["projects", "certifications", "workouts"].includes(activeTab) && (
+              <div className="relative">
+                <Filter size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                <input 
+                  type="text" 
+                  placeholder="Filter by skill..." 
+                  value={skillFilter} 
+                  onChange={(e) => setSkillFilter(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-xl text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-cyan-400" 
+                  style={{ width: '180px' }}
+                />
+              </div>
+            )}
+            {(searchQuery || skillFilter) && (
+              <button 
+                onClick={() => { setSearchQuery(""); setSkillFilter(""); }} 
+                className="px-4 py-2 bg-gray-800 text-gray-400 rounded-xl text-sm hover:text-white hover:bg-gray-700 transition"
+              >
+                Clear
+              </button>
+            )}
           </div>
         )}
 
