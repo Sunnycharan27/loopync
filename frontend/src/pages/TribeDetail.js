@@ -159,6 +159,7 @@ const TribeDetail = () => {
   const [showPortfolioModal, setShowPortfolioModal] = useState(false);
   const [trainers, setTrainers] = useState([]);
   const [skillFilter, setSkillFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
 
   const tribeCategory = tribe?.category || 'default';
