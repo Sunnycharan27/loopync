@@ -3,6 +3,7 @@ import axios from "axios";
 import { API } from "../App";
 import VibeCapsuleUpload from "./VibeCapsuleUpload";
 import VibeCapsuleViewer from "./VibeCapsuleViewer";
+import { OptimizedAvatar } from "./OptimizedImage";
 import { Plus } from "lucide-react";
 
 const VibeCapsules = ({ currentUser, onCreateStory }) => {
@@ -90,10 +91,12 @@ const VibeCapsules = ({ currentUser, onCreateStory }) => {
               <div className="relative">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 p-0.5">
                   <div className="w-full h-full rounded-full border-2 border-gray-900 overflow-hidden">
-                    <img
-                      src={userStory.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`}
+                    <OptimizedAvatar
+                      src={userStory.author?.avatar || null}
                       alt="Your Story"
-                      className="w-full h-full object-cover"
+                      size={60}
+                      fallbackSeed={currentUser.name}
+                      priority={true}
                     />
                   </div>
                 </div>
@@ -120,10 +123,11 @@ const VibeCapsules = ({ currentUser, onCreateStory }) => {
                 <div className="relative">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 p-0.5">
                     <div className="w-full h-full rounded-full border-2 border-gray-900 overflow-hidden">
-                      <img
-                        src={story.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${story.author?.name}`}
+                      <OptimizedAvatar
+                        src={story.author?.avatar || null}
                         alt={story.author?.name}
-                        className="w-full h-full object-cover"
+                        size={60}
+                        fallbackSeed={story.author?.name}
                       />
                     </div>
                   </div>
