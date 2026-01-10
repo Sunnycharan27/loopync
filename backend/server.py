@@ -76,6 +76,10 @@ client = AsyncIOMotorClient(
 )
 db = client[os.environ['DB_NAME']]
 
+# Initialize routes dependencies with database
+from routes.deps import set_database
+set_database(db)
+
 # Initialize services
 verification_service = VerificationService(db)
 two_factor_service = TwoFactorAuthService(db)
