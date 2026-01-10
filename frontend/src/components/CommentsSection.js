@@ -3,6 +3,7 @@ import axios from "axios";
 import { API, AuthContext } from "../App";
 import { Send, Trash2, Heart } from "lucide-react";
 import { toast } from "sonner";
+import { OptimizedAvatar } from "./OptimizedImage";
 
 const CommentsSection = ({ postId }) => {
   const { currentUser } = useContext(AuthContext);
@@ -77,10 +78,11 @@ const CommentsSection = ({ postId }) => {
       <div className="space-y-3">
         {comments.map(comment => (
           <div key={comment.id} className="flex gap-3">
-            <img
+            <OptimizedAvatar
               src={comment.author?.avatar}
               alt={comment.author?.name}
-              className="w-8 h-8 rounded-full"
+              size={32}
+              fallbackSeed={comment.authorId}
             />
             <div className="flex-1">
               <div className="bg-gray-800/30 rounded-2xl px-4 py-2 dark:bg-gray-800/30 light:bg-gray-100">
