@@ -59,10 +59,12 @@ const FeedReelCard = memo(({ reel, currentUser, onLike }) => {
           className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => navigate(`/profile/${reel.authorId}`)}
         >
-          <img
-            src={reel.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${reel.authorId}`}
+          <OptimizedAvatar
+            src={reel.author?.avatar || null}
             alt={reel.author?.name || 'User'}
-            className="w-10 h-10 rounded-full ring-2 ring-cyan-400/20"
+            size={40}
+            fallbackSeed={reel.authorId}
+            className="ring-2 ring-cyan-400/20"
           />
           <div>
             <div className="flex items-center gap-1.5">
