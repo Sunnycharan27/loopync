@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import UniversalShareModal from "./UniversalShareModal";
 import VerifiedBadge from "./VerifiedBadge";
+import { OptimizedAvatar } from "./OptimizedImage";
 import { getMediaUrl } from "../utils/mediaUtils";
 
 // Memoized FeedReelCard for better performance
