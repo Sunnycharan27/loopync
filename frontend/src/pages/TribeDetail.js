@@ -145,6 +145,8 @@ const TribeDetail = () => {
   const [showAddTrainerModal, setShowAddTrainerModal] = useState(false);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showJobModal, setShowJobModal] = useState(false);
+  const [showEditJobModal, setShowEditJobModal] = useState(false);
+  const [editingJob, setEditingJob] = useState(null);
   const [showCertificationModal, setShowCertificationModal] = useState(false);
   const [showTeamPostModal, setShowTeamPostModal] = useState(false);
   const [showEventModal, setShowEventModal] = useState(false);
