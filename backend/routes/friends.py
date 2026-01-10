@@ -192,7 +192,7 @@ async def remove_friend(user1Id: str, user2Id: str):
     # Delete friendship
     canonical_user1, canonical_user2 = get_canonical_friend_order(user1Id, user2Id)
     
-    result = await db.friendships.delete_one({
+    await db.friendships.delete_one({
         "userId1": canonical_user1,
         "userId2": canonical_user2
     })
