@@ -247,15 +247,25 @@ The platform is production-ready with:
 - [x] FeedSkeleton loading states in Home.js
 - [x] Components updated: Home.js, PostCard.js, FeedReelCard.js, VibeCapsules.js, CommentsSection.js
 
-### P1: Backend Code Refactoring (In Progress)
+### P1: Backend Code Refactoring ✅ COMPLETED
 - [x] Created modular routes structure: `/app/backend/routes/`
   - auth.py - Authentication routes
   - users.py - User management routes
   - posts.py - Posts CRUD routes
   - friends.py - Friend system routes
+  - tribes.py - Tribes/community routes
+  - reels.py - Short video routes
+  - capsules.py - Stories routes
   - deps.py - Shared dependencies
-- [ ] Wire routers into main server.py (pending)
-- [ ] Break down remaining endpoints (~300+ routes)
+- [x] Wired routers into server.py via set_database(db)
+- [ ] Break down remaining endpoints (~200+ routes still in server.py)
+
+### P2: VibeRooms Removal ✅ COMPLETED (January 2026)
+- [x] Removed VibeRooms from bottom navigation
+- [x] Added Resources page as replacement
+- [x] Updated tutorial (7 steps, removed VibeZone)
+- [x] Deleted Rooms.js, RoomDetail.js, RoomDetailClubhouse.js
+- [x] Updated App.js routes
 
 ### Performance Test Results
 - Posts API response: < 5 seconds
