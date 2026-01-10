@@ -1190,9 +1190,35 @@ const IdeaCard = ({ idea }) => (
       }`}>{idea.stage}</span>
     </div>
     <p className="text-gray-400 text-sm mb-2">{idea.problem}</p>
+    {idea.solution && <p className="text-cyan-400 text-sm mb-2"><strong>Solution:</strong> {idea.solution}</p>}
+    
+    {/* Links Section */}
+    {(idea.pitchDeckUrl || idea.documentUrl || idea.prototypeUrl) && (
+      <div className="flex flex-wrap gap-2 mb-3 mt-3">
+        {idea.pitchDeckUrl && (
+          <a href={idea.pitchDeckUrl} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-xs font-medium transition">
+            <Eye size={12} />Pitch Deck
+          </a>
+        )}
+        {idea.documentUrl && (
+          <a href={idea.documentUrl} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition">
+            <Download size={12} />Document
+          </a>
+        )}
+        {idea.prototypeUrl && (
+          <a href={idea.prototypeUrl} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition">
+            <ExternalLink size={12} />Prototype
+          </a>
+        )}
+      </div>
+    )}
+    
     <div className="flex items-center justify-between mt-3">
       <div className="flex items-center gap-2">
-        <img src={idea.author?.avatar} alt="" className="w-6 h-6 rounded-full" />
+        <img src={idea.author?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${idea.authorId}`} alt="" className="w-6 h-6 rounded-full" />
         <span className="text-xs text-gray-400">{idea.author?.name}</span>
       </div>
       <div className="flex items-center gap-1 text-yellow-400">
@@ -1215,6 +1241,31 @@ const ShowcaseCard = ({ showcase }) => (
       <p className="text-purple-400 text-sm">{showcase.stage} • {showcase.fundingStage}</p>
       <p className="text-gray-400 text-sm mt-2 line-clamp-2">{showcase.description}</p>
       {showcase.metrics && <p className="text-green-400 text-sm mt-2 font-semibold">{showcase.metrics}</p>}
+      
+      {/* Links Section */}
+      <div className="flex flex-wrap gap-2 mt-3">
+        {showcase.websiteUrl && (
+          <a href={showcase.websiteUrl.startsWith('http') ? showcase.websiteUrl : `https://${showcase.websiteUrl}`} 
+            target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-purple-500 hover:bg-purple-400 text-white rounded-lg text-xs font-semibold transition">
+            <ExternalLink size={12} />Website
+          </a>
+        )}
+        {showcase.pitchDeckUrl && (
+          <a href={showcase.pitchDeckUrl} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-pink-500/20 hover:bg-pink-500/30 text-pink-400 rounded-lg text-xs font-medium transition">
+            <Eye size={12} />Pitch Deck
+          </a>
+        )}
+        {showcase.demoUrl && (
+          <a href={showcase.demoUrl.startsWith('http') ? showcase.demoUrl : `https://${showcase.demoUrl}`} 
+            target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg text-xs font-semibold transition">
+            <ExternalLink size={12} />Demo
+          </a>
+        )}
+      </div>
+      
       <div className="flex flex-wrap gap-1 mt-2">
         {showcase.achievements?.slice(0, 2).map((a, i) => (
           <span key={i} className="px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-full text-xs">🏆 {a}</span>
