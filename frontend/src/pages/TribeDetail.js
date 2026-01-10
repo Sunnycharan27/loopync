@@ -432,6 +432,37 @@ const TribeDetail = () => {
     } catch (error) { toast.error(getErrorMsg(error) || "Failed to repost"); }
   };
 
+  const handleDeleteJob = async (jobId) => {
+    if (!window.confirm("Delete this job posting? This action cannot be undone.")) return;
+    try {
+      await axios.delete(`${API}/internships/${jobId}?userId=${currentUser.id}`);
+      setInternships(internships.filter(j => j.id !== jobId));
+      toast.success("Job deleted successfully!");
+    } catch (error) { 
+      if (error.response?.status === 403) {
+        toast.error("You can only delete your own job postings");
+      } else {
+        toast.error(getErrorMsg(error) || "Failed to delete job"); 
+      }
+    }
+  };
+
+  const handleUpdateJob = async (jobId, updatedData) => {
+    try {
+      await axios.put(`${API}/internships/${jobId}?userId=${currentUser.id}`, updatedData);
+      setInternships(internships.map(j => j.id === jobId ? { ...j, ...updatedData } : j));
+      toast.success("Job updated successfully!");
+      setShowEditJobModal(false);
+      setEditingJob(null);
+    } catch (error) {
+      if (error.response?.status === 403) {
+        toast.error("You can only edit your own job postings");
+      } else {
+        toast.error(getErrorMsg(error) || "Failed to update job");
+      }
+    }
+  };
+
   const tribeMembers = tribe?.members || [];
   const isMember = currentUser?.id && tribeMembers.includes(currentUser.id);
   const isOwner = currentUser?.id === tribe?.ownerId;
