@@ -986,20 +986,166 @@ const MemberCard = ({ member, tribe, navigate }) => (
 
 const InternshipCard = ({ job }) => {
   const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false);
+  
   return (
-    <div className="p-4 rounded-xl border border-gray-800 hover:border-cyan-400/30 transition" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
-      <div className="flex items-start justify-between mb-3">
-        <div>
-          <h4 className="font-bold text-white text-lg">{job.title}</h4>
-          <p className="text-cyan-400 text-sm flex items-center gap-1"><Building2 size={14} />{job.company}</p>
+    <div className="rounded-xl border border-gray-800 hover:border-cyan-400/30 transition overflow-hidden" style={{ background: 'rgba(26, 11, 46, 0.5)' }}>
+      {/* Header with company logo */}
+      <div className="p-4">
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-start gap-3">
+            {job.companyLogo ? (
+              <img src={job.companyLogo} alt={job.company} className="w-12 h-12 rounded-xl object-cover" />
+            ) : (
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center">
+                <Building2 size={24} className="text-cyan-400" />
+              </div>
+            )}
+            <div>
+              <h4 className="font-bold text-white text-lg">{job.title}</h4>
+              <p className="text-cyan-400 text-sm">{job.company}</p>
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+              job.type === 'internship' ? 'bg-blue-500/20 text-blue-400' : 
+              job.type === 'full-time' ? 'bg-green-500/20 text-green-400' :
+              job.type === 'part-time' ? 'bg-purple-500/20 text-purple-400' :
+              'bg-orange-500/20 text-orange-400'
+            }`}>
+              {job.type || 'Job'}
+            </span>
+            {job.remote && (
+              <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Remote</span>
+            )}
+          </div>
         </div>
-        <span className={`px-2 py-1 rounded-full text-xs ${job.type === 'internship' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'}`}>{job.type}</span>
+        
+        {/* Job Details */}
+        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400 mb-3">
+          {job.location && (
+            <span className="flex items-center gap-1">📍 {job.location}</span>
+          )}
+          {job.stipend && (
+            <span className="flex items-center gap-1 text-green-400">💰 {job.stipend}</span>
+          )}
+          {job.duration && (
+            <span className="flex items-center gap-1">⏱️ {job.duration}</span>
+          )}
+          {job.deadline && (
+            <span className="flex items-center gap-1 text-red-400">📅 Apply by {new Date(job.deadline).toLocaleDateString()}</span>
+          )}
+        </div>
+        
+        {/* Description */}
+        <p className={`text-gray-400 text-sm mb-3 ${expanded ? '' : 'line-clamp-2'}`}>{job.description}</p>
+        
+        {/* Skills Required */}
+        {job.skills?.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-3">
+            {job.skills.slice(0, expanded ? job.skills.length : 4).map(skill => (
+              <span key={skill} className="px-2 py-0.5 bg-gray-700 text-gray-300 rounded text-xs">{skill}</span>
+            ))}
+            {!expanded && job.skills.length > 4 && (
+              <span className="text-xs text-gray-500">+{job.skills.length - 4} more</span>
+            )}
+          </div>
+        )}
+        
+        {/* Expanded Details */}
+        {expanded && (
+          <div className="space-y-3 mb-4 p-3 bg-gray-900/50 rounded-lg">
+            {job.responsibilities && (
+              <div>
+                <h5 className="text-sm font-semibold text-white mb-1">Responsibilities:</h5>
+                <p className="text-gray-400 text-sm">{job.responsibilities}</p>
+              </div>
+            )}
+            {job.requirements && (
+              <div>
+                <h5 className="text-sm font-semibold text-white mb-1">Requirements:</h5>
+                <p className="text-gray-400 text-sm">{job.requirements}</p>
+              </div>
+            )}
+            {job.benefits && (
+              <div>
+                <h5 className="text-sm font-semibold text-white mb-1">Benefits:</h5>
+                <p className="text-gray-400 text-sm">{job.benefits}</p>
+              </div>
+            )}
+            {job.contactEmail && (
+              <div>
+                <h5 className="text-sm font-semibold text-white mb-1">Contact:</h5>
+                <a href={`mailto:${job.contactEmail}`} className="text-cyan-400 text-sm hover:underline">{job.contactEmail}</a>
+              </div>
+            )}
+          </div>
+        )}
+        
+        {/* Show More/Less */}
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="text-cyan-400 text-sm hover:underline mb-3"
+        >
+          {expanded ? '▲ Show Less' : '▼ Show More'}
+        </button>
       </div>
-      <p className="text-gray-400 text-sm mb-3 line-clamp-2">{job.description}</p>
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-500">{job.location} • {job.stipend || 'Unpaid'}</span>
-        <button onClick={() => navigate(`/internships/${job.id}/apply`)} className="px-4 py-1.5 bg-cyan-400 text-black rounded-lg text-sm font-semibold">Apply</button>
+      
+      {/* Action Buttons */}
+      <div className="flex items-center gap-2 p-4 pt-0 border-t border-gray-800/50">
+        {/* External Application Link (Google Forms, etc.) */}
+        {job.applicationUrl && (
+          <a
+            href={job.applicationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg font-semibold transition"
+          >
+            <ExternalLink size={16} />
+            Apply Now
+          </a>
+        )}
+        
+        {/* In-app Apply (if no external link) */}
+        {!job.applicationUrl && (
+          <button
+            onClick={() => navigate(`/internships/${job.id}/apply`)}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg font-semibold transition"
+          >
+            Apply Now
+          </button>
+        )}
+        
+        {/* Share Button */}
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(`${window.location.origin}/internships/${job.id}`);
+            toast.success('Link copied!');
+          }}
+          className="p-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition"
+        >
+          <Share2 size={16} />
+        </button>
+        
+        {/* Message Poster */}
+        {job.authorId && (
+          <button
+            onClick={() => navigate(`/messages?userId=${job.authorId}`)}
+            className="p-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition"
+          >
+            <MessageCircle size={16} />
+          </button>
+        )}
       </div>
+      
+      {/* Posted By */}
+      {job.author && (
+        <div className="px-4 pb-3 flex items-center gap-2 text-xs text-gray-500">
+          <img src={job.author.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${job.authorId}`} alt="" className="w-5 h-5 rounded-full" />
+          <span>Posted by {job.author.name}</span>
+          {job.createdAt && <span>• {new Date(job.createdAt).toLocaleDateString()}</span>}
+        </div>
+      )}
     </div>
   );
 };
