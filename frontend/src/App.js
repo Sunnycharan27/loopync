@@ -189,6 +189,7 @@ function App() {
           {isAuthenticated && currentUser && <CallManager currentUser={currentUser} />}
           
           <BrowserRouter>
+            <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/auth" element={<AuthComplete />} />
               <Route
