@@ -123,11 +123,9 @@ Bridge the gap between academic life and professional development for Indian stu
 - [x] Read receipts
 - [x] Real-time updates via Socket.IO
 
-### Audio Rooms (VibeRooms)
-- [x] Agora.io powered audio chat
-- [x] Create/join rooms
-- [x] Host controls
-- [x] Live participant list
+### Audio Rooms (VibeRooms) - REMOVED (January 2026)
+- Feature removed per user request
+- Replaced with Free Resources page in navigation
 
 ---
 
