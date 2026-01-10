@@ -1,67 +1,80 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Home from "./pages/Home";
-import VibeZone from "./pages/VibeZone";
-import Tribes from "./pages/Tribes";
-import TribeDetail from "./pages/TribeDetail";
-import CreateTribe from "./pages/CreateTribe";
-import Discover from "./pages/Discover";
-import Venues from "./pages/Venues";
-import VenueDetail from "./pages/VenueDetail";
-import Events from "./pages/Events";
-import EventDetail from "./pages/EventDetail";
-import Payment from "./pages/Payment";
-import Marketplace from "./pages/Marketplace";
-import Onboarding from "./pages/Onboarding";
-import MessengerNew from "./pages/MessengerNew";
-import Notifications from "./pages/Notifications";
-import Profile from "./pages/ProfileVibe";
-import InstagramProfile from "./pages/InstagramProfile";
-import UserProfile from "./pages/UserProfile";
-import People from "./pages/People";
-import Settings from "./pages/Settings";
-import AdminVerificationDashboard from "./pages/AdminVerificationDashboard";
-import VerificationRequest from "./pages/VerificationRequest";
-import PageView from "./pages/PageView";
-import Resources from "./pages/Resources";
-import Analytics from "./pages/Analytics";
-import Auth from "./pages/Auth";
-import AuthComplete from "./pages/AuthComplete";
 import { Toaster } from "sonner";
 
-// Marketplace Pages
-import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import Orders from "./pages/Orders";
-import SellerDashboard from "./pages/SellerDashboard";
+// Core pages - loaded immediately
+import Home from "./pages/Home";
+import Auth from "./pages/Auth";
 
-// Video Platform Pages
-import Videos from "./pages/Videos";
-import VideoPlayer from "./pages/VideoPlayer";
-import VideoUpload from "./pages/VideoUpload";
+// Lazy loaded pages - loaded on demand for better performance
+const VibeZone = lazy(() => import("./pages/VibeZone"));
+const Tribes = lazy(() => import("./pages/Tribes"));
+const TribeDetail = lazy(() => import("./pages/TribeDetail"));
+const CreateTribe = lazy(() => import("./pages/CreateTribe"));
+const Discover = lazy(() => import("./pages/Discover"));
+const Venues = lazy(() => import("./pages/Venues"));
+const VenueDetail = lazy(() => import("./pages/VenueDetail"));
+const Events = lazy(() => import("./pages/Events"));
+const EventDetail = lazy(() => import("./pages/EventDetail"));
+const Payment = lazy(() => import("./pages/Payment"));
+const Marketplace = lazy(() => import("./pages/Marketplace"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
+const MessengerNew = lazy(() => import("./pages/MessengerNew"));
+const Notifications = lazy(() => import("./pages/Notifications"));
+const Profile = lazy(() => import("./pages/ProfileVibe"));
+const InstagramProfile = lazy(() => import("./pages/InstagramProfile"));
+const UserProfile = lazy(() => import("./pages/UserProfile"));
+const People = lazy(() => import("./pages/People"));
+const Settings = lazy(() => import("./pages/Settings"));
+const AdminVerificationDashboard = lazy(() => import("./pages/AdminVerificationDashboard"));
+const VerificationRequest = lazy(() => import("./pages/VerificationRequest"));
+const PageView = lazy(() => import("./pages/PageView"));
+const Resources = lazy(() => import("./pages/Resources"));
+const Analytics = lazy(() => import("./pages/Analytics"));
+const AuthComplete = lazy(() => import("./pages/AuthComplete"));
+
+// Marketplace Pages - lazy loaded
+const Products = lazy(() => import("./pages/Products"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Orders = lazy(() => import("./pages/Orders"));
+const SellerDashboard = lazy(() => import("./pages/SellerDashboard"));
+
+// Video Platform Pages - lazy loaded
+const Videos = lazy(() => import("./pages/Videos"));
+const VideoPlayer = lazy(() => import("./pages/VideoPlayer"));
+const VideoUpload = lazy(() => import("./pages/VideoUpload"));
+
+// Digital Products Pages - lazy loaded
+const DigitalProducts = lazy(() => import("./pages/DigitalProducts"));
+const DigitalProductDetail = lazy(() => import("./pages/DigitalProductDetail"));
+const UploadDigitalProduct = lazy(() => import("./pages/UploadDigitalProduct"));
+
+// Student Features Pages - lazy loaded
+const StudentOnboarding = lazy(() => import("./pages/StudentOnboarding"));
+const Projects = lazy(() => import("./pages/Projects"));
+const CreateProject = lazy(() => import("./pages/CreateProject"));
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const Certifications = lazy(() => import("./pages/Certifications"));
+const CreateCertification = lazy(() => import("./pages/CreateCertification"));
+const TeamPosts = lazy(() => import("./pages/TeamPosts"));
+const CreateTeamPost = lazy(() => import("./pages/CreateTeamPost"));
+const CompanyDiscovery = lazy(() => import("./pages/CompanyDiscovery"));
+const CreateInternship = lazy(() => import("./pages/CreateInternship"));
+
+// Context providers
 import { WebSocketProvider } from "./context/WebSocketContext";
 import CallManager from "./components/CallManager";
 
-// Digital Products Pages
-import DigitalProducts from "./pages/DigitalProducts";
-import DigitalProductDetail from "./pages/DigitalProductDetail";
-import UploadDigitalProduct from "./pages/UploadDigitalProduct";
-
-// Student Features Pages
-import StudentOnboarding from "./pages/StudentOnboarding";
-import Projects from "./pages/Projects";
-import CreateProject from "./pages/CreateProject";
-import ProjectDetail from "./pages/ProjectDetail";
-import Certifications from "./pages/Certifications";
-import CreateCertification from "./pages/CreateCertification";
-import TeamPosts from "./pages/TeamPosts";
-import CreateTeamPost from "./pages/CreateTeamPost";
-import CompanyDiscovery from "./pages/CompanyDiscovery";
-import CreateInternship from "./pages/CreateInternship";
+// Loading component for Suspense
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(180deg, #0f021e 0%, #1a0b2e 100%)' }}>
+    <div className="animate-spin w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full"></div>
+  </div>
+);
 
 // Tutorial Component
 import TutorialModal from "./components/TutorialModal";
