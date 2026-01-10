@@ -560,13 +560,6 @@ const Discover = () => {
                 <Users size={18} />
                 People
               </button>
-              <button
-                onClick={() => navigate("/digital-products")}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold whitespace-nowrap transition-all bg-gradient-to-r from-green-500 to-teal-500 text-black hover:shadow-lg hover:shadow-green-500/30"
-              >
-                <Package size={18} />
-                Free Resources
-              </button>
             </div>
 
             {/* Content */}
