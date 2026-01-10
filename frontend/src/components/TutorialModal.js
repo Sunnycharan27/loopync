@@ -56,13 +56,13 @@ const tutorialSteps = [
   {
     id: 5,
     title: "Free Resources 📚",
-    description: "Access a library of free eBooks, courses, PDFs, and study materials shared by the community.",
+    description: "Access a library of free eBooks, courses, PDFs, and study materials shared by the community. Learn and grow together!",
     icon: BookOpen,
     color: "from-indigo-500 to-purple-500",
     tips: [
-      "Browse eBooks, courses & more",
+      "Browse eBooks, courses & tutorials",
       "Download resources for free",
-      "Share your own resources"
+      "Share your own learning materials"
     ]
   },
   {
@@ -79,18 +79,6 @@ const tutorialSteps = [
   },
   {
     id: 7,
-    title: "VibeZone 🎬",
-    description: "Watch and create short-form videos. Share your moments, tutorials, or just vibe with the community!",
-    icon: Video,
-    color: "from-red-500 to-orange-500",
-    tips: [
-      "Scroll through trending reels",
-      "Create your own video content",
-      "Add music to your videos"
-    ]
-  },
-  {
-    id: 8,
     title: "Stories & Profile ✨",
     description: "Share VibeCapsules (stories) that last 24 hours. Build your profile to showcase who you are!",
     icon: User,
