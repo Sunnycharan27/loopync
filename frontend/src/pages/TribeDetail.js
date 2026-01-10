@@ -660,6 +660,18 @@ const TribeDetail = () => {
           onCreated={() => fetchInternships()} 
         />
       )}
+      {showEditJobModal && editingJob && (
+        <EditJobModal 
+          job={editingJob}
+          currentUser={currentUser} 
+          onClose={() => { setShowEditJobModal(false); setEditingJob(null); }} 
+          onUpdated={(jobId, updatedData) => {
+            setInternships(internships.map(j => j.id === jobId ? { ...j, ...updatedData } : j));
+            setShowEditJobModal(false);
+            setEditingJob(null);
+          }} 
+        />
+      )}
       {showCertificationModal && (
         <CreateCertificationModal 
           tribeId={tribeId} 
