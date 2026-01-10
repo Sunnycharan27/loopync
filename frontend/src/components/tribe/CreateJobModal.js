@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Briefcase, MapPin, DollarSign, Clock, Building2, Users } from 'lucide-react';
+import { X, Briefcase, MapPin, DollarSign, Clock, Building2, Users, Link2, Mail } from 'lucide-react';
 import axios from 'axios';
 import { API } from '../../App';
 import { toast } from 'sonner';
@@ -9,8 +9,11 @@ const CreateJobModal = ({ tribeId, currentUser, onClose, onCreated }) => {
   const [formData, setFormData] = useState({
     title: '',
     company: '',
+    companyLogo: '',
     description: '',
     requirements: '',
+    responsibilities: '',
+    benefits: '',
     location: '',
     locationType: 'hybrid',
     jobType: 'full-time',
@@ -18,7 +21,8 @@ const CreateJobModal = ({ tribeId, currentUser, onClose, onCreated }) => {
     salary: '',
     salaryType: 'monthly',
     skills: [],
-    applyUrl: '',
+    applicationUrl: '',
+    contactEmail: '',
     deadline: ''
   });
   const [newSkill, setNewSkill] = useState('');
@@ -40,7 +44,19 @@ const CreateJobModal = ({ tribeId, currentUser, onClose, onCreated }) => {
     if (!formData.company.trim()) { toast.error('Please enter company name'); return; }
     setLoading(true);
     try {
-      const jobData = { ...formData, tribeId, postedBy: currentUser.id, poster: { id: currentUser.id, name: currentUser.name, avatar: currentUser.avatar }, applicants: [], status: 'active' };
+      const jobData = { 
+        ...formData, 
+        tribeId, 
+        authorId: currentUser.id,
+        postedBy: currentUser.id, 
+        author: { id: currentUser.id, name: currentUser.name, avatar: currentUser.avatar },
+        poster: { id: currentUser.id, name: currentUser.name, avatar: currentUser.avatar }, 
+        applicants: [], 
+        status: 'active',
+        remote: formData.locationType === 'remote',
+        stipend: formData.salary,
+        type: formData.jobType
+      };
       await axios.post(`${API}/internships?userId=${currentUser.id}`, jobData);
       toast.success('Job posted! 💼');
       onCreated?.();
@@ -69,8 +85,24 @@ const CreateJobModal = ({ tribeId, currentUser, onClose, onCreated }) => {
             <div className="relative"><Building2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" /><input type="text" value={formData.company} onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))} placeholder="Company name" className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500" /></div>
           </div>
           <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Company Logo URL</label>
+            <input type="url" value={formData.companyLogo} onChange={(e) => setFormData(prev => ({ ...prev, companyLogo: e.target.value }))} placeholder="https://company.com/logo.png" className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
-            <textarea value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} placeholder="Job description and responsibilities..." rows={3} className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 resize-none" />
+            <textarea value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} placeholder="Job description..." rows={3} className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 resize-none" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Responsibilities</label>
+            <textarea value={formData.responsibilities} onChange={(e) => setFormData(prev => ({ ...prev, responsibilities: e.target.value }))} placeholder="Key responsibilities..." rows={2} className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 resize-none" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Requirements</label>
+            <textarea value={formData.requirements} onChange={(e) => setFormData(prev => ({ ...prev, requirements: e.target.value }))} placeholder="Required qualifications..." rows={2} className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 resize-none" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Benefits (Optional)</label>
+            <textarea value={formData.benefits} onChange={(e) => setFormData(prev => ({ ...prev, benefits: e.target.value }))} placeholder="Perks and benefits..." rows={2} className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 resize-none" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">Job Type</label>
@@ -89,9 +121,41 @@ const CreateJobModal = ({ tribeId, currentUser, onClose, onCreated }) => {
             <div className="flex flex-wrap gap-2">{experienceLevels.map(e => (<button key={e.id} type="button" onClick={() => setFormData(prev => ({ ...prev, experienceLevel: e.id }))} className={`px-3 py-2 rounded-lg text-sm transition ${formData.experienceLevel === e.id ? 'bg-blue-500 text-white' : 'bg-gray-800 text-gray-400'}`}>{e.label}</button>))}</div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div><label className="block text-sm font-medium text-gray-300 mb-2">Salary</label><div className="relative"><DollarSign size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" /><input type="text" value={formData.salary} onChange={(e) => setFormData(prev => ({ ...prev, salary: e.target.value }))} placeholder="50,000" className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500" /></div></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-2">Salary/Stipend</label><div className="relative"><DollarSign size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" /><input type="text" value={formData.salary} onChange={(e) => setFormData(prev => ({ ...prev, salary: e.target.value }))} placeholder="₹50,000/month" className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500" /></div></div>
             <div><label className="block text-sm font-medium text-gray-300 mb-2">Deadline</label><input type="date" value={formData.deadline} onChange={(e) => setFormData(prev => ({ ...prev, deadline: e.target.value }))} className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-blue-500" /></div>
           </div>
+          
+          {/* Application Link - Google Forms, etc. */}
+          <div className="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-xl">
+            <label className="block text-sm font-medium text-cyan-400 mb-2 flex items-center gap-2">
+              <Link2 size={16} />
+              Application Link (Google Forms, etc.)
+            </label>
+            <input 
+              type="url" 
+              value={formData.applicationUrl} 
+              onChange={(e) => setFormData(prev => ({ ...prev, applicationUrl: e.target.value }))} 
+              placeholder="https://forms.google.com/..." 
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500" 
+            />
+            <p className="text-xs text-gray-400 mt-2">Candidates will be redirected to this link when they click "Apply Now"</p>
+          </div>
+          
+          {/* Contact Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
+              <Mail size={14} />
+              Contact Email (Optional)
+            </label>
+            <input 
+              type="email" 
+              value={formData.contactEmail} 
+              onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))} 
+              placeholder="hr@company.com" 
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500" 
+            />
+          </div>
+          
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">Required Skills</label>
             <div className="flex gap-2 mb-2"><input type="text" value={newSkill} onChange={(e) => setNewSkill(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSkill())} placeholder="Add skill..." className="flex-1 px-3 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white text-sm" /><button type="button" onClick={addSkill} className="px-3 py-2 bg-blue-500 text-white rounded-lg">Add</button></div>
