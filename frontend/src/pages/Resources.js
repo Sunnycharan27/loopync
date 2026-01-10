@@ -127,8 +127,10 @@ const Resources = () => {
       setLoading(true);
       // Fetch from digital products (free resources)
       const res = await axios.get(`${API}/digital-products`);
+      // API returns {products: [...], total: ...} - extract products array
+      const products = res.data?.products || res.data || [];
       // Filter only free resources
-      const freeResources = (res.data || []).filter(r => r.isFree || r.price === 0);
+      const freeResources = (Array.isArray(products) ? products : []).filter(r => r.isFree || r.price === 0);
       setResources(freeResources);
     } catch (error) {
       console.error("Failed to fetch resources:", error);
