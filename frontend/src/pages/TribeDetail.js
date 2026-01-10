@@ -776,6 +776,74 @@ const TribeDetail = () => {
   );
 
   function renderTabContent() {
+    // Search filter helper function
+    const matchesSearch = (item, fields) => {
+      if (!searchQuery.trim()) return true;
+      const query = searchQuery.toLowerCase();
+      return fields.some(field => {
+        const value = item[field];
+        if (typeof value === 'string') return value.toLowerCase().includes(query);
+        if (Array.isArray(value)) return value.some(v => typeof v === 'string' && v.toLowerCase().includes(query));
+        return false;
+      });
+    };
+
+    // Filter projects
+    const filteredProjects = projects.filter(p => {
+      const matchesQuery = matchesSearch(p, ['title', 'description', 'skills', 'techStack']);
+      const matchesSkill = !skillFilter || p.skills?.some(s => s.toLowerCase().includes(skillFilter.toLowerCase()));
+      return matchesQuery && matchesSkill;
+    });
+
+    // Filter resources
+    const filteredResources = resources.filter(r => 
+      matchesSearch(r, ['title', 'description', 'category', 'tags'])
+    );
+
+    // Filter jobs/internships
+    const filteredJobs = internships.filter(j => 
+      matchesSearch(j, ['title', 'company', 'description', 'location', 'skills', 'requirements'])
+    );
+
+    // Filter certifications
+    const filteredCertifications = certifications.filter(c => {
+      const matchesQuery = matchesSearch(c, ['title', 'issuer', 'skills']);
+      const matchesSkill = !skillFilter || c.skills?.some(s => s.toLowerCase().includes(skillFilter.toLowerCase()));
+      return matchesQuery && matchesSkill;
+    });
+
+    // Filter team posts
+    const filteredTeamPosts = teamPosts.filter(p => 
+      matchesSearch(p, ['title', 'description', 'roles', 'skills'])
+    );
+
+    // Filter ideas
+    const filteredIdeas = ideas.filter(i => 
+      matchesSearch(i, ['title', 'problem', 'solution', 'stage'])
+    );
+
+    // Filter showcases (startups)
+    const filteredShowcases = showcases.filter(s => 
+      matchesSearch(s, ['title', 'description', 'stage', 'fundingStage', 'achievements'])
+    );
+
+    // Filter posts
+    const filteredPosts = posts.filter(p => 
+      matchesSearch(p, ['text', 'hashtags'])
+    );
+
+    // Filter events
+    const filteredEvents = events.filter(e => 
+      matchesSearch(e, ['title', 'description', 'location', 'type'])
+    );
+
+    // Filter workouts  
+    const filteredWorkouts = workouts.filter(w => {
+      const matchesQuery = matchesSearch(w, ['title', 'description', 'type', 'muscleGroups']);
+      const matchesSkill = !skillFilter || w.muscleGroups?.some(m => m.toLowerCase().includes(skillFilter.toLowerCase()));
+      return matchesQuery && matchesSkill;
+    });
+
     // Posts Tab (All categories)
     if (activeTab === "posts") return (
       <div className="space-y-6">
