@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import {
   Search, Filter, Grid, List, Download, Eye, Heart, Star,
   BookOpen, FileText, Package, Plus, GraduationCap, Briefcase,
-  ArrowRight, TrendingUp, Clock, ChevronLeft, ChevronRight, DollarSign, ShoppingBag
+  ArrowRight, TrendingUp, Clock, ChevronLeft, ChevronRight, DollarSign, ShoppingBag,
+  Trash2, MoreVertical
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
 import TopHeader from "../components/TopHeader";
