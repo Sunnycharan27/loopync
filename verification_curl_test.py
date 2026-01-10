@@ -12,7 +12,7 @@ from datetime import datetime
 from motor.motor_asyncio import AsyncIOMotorClient
 
 # Configuration
-BACKEND_URL = "https://loopync-social-4.preview.emergentagent.com/api"
+BACKEND_URL = "https://vibetribe-2.preview.emergentagent.com/api"
 
 class CurlVerificationTester:
     def __init__(self):

@@ -24,7 +24,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://loopync-social-4.preview.emergentagent.com/api"
+BASE_URL = "https://vibetribe-2.preview.emergentagent.com/api"
 TEST_EMAIL = "test@test.com"
 TEST_PASSWORD = "testpassword123"
 

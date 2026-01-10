@@ -18,7 +18,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://loopync-social-4.preview.emergentagent.com/api"
+BACKEND_URL = "https://vibetribe-2.preview.emergentagent.com/api"
 ADMIN_EMAIL = "loopyncpvt@gmail.com"
 ADMIN_PASSWORD = "admin@loopync2025"
 

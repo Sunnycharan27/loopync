@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 
 # Base URL from environment
-BASE_URL = "https://loopync-social-4.preview.emergentagent.com/api"
+BASE_URL = "https://vibetribe-2.preview.emergentagent.com/api"
 
 # Test credentials
 ADMIN_EMAIL = "loopyncpvt@gmail.com"

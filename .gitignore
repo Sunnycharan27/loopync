@@ -87,3 +87,4 @@ database_export/
 database_export/media_files.json
 frontend/node_modules/.cache/default-development/1.pack
 frontend/node_modules/.cache/default-development/15.pack
+frontend/node_modules/.cache/default-development/0.pack
