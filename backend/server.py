@@ -641,61 +641,6 @@ class FriendRequest(BaseModel):
     status: str = "pending"  # pending, accepted, rejected
     createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
-class VibeRoom(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: str
-    description: str = ""
-    category: str = "general"  # music, tech, gaming, lifestyle, business, etc.
-    hostId: str
-    hostName: str = ""
-    moderators: List[str] = []
-    participants: List[dict] = []  # [{userId, userName, avatar, joinedAt, isMuted, role, raisedHand}]
-    # role: "host", "moderator", "speaker", "audience"
-    # raisedHand: bool - whether audience member wants to speak
-    maxParticipants: int = 50
-    maxSpeakers: int = 20  # Max speakers on stage at once
-    status: str = "active"  # active, ended
-    isPrivate: bool = False
-    tags: List[str] = []
-    startedAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
-    endedAt: Optional[str] = None
-    totalJoins: int = 0
-    peakParticipants: int = 0
-    scheduledFor: Optional[str] = None  # Future scheduled time
-
-class RoomCreate(BaseModel):
-    name: str
-    description: str = ""
-    category: str = "general"
-    isPrivate: bool = False
-    tags: List[str] = []
-
-class RoomMessage(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    roomId: str
-    userId: str
-    userName: str
-    avatar: str = ""
-    message: str
-    type: str = "text"  # text, emoji, system
-    createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
-
-class RoomAction(BaseModel):
-    action: str  # kick, ban, handRaise, reaction
-    targetUserId: str = None
-    data: dict = {}
-
-class RoomInvite(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    roomId: str
-    fromUserId: str
-    toUserId: str
-    status: str = "pending"  # pending, accepted, declined
-    createdAt: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
-
 class Friendship(BaseModel):
     model_config = ConfigDict(extra="ignore")
     userId1: str
