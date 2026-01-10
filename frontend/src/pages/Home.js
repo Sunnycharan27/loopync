@@ -13,6 +13,25 @@ import { toast } from "sonner";
 import { emergentApi } from "../services/emergentApi";
 // import GuidedTours from "../components/GuidedTours";
 
+// Skeleton loader for feed items
+const FeedSkeleton = () => (
+  <div className="space-y-4">
+    {[1, 2, 3].map((i) => (
+      <div key={i} className="glass-card p-4 animate-pulse">
+        <div className="flex items-start gap-3">
+          <div className="w-12 h-12 bg-gray-700 rounded-full" />
+          <div className="flex-1">
+            <div className="h-4 bg-gray-700 rounded w-32 mb-2" />
+            <div className="h-3 bg-gray-700 rounded w-24 mb-4" />
+            <div className="h-20 bg-gray-700 rounded w-full mb-3" />
+            <div className="h-48 bg-gray-700 rounded w-full" />
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
@@ -190,9 +209,7 @@ const Home = () => {
         {/* Combined Feed (Posts + Reels) */}
         <div className="space-y-4 px-4 mt-4">
           {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full mx-auto"></div>
-            </div>
+            <FeedSkeleton />
           ) : feed.length === 0 ? (
             <div className="text-center py-12 glass-card p-8">
               <p className="text-gray-400">No content yet. Be the first to post!</p>
