@@ -61,5 +61,5 @@ async def get_optional_user(credentials: Optional[HTTPAuthorizationCredentials] 
     """Optional user dependency - doesn't require authentication"""
     try:
         return await get_current_user(credentials)
-    except:
+    except Exception:
         return None
