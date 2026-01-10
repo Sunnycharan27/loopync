@@ -3,8 +3,25 @@
 
 from fastapi import APIRouter
 
-# Main router for all API routes
+# Import routers
+from .auth import router as auth_router
+from .users import router as users_router
+from .posts import router as posts_router
+from .friends import router as friends_router
+
+# Create main API router
 api_router = APIRouter(prefix="/api")
 
-# Import and include all routers
-# These will be added as we migrate routes from server.py
+# Include all routers
+api_router.include_router(auth_router)
+api_router.include_router(users_router)
+api_router.include_router(posts_router)
+api_router.include_router(friends_router)
+
+__all__ = [
+    "api_router",
+    "auth_router",
+    "users_router", 
+    "posts_router",
+    "friends_router",
+]
