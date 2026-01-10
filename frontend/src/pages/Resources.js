@@ -164,14 +164,41 @@ const Resources = () => {
     }
   };
 
+  const handleDelete = async (productId, e) => {
+    e.stopPropagation();
+    if (!currentUser) {
+      toast.error("Please login to delete resources");
+      return;
+    }
+    
+    if (!window.confirm("Are you sure you want to delete this resource? This action cannot be undone.")) {
+      return;
+    }
+    
+    try {
+      await axios.delete(`${API}/digital-products/${productId}?userId=${currentUser.id}`);
+      setProducts(products.filter(p => p.id !== productId));
+      setFeaturedProducts(featuredProducts.filter(p => p.id !== productId));
+      toast.success("Resource deleted successfully");
+    } catch (error) {
+      if (error.response?.status === 403) {
+        toast.error("You can only delete your own resources");
+      } else {
+        toast.error("Failed to delete resource");
+      }
+    }
+  };
+
   const ProductCard = ({ product }) => {
     const IconComponent = categoryIcons[product.category] || Package;
     const isLiked = currentUser && product.likes?.includes(currentUser.id);
+    const isOwner = currentUser && product.authorId === currentUser.id;
+    const [showMenu, setShowMenu] = useState(false);
     
     return (
       <div
         onClick={() => navigate(`/digital-products/${product.id}`)}
-        className="rounded-2xl overflow-hidden cursor-pointer group border border-gray-800 hover:border-cyan-400/30 transition-all hover:shadow-lg hover:shadow-cyan-400/10"
+        className="rounded-2xl overflow-hidden cursor-pointer group border border-gray-800 hover:border-cyan-400/30 transition-all hover:shadow-lg hover:shadow-cyan-400/10 relative"
         style={{ background: 'linear-gradient(180deg, #1a0b2e 0%, #0f021e 100%)' }}
       >
         {/* Cover Image */}
@@ -196,9 +223,41 @@ const Resources = () => {
             </span>
           </div>
 
-          {/* Category Badge */}
-          <div className="absolute top-3 right-3 px-2 py-1 bg-black/50 rounded-full text-xs text-white capitalize">
-            {product.category}
+          {/* Category Badge & Menu */}
+          <div className="absolute top-3 right-3 flex items-center gap-2">
+            <span className="px-2 py-1 bg-black/50 rounded-full text-xs text-white capitalize">
+              {product.category}
+            </span>
+            {isOwner && (
+              <div className="relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(!showMenu);
+                  }}
+                  className="p-1.5 bg-black/50 rounded-full text-white hover:bg-black/70 transition"
+                >
+                  <MoreVertical size={14} />
+                </button>
+                {showMenu && (
+                  <div 
+                    className="absolute right-0 top-8 bg-gray-900 border border-gray-700 rounded-lg shadow-xl z-10 min-w-[120px]"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button
+                      onClick={(e) => {
+                        handleDelete(product.id, e);
+                        setShowMenu(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-red-400 hover:bg-red-500/10 text-sm rounded-lg transition"
+                    >
+                      <Trash2 size={14} />
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Like Button */}
@@ -230,6 +289,9 @@ const Resources = () => {
                 className="w-6 h-6 rounded-full"
               />
               <span className="text-gray-400 text-xs">{product.author.name}</span>
+              {isOwner && (
+                <span className="text-cyan-400 text-xs">(You)</span>
+              )}
             </div>
           )}
 
