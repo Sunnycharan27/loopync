@@ -320,7 +320,7 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
             })}
           </p>
 
-          {/* Media Rendering - Optimized with native lazy loading */}
+          {/* Media Rendering - Optimized with lazy loading */}
           {(post.media || post.mediaUrl) && (post.media?.trim() !== '' || post.mediaUrl?.trim() !== '') && (() => {
             const mediaSource = post.mediaUrl || post.media;
             const mediaUrl = getMediaUrl(mediaSource);
@@ -341,16 +341,14 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
                     }}
                   />
                 ) : (
-                  <img
+                  <OptimizedPostImage
                     src={mediaUrl}
                     alt="Post media"
-                    loading="lazy"
-                    decoding="async"
-                    className="rounded-2xl w-full hover:scale-[1.01] transition-transform cursor-pointer bg-gray-900"
+                    className="rounded-2xl hover:scale-[1.01] transition-transform cursor-pointer"
+                    aspectRatio="auto"
                     onClick={() => setShowReactions(true)}
                     onError={(e) => {
                       console.error('Image load error:', mediaUrl);
-                      e.target.style.display = 'none';
                     }}
                   />
                 )}
