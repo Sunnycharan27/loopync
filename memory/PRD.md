@@ -236,6 +236,50 @@ The platform is production-ready with:
 
 ---
 
+## Performance Optimizations (January 2026) ✅
+
+### P0: Frontend Performance Improvements
+- [x] OptimizedImage component integration:
+  - IntersectionObserver-based lazy loading
+  - Adaptive quality based on network speed (3G/4G support)
+  - Progressive loading with skeleton placeholders
+  - 200px rootMargin for preloading
+- [x] OptimizedAvatar component for all user avatars
+- [x] OptimizedPostImage component for feed images
+- [x] FeedSkeleton loading states in Home.js
+- [x] Components updated: Home.js, PostCard.js, FeedReelCard.js, VibeCapsules.js, CommentsSection.js
+
+### P1: Backend Code Refactoring (In Progress)
+- [x] Created modular routes structure: `/app/backend/routes/`
+  - auth.py - Authentication routes
+  - users.py - User management routes
+  - posts.py - Posts CRUD routes
+  - friends.py - Friend system routes
+  - deps.py - Shared dependencies
+- [ ] Wire routers into main server.py (pending)
+- [ ] Break down remaining endpoints (~300+ routes)
+
+### Performance Test Results
+- Posts API response: < 5 seconds
+- Reels API response: < 5 seconds
+- Capsules API response: < 5 seconds
+- 80% of images lazy-loaded
+
+---
+
+## Known Issues / Technical Debt
+
+### Backend
+- server.py is 11,700+ lines - needs full router migration
+- delivery_service runs in MOCK mode
+
+### Posts Deletion Clarification
+- No auto-deletion mechanism exists in the codebase
+- Posts are only deleted when manually deleted by users
+- No TTL, expiration, or scheduled cleanup logic found
+
+---
+
 ## Future Roadmap
 
 ### Q1 2025
