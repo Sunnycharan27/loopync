@@ -206,18 +206,24 @@ const PostCard = memo(({ post, currentUser, onLike, onRepost, onDelete }) => {
       )}
 
       <div className="flex items-start gap-3">
-        <img
-          src={
-            post.author?.avatar 
-              ? (post.author.avatar.startsWith('http') 
-                  ? post.author.avatar 
-                  : getMediaUrl(post.author.avatar))
-              : `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.authorId}`
-          }
-          alt={post.author?.name || 'User'}
-          className="w-12 h-12 rounded-full ring-2 ring-cyan-400/20 cursor-pointer hover:ring-cyan-400/50 transition-all"
+        <div 
+          className="cursor-pointer hover:ring-cyan-400/50 transition-all rounded-full"
           onClick={() => navigate(`/profile/${post.authorId}`)}
-        />
+        >
+          <OptimizedAvatar
+            src={
+              post.author?.avatar 
+                ? (post.author.avatar.startsWith('http') 
+                    ? post.author.avatar 
+                    : getMediaUrl(post.author.avatar))
+                : null
+            }
+            alt={post.author?.name || 'User'}
+            size={48}
+            fallbackSeed={post.authorId}
+            className="ring-2 ring-cyan-400/20"
+          />
+        </div>
         <div className="flex-1">
           <div className="flex items-center justify-between mb-2">
             <div 
