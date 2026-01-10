@@ -1031,7 +1031,6 @@ const Settings = () => {
             { icon: "🏆", title: "Skill Endorsements", desc: "Get endorsed by peers for your skills" },
             { icon: "🚀", title: "Startup Showcase", desc: "Showcase your startup to the community" },
             { icon: "📚", title: "Free Resources", desc: "Share and download learning resources" },
-            { icon: "🎙️", title: "VibeRooms", desc: "Audio chat rooms for live discussions" },
           ].map((feature, i) => (
             <div key={i} className="flex items-start gap-3 p-2 hover:bg-gray-800/30 rounded-lg transition">
               <span className="text-xl">{feature.icon}</span>
