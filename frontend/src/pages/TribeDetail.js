@@ -20,6 +20,7 @@ import CreateReviewModal from "../components/tribe/CreateReviewModal";
 import AddTrainerModal from "../components/tribe/AddTrainerModal";
 import CreateProjectModal from "../components/tribe/CreateProjectModal";
 import CreateJobModal from "../components/tribe/CreateJobModal";
+import EditJobModal from "../components/tribe/EditJobModal";
 import CreateCertificationModal from "../components/tribe/CreateCertificationModal";
 import CreateTeamPostModal from "../components/tribe/CreateTeamPostModal";
 import CreateEventModal from "../components/tribe/CreateEventModal";
