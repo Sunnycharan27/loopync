@@ -875,7 +875,7 @@ const TribeDetail = () => {
         )}
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (posts.length > 0 ? posts.map(post => <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} onDelete={handleDelete} onRepost={handleRepost} />) : <EmptyState icon={Image} message="No posts yet" />)}
+        {isMember && (filteredPosts.length > 0 ? filteredPosts.map(post => <PostCard key={post.id} post={post} currentUser={currentUser} onLike={handleLike} onDelete={handleDelete} onRepost={handleRepost} />) : <EmptyState icon={Image} message={searchQuery ? "No posts match your search" : "No posts yet"} />)}
       </div>
     );
 
@@ -885,7 +885,12 @@ const TribeDetail = () => {
         <TabHeader title="Member Projects" buttonText="Add Project" buttonIcon={Rocket} onClick={() => setShowProjectModal(true)} showButton={isMember} />
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (projects.length > 0 ? projects.map(p => <ProjectCard key={p.id} project={p} currentUser={currentUser} onSkillClick={setSkillFilter} />) : <EmptyState icon={Code} message="No projects yet" />)}
+        {isMember && (
+          <>
+            {searchQuery && <p className="text-sm text-gray-400 mb-2">Showing {filteredProjects.length} of {projects.length} projects</p>}
+            {filteredProjects.length > 0 ? filteredProjects.map(p => <ProjectCard key={p.id} project={p} currentUser={currentUser} onSkillClick={setSkillFilter} />) : <EmptyState icon={Code} message={searchQuery ? "No projects match your search" : "No projects yet"} />}
+          </>
+        )}
       </div>
     );
 
@@ -895,7 +900,12 @@ const TribeDetail = () => {
         <TabHeader title="Member Certifications" buttonText="Add Cert" buttonIcon={Award} onClick={() => setShowCertificationModal(true)} showButton={isMember} />
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (certifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{certifications.map(c => <CertificationCard key={c.id} cert={c} onSkillClick={setSkillFilter} />)}</div> : <EmptyState icon={Award} message="No certifications yet" />)}
+        {isMember && (
+          <>
+            {searchQuery && <p className="text-sm text-gray-400 mb-2">Showing {filteredCertifications.length} of {certifications.length} certifications</p>}
+            {filteredCertifications.length > 0 ? <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{filteredCertifications.map(c => <CertificationCard key={c.id} cert={c} onSkillClick={setSkillFilter} />)}</div> : <EmptyState icon={Award} message={searchQuery ? "No certifications match your search" : "No certifications yet"} />}
+          </>
+        )}
       </div>
     );
 
@@ -905,7 +915,12 @@ const TribeDetail = () => {
         <TabHeader title="Looking for Team" buttonText="Find Team" buttonIcon={UsersRound} onClick={() => setShowTeamPostModal(true)} showButton={isMember} />
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (teamPosts.length > 0 ? teamPosts.map(p => <TeamPostCard key={p.id} post={p} currentUser={currentUser} />) : <EmptyState icon={UsersRound} message="No team posts yet" />)}
+        {isMember && (
+          <>
+            {searchQuery && <p className="text-sm text-gray-400 mb-2">Showing {filteredTeamPosts.length} of {teamPosts.length} team posts</p>}
+            {filteredTeamPosts.length > 0 ? filteredTeamPosts.map(p => <TeamPostCard key={p.id} post={p} currentUser={currentUser} />) : <EmptyState icon={UsersRound} message={searchQuery ? "No team posts match your search" : "No team posts yet"} />}
+          </>
+        )}
       </div>
     );
 
@@ -915,7 +930,12 @@ const TribeDetail = () => {
         <TabHeader title="Internships & Jobs" buttonText="Post Job" buttonIcon={Briefcase} onClick={() => setShowJobModal(true)} showButton={isMember} />
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (internships.length > 0 ? internships.map(j => <InternshipCard key={j.id} job={j} currentUser={currentUser} onEdit={(job) => { setEditingJob(job); setShowEditJobModal(true); }} onDelete={handleDeleteJob} />) : <EmptyState icon={Briefcase} message="No jobs posted yet" />)}
+        {isMember && (
+          <>
+            {searchQuery && <p className="text-sm text-gray-400 mb-2">Showing {filteredJobs.length} of {internships.length} jobs</p>}
+            {filteredJobs.length > 0 ? filteredJobs.map(j => <InternshipCard key={j.id} job={j} currentUser={currentUser} onEdit={(job) => { setEditingJob(job); setShowEditJobModal(true); }} onDelete={handleDeleteJob} />) : <EmptyState icon={Briefcase} message={searchQuery ? "No jobs match your search" : "No jobs posted yet"} />}
+          </>
+        )}
       </div>
     );
 
@@ -925,7 +945,12 @@ const TribeDetail = () => {
         <TabHeader title="Workouts" buttonText="Add Workout" buttonIcon={Dumbbell} onClick={() => setShowWorkoutModal(true)} showButton={isMember} />
         {!isMember && currentUser && <JoinPrompt onJoin={joinTribe} joining={joining} />}
         {!currentUser && <LoginPrompt navigate={navigate} />}
-        {isMember && (workouts.length > 0 ? workouts.map(w => <WorkoutCard key={w.id} workout={w} />) : <EmptyState icon={Dumbbell} message="No workouts shared yet" />)}
+        {isMember && (
+          <>
+            {searchQuery && <p className="text-sm text-gray-400 mb-2">Showing {filteredWorkouts.length} of {workouts.length} workouts</p>}
+            {filteredWorkouts.length > 0 ? filteredWorkouts.map(w => <WorkoutCard key={w.id} workout={w} />) : <EmptyState icon={Dumbbell} message={searchQuery ? "No workouts match your search" : "No workouts shared yet"} />}
+          </>
+        )}
       </div>
     );
 
